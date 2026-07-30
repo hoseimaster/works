@@ -126,9 +126,18 @@ import { getPublications } from "./publications.js";
         });
     }
 
+    function isAllowedValue(value, allowed) {
+        const normalizedValue = normalize(value);
+
+        return allowed.some(
+            allowedValue => normalize(allowedValue) === normalizedValue
+        );
+    }
+
     function checkAllowedValue(item, index, field, allowed) {
         const value = normalize(item[field]);
-        if (value && !allowed.includes(value)) {
+
+        if (value && !isAllowedValue(item[field], allowed)) {
             addIssue(
                 "error",
                 item,
@@ -146,7 +155,7 @@ import { getPublications } from "./publications.js";
         item[field].forEach((entry, i) => {
             const value = normalize(entry);
 
-            if (value && !allowed.includes(value)) {
+            if (value && !isAllowedValue(entry, allowed)) {
                 addIssue(
                     "error",
                     item,
@@ -294,4 +303,3 @@ import { getPublications } from "./publications.js";
     checkDuplicateIds(publications);
     printResults(publications);
 })();
-
