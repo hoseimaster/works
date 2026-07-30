@@ -253,8 +253,15 @@ import { getPublications } from "./publications.js";
             return;
         }
 
-        ["id", "title", "category", "publishDate"].forEach(
+        ["id", "category", "publishDate"].forEach(
             field => checkString(item, index, field, true)
+        );
+
+        checkOptionalField(
+            item,
+            index,
+            "title",
+            "タイトル欄"
         );
 
         checkOptionalField(
