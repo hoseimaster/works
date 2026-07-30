@@ -657,7 +657,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["非公開"],
-        description: "法政アイマス研のあゆみやA-1 Pictures福島祐ーインタビュー!!などを掲載しています。"
+        description: "法政アイマス研のあゆみやA-1 Pictures福島祐ー様へのインタビューなどを掲載しています。"
     },
 
     {
