@@ -1108,70 +1108,52 @@
     min-height: 64px;
 }
 
-/* THE IDOLM@STER */
-.filter-chip[data-value="THE IDOLM@STER"]{
-    color:#f34f6d;
-    border-color:#f34f6d;
-    background:#fff3f6;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="THE IDOLM@STER"
+] {
+    background: #fff0f2;
+    color: #c95160;
 }
 
-/* シンデレラガールズ */
-.filter-chip[data-value="シンデレラガールズ"]{
-    color:#2681c8;
-    border-color:#2681c8;
-    background:#f3f9ff;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="シンデレラガールズ"
+] {
+    background: #edf6ff;
+    color: #3478bd;
 }
 
-/* ミリオンライブ！ */
-.filter-chip[data-value="ミリオンライブ"]{
-    color:#ffc30b;
-    border-color:#ffc30b;
-    background:#fffdf2;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="ミリオンライブ"
+] {
+    background: #fff7df;
+    color: #c88a00;
 }
 
-/* SideM */
-.filter-chip[data-value="SideM"]{
-    color:#0fbe94;
-    border-color:#0fbe94;
-    background:#f2fcf8;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="SideM"
+] {
+    background: #eaf8f3;
+    color: #178b66;
 }
 
-/* シャイニーカラーズ */
-.filter-chip[data-value="シャイニーカラーズ"]{
-    color:#8dbbff;
-    border-color:#8dbbff;
-    background:#f5f9ff;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="シャイニーカラーズ"
+] {
+    background: #f1f5ff;
+    color: #667ed0;
 }
 
-/* 学園アイドルマスター */
-.filter-chip[data-value="学園アイドルマスター"]{
-    color:#f39800;
-    border-color:#f39800;
-    background:#fff8ef;
-}
-
-.filter-chip.is-selected[data-value="THE IDOLM@STER"]{
-    background:#f34f6d;
-}
-
-.filter-chip.is-selected[data-value="シンデレラガールズ"]{
-    background:#2681c8;
-}
-
-.filter-chip.is-selected[data-value="ミリオンライブ"]{
-    background:#ffc30b;
-}
-
-.filter-chip.is-selected[data-value="SideM"]{
-    background:#0fbe94;
-}
-
-.filter-chip.is-selected[data-value="シャイニーカラーズ"]{
-    background:#8dbbff;
-}
-
-.filter-chip.is-selected[data-value="学園アイドルマスター"]{
-    background:#f39800;
+#brandFilterOptions
+.filter-option[
+    data-filter-value="学園アイドルマスター"
+] {
+    background: #fff3e3;
+    color: #d77a00;
 }
 
 #brandFilterOptions
@@ -1709,88 +1691,12 @@ body.is-modal-open {
     }
 }
 
-/* ===== Search Toolbar Readability Adjustment ===== */
-
-.archive-search__inner{
-    gap:16px;
-    padding:18px;
-    border:1px solid #eadfd5;
-    border-radius:20px;
-    background:#ffffff;
-    box-shadow:0 12px 30px rgba(75,45,25,.10);
-}
-
-.archive-search__input,
-.archive-search__filter-button,
-.archive-search__sort select{
-    height:58px;
-    border:1px solid #d8cec5;
-    border-radius:14px;
-    background:#ffffff;
-    color:#2f2f2f;
-    box-shadow:inset 0 1px 2px rgba(0,0,0,.03);
-}
-
-.archive-search__input{
-    padding:0 52px 0 48px;
-    font-size:.96rem;
-    font-weight:500;
-}
-
-.archive-search__input::placeholder{
-    color:#8a817a;
-}
-
-.archive-search__filter-button,
-.archive-search__sort select{
-    font-size:.9rem;
-    font-weight:700;
-}
-
-.archive-search__filter-button{
-    min-width:190px;
-    padding:0 24px;
-}
-
-.archive-search__sort{
-    width:230px;
-}
-
-.archive-search__sort select{
-    padding:0 42px 0 18px;
-}
-
-.archive-search__input:hover,
-.archive-search__filter-button:hover,
-.archive-search__sort select:hover{
-    border-color:#f0a36c;
-    background:#fffaf6;
-}
-
-.archive-search__input:focus,
-.archive-search__filter-button:focus-visible,
-.archive-search__sort select:focus{
-    outline:none;
-    border-color:#f47a24;
-    background:#ffffff;
-    box-shadow:0 0 0 4px rgba(244,122,36,.14);
-}
-
-.archive-search__filter-button:hover,
-.archive-search__sort select:hover{
-    transform:translateY(-1px);
-    box-shadow:0 8px 20px rgba(75,45,25,.10);
-}
-
-@media (max-width:700px){
-    .archive-search__inner{
-        gap:12px;
-        padding:14px;
-    }
-
-    .archive-search__filter-button,
-    .archive-search__sort,
-    .archive-search__sort select{
-        width:100%;
-    }
-}
+/* Search readability update */
+.archive-search__input,.archive-search__filter-button,.archive-search__sort select{font-size:.95rem;font-weight:600;}
+.archive-search__inner{padding:20px;border:1px solid #e5ddd6;border-radius:22px;background:#fffdfb;box-shadow:0 12px 32px rgba(0,0,0,.08);}
+.archive-search__input{height:60px;padding:0 20px 0 52px;border:2px solid #d9d9d9;border-radius:18px;background:#fff;font-size:.95rem;font-weight:600;}
+.archive-search__input::placeholder{color:#9a9a9a;font-weight:500;}
+.archive-search__input:hover{border-color:#c3c3c3;}
+.archive-search__input:focus{border-color:#f47a24;box-shadow:0 0 0 5px rgba(244,122,36,.15);}
+.archive-search__filter-button,.archive-search__sort select{height:60px;border:2px solid #d9d9d9;border-radius:18px;background:#fff;font-size:.95rem;font-weight:600;}
+.archive-search__filter-button:hover,.archive-search__sort select:hover{border-color:#f47a24;background:#fff8f3;}
