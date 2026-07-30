@@ -50,7 +50,7 @@ export const BRAND_OPTIONS = [
         label: "シンデレラガールズ"
     },
     {
-        value: "ミリオンライブ",
+        value: "ミリオンライブ！",
         label: "ミリオンライブ！"
     },
     {
@@ -501,7 +501,7 @@ const PUBLICATIONS = [
     brands: [
         "THE IDOLM@STER",
         "シンデレラガールズ",
-        "ミリオンライブ"
+        "ミリオンライブ！"
     ],
     keywords: ["検定,クイズ"],
     coverImage: "./publication-025.png",
@@ -535,7 +535,7 @@ const PUBLICATIONS = [
        brands: [
         "THE IDOLM@STER",
         "シンデレラガールズ",
-        "ミリオンライブ"
+        "ミリオンライブ！"
     ],
        keywords: [],
         coverImage: "./publication-927.png",
@@ -554,7 +554,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ"
+            "ミリオンライブ！"
         ],
         keywords: [],
         coverImage: "./publication-027.png",
@@ -588,7 +588,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "その他"
         ],
         keywords: [],
@@ -632,10 +632,10 @@ const PUBLICATIONS = [
 
     {
         id: "publication-032",
-        title: "ミリオンライブ検定",
+        title: "ミリオンライブ！検定",
         publishDate: "2014-08-16",
         category: "検定本",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["検定,クイズ"],
         coverImage: "./publication-032.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%83%9f%e3%83%aa%e3%82%aa%e3%83%b3%e3%83%a9%e3%82%a4%e3%83%96%e6%a4%9c%e5%ae%9a/",
@@ -695,7 +695,7 @@ const PUBLICATIONS = [
         title: "HOSEIM@STER Million 2nd Call Guide",
         publishDate: "2015-04-04",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: [],
         coverImage: "./publication-036.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim-ster-million-2nd-call-guide/",
@@ -728,7 +728,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM"
         ],
         keywords: [],
@@ -748,7 +748,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM"
         ],
         keywords: ["ゲーム,ボードゲーム,すごろく"],
@@ -798,7 +798,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM"
         ],
         keywords: ["検定,クイズ"],
@@ -815,7 +815,7 @@ const PUBLICATIONS = [
         title: "HOSEIM@STER MILLION 3rd 準備号",
         publishDate: "2016-05-05",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: [],
         coverImage: "./publication-043.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim%40ster-million-3rd-%e6%ba%96%e5%82%99%e5%8f%b7/",
@@ -830,7 +830,7 @@ const PUBLICATIONS = [
         title: "THE IDOLM@STER MILLION LIVE 3rdLIVE TOUR CARRABAN BOOK",
         publishDate: "2016-08-01",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: [],
         coverImage: "./publication-044.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-million-live-3rdlive-tour-carraban-book/",
@@ -878,7 +878,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ"
+            "ミリオンライブ！"
         ],
         keywords: ["クイズ"],
         coverImage: "./publication-047.png",
@@ -954,7 +954,7 @@ const PUBLICATIONS = [
         title: "HOSEIM@STER MILLION 4th MEMORIAL LEAFLET",
         publishDate: "2017-03-11",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ゲーム,遊び方"],
         coverImage: "./publication-052.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim-ster-million-4th-memorial-leaflet/",
@@ -1134,7 +1134,7 @@ const PUBLICATIONS = [
         title: "ミリシタ検定",
         publishDate: "2019-08-11",
         category: "検定本",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["検定,クイズ"],
         coverImage: "./publication-064.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%83%9f%e3%83%aa%e3%82%b7%e3%82%bf%e6%a4%9c%e5%ae%9a/",
@@ -1209,7 +1209,7 @@ const PUBLICATIONS = [
         title: "THE IDOLM@STER MILLION LIVE! 7thLIVE Q@MP FLYER!!! Reburn Memorial Leaflet",
         publishDate: "2021-05-20",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-069.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-million-live-7th-live-reburn-memorial-leaflet/",
@@ -1314,7 +1314,7 @@ const PUBLICATIONS = [
         title: "THE IDOLM＠STER MILLION LIVE! 8thLIVE Twelw@ve Memorial Leaflet",
         publishDate: "2022-02-13",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-076.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolmaster-million-live-8thlive-twelwave-memorial-leaflet/",
@@ -1419,7 +1419,7 @@ const PUBLICATIONS = [
         title: "ミリシタ検定Ⅱ",
         publishDate: "2022-12-31",
         category: "検定本",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["検定,クイズ"],
         coverImage: "./publication-083.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%83%9f%e3%83%aa%e3%82%b7%e3%82%bf%e6%a4%9c%e5%ae%9a%e2%85%b1/",
@@ -1434,7 +1434,7 @@ const PUBLICATIONS = [
         title: "202301.14-01.15 @Nippon Budokan THE IDOL M@STER MILLION LIVE! 9th LIVE ChoruSp@rklle!!!!! Memorial leaflet",
         publishDate: "2023-01-14",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-084.png",
         detailUrl: "https://www.hoseimaster-web.com/l/202301-14-01-15-nippon-budokan-the-idol-m-ster-million-live-9th-live-chorusp-rklle-memorial-leaflet/",
@@ -1452,7 +1452,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM",
             "シャイニーカラーズ",
         ],
@@ -1485,7 +1485,7 @@ const PUBLICATIONS = [
         title: "THE IDOLM@STER MILION LIVE! 10thLIVE TOUR Act-1 H@PPY 4 YOU! Memorial Leaflet",
         publishDate: "2023-04-22",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-087.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-million-live-10thlivetour-act-1-memorial-leaflet/",
@@ -1500,7 +1500,7 @@ const PUBLICATIONS = [
         title: "THE iDOLM@STER MILLION LIVE! 10thLIVE 5 to SP@RKLE Act-2 Memorial Leaflet?",
         publishDate: "2023-07-30",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-088.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-million-live-10thlivetour-act-2-memorial-leaflet/",
@@ -1545,7 +1545,7 @@ const PUBLICATIONS = [
         title: "THE IDOLM@STER MILLION LIVE! 10thLIVE TOUR Act-4 MILLION THE@TER!!!! Memorial Pamphlet",
         publishDate: "2024-02-24",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: ["ライブ,リーフレット"],
         coverImage: "./publication-091.png",
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-million-live-10thlive-tour-act-4-million-the-ter-memorial-pamphlet/",
@@ -1653,7 +1653,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM",
             "シャイニーカラーズ",
             "学園アイドルマスター",
@@ -1676,7 +1676,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ",
+            "ミリオンライブ！",
             "SideM",
             "シャイニーカラーズ",
             "学園アイドルマスター",
@@ -1696,7 +1696,7 @@ const PUBLICATIONS = [
         title: "ミリ新作　タイトルを入力してください",
         publishDate: "2026-09-19",
         category: "リーフレット",
-        brands: ["ミリオンライブ"],
+        brands: ["ミリオンライブ！"],
         keywords: [],
         coverImage: "./publication-100.png",
         detailUrl: "",
@@ -2443,3 +2443,4 @@ function clonePublication(
                 : []
     };
 }
+
