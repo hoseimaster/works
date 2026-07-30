@@ -3,6 +3,8 @@
  * publications.js のデータ検証
  */
 
+import { getPublications } from "./publications.js";
+
 (() => {
     "use strict";
 
@@ -191,14 +193,14 @@
             );
         }
 
-        if ("interview" in item && typeof item.interview !== "boolean") {
+        if ("hasInterview" in item && typeof item.hasInterview !== "boolean") {
             addIssue(
                 "error",
                 item,
                 index,
-                "interview",
-                "interview は true または false で指定してください。",
-                item.interview
+                "hasInterview",
+                "hasInterview は true または false で指定してください。",
+                item.hasInterview
             );
         }
 
@@ -279,9 +281,11 @@
         window.publicationValidationResults = { errors, warnings };
     }
 
-    if (typeof publications === "undefined" || !Array.isArray(publications)) {
+    const publications = getPublications();
+
+    if (!Array.isArray(publications)) {
         console.error(
-            "❌ publications が見つからないか、配列ではありません。publications.js を validate.js より先に読み込んでください。"
+            "❌ getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
         );
         return;
     }
