@@ -1112,48 +1112,54 @@
 .filter-option[
     data-filter-value="THE IDOLM@STER"
 ] {
-    background: #fff0f2;
-    color: #c95160;
+    background: #fff1f4;
+    border-color: #f34f6d;
+    color: #f34f6d;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シンデレラガールズ"
 ] {
-    background: #edf6ff;
-    color: #3478bd;
+    background: #eef6ff;
+    border-color: #2681c8;
+    color: #2681c8;
 }
 
 #brandFilterOptions
 .filter-option[
-    data-filter-value="ミリオンライブ"
+    data-filter-value="ミリオンライブ！"
 ] {
-    background: #fff7df;
-    color: #c88a00;
+    background: #fff9df;
+    border-color: #ffc30b;
+    color: #ffc30b;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="SideM"
 ] {
-    background: #eaf8f3;
-    color: #178b66;
+    background: #eefbf7;
+    border-color: #0fbe94;
+    color: #0fbe94;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シャイニーカラーズ"
 ] {
-    background: #f1f5ff;
-    color: #667ed0;
+    background: #f2f8ff;
+    border-color: #8dbbff;
+    color: #8dbbff;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="学園アイドルマスター"
 ] {
-    background: #fff3e3;
-    color: #d77a00;
+    background: #fff6eb;
+    border-color: #f39800;
+    color: #f39800;
 }
 
 #brandFilterOptions
@@ -1700,3 +1706,27 @@ body.is-modal-open {
 .archive-search__input:focus{border-color:#f47a24;box-shadow:0 0 0 5px rgba(244,122,36,.15);}
 .archive-search__filter-button,.archive-search__sort select{height:60px;border:2px solid #d9d9d9;border-radius:18px;background:#fff;font-size:.95rem;font-weight:600;}
 .archive-search__filter-button:hover,.archive-search__sort select:hover{border-color:#f47a24;background:#fff8f3;}
+
+/* ===== Brand button selected colors ===== */
+#brandFilterOptions .filter-option[data-filter-value="THE IDOLM@STER"]:has(input:checked){
+    background:#f34f6d;border-color:#f34f6d;color:#fff;
+}
+#brandFilterOptions .filter-option[data-filter-value="シンデレラガールズ"]:has(input:checked){
+    background:#2681c8;border-color:#2681c8;color:#fff;
+}
+#brandFilterOptions .filter-option[data-filter-value="ミリオンライブ！"]:has(input:checked){
+    background:#ffc30b;border-color:#ffc30b;color:#fff;
+}
+#brandFilterOptions .filter-option[data-filter-value="SideM"]:has(input:checked){
+    background:#0fbe94;border-color:#0fbe94;color:#fff;
+}
+#brandFilterOptions .filter-option[data-filter-value="シャイニーカラーズ"]:has(input:checked){
+    background:#8dbbff;border-color:#8dbbff;color:#fff;
+}
+#brandFilterOptions .filter-option[data-filter-value="学園アイドルマスター"]:has(input:checked){
+    background:#f39800;border-color:#f39800;color:#fff;
+}
+#brandFilterOptions .filter-option:has(input:checked)::after{
+    background:rgba(255,255,255,.22);
+    color:#fff;
+}
