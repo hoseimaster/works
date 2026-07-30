@@ -51,7 +51,7 @@ export const BRAND_OPTIONS = [
     },
     {
         value: "ミリオンライブ",
-        label: "ミリオンライブ"
+        label: "ミリオンライブ！"
     },
     {
         value: "SideM",
@@ -1596,38 +1596,38 @@ const PUBLICATIONS = [
 
     {
         id: "publication-100",
-        title: "タイトルを入力してください",
-        publishDate: "2026-08-16",
-        category: "会誌",
-        brands: ["シンデレラガールズ"],
+        title: "ミリ新作　タイトルを入力してください",
+        publishDate: "2026-09-19",
+        category: "リーフレット",
+        brands: ["ミリオンライブ"],
         coverImage: "./ASSET/images/publication-100.png",
-        detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
+        detailUrl: "",
         publicationPermission: false,
-        hasInterview: false,
+        hasInterview: true,
         siteStatuses: ["非公開"],
         description: "制作物の紹介文を入力してください。"
     },
 
     {
         id: "publication-101",
-        title: "タイトルを入力してください",
+        title: "シャニ新作　タイトルを入力してください",
         publishDate: "2026-08-16",
-        category: "会誌",
-        brands: ["シンデレラガールズ"],
+        category: "リーフレット",
+        brands: ["シャイニーカラーズ"],
         coverImage: "./ASSET/images/publication-101.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: false,
         hasInterview: false,
-        siteStatuses: ["非公開"],
+        siteStatuses: ["電子版公開中"],
         description: "制作物の紹介文を入力してください。"
     },
 
     {
         id: "publication-102",
-        title: "タイトルを入力してください",
+        title: "シャニ新作２　タイトルを入力してください",
         publishDate: "2026-08-16",
-        category: "会誌",
-        brands: ["シンデレラガールズ"],
+        category: "リーフレット",
+        brands: ["シャイニーカラーズ"],
         coverImage: "./ASSET/images/publication-102.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: false,
