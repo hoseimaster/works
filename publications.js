@@ -1653,7 +1653,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ!",
+            "ミリオンライブ",
             "SideM",
             "シャイニーカラーズ",
             "学園アイドルマスター",
@@ -1676,7 +1676,7 @@ const PUBLICATIONS = [
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
-            "ミリオンライブ！",
+            "ミリオンライブ",
             "SideM",
             "シャイニーカラーズ",
             "学園アイドルマスター",
