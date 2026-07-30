@@ -1699,14 +1699,84 @@ body.is-modal-open {
 }
 
 /* Search readability update */
-.archive-search__input,.archive-search__filter-button,.archive-search__sort select{font-size:.95rem;font-weight:600;}
-.archive-search__inner{padding:20px;border:1px solid #e5ddd6;border-radius:22px;background:#fffdfb;box-shadow:0 12px 32px rgba(0,0,0,.08);}
-.archive-search__input{height:60px;padding:0 20px 0 52px;border:2px solid #d9d9d9;border-radius:18px;background:#fff;font-size:.95rem;font-weight:600;}
-.archive-search__input::placeholder{color:#9a9a9a;font-weight:500;}
-.archive-search__input:hover{border-color:#c3c3c3;}
-.archive-search__input:focus{border-color:#f47a24;box-shadow:0 0 0 5px rgba(244,122,36,.15);}
-.archive-search__filter-button,.archive-search__sort select{height:60px;border:2px solid #d9d9d9;border-radius:18px;background:#fff;font-size:.95rem;font-weight:600;}
-.archive-search__filter-button:hover,.archive-search__sort select:hover{border-color:#f47a24;background:#fff8f3;}
+.archive-search__input,
+.archive-search__filter-button,
+.archive-search__sort select{
+    font-size:.95rem;
+    font-weight:600;
+}
+
+.archive-search__inner{
+    padding:20px;
+    border:1px solid #e5ddd6;
+    border-radius:22px;
+    background:#fffdfb;
+    box-shadow:0 12px 32px rgba(0,0,0,.08);
+}
+
+.archive-search__keyword::before{
+    z-index:1;
+    display:grid;
+    width:34px;
+    height:34px;
+    left:13px;
+    border-radius:50%;
+    background:#f47a24;
+    color:#ffffff;
+    content:"⌕";
+    font-size:1.25rem;
+    font-weight:800;
+    line-height:1;
+    place-items:center;
+}
+
+.archive-search__input{
+    height:60px;
+    padding:0 20px 0 58px;
+    border:2px solid #f47a24;
+    border-radius:18px;
+    background:#fff8f2;
+    color:#333333;
+    font-size:.95rem;
+    font-weight:600;
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.9),
+        0 5px 14px rgba(244,122,36,.12);
+}
+
+.archive-search__input::placeholder{
+    color:#8a684f;
+    font-weight:600;
+}
+
+.archive-search__input:hover{
+    border-color:#df6818;
+    background:#fff4ea;
+}
+
+.archive-search__input:focus{
+    border-color:#df6818;
+    background:#ffffff;
+    box-shadow:
+        0 0 0 5px rgba(244,122,36,.18),
+        0 8px 20px rgba(244,122,36,.14);
+}
+
+.archive-search__filter-button,
+.archive-search__sort select{
+    height:60px;
+    border:2px solid #d9d9d9;
+    border-radius:18px;
+    background:#fff;
+    font-size:.95rem;
+    font-weight:600;
+}
+
+.archive-search__filter-button:hover,
+.archive-search__sort select:hover{
+    border-color:#f47a24;
+    background:#fff8f3;
+}
 
 /* ===== Brand button selected colors ===== */
 #brandFilterOptions .filter-option[data-filter-value="THE IDOLM@STER"]:has(input:checked){
