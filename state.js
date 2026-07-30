@@ -605,14 +605,19 @@ function normalizePublications(
                 return {
                     ...publication,
 
+                    category:
+                        normalizeFilterValue(
+                            publication.category
+                        ),
+
                     brands:
                         Array.isArray(
                             publication.brands
                         )
-                            ? [
-                                ...publication
-                                    .brands
-                            ]
+                            ? publication.brands
+                                .map(
+                                    normalizeFilterValue
+                                )
                             : [],
 
                     siteStatuses:
@@ -620,10 +625,11 @@ function normalizePublications(
                             publication
                                 .siteStatuses
                         )
-                            ? [
-                                ...publication
-                                    .siteStatuses
-                            ]
+                            ? publication
+                                .siteStatuses
+                                .map(
+                                    normalizeFilterValue
+                                )
                             : []
                 };
             }
