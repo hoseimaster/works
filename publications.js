@@ -1656,7 +1656,8 @@ const PUBLICATIONS = [
             "ミリオンライブ!",
             "SideM",
             "シャイニーカラーズ",
-            "学園アイドルマスター"   
+            "学園アイドルマスター",
+            "その他"  
         ],
         keywords: ["ライブ,リーフレット,MOIW,合同,もいう"],
         coverImage: "./publication-098.png",
