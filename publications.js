@@ -141,7 +141,7 @@ const PUBLICATIONS = [
         brands: ["THE IDOLM@STER"],
         keywords: ["聖地巡礼"],
         coverImage: "./publication-001.png",
-        detailUrl: "https://www.hoseimaster-web.com/l/%E3%82%A2%E3%82%A4%E3%83%9E%E3%82%B9%E8%81%96%E5%9C%B0%E5%B7%A1%E7%A4%BC%E9%9B%86/",
+        detailUrl: "",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
