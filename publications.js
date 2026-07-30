@@ -1435,7 +1435,7 @@ const PUBLICATIONS = [
         detailUrl: "https://www.hoseimaster-web.com/l/the-idolm-ster-sidem-8th-stage-all-honds-together-memorial-leaflet/",
         publicationPermission: true,
         hasInterview: true,
-        siteStatuses: ["非公開"],
+        siteStatuses: ["電子版公開中"],
         description: "作詞家の新谷風太様へのインタビューを掲載しております。" 
     },
 
@@ -1568,7 +1568,7 @@ const PUBLICATIONS = [
         detailUrl: "https://www.hoseimaster-web.com/l/moiw2025-ml/",
         publicationPermission: true,
         hasInterview: true,
-        siteStatuses: ["非公開"],
+        siteStatuses: ["電子版公開中"],
         description: "作詞家の烏屋茶房様へのインタビューを掲載しております！"
     },
 
