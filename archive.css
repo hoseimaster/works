@@ -1108,52 +1108,70 @@
     min-height: 64px;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="THE IDOLM@STER"
-] {
-    background: #fff0f2;
-    color: #c95160;
+/* THE IDOLM@STER */
+.filter-chip[data-value="THE IDOLM@STER"]{
+    color:#f34f6d;
+    border-color:#f34f6d;
+    background:#fff3f6;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="シンデレラガールズ"
-] {
-    background: #edf6ff;
-    color: #3478bd;
+/* シンデレラガールズ */
+.filter-chip[data-value="シンデレラガールズ"]{
+    color:#2681c8;
+    border-color:#2681c8;
+    background:#f3f9ff;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="ミリオンライブ！"
-] {
-    background: #fff7df;
-    color: #c88a00;
+/* ミリオンライブ！ */
+.filter-chip[data-value="ミリオンライブ"]{
+    color:#ffc30b;
+    border-color:#ffc30b;
+    background:#fffdf2;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="SideM"
-] {
-    background: #eaf8f3;
-    color: #178b66;
+/* SideM */
+.filter-chip[data-value="SideM"]{
+    color:#0fbe94;
+    border-color:#0fbe94;
+    background:#f2fcf8;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="シャイニーカラーズ"
-] {
-    background: #f1f5ff;
-    color: #667ed0;
+/* シャイニーカラーズ */
+.filter-chip[data-value="シャイニーカラーズ"]{
+    color:#8dbbff;
+    border-color:#8dbbff;
+    background:#f5f9ff;
 }
 
-#brandFilterOptions
-.filter-option[
-    data-filter-value="学園アイドルマスター"
-] {
-    background: #fff3e3;
-    color: #d77a00;
+/* 学園アイドルマスター */
+.filter-chip[data-value="学園アイドルマスター"]{
+    color:#f39800;
+    border-color:#f39800;
+    background:#fff8ef;
+}
+
+.filter-chip.is-selected[data-value="THE IDOLM@STER"]{
+    background:#f34f6d;
+}
+
+.filter-chip.is-selected[data-value="シンデレラガールズ"]{
+    background:#2681c8;
+}
+
+.filter-chip.is-selected[data-value="ミリオンライブ"]{
+    background:#ffc30b;
+}
+
+.filter-chip.is-selected[data-value="SideM"]{
+    background:#0fbe94;
+}
+
+.filter-chip.is-selected[data-value="シャイニーカラーズ"]{
+    background:#8dbbff;
+}
+
+.filter-chip.is-selected[data-value="学園アイドルマスター"]{
+    background:#f39800;
 }
 
 #brandFilterOptions
