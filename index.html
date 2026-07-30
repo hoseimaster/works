@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="法政大学アイドルマスター研究会がこれまでに制作した出版物を、分類や発行年などから検索できるアーカイブページです。"
+    >
+
+    <title>
+        制作物アーカイブ｜法政大学アイドルマスター研究会
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/archive.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- JavaScriptが使用できない環境向け -->
+    <noscript>
+        <style>
+            .requires-javascript {
+                display: none !important;
+            }
+        </style>
+    </noscript>
+</head>
+
+<body>
+    <!-- ========================================
+         サイトヘッダー
+    ========================================= -->
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a
+    class="site-header__logo"
+    href="https://www.hoseimaster-web.com/"
+    aria-label="法政大学アイドルマスター研究会 ホーム"
+>
+    <span class="site-header__logo-mark" aria-hidden="true">
+        <img
+            src="./ASSET/images/header-logo.jpg"
+            alt=""
+            class="site-header__logo-image"
+        >
+    </span>
+
+    <span class="site-header__name">
+        法政大学アイドルマスター研究会
+    </span>
+</a>
+
+            <button
+                id="menuToggleButton"
+                class="site-header__menu-button"
+                type="button"
+                aria-controls="globalNavigation"
+                aria-expanded="false"
+                aria-label="メニューを開く"
+            >
+                <span class="site-header__menu-icon" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+
+            <nav
+                id="globalNavigation"
+                class="global-navigation"
+                aria-label="メインメニュー"
+            >
+                <ul class="global-navigation__list">
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/">Home</a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/about-us/">About Us</a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/news/">News</a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a
+                            href="https://www.hoseimaster-web.com/works-new/"
+                            aria-current="page"
+                        >
+                            Works
+                        </a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/gallery/">Gallery</a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/event/">Event</a>
+                    </li>
+
+                    <li class="global-navigation__item">
+                        <a href="https://www.hoseimaster-web.com/contact-us/">Contact Us</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- ========================================
+         メインコンテンツ
+    ========================================= -->
+    <main class="archive-main">
+        <div class="archive-container">
+
+            <!-- パンくずリスト -->
+            <nav
+                class="breadcrumb"
+                aria-label="パンくずリスト"
+            >
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item">
+                        <a href="https://www.hoseimaster-web.com/">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb__item">
+                        <a href="https://www.hoseimaster-web.com/works/">
+                            Works
+                        </a>
+                    </li>
+
+                    <li
+                        class="breadcrumb__item"
+                        aria-current="page"
+                    >
+                        制作物アーカイブ
+                    </li>
+                </ol>
+            </nav>
+
+
+            <!-- ページタイトル -->
+            <header class="archive-heading">
+                <p class="archive-heading__english">
+                    WORKS ARCHIVE
+                </p>
+
+                <h1 class="archive-heading__title">
+                    制作物アーカイブ
+                </h1>
+
+                <p class="archive-heading__description">
+                    当会がこれまでに制作した出版物を、
+                    分類や発行年などから検索できます。
+                </p>
+            </header>
+
+
+            <!-- JavaScript無効時の案内 -->
+            <noscript>
+                <div class="archive-message archive-message--error">
+                    <p>
+                        制作物の検索機能を利用するには、
+                        JavaScriptを有効にしてください。
+                    </p>
+                </div>
+            </noscript>
+
+
+            <!-- ========================================
+                 検索・並び替えツールバー
+            ========================================= -->
+            <section
+                class="archive-toolbar requires-javascript"
+                aria-label="制作物の検索と並び替え"
+            >
+                <!-- キーワード検索 -->
+                <div class="search-area">
+                        <input
+                            id="keywordInput"
+                            class="archive-keyword__input"
+                            type="search"
+                            name="keyword"
+                            placeholder="出版物名などキーワードで検索..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button
+                        id="openFilterButton"
+                        class="filter-button"
+                        type="button"
+                        aria-controls="filterModal"
+                        aria-expanded="false"
+                    >
+                        ⚙ 絞り込み
+                        <span id="filterCount" class="count" hidden>0</span>
+                    </button>
+
+                    <div class="sort-area">
+                        <label class="visually-hidden" for="sortSelect">並び替え</label>
+                        <select id="sortSelect" class="archive-sort__select" name="sort">
+                            <option value="date-desc">⇅ 新しい順</option>
+                            <option value="date-asc">⇅ 古い順</option>
+                            <option value="title-asc">⇅ タイトル順（昇順）</option>
+                            <option value="title-desc">⇅ タイトル順（降順）</option>
+                        </select>
+                    </div>
+                </section>
+
+
+            <!-- ========================================
+                 選択中の検索条件
+            ========================================= -->
+            <section
+                id="activeFiltersSection"
+                class="active-filters requires-javascript"
+                aria-labelledby="activeFiltersTitle"
+                hidden
+            >
+                <div class="active-filters__header">
+                    <h2
+                        id="activeFiltersTitle"
+                        class="active-filters__title"
+                    >
+                        選択中の条件
+                    </h2>
+
+                    <button
+                        id="clearAllFiltersButton"
+                        class="active-filters__clear"
+                        type="button"
+                    >
+                        すべて解除
+                    </button>
+                </div>
+
+                <div
+                    id="activeFilters"
+                    class="active-filters__list"
+                    aria-live="polite"
+                >
+                    <!-- JSで条件タグを生成 -->
+                </div>
+            </section>
+
+
+            <!-- ========================================
+                 検索結果情報
+            ========================================= -->
+            <section
+                class="archive-results-header"
+                aria-labelledby="resultsHeading"
+            >
+                <div>
+                    <h2
+                        id="resultsHeading"
+                        class="archive-results-header__title"
+                    >
+                        制作物一覧
+                    </h2>
+
+                    <p
+                        id="resultSummary"
+                        class="archive-results-header__summary"
+                        aria-live="polite"
+                    >
+                        全
+                        <strong id="resultCount">0</strong>
+                        件
+                    </p>
+                </div>
+            </section>
+
+
+            <!-- 読み込み中 -->
+            <div
+                id="loadingMessage"
+                class="archive-message"
+                role="status"
+            >
+                <p>制作物を読み込んでいます。</p>
+            </div>
+
+
+            <!-- エラー表示 -->
+            <div
+                id="errorMessage"
+                class="archive-message archive-message--error"
+                role="alert"
+                hidden
+            >
+                <p>
+                    制作物データを表示できませんでした。
+                    ページを再読み込みしてください。
+                </p>
+            </div>
+
+
+            <!-- 検索結果なし -->
+            <div
+                id="emptyMessage"
+                class="archive-message archive-message--empty"
+                hidden
+            >
+                <h2 class="archive-message__title">
+                    該当する制作物がありません
+                </h2>
+
+                <p>
+                    検索条件を変更して、もう一度お試しください。
+                </p>
+
+                <button
+                    id="emptyResetButton"
+                    class="archive-button"
+                    type="button"
+                >
+                    検索条件をリセット
+                </button>
+            </div>
+
+
+            <!-- ========================================
+                 制作物カード一覧
+            ========================================= -->
+            <section
+                id="publicationList"
+                class="publication-list"
+                aria-label="制作物の検索結果"
+            >
+                <!-- JavaScriptで制作物カードを生成 -->
+            </section>
+
+        </div>
+    </main>
+
+
+    <!-- ========================================
+         検索条件モーダル
+    ========================================= -->
+    <div
+        id="filterModal"
+        class="filter-modal requires-javascript"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="filterModalTitle"
+        hidden
+    >
+        <!-- 背景 -->
+        <div
+            class="filter-modal__backdrop"
+            data-modal-close
+            aria-hidden="true"
+        ></div>
+
+        <!-- モーダル本体 -->
+        <div class="filter-modal__panel">
+            <header class="filter-modal__header">
+                <h2
+                    id="filterModalTitle"
+                    class="filter-modal__title"
+                >
+                    検索条件
+                </h2>
+
+                <button
+                    class="filter-modal__close"
+                    type="button"
+                    data-modal-close
+                    aria-label="検索条件を閉じる"
+                >
+                    <span aria-hidden="true">×</span>
+                </button>
+            </header>
+
+
+            <div class="filter-modal__body">
+                <!-- モーダル内キーワード -->
+                <section class="filter-group">
+                    <h3 class="filter-group__title">
+                        キーワード
+                    </h3>
+
+                    <label
+                        class="visually-hidden"
+                        for="modalKeywordInput"
+                    >
+                        出版物名や制作者名を入力
+                    </label>
+
+                    <input
+                        id="modalKeywordInput"
+                        class="filter-text-input"
+                        type="search"
+                        placeholder="出版物名、制作者名など"
+                        autocomplete="off"
+                    >
+                </section>
+
+
+                <!-- 分類 -->
+                <section
+                    class="filter-group"
+                    aria-labelledby="categoryFilterTitle"
+                >
+                    <div class="filter-group__heading">
+                        <h3
+                            id="categoryFilterTitle"
+                            class="filter-group__title"
+                        >
+                            分類
+                        </h3>
+
+                        <button
+                            class="filter-group__clear"
+                            type="button"
+                            data-clear-filter="categories"
+                        >
+                            選択解除
+                        </button>
+                    </div>
+
+                    <div
+                        id="categoryFilterOptions"
+                        class="filter-options filter-options--buttons"
+                    >
+                        <!-- publications.jsのデータからJSで生成 -->
+                    </div>
+                </section>
+
+
+                <!-- ブランド -->
+                <section
+                    class="filter-group"
+                    aria-labelledby="brandFilterTitle"
+                >
+                    <div class="filter-group__heading">
+                        <h3
+                            id="brandFilterTitle"
+                            class="filter-group__title"
+                        >
+                            ブランド
+                        </h3>
+
+                        <button
+                            class="filter-group__clear"
+                            type="button"
+                            data-clear-filter="brands"
+                        >
+                            選択解除
+                        </button>
+                    </div>
+
+                    <div
+                        id="brandFilterOptions"
+                        class="filter-options filter-options--buttons"
+                    >
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </section>
+
+
+                <!-- 発行年 -->
+                <section
+                    class="filter-group"
+                    aria-labelledby="yearFilterTitle"
+                    data-filter-group="year"
+                >
+                    <div class="filter-group__heading">
+                        <h3
+                            id="yearFilterTitle"
+                            class="filter-group__title"
+                        >
+                            発行年
+                        </h3>
+
+                        <button
+                            class="filter-group__clear"
+                            type="button"
+                            data-clear-filter="year"
+                        >
+                            選択解除
+                        </button>
+                    </div>
+
+                    <div class="year-range-filter">
+                        <label class="year-range-filter__field">
+                            <span class="year-range-filter__label">
+                                下限
+                            </span>
+
+                            <select
+                                id="yearFromSelect"
+                                class="year-range-filter__select"
+                            >
+                                <option value="">
+                                    指定なし
+                                </option>
+                            </select>
+                        </label>
+
+                        <span
+                            class="year-range-filter__separator"
+                            aria-hidden="true"
+                        >
+                            〜
+                        </span>
+
+                        <label class="year-range-filter__field">
+                            <span class="year-range-filter__label">
+                                上限
+                            </span>
+
+                            <select
+                                id="yearToSelect"
+                                class="year-range-filter__select"
+                            >
+                                <option value="">
+                                    指定なし
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <p class="year-range-filter__note">
+                        片方だけ指定した場合は、未指定側を全期間として検索します。
+                    </p>
+                </section>
+
+
+                <!-- インタビュー -->
+                <section
+                    class="filter-group"
+                    aria-labelledby="interviewFilterTitle"
+                >
+                    <div class="filter-group__heading">
+                        <h3
+                            id="interviewFilterTitle"
+                            class="filter-group__title"
+                        >
+                            インタビュー
+                        </h3>
+
+                        <button
+                            class="filter-group__clear"
+                            type="button"
+                            data-clear-filter="interview"
+                        >
+                            選択解除
+                        </button>
+                    </div>
+
+                    <div
+                        id="interviewFilterOptions"
+                        class="filter-options"
+                    >
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </section>
+
+
+                <!-- サイト掲載状況 -->
+                <section
+                    class="filter-group"
+                    aria-labelledby="siteStatusFilterTitle"
+                >
+                    <div class="filter-group__heading">
+                        <h3
+                            id="siteStatusFilterTitle"
+                            class="filter-group__title"
+                        >
+                            サイト掲載状況
+                        </h3>
+
+                        <button
+                            class="filter-group__clear"
+                            type="button"
+                            data-clear-filter="siteStatuses"
+                        >
+                            選択解除
+                        </button>
+                    </div>
+
+                    <div
+                        id="siteStatusFilterOptions"
+                        class="filter-options"
+                    >
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </section>
+            </div>
+
+
+            <!-- モーダル下部 -->
+            <footer class="filter-modal__footer">
+                <button
+                    id="resetFilterButton"
+                    class="filter-modal__reset"
+                    type="button"
+                >
+                    条件をリセット
+                </button>
+
+                <button
+                    id="applyFilterButton"
+                    class="filter-modal__apply"
+                    type="button"
+                >
+                    <span>この条件で検索</span>
+
+                    <span
+                        id="modalResultCount"
+                        class="filter-modal__result-count"
+                        aria-live="polite"
+                    >
+                        0件
+                    </span>
+                </button>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- ========================================
+         ページ上部へ戻る
+    ========================================= -->
+    <button
+        id="pageTopButton"
+        class="page-top-button"
+        type="button"
+        aria-label="ページ上部へ戻る"
+        hidden
+    >
+        <span aria-hidden="true">↑</span>
+    </button>
+
+
+    <!-- ========================================
+         フッター
+    ========================================= -->
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <nav
+                class="footer-navigation"
+                aria-label="フッターメニュー"
+            >
+                <ul class="footer-navigation__list">
+                    <li>
+                        <a href="https://www.hoseimaster-web.com/">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.hoseimaster-web.com/works/">
+                            Works
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.hoseimaster-web.com/contact-us/">
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://hosei-imas.booth.pm/">
+                            公式BOOTH
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="https://x.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            公式X
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <p class="site-footer__copyright">
+                <small>
+                    © 法政大学アイドルマスター研究会.
+                    All rights reserved.
+                </small>
+            </p>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
