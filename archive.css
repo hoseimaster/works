@@ -1733,46 +1733,68 @@ body.is-modal-open {
 .archive-search__input{
     height:52px;
     padding:0 18px 0 52px;
-    border:2px solid #f47a24;
-    border-radius:18px;
-    background:#fff8f2;
+    border:2px solid #e7d9cf;
+    border-radius:16px;
+    background:#ffffff;
     color:#333333;
     font-size:.95rem;
     font-weight:600;
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.9),
-        0 5px 14px rgba(244,122,36,.12);
+    box-shadow:0 6px 16px rgba(0,0,0,.06);
+    transition:.25s;
 }
 
 .archive-search__input::placeholder{
-    color:#8a684f;
-    font-weight:600;
+    color:#9b8b7f;
+    font-weight:500;
 }
 
 .archive-search__input:hover{
-    border-color:#df6818;
-    background:#fff4ea;
+    border-color:#f2a56c;
+    box-shadow:0 8px 20px rgba(244,122,36,.10);
 }
 
 .archive-search__input:focus{
-    border-color:#df6818;
-    background:#ffffff;
+    border-color:#f47a24;
+    background:#fffdfb;
     box-shadow:
-        0 0 0 5px rgba(244,122,36,.18),
-        0 8px 20px rgba(244,122,36,.14);
+        0 0 0 4px rgba(244,122,36,.14),
+        0 10px 24px rgba(244,122,36,.12);
 }
 
-.archive-search__filter-button,
+.archive-search__filter-button{
+    height:52px;
+    padding:0 22px;
+    border:2px solid #f47a24;
+    border-radius:16px;
+    background:#f47a24;
+    color:#ffffff;
+    font-size:.95rem;
+    font-weight:700;
+    box-shadow:0 8px 18px rgba(244,122,36,.25);
+}
+
+.archive-search__filter-button:hover{
+    background:#e56814;
+    border-color:#e56814;
+    box-shadow:0 12px 24px rgba(244,122,36,.35);
+    transform:translateY(-2px);
+}
+
+.archive-search__filter-button:active{
+    transform:translateY(0);
+    box-shadow:0 4px 10px rgba(244,122,36,.2);
+}
+
 .archive-search__sort select{
     height:52px;
     border:2px solid #d9d9d9;
-    border-radius:18px;
+    border-radius:16px;
     background:#fff;
+    color:#333;
     font-size:.95rem;
     font-weight:600;
 }
 
-.archive-search__filter-button:hover,
 .archive-search__sort select:hover{
     border-color:#f47a24;
     background:#fff8f3;
