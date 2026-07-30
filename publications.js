@@ -807,7 +807,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
-        description: "今回はアイマスオールジャンルからの出題です。 "
+        description: "今回はアイマスオールジャンルからの出題です。"
     },
 
     {
@@ -1096,7 +1096,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "インタビュー記事に加えて以前行ったアンケートの結果を掲載しています。 "
+        description: "インタビュー記事に加えて以前行ったアンケートの結果を掲載しています。"
     },
 
     {
@@ -1336,7 +1336,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
-        description: "当会会員による思い出に残っているライブの場面やライブへ向けた期待のコメントを掲載しております。 "
+        description: "当会会員による思い出に残っているライブの場面やライブへ向けた期待のコメントを掲載しております。"
     },
 
     {
@@ -1351,7 +1351,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
-        description: "当会会員による「想像をこえたシャニマスの思い出」、ライブへ向けた期待のコメントなどを掲載しております。 "
+        description: "当会会員による「想像をこえたシャニマスの思い出」、ライブへ向けた期待のコメントなどを掲載しております。"
     },
 
     {
@@ -1396,7 +1396,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
-        description: "当会会員による｢#(ハッシュタグ)｣にまつわる企画を掲載しております。 "
+        description: "当会会員による｢#(ハッシュタグ)｣にまつわる企画を掲載しております。"
     },
 
     {
@@ -1567,7 +1567,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家の鈴木静那様へのインタビューを掲載しています。 "
+        description: "作詞家の鈴木静那様へのインタビューを掲載しています。"
     },
 
     {
