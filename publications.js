@@ -1700,7 +1700,7 @@ const PUBLICATIONS = [
         keywords: [""],
         coverImage: "./publication-100.png",
         detailUrl: "",
-        publicationPermission: true,
+        publicationPermission: false,
         hasInterview: false,
         siteStatuses: [""],
         description: ""
@@ -1708,16 +1708,16 @@ const PUBLICATIONS = [
 
     {
         id: "publication-101",
-        title: "検証テスト用",
-        publishDate: "20267-08-16",
-        category: "パンフレット",
-        brands: ["vα-liv"],
+        title: "",
+        publishDate: "2026-08-16",
+        category: "",
+        brands: [""],
         keywords: [""],
         coverImage: "./publication-101.png",
         detailUrl: "",
-        publicationPermission: true,
+        publicationPermission: false,
         hasInterview: false,
-        siteStatuses: ["検証テスト"],
+        siteStatuses: [""],
         description: ""
     },
 
