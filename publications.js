@@ -139,7 +139,7 @@ const PUBLICATIONS = [
         publishDate: "2010-11-23",
         category: "その他",
         brands: ["THE IDOLM@STER"],
-        keywords: ["聖地巡礼"],
+        keywords: ["聖地巡礼,中田"],
         coverImage: "./publication-001.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%E3%82%A2%E3%82%A4%E3%83%9E%E3%82%B9%E8%81%96%E5%9C%B0%E5%B7%A1%E7%A4%BC%E9%9B%86/",
         publicationPermission: true,
