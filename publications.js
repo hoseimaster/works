@@ -35,15 +35,15 @@ export const PUBLICATION_CATEGORIES = [
 
 
 /**
- * アイドルマスターシリーズのブランド
+ * THE IDOLM@STERシリーズのブランド
  *
  * 制作物データのbrandsと
  * 完全に同じ表記にしてください。
  */
 export const BRAND_OPTIONS = [
     {
-        value: "アイドルマスター",
-        label: "アイドルマスター"
+        value: "THE IDOLM@STER",
+        label: "THE IDOLM@STER"
     },
     {
         value: "シンデレラガールズ",
@@ -142,7 +142,7 @@ const PUBLICATIONS = [
         title: "アイマス聖地巡礼集 星井町特集",
         publishDate: "2010-11-23",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-001.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%E3%82%A2%E3%82%A4%E3%83%9E%E3%82%B9%E8%81%96%E5%9C%B0%E5%B7%A1%E7%A4%BC%E9%9B%86/",
         publicationPermission: true,
@@ -156,7 +156,7 @@ const PUBLICATIONS = [
         title: "アイマス聖地巡礼集2",
         publishDate: "2011-02-13",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-002.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%82%a4%e3%83%9e%e3%82%b9%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%862/",
         publicationPermission: true,
@@ -198,7 +198,7 @@ const PUBLICATIONS = [
         title: "アイマス聖地巡礼集総集編",
         publishDate: "2011-05-22",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-005.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%82%a4%e3%83%9e%e3%82%b9%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%86%e7%b7%8f%e9%9b%86%e7%b7%a8/",
         publicationPermission: true,
@@ -226,7 +226,7 @@ const PUBLICATIONS = [
         title: "インフィニー 学園祭特別号",
         publishDate: "2011-11-03",
         category: "会誌",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-007.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a4%e3%83%b3%e3%83%95%e3%82%a3%e3%83%8b%e3%83%bc-%e5%ad%a6%e5%9c%92%e7%a5%ad%e7%89%b9%e5%88%a5%e5%8f%b7/",
         publicationPermission: true,
@@ -240,7 +240,7 @@ const PUBLICATIONS = [
         title: "アイマス2聖地巡礼集",
         publishDate: "2011-11-23",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-008.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%82%a4%e3%83%9e%e3%82%b92%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%86/",
         publicationPermission: true,
@@ -268,7 +268,7 @@ const PUBLICATIONS = [
         title: "アニマス聖地巡礼集",
         publishDate: "2011-12-31",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-010.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%83%8b%e3%83%9e%e3%82%b9%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%86/",
         publicationPermission: true,
@@ -282,7 +282,7 @@ const PUBLICATIONS = [
         title: "アニマス聖地巡礼集2",
         publishDate: "2011-12-31",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-011.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%83%8b%e3%83%9e%e3%82%b9%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%862/",
         publicationPermission: true,
@@ -310,7 +310,7 @@ const PUBLICATIONS = [
         title: "For my family",
         publishDate: "2012-02-12",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-013.png",
         detailUrl: "https://www.hoseimaster-web.com/l/for-my-family/",
         publicationPermission: true,
@@ -338,7 +338,7 @@ const PUBLICATIONS = [
         title: "アイマス1・2聖地巡礼集",
         publishDate: "2012-04-28",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-015.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%82%a4%e3%83%9e%e3%82%b91%e3%83%bb2%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%86/",
         publicationPermission: true,
@@ -352,7 +352,7 @@ const PUBLICATIONS = [
         title: "インフィニー 7thライブ特別号",
         publishDate: "2012-06-22",
         category: "会誌",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-016.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a4%e3%83%b3%e3%83%95%e3%82%a3%e3%83%8b%e3%83%bc-7th%e3%83%a9%e3%82%a4%e3%83%96%e7%89%b9%e5%88%a5%e5%8f%b7/",
         publicationPermission: true,
@@ -366,7 +366,7 @@ const PUBLICATIONS = [
         title: "波",
         publishDate: "2012-06-23",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-017.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e6%b3%a2/",
         publicationPermission: true,
@@ -380,7 +380,7 @@ const PUBLICATIONS = [
         title: "アニマス聖地巡礼集R",
         publishDate: "2012-06-24",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-018.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%83%8b%e3%83%9e%e3%82%b9%e8%81%96%e5%9c%b0%e5%b7%a1%e7%a4%bc%e9%9b%86r/",
         publicationPermission: true,
@@ -436,7 +436,7 @@ const PUBLICATIONS = [
         title: "アイドルマスター検定",
         publishDate: "2012-12-31",
         category: "検定本",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-022.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%82%a4%e3%83%89%e3%83%ab%e3%83%9e%e3%82%b9%e3%82%bf%e3%83%bc%e6%a4%9c%e5%ae%9a/",
         publicationPermission: true,
@@ -450,7 +450,7 @@ const PUBLICATIONS = [
         title: "インフィニー 冬ライブ号2013",
         publishDate: "2013-02-10",
         category: "会誌",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-023.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a4%e3%83%b3%e3%83%95%e3%82%a3%e3%83%8b%e3%83%bc-%e5%86%ac%e3%83%a9%e3%82%a4%e3%83%96%e5%8f%b72013/",
         publicationPermission: true,
@@ -479,7 +479,7 @@ const PUBLICATIONS = [
     publishDate: "2013-05-03",
     category: "検定本",
     brands: [
-        "アイドルマスター",
+        "THE IDOLM@STER",
         "シンデレラガールズ",
         "ミリオンライブ"
     ],
@@ -511,7 +511,7 @@ const PUBLICATIONS = [
         publishDate: "2013-08-04",
         category: "会誌",
        brands: [
-        "アイドルマスター",
+        "THE IDOLM@STER",
         "シンデレラガールズ",
         "ミリオンライブ"
     ],
@@ -529,7 +529,7 @@ const PUBLICATIONS = [
         publishDate: "2013-11-01",
         category: "会誌",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ"
         ],
@@ -546,7 +546,7 @@ const PUBLICATIONS = [
         title: "アニメ「THE IDOLM@STER」コメンタリーCD",
         publishDate: "2013-12-31",
         category: "その他",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-028.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a2%e3%83%8b%e3%83%a1%e3%80%8cthe-idolm%40ster%e3%80%8d%e3%82%b3%e3%83%a1%e3%83%b3%e3%82%bf%e3%83%aa%e3%83%bccd/",
         publicationPermission: true,
@@ -561,7 +561,7 @@ const PUBLICATIONS = [
         publishDate: "2014-02-22",
         category: "リーフレット",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "その他"
@@ -579,7 +579,7 @@ const PUBLICATIONS = [
         title: "HOSEIM@STER 9th特別号",
         publishDate: "2014-08-02",
         category: "リーフレット",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-030.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim%40ster-9th%e7%89%b9%e5%88%a5%e5%8f%b7/",
         publicationPermission: true,
@@ -621,7 +621,7 @@ const PUBLICATIONS = [
         title: "HOSEIM@STER 2014 9th東京号",
         publishDate: "2014-08-16",
         category: "リーフレット",
-        brands: ["アイドルマスター"],
+        brands: ["THE IDOLM@STER"],
         coverImage: "./publication-033.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim%40ster-2014-9th%e6%9d%b1%e4%ba%ac%e5%8f%b7/",
         publicationPermission: true,
@@ -692,7 +692,7 @@ const PUBLICATIONS = [
         publishDate: "2015-07-18",
         category: "リーフレット",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM"
@@ -711,7 +711,7 @@ const PUBLICATIONS = [
         publishDate: "2015-08-01",
         category: "その他",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM"
@@ -758,7 +758,7 @@ const PUBLICATIONS = [
         publishDate: "2015-12-31",
         category: "検定本",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM"
@@ -833,7 +833,7 @@ const PUBLICATIONS = [
         publishDate: "2016-12-31",
         category: "検定本",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ"
         ],
@@ -1369,7 +1369,7 @@ const PUBLICATIONS = [
         publishDate: "2023-02-11",
         category: "リーフレット",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM",
@@ -1557,7 +1557,7 @@ const PUBLICATIONS = [
         publishDate: "2025-12-13",
         category: "リーフレット",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM",
@@ -1578,7 +1578,7 @@ const PUBLICATIONS = [
         publishDate: "2026-08-16",
         category: "会誌",
         brands: [
-            "アイドルマスター",
+            "THE IDOLM@STER",
             "シンデレラガールズ",
             "ミリオンライブ",
             "SideM",
