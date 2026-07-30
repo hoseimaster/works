@@ -906,7 +906,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-049",
-        title: "HOSEIM@STER PRODUCER MEETING 2017 特別号",
+        title: "HOSEiM@STER PRODUCER MEETING 2017 特別号",
         publishDate: "2017-01-28",
         category: "会誌",
         brands: ["その他"],
@@ -981,7 +981,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-054",
-        title: "HOSEIM@STER 夏コミ号　作中の料理を作ってみた?",
+        title: "HOSEiMM@STER 夏コミ号　作中の料理を作ってみた?",
         publishDate: "2017-08-13",
         category: "その他",
         brands: ["その他"],
@@ -996,7 +996,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-055",
-        title: "HOSEIM@STER 2017 学園祭号",
+        title: "HOSEiM@STER 2017 学園祭号",
         publishDate: "2017-11-02",
         category: "会誌",
         brands: ["その他"],
@@ -1011,7 +1011,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-056",
-        title: "HOSEIM@STER 2017 winter 作ってみた? Vol.2",
+        title: "HOSEiM@STER 2017 winter 作ってみた? Vol.2",
         publishDate: "2017-12-31",
         category: "その他",
         brands: ["その他"],
@@ -1041,7 +1041,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-058",
-        title: "HOSEIM@STER FOR PRODUCER MEETING 2018",
+        title: "HOSEiM@STER FOR PRODUCER MEETING 2018",
         publishDate: "2018-08-04",
         category: "会誌",
         brands: ["その他"],
@@ -1056,7 +1056,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-059",
-        title: "HOSEIM@STER 2018 学園祭号",
+        title: "HOSEiM@STER 2018 学園祭号",
         publishDate: "2018-11-01",
         category: "会誌",
         brands: ["その他"],
@@ -1176,7 +1176,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-067",
-        title: "HOSEIM@STER Cook p@d!! ~作ってみた vol.3~",
+        title: "Hosei m@ster Cook p@d!! ~作ってみた vol.3~",
         publishDate: "2020-12-14",
         category: "その他",
         brands: ["その他"],
