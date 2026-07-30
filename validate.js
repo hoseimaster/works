@@ -389,42 +389,42 @@ import { getPublications } from "./publications.js";
 
         if (errors.length) {
             console.groupCollapsed(
-                `%c❌ エラー ${errors.length}件`,
+                `%cエラー ${errors.length}件`,
                 "color:#c62828;font-weight:bold;"
             );
             console.table(errors);
             console.groupEnd();
         } else {
             console.log(
-                "%c✅ エラーはありません。",
+                "%cエラーはありません。",
                 "color:#2e7d32;font-weight:bold;"
             );
         }
 
         if (warnings.length) {
             console.groupCollapsed(
-                `%c⚠️ 警告 ${warnings.length}件`,
+                `%c警告 ${warnings.length}件`,
                 "color:#ed6c02;font-weight:bold;"
             );
             console.table(warnings);
             console.groupEnd();
         } else {
             console.log(
-                "%c✅ 警告はありません。",
+                "%c警告はありません。",
                 "color:#2e7d32;font-weight:bold;"
             );
         }
 
         if (notices.length) {
             console.groupCollapsed(
-                `%cℹ️ 確認事項 ${notices.length}件`,
+                `%c確認事項 ${notices.length}件`,
                 "color:#1565c0;font-weight:bold;"
             );
             console.table(notices);
             console.groupEnd();
         } else {
             console.log(
-                "%c✅ 確認事項はありません。",
+                "%c確認事項はありません。",
                 "color:#2e7d32;font-weight:bold;"
             );
         }
@@ -451,7 +451,7 @@ import { getPublications } from "./publications.js";
 
     if (!Array.isArray(publications)) {
         console.error(
-            "❌ getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
+            "getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
         );
         return;
     }
