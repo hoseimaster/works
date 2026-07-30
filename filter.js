@@ -1659,7 +1659,8 @@ export function matchesKeyword(
         publication.description,
         publication.publishDate,
         ...(publication.brands ?? []),
-        ...(publication.siteStatuses ?? [])
+        ...(publication.siteStatuses ?? []),
+        ...(publication.keywords ?? [])
     ];
 
     const searchableText =
