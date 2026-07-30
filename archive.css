@@ -1726,7 +1726,15 @@ body.is-modal-open {
 #brandFilterOptions .filter-option[data-filter-value="学園アイドルマスター"]:has(input:checked){
     background:#f39800;border-color:#f39800;color:#fff;
 }
-#brandFilterOptions .filter-option:has(input:checked)::after{
+#brandFilterOptions
+.filter-option:has(input:checked)::after{
     background:rgba(255,255,255,.22);
     color:#fff;
+}
+
+/* その他だけは灰色のチェック */
+#brandFilterOptions
+.filter-option[data-filter-value="その他"]:has(input:checked)::after{
+    background:#6d6d6d;
+    color:#ffffff;
 }
