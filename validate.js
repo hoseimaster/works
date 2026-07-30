@@ -1,6 +1,4 @@
-from pathlib import Path
-
-code = """/**
+/**
  * validate.js
  * publications.js のデータ検証
  */
@@ -55,7 +53,7 @@ code = """/**
 
     function isValidDate(value) {
         if (typeof value !== "string") return false;
-        if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(value.trim())) return false;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(value.trim())) return false;
 
         const [y, m, d] = value.split("-").map(Number);
         const date = new Date(Date.UTC(y, m - 1, d));
@@ -289,8 +287,3 @@ code = """/**
     checkDuplicateIds(publications);
     printResults(publications);
 })();
-"""
-
-out = Path("/mnt/data/validate.js")
-out.write_text(code, encoding="utf-8")
-print(out)
