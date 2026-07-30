@@ -1693,17 +1693,17 @@ const PUBLICATIONS = [
 
     {
         id: "publication-100",
-        title: "タイトルを入力してください",
-        publishDate: "2026-09-19",
-        category: "リーフレット",
+        title: "",
+        publishDate: "",
+        category: "",
         brands: [""],
         keywords: [],
         coverImage: "./publication-100.png",
         detailUrl: "",
-        publicationPermission: false,
-        hasInterview: true,
-        siteStatuses: ["非公開"],
-        description: "制作物の紹介文を入力してください。"
+        publicationPermission: true,
+        hasInterview: false,
+        siteStatuses: [""],
+        description: ""
     },
 
     {
