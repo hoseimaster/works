@@ -1034,3 +1034,36 @@ body.is-navigation-open {
     height:60px;   /* お好みで調整 */
     object-fit:contain;
 }
+
+/* キーワード入力 */
+.search-area{
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.archive-keyword__input,
+.filter-text-input{
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid #eadfd4;
+    border-radius: 999px;
+    background: #fffdfb;
+    font-size: 15px;
+    transition: .2s;
+    box-shadow: none;
+}
+
+.archive-keyword__input:hover,
+.filter-text-input:hover{
+    border-color: #dcc7b0;
+}
+
+.archive-keyword__input:focus,
+.filter-text-input:focus{
+    outline: none;
+    border-color: #d9a97b;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(217,169,123,.12);
+}
