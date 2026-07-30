@@ -1693,7 +1693,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-100",
-        title: "",
+        title: "タイトルを入力してください",
         publishDate: "",
         category: "",
         brands: [""],
