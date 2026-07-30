@@ -1700,7 +1700,7 @@ const PUBLICATIONS = [
         keywords: [],
         coverImage: "./publication-100.png",
         detailUrl: "",
-        publicationPermission: true,
+        publicationPermission: false,
         hasInterview: false,
         siteStatuses: [""],
         description: ""
