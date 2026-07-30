@@ -929,141 +929,106 @@ body.is-navigation-open {
 }
 
 
-/* ===== Filter footer redesign ===== */
+/* ========================================
+   フッター（本サイト準拠）
+======================================== */
 
-.filter-modal__footer{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:18px;
-    padding:22px 28px;
-    border-top:1px solid #eee8e2;
-    background:#fffdf9;
+.site-footer {
+    padding: 42px 20px 34px;
+    color: #666;
+    background: #fff;
+    border-top: 1px solid #ececec;
+    text-align: center;
 }
 
-.filter-modal__reset{
-    min-width:190px;
-    height:56px;
-    padding:0 28px;
-    border:1px solid #d8d8d8;
-    border-radius:16px;
-    background:#fff;
-    color:#555;
-    font-weight:700;
-    transition:.25s;
+.site-footer__inner {
+    width: min(100%, 1040px);
+    margin: 0 auto;
 }
 
-.filter-modal__reset:hover{
-    background:#f7f7f7;
-    border-color:#bfbfbf;
-    transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(0,0,0,.06);
+.site-footer__top-link {
+    margin: 0 0 22px;
 }
 
-.filter-modal__apply{
-    min-width:250px;
-    height:56px;
-    padding:0 32px;
-    border:1px solid #f47a24;
-    border-radius:16px;
-    background:#f47a24;
-    color:#fff;
-    font-weight:700;
-    box-shadow:0 10px 24px rgba(244,122,36,.22);
-    transition:.25s;
+.site-footer__top-link a {
+    color: #555;
+    font-size: 0.88rem;
+    text-decoration: none;
 }
 
-.filter-modal__apply:hover{
-    background:#e66c17;
-    border-color:#e66c17;
-    transform:translateY(-2px);
-    box-shadow:0 14px 30px rgba(244,122,36,.30);
+.site-footer__top-link a:hover {
+    text-decoration: underline;
 }
 
-.filter-modal__apply:active,
-.filter-modal__reset:active{
-    transform:translateY(0);
-}
-
-
-
-/* ==========================================
-   検索エリア強調（やさしいデザイン）
-========================================== */
-
-.archive-toolbar{
-    border:1px solid #f3d4b5;
-    border-radius:22px;
-    background:#fffdf9;
-    box-shadow:0 8px 20px rgba(244,122,36,.08);
-}
-
-.search-area input,
-.filter-button,
-.sort-area select{
-    border:1px solid #f1cda9;
-    background:#fffefc;
-    transition:.25s;
-}
-
-.search-area input:hover,
-.filter-button:hover,
-.sort-area select:hover{
-    border-color:#f4b16d;
-    background:#fffaf3;
-}
-
-.search-area input:focus,
-.sort-area select:focus{
-    border-color:#f4a259;
-    box-shadow:0 0 0 3px rgba(244,162,89,.12);
-}
-
-.filter-button{
-    background:#fffefc;
-}
-
-.filter-button:hover{
-    background:#fff8ef;
-    box-shadow:0 6px 16px rgba(244,122,36,.10);
-}
-
-.site-header__logo-image{
-    display:block;
-    width:auto;
-    height:60px;   /* お好みで調整 */
-    object-fit:contain;
-}
-
-/* キーワード入力 */
-.search-area{
-    padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-}
-
-.archive-keyword__input,
-.filter-text-input{
+.site-footer__rule {
     width: 100%;
-    padding: 12px 18px;
-    border: 1px solid #eadfd4;
-    border-radius: 999px;
-    background: #fffdfb;
-    font-size: 15px;
-    transition: .2s;
-    box-shadow: none;
+    height: 1px;
+    margin: 0 0 24px;
+    background: #ededed;
 }
 
-.archive-keyword__input:hover,
-.filter-text-input:hover{
-    border-color: #dcc7b0;
+.site-footer__copyright {
+    margin: 0 0 14px;
+    color: #777;
+    font-size: 0.75rem;
 }
 
-.archive-keyword__input:focus,
-.filter-text-input:focus{
-    outline: none;
-    border-color: #d9a97b;
-    background: #ffffff;
-    box-shadow: 0 0 0 4px rgba(217,169,123,.12);
+.footer-navigation {
+    margin: 0;
+}
+
+.footer-navigation + .footer-navigation {
+    margin-top: 10px;
+}
+
+.footer-navigation__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    list-style: none;
+}
+
+.footer-navigation__list li {
+    display: flex;
+    align-items: center;
+}
+
+.footer-navigation__list li:not(:last-child)::after {
+    margin: 0 8px;
+    color: #b7b7b7;
+    content: "｜";
+}
+
+.footer-navigation__list a {
+    color: #777;
+    font-size: 0.75rem;
+    line-height: 1.8;
+    text-decoration: none;
+}
+
+.footer-navigation__list a:hover {
+    color: #444;
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .site-footer {
+        padding: 34px 16px 28px;
+    }
+
+    .footer-navigation__list {
+        row-gap: 4px;
+    }
+
+    .footer-navigation__list li:not(:last-child)::after {
+        margin: 0 5px;
+    }
+
+    .footer-navigation__list a {
+        font-size: 0.7rem;
+    }
 }
