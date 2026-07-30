@@ -392,7 +392,7 @@ import { getPublications } from "./publications.js";
 
     function printResults(data) {
         console.group(
-            "%cpublications.js 検証結果",
+            "%cpublications.js 自動検証結果",
             "font-size:16px;font-weight:bold;"
         );
 
