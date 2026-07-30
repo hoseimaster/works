@@ -1040,3 +1040,76 @@ body.is-navigation-open {
         font-size: 0.7rem;
     }
 }
+
+.reset-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 22px;
+    margin-top:20px;
+
+    border:1px solid #f1cda9;
+    border-radius:999px;
+
+    background:#fffefc;
+    color:#7a5d45;
+
+    font-size:0.95rem;
+    font-weight:600;
+    cursor:pointer;
+
+    transition:
+        background .2s,
+        border-color .2s,
+        box-shadow .2s,
+        transform .15s;
+}
+
+.reset-button:hover{
+    background:#fff8ef;
+    border-color:#f4b16d;
+    box-shadow:0 6px 16px rgba(244,122,36,.10);
+}
+
+.reset-button:active{
+    transform:scale(.98);
+}
+
+.reset-button:focus-visible{
+    outline:none;
+    border-color:#f4a259;
+    box-shadow:0 0 0 4px rgba(244,162,89,.12);
+}
+
+/* キーワード入力 */
+.search-area{
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.archive-keyword__input,
+.filter-text-input{
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid #eadfd4;
+    border-radius: 999px;
+    background: #fffdfb;
+    font-size: 15px;
+    transition: .2s;
+    box-shadow: none;
+}
+
+.archive-keyword__input:hover,
+.filter-text-input:hover{
+    border-color: #dcc7b0;
+}
+
+.archive-keyword__input:focus,
+.filter-text-input:focus{
+    outline: none;
+    border-color: #d9a97b;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(217,169,123,.12);
+}
