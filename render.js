@@ -367,10 +367,7 @@ function createCoverAltText(
     publication
 ) {
     const title =
-        String(
-            publication.title ??
-            "制作物"
-        ).trim();
+        String(publication.title ?? "").trim() || "制作物";
 
     return `${title}の表紙`;
 }
@@ -391,10 +388,7 @@ function applyFallbackImage(
 ) {
     const safeTitle =
         escapeSvgText(
-            String(
-                title ??
-                "NO IMAGE"
-            )
+            String(title ?? "").trim() || "NO IMAGE"
                 .trim()
                 .slice(0, 24)
         );
@@ -505,10 +499,7 @@ function createPublicationContent(
         "publication-card__title";
 
     title.textContent =
-        String(
-            publication.title ??
-            "タイトル未設定"
-        );
+        String(publication.title ?? "").trim() || "タイトル未設定";
 
     content.append(
         metadata,
