@@ -67,16 +67,10 @@ function initializeArchivePage() {
             );
 
         if (!validationResult.isValid) {
-            console.error(
+            console.warn(
                 "制作物データに問題があります。",
                 validationResult.errors
             );
-
-            showInitializationError(
-                elements
-            );
-
-            return;
         }
 
         const initialPublications =
