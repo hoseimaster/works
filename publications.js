@@ -1311,7 +1311,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-076",
-        title: "THE IDOLM＠STER MILLION LIVE! 8thLIVE Twelw@ve Memorial Leaflet",
+        title: "THE IDOLM@STER MILLION LIVE! 8thLIVE Twelw@ve Memorial Leaflet",
         publishDate: "2022-02-13",
         category: "リーフレット",
         brands: ["ミリオンライブ！"],
@@ -1326,7 +1326,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-077",
-        title: "THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND!!!　＠BELLUNA DOME 2022.4/2~4/3 MEMORIAL LEAFLET",
+        title: "THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND!!!　@BELLUNA DOME 2022.4/2~4/3 MEMORIAL LEAFLET",
         publishDate: "2022-04-02",
         category: "リーフレット",
         brands: ["シンデレラガールズ"],
@@ -1512,7 +1512,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-089",
-        title: "THE IDOLM@STER SideM 8th STAGE ～ALL H＠NDS TOGETHER～ MEMORIAL LEAFLET?",
+        title: "THE IDOLM@STER SideM 8th STAGE ～ALL H@NDS TOGETHER～ MEMORIAL LEAFLET?",
         publishDate: "2023-10-28",
         category: "リーフレット",
         brands: ["SideM"],
