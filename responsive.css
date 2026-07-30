@@ -1,0 +1,423 @@
+/* ========================================
+   制作物アーカイブ
+   レスポンシブ調整
+======================================== */
+
+/*
+    基本のレスポンシブ処理は base.css と archive.css にあります。
+    このファイルでは、画面幅ごとの余白・文字サイズ・表示崩れを
+    最終調整します。
+*/
+
+
+/* ========================================
+   ノートPC・小型デスクトップ
+   1200px以下
+======================================== */
+
+@media screen and (max-width: 1200px) {
+    :root {
+        --container-width: 1040px;
+    }
+
+    .site-header__inner,
+    .site-footer__inner,
+    .archive-container {
+        width: min(
+            var(--container-width),
+            calc(100% - var(--container-padding) * 2)
+        );
+    }
+
+    .global-navigation__list {
+        gap: 20px;
+    }
+
+    .global-navigation__item a {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* ========================================
+   タブレット・小型画面
+   900px以下
+======================================== */
+
+@media screen and (max-width: 900px) {
+    :root {
+        --container-padding: 20px;
+    }
+
+    /*
+        900px以下では base.css 側の指定により
+        通常ナビゲーションからハンバーガーメニューへ切り替わります。
+    */
+
+    .archive-main {
+        padding-top: 34px;
+        padding-bottom: 72px;
+    }
+
+    .breadcrumb {
+        margin-bottom: 36px;
+    }
+
+    .archive-heading {
+        max-width: 680px;
+    }
+
+    .archive-heading__title {
+        font-size: clamp(2rem, 7vw, 3rem);
+    }
+
+    .archive-toolbar {
+        padding: 24px;
+    }
+
+    .publication-list {
+        gap: 42px 28px;
+    }
+
+    .filter-modal__panel {
+        width: min(720px, 100%);
+    }
+}
+
+
+/* ========================================
+   スマートフォン
+   620px以下
+======================================== */
+
+@media screen and (max-width: 620px) {
+    :root {
+        --container-padding: 16px;
+    }
+
+    body {
+        font-size: 0.95rem;
+    }
+
+    .archive-main {
+        padding-top: 26px;
+        padding-bottom: 60px;
+    }
+
+    .breadcrumb {
+        margin-bottom: 28px;
+    }
+
+    .breadcrumb__list {
+        gap: 6px;
+
+        font-size: 0.72rem;
+    }
+
+    .breadcrumb__item:not(:last-child)::after {
+        margin-left: 6px;
+    }
+
+    .archive-heading__english {
+        margin-bottom: 6px;
+
+        font-size: 0.7rem;
+    }
+
+    .archive-heading__title {
+        font-size: clamp(1.8rem, 10vw, 2.5rem);
+        letter-spacing: 0.02em;
+    }
+
+    .archive-heading__description br {
+        display: none;
+    }
+
+    .archive-keyword__input {
+        height: 50px;
+        padding-right: 54px;
+
+        font-size: 16px;
+    }
+
+    .archive-keyword__button {
+        width: 50px;
+        height: 50px;
+    }
+
+    .archive-sort__select {
+        min-height: 50px;
+
+        font-size: 16px;
+    }
+
+    .archive-button {
+        min-height: 50px;
+    }
+
+    .archive-results-header {
+        align-items: flex-end;
+    }
+
+    .publication-card__title {
+        font-size: 1.05rem;
+    }
+
+    .publication-card__meta {
+        font-size: 0.8rem;
+    }
+
+    .filter-text-input {
+        font-size: 16px;
+    }
+
+    .filter-group__heading {
+        gap: 12px;
+    }
+
+    .filter-group__title {
+        font-size: 0.96rem;
+    }
+
+    .filter-group__clear {
+        flex-shrink: 0;
+    }
+
+    .site-footer {
+        padding-top: 42px;
+        padding-bottom: 26px;
+    }
+
+    .footer-navigation__list {
+        gap: 10px 20px;
+    }
+
+    .footer-navigation__list a {
+        font-size: 0.78rem;
+    }
+}
+
+
+/* ========================================
+   小型スマートフォン
+   430px以下
+======================================== */
+
+@media screen and (max-width: 430px) {
+    :root {
+        --container-padding: 12px;
+    }
+
+    .archive-main {
+        padding-top: 22px;
+    }
+
+    .archive-heading {
+        margin-bottom: 30px;
+    }
+
+    .archive-heading__title {
+        font-size: clamp(1.65rem, 10vw, 2.15rem);
+    }
+
+    .archive-heading__description {
+        font-size: 0.86rem;
+        line-height: 1.8;
+    }
+
+    .archive-toolbar {
+        padding: 16px;
+    }
+
+    .archive-keyword__label {
+        font-size: 0.8rem;
+    }
+
+    .archive-results-header__title {
+        font-size: 1.15rem;
+    }
+
+    .archive-results-header__summary {
+        font-size: 0.82rem;
+    }
+
+    .active-filters__header {
+        display: block;
+    }
+
+    .active-filters__clear {
+        margin-top: 8px;
+    }
+
+    .publication-card {
+        width: 100%;
+    }
+
+    .publication-card__body {
+        padding-top: 16px;
+    }
+
+    .publication-card__badges {
+        gap: 6px;
+    }
+
+    .publication-card__badge {
+        padding: 4px 8px;
+
+        font-size: 0.68rem;
+    }
+
+    .filter-modal__body {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .filter-modal__footer {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .archive-message {
+        padding: 22px 16px;
+    }
+
+    .page-top-button {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+
+
+/* ========================================
+   極小画面
+   360px以下
+======================================== */
+
+@media screen and (max-width: 360px) {
+    :root {
+        --container-padding: 10px;
+    }
+
+    .archive-heading__title {
+        font-size: 1.6rem;
+    }
+
+    .archive-toolbar {
+        padding: 14px;
+    }
+
+    .archive-button,
+    .archive-sort__select {
+        font-size: 0.84rem;
+    }
+
+    .filter-modal__title {
+        font-size: 1rem;
+    }
+
+    .filter-modal__close {
+        width: 42px;
+        height: 42px;
+    }
+
+    .footer-navigation__list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ========================================
+   横向きスマートフォン
+======================================== */
+
+@media screen and (max-height: 520px) and (orientation: landscape) {
+    .filter-modal {
+        align-items: stretch;
+    }
+
+    .filter-modal__panel {
+        width: min(760px, 100%);
+        max-height: 100vh;
+        margin: 0 auto;
+
+        border-radius: 0;
+    }
+
+    .filter-modal__header {
+        min-height: 58px;
+
+        border-radius: 0;
+    }
+
+    .filter-modal__body {
+        padding-bottom: 18px;
+    }
+
+    .filter-group {
+        padding: 18px 0;
+    }
+}
+
+
+/* ========================================
+   タッチ端末
+======================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    .publication-card:hover {
+        transform: none;
+    }
+
+    .publication-card:hover .publication-card__image {
+        transform: none;
+    }
+
+    .archive-button,
+    .archive-keyword__button,
+    .filter-modal__close,
+    .page-top-button,
+    .site-header__menu-button {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+
+/* ========================================
+   印刷
+======================================== */
+
+@media print {
+    .site-header,
+    .site-footer,
+    .archive-toolbar,
+    .active-filters,
+    .filter-modal,
+    .page-top-button {
+        display: none !important;
+    }
+
+    .archive-main {
+        padding: 0;
+    }
+
+    .archive-container {
+        width: 100%;
+    }
+
+    .publication-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 24px;
+    }
+
+    .publication-card {
+        break-inside: avoid;
+
+        box-shadow: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
