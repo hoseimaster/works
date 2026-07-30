@@ -1112,54 +1112,48 @@
 .filter-option[
     data-filter-value="THE IDOLM@STER"
 ] {
-    background: #fff3f6;
-    border-color:#f34f6d;
-    color: #f34f6d;
+    background: #fff0f2;
+    color: #c95160;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シンデレラガールズ"
 ] {
-    background: #f3f9ff;
-    border-color:#2681c8;
-    color: #2681c8;
+    background: #edf6ff;
+    color: #3478bd;
 }
 
 #brandFilterOptions
 .filter-option[
-    data-filter-value="ミリオンライブ！"
+    data-filter-value="ミリオンライブ"
 ] {
-    background: #fffdf2;
-    border-color:#ffc30b;
-    color: #ffc30b;
+    background: #fff7df;
+    color: #c88a00;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="SideM"
 ] {
-    background: #f2fcf8;
-    border-color:#0fbe94;
-    color: #0fbe94;
+    background: #eaf8f3;
+    color: #178b66;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シャイニーカラーズ"
 ] {
-    background: #f5f9ff;
-    border-color:#8dbbff;
-    color: #8dbbff;
+    background: #f1f5ff;
+    color: #667ed0;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="学園アイドルマスター"
 ] {
-    background: #fff8ef;
-    border-color:#f39800;
-    color: #f39800;
+    background: #fff3e3;
+    color: #d77a00;
 }
 
 #brandFilterOptions
@@ -1693,6 +1687,92 @@ body.is-modal-open {
 
     .archive-search__filter-button,
     .archive-search__sort{
+        width:100%;
+    }
+}
+
+/* ===== Search Toolbar Readability Adjustment ===== */
+
+.archive-search__inner{
+    gap:16px;
+    padding:18px;
+    border:1px solid #eadfd5;
+    border-radius:20px;
+    background:#ffffff;
+    box-shadow:0 12px 30px rgba(75,45,25,.10);
+}
+
+.archive-search__input,
+.archive-search__filter-button,
+.archive-search__sort select{
+    height:58px;
+    border:1px solid #d8cec5;
+    border-radius:14px;
+    background:#ffffff;
+    color:#2f2f2f;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.03);
+}
+
+.archive-search__input{
+    padding:0 52px 0 48px;
+    font-size:.96rem;
+    font-weight:500;
+}
+
+.archive-search__input::placeholder{
+    color:#8a817a;
+}
+
+.archive-search__filter-button,
+.archive-search__sort select{
+    font-size:.9rem;
+    font-weight:700;
+}
+
+.archive-search__filter-button{
+    min-width:190px;
+    padding:0 24px;
+}
+
+.archive-search__sort{
+    width:230px;
+}
+
+.archive-search__sort select{
+    padding:0 42px 0 18px;
+}
+
+.archive-search__input:hover,
+.archive-search__filter-button:hover,
+.archive-search__sort select:hover{
+    border-color:#f0a36c;
+    background:#fffaf6;
+}
+
+.archive-search__input:focus,
+.archive-search__filter-button:focus-visible,
+.archive-search__sort select:focus{
+    outline:none;
+    border-color:#f47a24;
+    background:#ffffff;
+    box-shadow:0 0 0 4px rgba(244,122,36,.14);
+}
+
+.archive-search__filter-button:hover,
+.archive-search__sort select:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px rgba(75,45,25,.10);
+}
+
+@media (max-width:700px){
+    .archive-search__inner{
+        gap:12px;
+        padding:14px;
+    }
+
+    .archive-search__filter-button,
+    .archive-search__sort,
+    .archive-search__sort select{
         width:100%;
     }
 }
