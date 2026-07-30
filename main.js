@@ -61,17 +61,9 @@ function initializeArchivePage() {
         const publications =
             getPublications();
 
-        const validationResult =
-            validatePublicationData(
-                publications
-            );
-
-        if (!validationResult.isValid) {
-            console.warn(
-                "制作物データに問題があります。",
-                validationResult.errors
-            );
-        }
+        validatePublicationData(
+            publications
+        );
 
         const initialPublications =
             sortPublications(
