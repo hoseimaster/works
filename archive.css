@@ -1112,48 +1112,54 @@
 .filter-option[
     data-filter-value="THE IDOLM@STER"
 ] {
-    background: #fff0f2;
-    color: #c95160;
+    background: #fff3f6;
+    border-color:#f34f6d;
+    color: #f34f6d;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シンデレラガールズ"
 ] {
-    background: #edf6ff;
-    color: #3478bd;
+    background: #f3f9ff;
+    border-color:#2681c8;
+    color: #2681c8;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="ミリオンライブ"
 ] {
-    background: #fff7df;
-    color: #c88a00;
+    background: #fffdf2;
+    border-color:#ffc30b;
+    color: #ffc30b;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="SideM"
 ] {
-    background: #eaf8f3;
-    color: #178b66;
+    background: #f2fcf8;
+    border-color:#0fbe94;
+    color: #0fbe94;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="シャイニーカラーズ"
 ] {
-    background: #f1f5ff;
-    color: #667ed0;
+    background: #f5f9ff;
+    border-color:#8dbbff;
+    color: #8dbbff;
 }
 
 #brandFilterOptions
 .filter-option[
     data-filter-value="学園アイドルマスター"
 ] {
-    background: #fff3e3;
-    color: #d77a00;
+    background: #fff8ef;
+    border-color:#f39800;
+    color: #f39800;
 }
 
 #brandFilterOptions
