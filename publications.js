@@ -1586,7 +1586,7 @@ const PUBLICATIONS = [
             "学園アイドルマスター",
             "その他"
         ],
-        coverImage: "./ASSET/images/publication-099.png",
+        coverImage: "./publication-099.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
         hasInterview: false,
