@@ -1219,7 +1219,25 @@ function normalizeDetailUrl(
         return "";
     }
 
-    return url;
+    let parsed;
+
+    try {
+        parsed = new URL(
+            url,
+            document.baseURI
+        );
+    } catch {
+        return "";
+    }
+
+    if (
+        parsed.protocol !== "http:" &&
+        parsed.protocol !== "https:"
+    ) {
+        return "";
+    }
+
+    return parsed.href;
 }
 
 
