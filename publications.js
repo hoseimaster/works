@@ -1341,7 +1341,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-078",
-        title: "THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み，今を越えて。 MEMORIAL LEAFLET?",
+        title: "THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み、今を越えて。 MEMORIAL LEAFLET?",
         publishDate: "2022-04-23",
         category: "リーフレット",
         brands: ["シャイニーカラーズ"],
@@ -1467,7 +1467,7 @@ const PUBLICATIONS = [
 
     {
         id: "publication-086",
-        title: "THE IDOLM@STER SHINY COLORS 5thLIVE If I_wings.?Memorial Reaflet",
+        title: "THE IDOLM@STER SHINY COLORS 5thLIVE If I_wings.Memorial Reaflet",
         publishDate: "2023-03-18",
         category: "リーフレット",
         brands: ["シャイニーカラーズ"],
