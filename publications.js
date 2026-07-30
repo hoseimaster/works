@@ -1693,14 +1693,14 @@ const PUBLICATIONS = [
 
     {
         id: "publication-100",
-        title: "タイトルを入力してください",
+        title: "",
         publishDate: "",
         category: "",
         brands: [""],
-        keywords: [],
+        keywords: [""],
         coverImage: "./publication-100.png",
         detailUrl: "",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
         siteStatuses: [""],
         description: ""
@@ -1708,17 +1708,17 @@ const PUBLICATIONS = [
 
     {
         id: "publication-101",
-        title: "タイトルを入力してください",
-        publishDate: "2026-08-16",
-        category: "リーフレット",
-        brands: [""],
-        keywords: [],
+        title: "検証テスト用",
+        publishDate: "20267-08-16",
+        category: "パンフレット",
+        brands: ["vα-liv"],
+        keywords: [""],
         coverImage: "./publication-101.png",
         detailUrl: "",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
-        siteStatuses: ["非公開"],
-        description: "制作物の紹介文を入力してください。"
+        siteStatuses: ["検証テスト"],
+        description: ""
     },
 
     {
@@ -1727,7 +1727,7 @@ const PUBLICATIONS = [
         publishDate: "2030-08-16",
         category: "リーフレット",
         brands: [""],
-        keywords: [],
+        keywords: [""],
         coverImage: "./publication-102.png",
         detailUrl: "",
         publicationPermission: false,
