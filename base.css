@@ -1112,3 +1112,48 @@ body.is-navigation-open {
     background: #ffffff;
     box-shadow: 0 0 0 4px rgba(217,169,123,.12);
 }
+
+
+/* ========================================
+   アーカイブタイトル
+======================================== */
+
+.archive-header,
+.archive-hero,
+.page-header{
+    text-align:center;
+}
+
+.archive-header h1,
+.archive-hero h1,
+.page-header h1{
+    color:#f47a24;
+    font-size:clamp(2rem,4vw,2.8rem);
+    font-weight:700;
+    letter-spacing:.04em;
+    margin-bottom:14px;
+}
+
+.archive-header p,
+.archive-hero p,
+.page-header p{
+    max-width:760px;
+    margin:0 auto;
+    color:#666;
+    line-height:1.9;
+}
+
+@media (max-width:768px){
+    .archive-header h1,
+    .archive-hero h1,
+    .page-header h1{
+        font-size:clamp(1.7rem,7vw,2.2rem);
+    }
+
+    .archive-header p,
+    .archive-hero p,
+    .page-header p{
+        font-size:.95rem;
+        line-height:1.8;
+    }
+}
