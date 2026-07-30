@@ -18,9 +18,9 @@
     </title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./base.css">
-    <link rel="stylesheet" href="./archive.css">
-    <link rel="stylesheet" href="./responsive.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/archive.css">
+    <link rel="stylesheet" href="./css/responsive.css">
 
     <!-- JavaScriptが使用できない環境向け -->
     <noscript>
@@ -39,22 +39,22 @@
     <header class="site-header">
         <div class="site-header__inner">
             <a
-    class="site-header__logo"
-    href="https://www.hoseimaster-web.com/"
-    aria-label="法政大学アイドルマスター研究会 ホーム"
->
-    <span class="site-header__logo-mark" aria-hidden="true">
-        <img
-            src="./header-logo.jpg"
-            alt=""
-            class="site-header__logo-image"
-        >
-    </span>
+                class="site-header__logo"
+                href="https://www.hoseimaster-web.com/"
+                aria-label="法政大学アイドルマスター研究会 ホーム"
+            >
+                <span class="site-header__logo-mark" aria-hidden="true">
+                    <span class="site-header__logo-letter">H</span>
+                    <span class="site-header__logo-subtext">
+                        <span>osei</span>
+                        <span>im@s</span>
+                    </span>
+                </span>
 
-    <span class="site-header__name">
-        法政大学アイドルマスター研究会
-    </span>
-</a>
+                <span class="site-header__name">
+                    法政大学アイドルマスター研究会
+                </span>
+            </a>
 
             <button
                 id="menuToggleButton"
@@ -91,7 +91,7 @@
 
                     <li class="global-navigation__item">
                         <a
-                            href="https://www.hoseimaster-web.com/works-new/"
+                            href="https://www.hoseimaster-web.com/works/"
                             aria-current="page"
                         >
                             Works
@@ -120,6 +120,34 @@
     ========================================= -->
     <main class="archive-main">
         <div class="archive-container">
+
+            <!-- パンくずリスト -->
+            <nav
+                class="breadcrumb"
+                aria-label="パンくずリスト"
+            >
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item">
+                        <a href="https://www.hoseimaster-web.com/">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb__item">
+                        <a href="https://www.hoseimaster-web.com/works/">
+                            Works
+                        </a>
+                    </li>
+
+                    <li
+                        class="breadcrumb__item"
+                        aria-current="page"
+                    >
+                        制作物アーカイブ
+                    </li>
+                </ol>
+            </nav>
+
 
             <!-- ページタイトル -->
             <header class="archive-heading">
@@ -175,7 +203,7 @@
                         aria-controls="filterModal"
                         aria-expanded="false"
                     >
-                        絞り込み
+                        ⚙ 絞り込み
                         <span id="filterCount" class="count" hidden>0</span>
                     </button>
 
@@ -368,7 +396,7 @@
                         class="visually-hidden"
                         for="modalKeywordInput"
                     >
-                        出版物名などのキーワードを入力
+                        出版物名や制作者名を入力
                     </label>
 
                     <input
@@ -623,58 +651,37 @@
     ========================================= -->
     <footer class="site-footer">
         <div class="site-footer__inner">
-            <nav
-                class="footer-navigation"
-                aria-label="フッターメニュー"
-            >
+            <p class="site-footer__top-link">
+                <a href="https://www.hoseimaster-web.com/">「Home」Top</a>
+            </p>
+
+            <div class="site-footer__rule" aria-hidden="true"></div>
+
+            <p class="site-footer__copyright">
+                <small>©法政大学アイドルマスター研究会. All rights reserved.</small>
+            </p>
+
+            <nav class="footer-navigation footer-navigation--legal" aria-label="サイト情報">
                 <ul class="footer-navigation__list">
-                    <li>
-                        <a href="https://www.hoseimaster-web.com/">
-                            Home
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://www.hoseimaster-web.com/works/">
-                            Works
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://www.hoseimaster-web.com/contact-us/">
-                            Contact Us
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://hosei-imas.booth.pm/">
-                            公式BOOTH
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                            href="https://x.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            公式X
-                        </a>
-                    </li>
+                    <li><a href="https://www.hoseimaster-web.com/privacy-policy/">個人情報保護方針</a></li>
+                    <li><a href="https://www.hoseimaster-web.com/terms-and-conditions/">利用規約</a></li>
+                    <li><a href="https://www.hoseimaster-web.com/about-this-site/">本サイトについて</a></li>
                 </ul>
             </nav>
 
-            <p class="site-footer__copyright">
-                <small>
-                    © 法政大学アイドルマスター研究会.
-                    All rights reserved.
-                </small>
-            </p>
+            <nav class="footer-navigation footer-navigation--social" aria-label="公式リンク">
+                <ul class="footer-navigation__list">
+                    <li><a href="https://hosei-imas.booth.pm/" target="_blank" rel="noopener noreferrer">公式BOOTH</a></li>
+                    <li><a href="https://x.com/" target="_blank" rel="noopener noreferrer">公式X</a></li>
+                    <li><a href="https://ameblo.jp/hoseimaster/" target="_blank" rel="noopener noreferrer">公式Blog</a></li>
+                    <li><a href="https://www.hoseimaster-web.com/sitemap/">サイトマップ</a></li>
+                </ul>
+            </nav>
         </div>
     </footer>
 
 
     <!-- JavaScript -->
-  <script type="module" src="./main.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
