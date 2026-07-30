@@ -1041,44 +1041,43 @@ body.is-navigation-open {
     }
 }
 
-.reset-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:12px 22px;
-    margin-top:20px;
-
-    border:1px solid #f1cda9;
-    border-radius:999px;
-
-    background:#fffefc;
-    color:#7a5d45;
-
-    font-size:0.95rem;
-    font-weight:600;
-    cursor:pointer;
-
+.reset-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    border: 1px solid #f4a259;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #fff8f1 0%, #ffe8d4 100%);
+    color: #d66b14;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
     transition:
-        background .2s,
-        border-color .2s,
-        box-shadow .2s,
-        transform .15s;
+        background .2s ease,
+        border-color .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease;
+    box-shadow: 0 4px 12px rgba(244,122,36,.12);
 }
 
-.reset-button:hover{
-    background:#fff8ef;
-    border-color:#f4b16d;
-    box-shadow:0 6px 16px rgba(244,122,36,.10);
+.reset-button:hover {
+    background: linear-gradient(180deg, #ffeedc 0%, #ffd7b0 100%);
+    border-color: #ef8d2d;
+    box-shadow: 0 8px 18px rgba(244,122,36,.18);
+    transform: translateY(-1px);
 }
 
-.reset-button:active{
-    transform:scale(.98);
+.reset-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(244,122,36,.12);
 }
 
-.reset-button:focus-visible{
-    outline:none;
-    border-color:#f4a259;
-    box-shadow:0 0 0 4px rgba(244,162,89,.12);
+.reset-button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(244,162,89,.2),
+        0 8px 18px rgba(244,122,36,.18);
 }
 
 /* キーワード入力 */
