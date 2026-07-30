@@ -24,14 +24,13 @@
     const normalize = value =>
         String(value ?? "").normalize("NFKC").trim();
 
-    const getId = (item, index) =>
-        normalize(item?.id) || `未設定（配列番号: ${index}）`;
+    const getId = item =>
+        normalize(item?.id) || "ID未設定";
 
     function addIssue(type, item, index, field, message, value) {
         const issue = {
             種別: type === "error" ? "エラー" : "警告",
-            固有番号: getId(item, index),
-            配列番号: index,
+            固有番号: getId(item),
             エラー箇所: field,
             内容: message,
             現在値:
@@ -235,13 +234,17 @@
         map.forEach((indexes, id) => {
             if (indexes.length < 2) return;
 
+            const duplicateIds = indexes
+                .map(index => getId(data[index]))
+                .join(", ");
+
             indexes.forEach(index => {
                 addIssue(
                     "error",
                     data[index],
                     index,
                     "id",
-                    `固有番号「${id}」が重複しています。重複位置: ${indexes.join(", ")}`,
+                    `固有番号「${id}」が重複しています。該当固有番号: ${duplicateIds}`,
                     data[index].id
                 );
             });
@@ -287,3 +290,4 @@
     checkDuplicateIds(publications);
     printResults(publications);
 })();
+
