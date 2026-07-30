@@ -1378,8 +1378,10 @@ function removeActiveFilter({
             filterKey
         ].filter((value) => {
             return (
-                String(value) !==
-                String(
+                normalizeFilterValue(
+                    value
+                ) !==
+                normalizeFilterValue(
                     filterValue
                 )
             );
@@ -1450,8 +1452,10 @@ function synchronizeFilterInputs(
                 selectedValues.some(
                     (value) => {
                         return (
-                            String(value) ===
-                            String(
+                            normalizeFilterValue(
+                                value
+                            ) ===
+                            normalizeFilterValue(
                                 checkbox.value
                             )
                         );
@@ -1700,13 +1704,11 @@ function matchesSingleValueGroup(
     return selectedValues.some(
         (selectedValue) => {
             return (
-                String(
-                    publicationValue ??
-                    ""
+                normalizeFilterValue(
+                    publicationValue
                 ) ===
-                String(
-                    selectedValue ??
-                    ""
+                normalizeFilterValue(
+                    selectedValue
                 )
             );
         }
@@ -1732,7 +1734,7 @@ function matchesArrayGroup(
             publicationValues
         )
             ? publicationValues.map(
-                String
+                normalizeFilterValue
             )
             : [];
 
@@ -1740,7 +1742,7 @@ function matchesArrayGroup(
         (selectedValue) => {
             return normalizedPublicationValues
                 .includes(
-                    String(
+                    normalizeFilterValue(
                         selectedValue
                     )
                 );
@@ -1862,6 +1864,21 @@ function matchesInterviewGroup(
         }
     );
 }
+
+/* ========================================
+   フィルター値正規化
+======================================== */
+
+function normalizeFilterValue(
+    value
+) {
+    return String(
+        value ?? ""
+    )
+        .normalize("NFKC")
+        .trim();
+}
+
 
 /* ========================================
    検索文字正規化
