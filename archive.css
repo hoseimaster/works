@@ -1167,6 +1167,7 @@
     data-filter-value="その他"
 ] {
     background: #f1f1f3;
+    border-color: #9a9a9a;
     color: #696a76;
 }
 
@@ -1732,9 +1733,9 @@ body.is-modal-open {
     color:#fff;
 }
 
-/* その他だけは灰色のチェック */
 #brandFilterOptions
-.filter-option[data-filter-value="その他"]:has(input:checked)::after{
-    background:#6d6d6d;
+.filter-option[data-filter-value="その他"]:has(input:checked){
+    background:#9a9a9a;
+    border-color:#9a9a9a;
     color:#ffffff;
 }
