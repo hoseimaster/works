@@ -105,8 +105,11 @@
 }
 
 .archive-search__filter-button{
-    position:relative;
-    min-width:180px;
+    ...
+    font-size:.93rem;
+    font-weight:600;
+    letter-spacing:.03em;
+    ...
 }
 
 .archive-search__filter-button::after{
