@@ -269,19 +269,19 @@ import { getPublications } from "./publications.js";
         console.log(`警告件数: ${warnings.length}`);
 
         if (errors.length) {
-            console.groupCollapsed(`%c❌ エラー ${errors.length}件`, "color:#c62828;font-weight:bold;");
+            console.groupCollapsed(`%cエラー ${errors.length}件`, "color:#c62828;font-weight:bold;");
             console.table(errors);
             console.groupEnd();
         } else {
-            console.log("%c✅ エラーはありません。", "color:#2e7d32;font-weight:bold;");
+            console.log("%cエラーはありません。", "color:#2e7d32;font-weight:bold;");
         }
 
         if (warnings.length) {
-            console.groupCollapsed(`%c⚠️ 警告 ${warnings.length}件`, "color:#ed6c02;font-weight:bold;");
+            console.groupCollapsed(`%c警告 ${warnings.length}件`, "color:#ed6c02;font-weight:bold;");
             console.table(warnings);
             console.groupEnd();
         } else {
-            console.log("%c✅ 警告はありません。", "color:#2e7d32;font-weight:bold;");
+            console.log("%c警告はありません。", "color:#2e7d32;font-weight:bold;");
         }
 
         console.log("詳細確認用:", { errors, warnings });
@@ -294,7 +294,7 @@ import { getPublications } from "./publications.js";
 
     if (!Array.isArray(publications)) {
         console.error(
-            "❌ getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
+            "getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
         );
         return;
     }
