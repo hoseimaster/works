@@ -1441,7 +1441,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家のmekakushe様へのインタビューを掲載しております！ "
+        description: "作詞家のmekakushe様へのインタビューを掲載しております。"
     },
 
     {
@@ -1462,7 +1462,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家の烏屋茶房様へのインタビューとなっております！ "
+        description: "作詞家の烏屋茶房様へのインタビューとなっております。"
     },
 
     {
@@ -1612,7 +1612,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家のやぎぬまかな様へのインタビューを掲載しております！"
+        description: "作詞家のやぎぬまかな様へのインタビューを掲載しております。"
     },
 
     {
@@ -1627,7 +1627,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家の松井洋平様へのインタビューを掲載しております！"
+        description: "作詞家の松井洋平様へのインタビューを掲載しております。"
     },
 
     {
@@ -1664,7 +1664,7 @@ const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["電子版公開中"],
-        description: "作詞家の烏屋茶房様へのインタビューを掲載しております！"
+        description: "作詞家の烏屋茶房様へのインタビューを掲載しております。"
     },
 
     {
