@@ -22,6 +22,7 @@ import { getPublications } from "./publications.js";
 
     const errors = [];
     const warnings = [];
+    const notices = [];
 
     const normalize = value =>
         String(value ?? "").normalize("NFKC").trim();
@@ -30,10 +31,16 @@ import { getPublications } from "./publications.js";
         normalize(item?.id) || "ID未設定";
 
     function addIssue(type, item, index, field, message, value) {
+        const labels = {
+            error: "エラー",
+            warning: "警告",
+            notice: "確認"
+        };
+
         const issue = {
-            種別: type === "error" ? "エラー" : "警告",
+            種別: labels[type] ?? type,
             固有番号: getId(item),
-            エラー箇所: field,
+            確認箇所: field,
             内容: message,
             現在値:
                 value === undefined
@@ -43,7 +50,13 @@ import { getPublications } from "./publications.js";
                         : String(value)
         };
 
-        (type === "error" ? errors : warnings).push(issue);
+        if (type === "error") {
+            errors.push(issue);
+        } else if (type === "warning") {
+            warnings.push(issue);
+        } else if (type === "notice") {
+            notices.push(issue);
+        }
     }
 
     function isEmpty(value) {
@@ -68,12 +81,53 @@ import { getPublications } from "./publications.js";
         const value = item[field];
 
         if (required && isEmpty(value)) {
-            addIssue("error", item, index, field, `${field} が未設定です。`, value);
+            addIssue(
+                "error",
+                item,
+                index,
+                field,
+                `${field} が未設定です。`,
+                value
+            );
             return;
         }
 
         if (!isEmpty(value) && typeof value !== "string") {
-            addIssue("error", item, index, field, `${field} は文字列で指定してください。`, value);
+            addIssue(
+                "error",
+                item,
+                index,
+                field,
+                `${field} は文字列で指定してください。`,
+                value
+            );
+        }
+    }
+
+    function checkOptionalField(item, index, field, label) {
+        const value = item[field];
+
+        if (isEmpty(value)) {
+            addIssue(
+                "notice",
+                item,
+                index,
+                field,
+                `${label}が未入力です。`,
+                value
+            );
+            return;
+        }
+
+        if (typeof value !== "string") {
+            addIssue(
+                "error",
+                item,
+                index,
+                field,
+                `${field} は文字列で指定してください。`,
+                value
+            );
         }
     }
 
@@ -81,12 +135,26 @@ import { getPublications } from "./publications.js";
         const value = item[field];
 
         if (!Array.isArray(value)) {
-            addIssue("error", item, index, field, `${field} は配列で指定してください。`, value);
+            addIssue(
+                "error",
+                item,
+                index,
+                field,
+                `${field} は配列で指定してください。`,
+                value
+            );
             return;
         }
 
         if (required && value.length === 0) {
-            addIssue("warning", item, index, field, `${field} が空の配列です。`, value);
+            addIssue(
+                "warning",
+                item,
+                index,
+                field,
+                `${field} が空の配列です。`,
+                value
+            );
         }
 
         value.forEach((entry, i) => {
@@ -112,8 +180,11 @@ import { getPublications } from "./publications.js";
         });
 
         const normalized = value.map(normalize);
+
         [...new Set(
-            normalized.filter((v, i, arr) => v && arr.indexOf(v) !== i)
+            normalized.filter((v, i, arr) =>
+                v && arr.indexOf(v) !== i
+            )
         )].forEach(v => {
             addIssue(
                 "warning",
@@ -130,7 +201,8 @@ import { getPublications } from "./publications.js";
         const normalizedValue = normalize(value);
 
         return allowed.some(
-            allowedValue => normalize(allowedValue) === normalizedValue
+            allowedValue =>
+                normalize(allowedValue) === normalizedValue
         );
     }
 
@@ -181,17 +253,33 @@ import { getPublications } from "./publications.js";
             return;
         }
 
-        ["id", "title", "category", "publishDate", "description"].forEach(field =>
-            checkString(item, index, field, true)
+        ["id", "title", "category", "publishDate", "description"].forEach(
+            field => checkString(item, index, field, true)
+        );
+
+        checkOptionalField(
+            item,
+            index,
+            "coverImage",
+            "イメージ欄"
+        );
+
+        checkOptionalField(
+            item,
+            index,
+            "detailUrl",
+            "URL欄"
         );
 
         checkArray(item, index, "brands", true);
         checkArray(item, index, "siteStatuses", true);
         checkArray(item, index, "keywords");
 
-        if (typeof item.publishDate === "string" &&
+        if (
+            typeof item.publishDate === "string" &&
             !isEmpty(item.publishDate) &&
-            !isValidDate(item.publishDate)) {
+            !isValidDate(item.publishDate)
+        ) {
             addIssue(
                 "error",
                 item,
@@ -202,7 +290,10 @@ import { getPublications } from "./publications.js";
             );
         }
 
-        if ("hasInterview" in item && typeof item.hasInterview !== "boolean") {
+        if (
+            "hasInterview" in item &&
+            typeof item.hasInterview !== "boolean"
+        ) {
             addIssue(
                 "error",
                 item,
@@ -213,12 +304,32 @@ import { getPublications } from "./publications.js";
             );
         }
 
-        checkAllowedValue(item, index, "category", VALID_CATEGORIES);
-        checkAllowedArray(item, index, "brands", VALID_BRANDS);
-        checkAllowedArray(item, index, "siteStatuses", VALID_SITE_STATUSES);
+        checkAllowedValue(
+            item,
+            index,
+            "category",
+            VALID_CATEGORIES
+        );
+
+        checkAllowedArray(
+            item,
+            index,
+            "brands",
+            VALID_BRANDS
+        );
+
+        checkAllowedArray(
+            item,
+            index,
+            "siteStatuses",
+            VALID_SITE_STATUSES
+        );
 
         Object.keys(item).forEach(key => {
-            if (typeof item[key] === "string" && item[key] !== item[key].trim()) {
+            if (
+                typeof item[key] === "string" &&
+                item[key] !== item[key].trim()
+            ) {
                 addIssue(
                     "warning",
                     item,
@@ -238,7 +349,10 @@ import { getPublications } from "./publications.js";
             const id = normalize(item?.id);
             if (!id) return;
 
-            if (!map.has(id)) map.set(id, []);
+            if (!map.has(id)) {
+                map.set(id, []);
+            }
+
             map.get(id).push(index);
         });
 
@@ -263,38 +377,81 @@ import { getPublications } from "./publications.js";
     }
 
     function printResults(data) {
-        console.group("%cpublications.js 検証結果", "font-size:16px;font-weight:bold;");
+        console.group(
+            "%cpublications.js 検証結果",
+            "font-size:16px;font-weight:bold;"
+        );
+
         console.log(`制作物件数: ${data.length}`);
         console.log(`エラー件数: ${errors.length}`);
         console.log(`警告件数: ${warnings.length}`);
+        console.log(`確認事項件数: ${notices.length}`);
 
         if (errors.length) {
-            console.groupCollapsed(`%cエラー ${errors.length}件`, "color:#c62828;font-weight:bold;");
+            console.groupCollapsed(
+                `%c❌ エラー ${errors.length}件`,
+                "color:#c62828;font-weight:bold;"
+            );
             console.table(errors);
             console.groupEnd();
         } else {
-            console.log("%cエラーはありません。", "color:#2e7d32;font-weight:bold;");
+            console.log(
+                "%c✅ エラーはありません。",
+                "color:#2e7d32;font-weight:bold;"
+            );
         }
 
         if (warnings.length) {
-            console.groupCollapsed(`%c警告 ${warnings.length}件`, "color:#ed6c02;font-weight:bold;");
+            console.groupCollapsed(
+                `%c⚠️ 警告 ${warnings.length}件`,
+                "color:#ed6c02;font-weight:bold;"
+            );
             console.table(warnings);
             console.groupEnd();
         } else {
-            console.log("%c警告はありません。", "color:#2e7d32;font-weight:bold;");
+            console.log(
+                "%c✅ 警告はありません。",
+                "color:#2e7d32;font-weight:bold;"
+            );
         }
 
-        console.log("詳細確認用:", { errors, warnings });
+        if (notices.length) {
+            console.groupCollapsed(
+                `%cℹ️ 確認事項 ${notices.length}件`,
+                "color:#1565c0;font-weight:bold;"
+            );
+            console.table(notices);
+            console.groupEnd();
+        } else {
+            console.log(
+                "%c✅ 確認事項はありません。",
+                "color:#2e7d32;font-weight:bold;"
+            );
+        }
+
+        console.log(
+            "詳細確認用:",
+            {
+                errors,
+                warnings,
+                notices
+            }
+        );
+
         console.groupEnd();
 
-        window.publicationValidationResults = { errors, warnings };
+        window.publicationValidationResults = {
+            errors,
+            warnings,
+            notices
+        };
     }
 
     const publications = getPublications();
 
     if (!Array.isArray(publications)) {
         console.error(
-            "getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
+            "❌ getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
         );
         return;
     }
