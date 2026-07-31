@@ -1162,7 +1162,7 @@ export const PUBLICATIONS = [
         brands: ["その他"],
         keywords: [],
         coverImage: "./publication-071.png",
-        detailUrl: "https://www.hoseimaster-web.com/l/hoseim-ster-2021/",
+        detailUrl: "",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
