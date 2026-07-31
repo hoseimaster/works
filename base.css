@@ -1373,3 +1373,61 @@ p.archive-heading__description{
         line-height:1.9 !important;
     }
 }
+
+/* ========================================
+   検索条件をリセット
+======================================== */
+
+#emptyResetButton,
+.archive-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    min-width:190px;
+    min-height:48px;
+    margin-top:24px;
+    padding:0 26px;
+
+    border:1px solid #d99a5d;
+    border-radius:999px;
+
+    background:#ffffff;
+    color:#d26d2d;
+
+    font:inherit;
+    font-size:.96rem;
+    font-weight:700;
+    letter-spacing:.04em;
+
+    cursor:pointer;
+
+    transition:
+        background-color .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease;
+}
+
+#emptyResetButton:hover,
+.archive-button:hover{
+    border-color:#c97737;
+    background:#fdf2e7;
+    color:#b95f1d;
+
+    box-shadow:0 6px 18px rgba(201,119,55,.18);
+    transform:translateY(-1px);
+}
+
+#emptyResetButton:active,
+.archive-button:active{
+    box-shadow:none;
+    transform:translateY(0);
+}
+
+#emptyResetButton:focus-visible,
+.archive-button:focus-visible{
+    outline:none;
+    box-shadow:0 0 0 4px rgba(230,111,40,.18);
+}
