@@ -1045,3 +1045,53 @@ body.is-navigation-open {
         line-height:1.8;
     }
 }
+
+/* ========================================
+   ヘッダーロゴ（画像一体型）
+======================================== */
+
+.site-header__logo{
+    display:flex;
+    align-items:center;
+    flex-shrink:0;
+    min-height:auto;
+    padding:0;
+    background:#fff;
+    text-decoration:none;
+}
+
+.site-header__logo-image-full{
+    display:block;
+    width:min(760px,100%);
+    height:auto;
+}
+
+.site-header__logo-mark,
+.site-header__name,
+.site-header__logo-letter,
+.site-header__logo-subtext{
+    display:none;
+}
+
+@media (max-width:900px){
+    .site-header__logo{
+        padding:0;
+        min-height:auto;
+    }
+
+    .site-header__logo-image-full{
+        width:520px;
+    }
+}
+
+@media (max-width:560px){
+    .site-header__logo{
+        padding:0;
+        min-height:auto;
+    }
+
+    .site-header__logo-image-full{
+        width:100%;
+        max-width:330px;
+    }
+}
