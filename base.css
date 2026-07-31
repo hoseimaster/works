@@ -1263,12 +1263,97 @@ body.is-navigation-open {
 }
 
 /* ===== ご注意 ===== */
-.notice-section{padding:12px 0 18px;text-align:center}
-.notice-toggle-button{padding:8px 20px;border:1px solid #ddd;border-radius:999px;background:#fafafa;color:#777;font-size:.88rem}
-.notice-toggle-button:hover{background:#fff7ef;border-color:#d79a62;color:#d06f27}
-.notice-panel{max-width:980px;margin:16px auto 0;padding:22px;border:1px solid #eadfd5;border-radius:14px;background:#fffdfb;text-align:left;color:#666}
-.notice-panel p{margin:0 0 12px;line-height:1.9;font-size:.88rem}
-.notice-panel p:last-child{margin-bottom:0}
+
+.notice-section{
+    width:min(var(--container-width),calc(100% - var(--container-padding) * 2));
+    margin:0 auto;
+    padding:10px 0 28px;
+}
+
+.notice-toggle-button{
+    position:relative;
+    display:flex;
+    align-items:center;
+    width:100%;
+    min-height:52px;
+    padding:12px 52px 12px 20px;
+    border:1px solid #ead8c8;
+    border-left:4px solid #e7863e;
+    border-radius:12px;
+    background:#fffaf6;
+    color:#625b55;
+    font-size:.9rem;
+    font-weight:600;
+    text-align:left;
+    box-shadow:0 5px 16px rgba(85,55,35,.05);
+    transition:.2s;
+}
+
+.notice-toggle-button::before{
+    content:"※";
+    margin-right:10px;
+    color:#d97027;
+    font-weight:700;
+}
+
+.notice-toggle-button::after{
+    content:"+";
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:1.2rem;
+    color:#b8794b;
+}
+
+.notice-toggle-button[aria-expanded="true"]::after{
+    content:"−";
+}
+
+.notice-toggle-button:hover{
+    background:#fff6ef;
+    border-color:#dfb28e;
+    border-left-color:#db7229;
+    color:#c26425;
+}
+
+.notice-panel{
+    margin-top:10px;
+    padding:24px 26px;
+    border:1px solid #eadfd6;
+    border-radius:12px;
+    background:#fffdfb;
+    color:#625e5a;
+    box-shadow:0 8px 22px rgba(70,45,30,.05);
+}
+
+.notice-panel p{
+    margin:0;
+    font-size:.86rem;
+    line-height:1.9;
+}
+
+.notice-panel p+p{
+    margin-top:14px;
+}
+
+@media (max-width:700px){
+    .notice-toggle-button{
+        min-height:48px;
+        padding:10px 46px 10px 16px;
+        font-size:.86rem;
+    }
+
+    .notice-panel{
+        padding:20px 16px;
+    }
+
+    .notice-panel p{
+        font-size:.8rem;
+        line-height:1.85;
+    }
+}
+
 
 /* ========================================
    制作物アーカイブ見出し
