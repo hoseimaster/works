@@ -1304,3 +1304,51 @@ body.is-navigation-open {
         top: calc(100% + 4px);
     }
 }
+
+/* ========================================
+   制作物アーカイブ見出し
+======================================== */
+
+.archive-heading{
+    width:100%;
+    margin:12px auto 56px;
+    text-align:center;
+}
+
+.archive-heading__title{
+    margin:0 0 24px;
+    color:#e66f28;
+    font-size:clamp(2.4rem,5vw,3.5rem);
+    font-weight:700;
+    line-height:1.25;
+    letter-spacing:.04em;
+    text-align:center;
+}
+
+.archive-heading__description{
+    max-width:860px;
+    margin:0 auto;
+    color:#444444;
+    font-size:1.08rem;
+    font-weight:500;
+    line-height:2;
+    text-align:center;
+}
+
+@media (max-width:768px){
+    .archive-heading{
+        margin:4px auto 40px;
+    }
+
+    .archive-heading__title{
+        margin-bottom:18px;
+        font-size:clamp(2rem,8vw,2.8rem);
+    }
+
+    .archive-heading__description{
+        padding:0 8px;
+        font-size:.96rem;
+        line-height:1.9;
+    }
+}
+
