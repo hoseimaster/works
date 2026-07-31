@@ -1619,7 +1619,7 @@ export const PUBLICATIONS = [
         brands: ["運用試験用"],
         keywords: ["運用試験用"],
         coverImage: "./publication-100.png",
-        detailUrl: "運用試験用",
+        detailUrl: "",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["運用試験用"],
