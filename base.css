@@ -941,143 +941,31 @@ body.is-navigation-open {
    フッター（本サイト準拠）
 ======================================== */
 
-.site-footer {
-    padding: 42px 20px 34px;
-    color: #666;
-    background: #fff;
-    border-top: 1px solid #ececec;
-    text-align: center;
+.site-footer{
+    padding:38px 20px 30px;
+    background:#faf9fb;
+    border-top:1px solid #ececec;
+    color:#7b7b7b;
+    text-align:center;
 }
 
-.site-footer__inner {
-    width: min(100%, 1040px);
-    margin: 0 auto;
-}
-
-.site-footer__top-link {
-    margin: 0 0 22px;
-}
-
-.site-footer__top-link a {
-    color: #555;
-    font-size: 0.88rem;
-    text-decoration: none;
-}
-
-.site-footer__top-link a:hover {
-    text-decoration: underline;
-}
-
-.site-footer__rule {
-    width: 100%;
-    height: 1px;
-    margin: 0 0 24px;
-    background: #ededed;
-}
-
-.site-footer__copyright {
-    margin: 0 0 14px;
-    color: #777;
-    font-size: 0.75rem;
-}
-
-.footer-navigation {
-    margin: 0;
-}
-
-.footer-navigation + .footer-navigation {
-    margin-top: 10px;
-}
-
-.footer-navigation__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    gap: 0;
-    list-style: none;
-}
-
-.footer-navigation__list li {
-    display: flex;
-    align-items: center;
-}
-
-.footer-navigation__list li:not(:last-child)::after {
-    margin: 0 8px;
-    color: #b7b7b7;
-    content: "｜";
-}
-
-.footer-navigation__list a {
-    color: #777;
-    font-size: 0.75rem;
-    line-height: 1.8;
-    text-decoration: none;
-}
-
-.footer-navigation__list a:hover {
-    color: #444;
-    text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-    .site-footer {
-        padding: 34px 16px 28px;
-    }
-
-    .footer-navigation__list {
-        row-gap: 4px;
-    }
-
-    .footer-navigation__list li:not(:last-child)::after {
-        margin: 0 5px;
-    }
-
-    .footer-navigation__list a {
-        font-size: 0.7rem;
-    }
-}
-
-.reset-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 26px;
-    border: 1px solid #f4a259;
-    border-radius: 999px;
-    background: linear-gradient(180deg, #fff8f1 0%, #ffe8d4 100%);
-    color: #d66b14;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition:
-        background .2s ease,
-        border-color .2s ease,
-        transform .15s ease,
-        box-shadow .2s ease;
-    box-shadow: 0 4px 12px rgba(244,122,36,.12);
-}
-
-.reset-button:hover {
-    background: linear-gradient(180deg, #ffeedc 0%, #ffd7b0 100%);
-    border-color: #ef8d2d;
-    box-shadow: 0 8px 18px rgba(244,122,36,.18);
-    transform: translateY(-1px);
-}
-
-.reset-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(244,122,36,.12);
-}
-
-.reset-button:focus-visible {
-    outline: none;
-    box-shadow:
-        0 0 0 3px rgba(244,162,89,.2),
-        0 8px 18px rgba(244,122,36,.18);
+.site-footer__inner{width:min(100%,1040px);margin:0 auto;}
+.site-footer__top-link{margin:0 0 18px;}
+.site-footer__top-link a{color:#777;font-size:.9rem;text-decoration:none;}
+.site-footer__top-link a:hover{color:#f47a24;text-decoration:underline;}
+.site-footer__rule{display:none;}
+.site-footer__copyright{margin:0 0 12px;color:#808080;font-size:.9rem;line-height:1.7;}
+.footer-navigation{margin:0;}
+.footer-navigation+.footer-navigation{margin-top:6px;}
+.footer-navigation__list{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:0;padding:0;list-style:none;gap:0;}
+.footer-navigation__list li{display:flex;align-items:center;}
+.footer-navigation__list li:not(:last-child)::after{content:"|";margin:0 6px;color:#bfbfbf;}
+.footer-navigation__list a{color:#7d7d7d;font-size:.9rem;line-height:1.7;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;transition:color .2s ease;}
+.footer-navigation__list a:hover{color:#f47a24;}
+@media (max-width:600px){
+.site-footer{padding:32px 16px 26px;}
+.site-footer__copyright,.footer-navigation__list a{font-size:.82rem;}
+.footer-navigation__list li:not(:last-child)::after{margin:0 4px;}
 }
 
 /* キーワード入力 */
