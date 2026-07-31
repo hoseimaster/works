@@ -1056,13 +1056,14 @@ body.is-navigation-open {
     flex-shrink:0;
     min-height:auto;
     padding:0;
-    background:#fff;
+    background:transparent;
     text-decoration:none;
 }
 
 .site-header__logo-image-full{
     display:block;
     width:min(440px,100%);
+    margin:0;
     height:auto;
 }
 
