@@ -710,25 +710,46 @@
 }
 
 .archive-message__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    margin-top: 22px;
-    padding:
-        0 20px;
-    border: 0;
-    border-radius: 9px;
-    background: #f47a24;
-    color: #ffffff;
-    font: inherit;
-    font-size: 0.86rem;
-    font-weight: 700;
-    cursor: pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:190px;
+    height:48px;
+    margin-top:24px;
+    padding:0 26px;
+    border:1px solid #d99a5d;
+    border-radius:999px;
+    background:#ffffff;
+    color:#d26d2d;
+    font:inherit;
+    font-size:.96rem;
+    font-weight:700;
+    letter-spacing:.04em;
+    cursor:pointer;
+    transition:
+        background-color .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .15s ease,
+        box-shadow .2s ease;
 }
 
-.archive-message__button:hover {
-    background: #e56814;
+.archive-message__button:hover{
+    background:#fdf2e7;
+    border-color:#c97737;
+    color:#b95f1d;
+    box-shadow:0 6px 18px rgba(201,119,55,.18);
+    transform:translateY(-1px);
+}
+
+.archive-message__button:active{
+    transform:translateY(0);
+    box-shadow:none;
+}
+
+.archive-message__button:focus-visible{
+    outline:none;
+    box-shadow:0 0 0 4px rgba(230,111,40,.18);
 }
 
 
