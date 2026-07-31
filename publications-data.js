@@ -1614,16 +1614,16 @@ export const PUBLICATIONS = [
     {
         id: "publication-100",
         title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
-        keywords: [""],
+        publishDate: "運用試験用",
+        category: "運用試験用",
+        brands: ["運用試験用"],
+        keywords: ["運用試験用"],
         coverImage: "./publication-100.png",
-        detailUrl: "",
-        publicationPermission: false,
-        hasInterview: false,
-        siteStatuses: [""],
-        description: ""
+        detailUrl: "運用試験用",
+        publicationPermission: true,
+        hasInterview: 運用試験用,
+        siteStatuses: ["運用試験用"],
+        description: "運用試験用"
     },
 
     {
