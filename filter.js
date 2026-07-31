@@ -89,6 +89,11 @@ export function initializeFilters({
         elements
     });
 
+    initializeSingleBrandFilter({
+        store,
+        elements
+    });
+
     initializeFilterButtons({
         store,
         elements
@@ -217,6 +222,11 @@ function getFilterElements() {
         brandFilterOptions:
             document.getElementById(
                 "brandFilterOptions"
+            ),
+
+        singleBrandOnlyCheckbox:
+            document.getElementById(
+                "singleBrandOnlyCheckbox"
             ),
 
         yearFromSelect:
@@ -888,6 +898,13 @@ function applyCheckedFilters(
         )
     ];
 
+    nextFilters.singleBrandOnly =
+        Boolean(
+            elements
+                .singleBrandOnlyCheckbox
+                ?.checked
+        );
+
     store.setFilters(
         nextFilters
     );
@@ -903,6 +920,33 @@ function getFilterOptionContainers(
         elements.interviewFilterOptions,
         elements.siteStatusFilterOptions
     ].filter(Boolean);
+}
+
+
+/* ========================================
+   単一ブランドのみ表示
+======================================== */
+
+function initializeSingleBrandFilter({
+    store,
+    elements
+}) {
+    const checkbox =
+        elements.singleBrandOnlyCheckbox;
+
+    if (!checkbox) {
+        return;
+    }
+
+    checkbox.addEventListener(
+        "change",
+        () => {
+            store.setFilters({
+                singleBrandOnly:
+                    checkbox.checked
+            });
+        }
+    );
 }
 
 
@@ -1055,6 +1099,23 @@ function initializeGroupClearButtons({
                         }
                     );
 
+                    if (
+                        filterKey === "brands" &&
+                        elements
+                            .singleBrandOnlyCheckbox
+                    ) {
+                        elements
+                            .singleBrandOnlyCheckbox
+                            .checked = false;
+
+                        store.setFilters({
+                            brands: [],
+                            singleBrandOnly: false
+                        });
+
+                        return;
+                    }
+
                     store.setFilters({
                         [filterKey]: []
                     });
@@ -1075,6 +1136,14 @@ function clearAllFilters({
     clearYearRange(
         elements
     );
+
+    if (
+        elements.singleBrandOnlyCheckbox
+    ) {
+        elements
+            .singleBrandOnlyCheckbox
+            .checked = false;
+    }
 
     synchronizeKeywordInputs(
         "",
@@ -1275,6 +1344,15 @@ function collectActiveFilters(
         }
     );
 
+    if (
+        filters.singleBrandOnly
+    ) {
+        activeFilters.push({
+            key: "singleBrandOnly",
+            value: "true",
+            label: "単一ブランドのみ"
+        });
+    }
 
     return activeFilters;
 }
@@ -1362,6 +1440,26 @@ function removeActiveFilter({
         return;
     }
 
+
+    if (
+        filterKey ===
+        "singleBrandOnly"
+    ) {
+        if (
+            elements
+                .singleBrandOnlyCheckbox
+        ) {
+            elements
+                .singleBrandOnlyCheckbox
+                .checked = false;
+        }
+
+        store.setFilters({
+            singleBrandOnly: false
+        });
+
+        return;
+    }
 
     if (
         !Array.isArray(
@@ -1465,6 +1563,17 @@ function synchronizeFilterInputs(
     });
 
     if (
+        elements.singleBrandOnlyCheckbox
+    ) {
+        elements
+            .singleBrandOnlyCheckbox
+            .checked =
+                Boolean(
+                    filters.singleBrandOnly
+                );
+    }
+
+    if (
         elements.yearFromSelect &&
         document.activeElement !==
             elements.yearFromSelect
@@ -1544,6 +1653,11 @@ function countActiveFilters(
         ).length;
     });
 
+    if (
+        filters.singleBrandOnly
+    ) {
+        count += 1;
+    }
 
     return count;
 }
@@ -1574,13 +1688,19 @@ function updateResetButtonState(
             ).trim()
         );
 
+    const hasSingleBrandFilter =
+        Boolean(
+            filters.singleBrandOnly
+        );
+
     if (
         elements.resetFilterButton
     ) {
         elements.resetFilterButton
             .disabled =
                 !hasArrayFilters &&
-                !hasKeyword;
+                !hasKeyword &&
+                !hasSingleBrandFilter;
     }
 
     if (
@@ -1625,6 +1745,10 @@ export function filterPublications(
                 matchesArrayGroup(
                     publication.brands,
                     filters.brands
+                ) &&
+                matchesSingleBrandOnly(
+                    publication.brands,
+                    filters.singleBrandOnly
                 ) &&
                 matchesYearGroup(
                     publication.publishDate,
@@ -1684,6 +1808,38 @@ export function matchesKeyword(
             return searchableText
                 .includes(part);
         }
+    );
+}
+
+
+function matchesSingleBrandOnly(
+    publicationBrands,
+    singleBrandOnly
+) {
+    if (!singleBrandOnly) {
+        return true;
+    }
+
+    if (
+        !Array.isArray(
+            publicationBrands
+        )
+    ) {
+        return false;
+    }
+
+    const normalizedBrands = [
+        ...new Set(
+            publicationBrands
+                .map(
+                    normalizeFilterValue
+                )
+                .filter(Boolean)
+        )
+    ];
+
+    return (
+        normalizedBrands.length === 1
     );
 }
 
