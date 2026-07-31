@@ -1621,7 +1621,7 @@ export const PUBLICATIONS = [
         coverImage: "./publication-100.png",
         detailUrl: "運用試験用",
         publicationPermission: true,
-        hasInterview: 運用試験用,
+        hasInterview: false,
         siteStatuses: ["運用試験用"],
         description: "運用試験用"
     },
