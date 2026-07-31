@@ -1096,3 +1096,211 @@ body.is-navigation-open {
         max-width:240px;
     }
 }
+
+/* ========================================
+   ヘッダー最終調整
+   ロゴ・ナビゲーションのはみ出し防止
+   オレンジ帯の高さ調整
+======================================== */
+
+.site-header {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    padding: 8px 0;
+    overflow: visible;
+    background: #ffb300;
+}
+
+.site-header__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: min(
+        var(--container-width),
+        calc(100% - var(--container-padding) * 2)
+    );
+    min-width: 0;
+    min-height: 52px;
+    margin-right: auto;
+    margin-left: auto;
+    gap: 20px;
+    overflow: visible;
+}
+
+.site-header__logo {
+    display: flex;
+    align-items: center;
+    flex: 0 1 440px;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    text-decoration: none;
+}
+
+.site-header__logo-image-full {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+}
+
+.site-header__logo-mark,
+.site-header__name,
+.site-header__logo-letter,
+.site-header__logo-subtext {
+    display: none;
+}
+
+.global-navigation {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: auto;
+}
+
+.global-navigation__list {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+    gap: clamp(12px, 1.5vw, 24px);
+}
+
+.global-navigation__item {
+    flex: 0 0 auto;
+}
+
+.global-navigation__item a {
+    white-space: nowrap;
+}
+
+/* PC幅が狭い場合 */
+@media screen and (max-width: 1180px) and (min-width: 901px) {
+    .site-header__inner {
+        gap: 14px;
+    }
+
+    .site-header__logo {
+        flex-basis: 360px;
+    }
+
+    .site-header__logo-image-full {
+        max-width: 360px;
+    }
+
+    .global-navigation__list {
+        gap: 12px;
+    }
+
+    .global-navigation__item a {
+        font-size: 0.78rem;
+        letter-spacing: 0.02em;
+    }
+}
+
+/* 900px以下ではハンバーガーメニューへ切り替える */
+@media screen and (max-width: 900px) {
+    .site-header {
+        padding: 6px 0;
+        overflow: visible;
+    }
+
+    .site-header__inner {
+        min-height: 48px;
+        gap: 16px;
+        overflow: visible;
+    }
+
+    .site-header__logo {
+        flex: 1 1 auto;
+        max-width: 360px;
+        min-width: 0;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .site-header__logo-image-full {
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .site-header__menu-button {
+        position: relative;
+        z-index: 1002;
+        display: flex;
+        flex: 0 0 48px;
+        width: 48px;
+        height: 48px;
+        margin-left: auto;
+    }
+
+    .global-navigation {
+        position: absolute;
+        z-index: 1001;
+        top: calc(100% + 6px);
+        right: calc(var(--container-padding) * -1);
+        left: calc(var(--container-padding) * -1);
+        display: none;
+        width: auto;
+        min-width: 0;
+        margin: 0;
+        background: var(--color-background);
+    }
+
+    .global-navigation.is-open {
+        display: block;
+    }
+
+    .global-navigation__list {
+        display: block;
+        width: min(
+            var(--container-width),
+            calc(100% - var(--container-padding) * 2)
+        );
+        margin: 0 auto;
+        padding: 12px 0 24px;
+    }
+
+    .global-navigation__item a {
+        white-space: normal;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .site-header {
+        padding: 4px 0;
+    }
+
+    .site-header__inner {
+        min-height: 44px;
+        gap: 10px;
+    }
+
+    .site-header__logo {
+        max-width: calc(100% - 50px);
+        min-height: 0;
+        padding: 0;
+    }
+
+    .site-header__logo-image-full {
+        width: 100%;
+        max-width: 240px;
+    }
+
+    .site-header__menu-button {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .global-navigation {
+        top: calc(100% + 4px);
+    }
+}
