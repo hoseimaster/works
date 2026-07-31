@@ -1417,7 +1417,7 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-088",
-        title: "THE iDOLM@STER MILLION LIVE! 10thLIVE 5 to SP@RKLE Act-2 Memorial Leaflet?",
+        title: "THE IDOLM@STER MILLION LIVE! 10thLIVE 5 TO SP@RKLE Act-2 Memorial Leaflet",
         publishDate: "2023-07-30",
         category: "リーフレット",
         brands: ["ミリオンライブ！"],
