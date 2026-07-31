@@ -4,9 +4,13 @@
 ======================================== */
 
 /*
-    基本のレスポンシブ処理は base.css と archive.css にあります。
-    このファイルでは、画面幅ごとの余白・文字サイズ・表示崩れを
-    最終調整します。
+    読み込み順：
+    base.css → archive.css → responsive.css
+
+    このファイルでは、実際のHTMLで使用しているクラス名に合わせて
+    画面幅ごとの最終調整のみを行います。
+
+    制作物一覧の列数は archive.css 側の設定をそのまま使用します。
 */
 
 
@@ -22,7 +26,8 @@
 
     .site-header__inner,
     .site-footer__inner,
-    .archive-container {
+    .archive-container,
+    .notice-section__inner {
         width: min(
             var(--container-width),
             calc(100% - var(--container-padding) * 2)
@@ -30,11 +35,11 @@
     }
 
     .global-navigation__list {
-        gap: 20px;
+        gap: 16px;
     }
 
     .global-navigation__item a {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
     }
 }
 
@@ -49,22 +54,16 @@
         --container-padding: 20px;
     }
 
-    /*
-        900px以下では base.css 側の指定により
-        通常ナビゲーションからハンバーガーメニューへ切り替わります。
-    */
-
     .archive-main {
         padding-top: 34px;
         padding-bottom: 72px;
     }
 
-    .breadcrumb {
-        margin-bottom: 36px;
-    }
-
     .archive-heading {
+        width: 100%;
         max-width: 680px;
+        margin-right: auto;
+        margin-left: auto;
     }
 
     .archive-heading__title {
@@ -72,25 +71,29 @@
     }
 
     .archive-toolbar {
-        padding: 24px;
+        padding: 18px;
     }
 
     .publication-list {
-        gap: 42px 28px;
+        gap: 36px 24px;
     }
 
     .filter-modal__panel {
-        width: min(720px, 100%);
+        width: min(720px, calc(100% - 40px));
+    }
+
+    .notice-panel {
+        max-width: 100%;
     }
 }
 
 
 /* ========================================
    スマートフォン
-   620px以下
+   700px以下
 ======================================== */
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 700px) {
     :root {
         --container-padding: 16px;
     }
@@ -104,92 +107,134 @@
         padding-bottom: 60px;
     }
 
-    .breadcrumb {
-        margin-bottom: 28px;
-    }
-
-    .breadcrumb__list {
-        gap: 6px;
-
-        font-size: 0.72rem;
-    }
-
-    .breadcrumb__item:not(:last-child)::after {
-        margin-left: 6px;
-    }
-
-    .archive-heading__english {
-        margin-bottom: 6px;
-
-        font-size: 0.7rem;
+    .archive-heading {
+        margin-bottom: 36px;
     }
 
     .archive-heading__title {
-        font-size: clamp(1.8rem, 10vw, 2.5rem);
+        font-size: clamp(1.8rem, 9vw, 2.5rem);
         letter-spacing: 0.02em;
     }
 
-    .archive-heading__description br {
-        display: none;
+    .archive-heading__description {
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 0.95rem;
+        line-height: 1.9;
     }
 
-    .archive-keyword__input {
-        height: 50px;
-        padding-right: 54px;
-
-        font-size: 16px;
+    .archive-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px;
     }
 
-    .archive-keyword__button {
-        width: 50px;
-        height: 50px;
+    .search-area,
+    .filter-button,
+    .sort-area {
+        width: 100%;
+        min-width: 0;
     }
 
-    .archive-sort__select {
+    .archive-keyword__input,
+    .filter-button,
+    .archive-sort__select,
+    .filter-text-input {
         min-height: 50px;
-
         font-size: 16px;
     }
 
+    .filter-button {
+        justify-content: center;
+    }
+
+    .archive-results-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .publication-list {
+        gap: 28px 16px;
+    }
+
+    .filter-modal {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .filter-modal__panel {
+        width: 100%;
+        max-height: 92vh;
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .filter-modal__header {
+        padding: 18px 20px;
+    }
+
+    .filter-modal__body {
+        padding: 22px 18px;
+    }
+
+    .filter-options,
+    #brandFilterOptions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .filter-option,
+    #brandFilterOptions .filter-option {
+        min-height: 52px;
+        padding: 10px 12px;
+    }
+
+    .filter-option__label {
+        font-size: 0.78rem;
+    }
+
+    .filter-modal__footer {
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .filter-modal__reset,
+    .filter-modal__apply {
+        min-width: 0;
+        flex: 1;
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    #emptyResetButton,
     .archive-button {
         min-height: 50px;
     }
 
-    .archive-results-header {
-        align-items: flex-end;
+    .notice-section {
+        padding: 16px 0 14px;
     }
 
-    .publication-card__title {
-        font-size: 1.05rem;
+    .notice-panel {
+        padding: 20px 18px;
     }
 
-    .publication-card__meta {
-        font-size: 0.8rem;
-    }
-
-    .filter-text-input {
-        font-size: 16px;
-    }
-
-    .filter-group__heading {
-        gap: 12px;
-    }
-
-    .filter-group__title {
-        font-size: 0.96rem;
-    }
-
-    .filter-group__clear {
-        flex-shrink: 0;
+    .notice-panel p {
+        font-size: 0.82rem;
+        line-height: 1.85;
     }
 
     .site-footer {
-        padding-top: 42px;
+        padding-top: 36px;
         padding-bottom: 26px;
     }
 
     .footer-navigation__list {
-        gap: 10px 20px;
+        row-gap: 4px;
     }
 
     .footer-navigation__list a {
@@ -226,11 +271,8 @@
     }
 
     .archive-toolbar {
-        padding: 16px;
-    }
-
-    .archive-keyword__label {
-        font-size: 0.8rem;
+        padding: 14px;
+        border-radius: 18px;
     }
 
     .archive-results-header__title {
@@ -249,22 +291,9 @@
         margin-top: 8px;
     }
 
-    .publication-card {
-        width: 100%;
-    }
-
-    .publication-card__body {
-        padding-top: 16px;
-    }
-
-    .publication-card__badges {
-        gap: 6px;
-    }
-
-    .publication-card__badge {
-        padding: 4px 8px;
-
-        font-size: 0.68rem;
+    .filter-options,
+    #brandFilterOptions {
+        grid-template-columns: 1fr;
     }
 
     .filter-modal__body {
@@ -273,12 +302,33 @@
     }
 
     .filter-modal__footer {
+        flex-direction: column;
         padding-right: 16px;
         padding-left: 16px;
     }
 
+    .filter-modal__reset,
+    .filter-modal__apply {
+        width: 100%;
+    }
+
     .archive-message {
-        padding: 22px 16px;
+        min-height: 240px;
+        padding: 28px 16px;
+    }
+
+    #emptyResetButton,
+    .archive-button {
+        width: min(100%, 240px);
+        min-width: 0;
+    }
+
+    .notice-toggle-button {
+        min-height: 40px;
+    }
+
+    .notice-panel {
+        padding: 18px 14px;
     }
 
     .page-top-button {
@@ -303,11 +353,12 @@
     }
 
     .archive-toolbar {
-        padding: 14px;
+        padding: 12px;
     }
 
     .archive-button,
-    .archive-sort__select {
+    .archive-sort__select,
+    .filter-button {
         font-size: 0.84rem;
     }
 
@@ -316,13 +367,17 @@
     }
 
     .filter-modal__close {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
     }
 
     .footer-navigation__list {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: center;
+    }
+
+    .footer-navigation__list li:not(:last-child)::after {
+        margin-right: 4px;
+        margin-left: 4px;
     }
 }
 
@@ -340,13 +395,11 @@
         width: min(760px, 100%);
         max-height: 100vh;
         margin: 0 auto;
-
         border-radius: 0;
     }
 
     .filter-modal__header {
         min-height: 58px;
-
         border-radius: 0;
     }
 
@@ -365,17 +418,17 @@
 ======================================== */
 
 @media (hover: none) and (pointer: coarse) {
-    .publication-card:hover {
-        transform: none;
-    }
-
-    .publication-card:hover .publication-card__image {
+    .publication-card__link:hover .publication-card__image-area,
+    .publication-card__link:hover .publication-card__image {
         transform: none;
     }
 
     .archive-button,
-    .archive-keyword__button,
+    .filter-button,
     .filter-modal__close,
+    .filter-modal__reset,
+    .filter-modal__apply,
+    .notice-toggle-button,
     .page-top-button,
     .site-header__menu-button {
         -webkit-tap-highlight-color: transparent;
@@ -393,11 +446,13 @@
     .archive-toolbar,
     .active-filters,
     .filter-modal,
+    .notice-section,
     .page-top-button {
         display: none !important;
     }
 
     .archive-main {
+        width: 100%;
         padding: 0;
     }
 
@@ -406,14 +461,14 @@
     }
 
     .publication-list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-
         gap: 24px;
     }
 
     .publication-card {
         break-inside: avoid;
+    }
 
+    .publication-card__image-area {
         box-shadow: none;
     }
 
