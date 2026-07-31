@@ -610,6 +610,29 @@
 
 
     <!-- ========================================
+         ご注意
+    ========================================= -->
+
+    <section class="notice-section">
+        <div class="notice-section__inner">
+            <button id="noticeToggleButton" class="notice-toggle-button" type="button" aria-controls="noticePanel" aria-expanded="false">
+                ご注意
+            </button>
+
+            <div id="noticePanel" class="notice-panel" hidden>
+                <p>※リーフレットや会誌類の制作物の発行者は全て「法政大学アイドルマスター研究会」です。</p>
+                <p>※リーフレットや会誌類の制作物はバンダイナムコエンターテインメント様、並びにその他各所とは一切無関係に制作されております。</p>
+                <p>※リーフレットや会誌類の制作物の内容やそれに関する情報、記載されたURL等は制作した当時のままとなっており、現在の情報とは異なっている場合がございます。あらかじめご了承ください。</p>
+                <p>※リーフレットや会誌類の制作物について、ご協力いただいたアイマス関係者様並びにイラストレーター様へのお問い合わせ等はご遠慮ください。</p>
+                <p>※電子版リーフレットの公開は予告なく終了する場合があります。</p>
+                <p>※リーフレットや会誌類の制作物の一部又は全部を無断で複写・複製（コピー・スキャン・デジタル化等）・転載すること及びオークションサイトなどを通じて有償で譲渡する行為は禁止とさせていただきます。当会はそうした行為により発生したトラブルの一切の責任を負いません。</p>
+                <p>※本サイト上では、無償または有償で頒布した一部の出版物を、「リーフレット」と総称している場合があります。</p>
+                <p>※リーフレットや会誌類の制作物について問い合わせ等がございましたら本サイト内の「お問い合わせフォーム」よりご連絡ください。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
          フッター
     ========================================= -->
     <footer class="site-footer">
@@ -644,5 +667,17 @@
     <!-- JavaScript -->
   <script type="module" src="./main.js"></script>
 　<script type="module" src="./validate.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+ const b=document.getElementById("noticeToggleButton");
+ const p=document.getElementById("noticePanel");
+ if(!b||!p)return;
+ b.addEventListener("click",()=>{
+   const open=b.getAttribute("aria-expanded")==="true";
+   b.setAttribute("aria-expanded",String(!open));
+   p.hidden=open;
+ });
+});
+</script>
 </body>
 </html>
