@@ -1679,3 +1679,120 @@ body.is-modal-open {
     border-color:#9a9a9a;
     color:#ffffff;
 }
+
+/* ========================================
+   単一ブランドのみ表示
+======================================== */
+
+.single-brand-filter {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #eadfd6;
+}
+
+.single-brand-filter__label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 12px 15px;
+    border: 1px solid #ead8c8;
+    border-radius: 12px;
+    background: #fffaf6;
+    color: #4f4a46;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.single-brand-filter__label:hover {
+    border-color: #e3a372;
+    background: #fff6ef;
+    box-shadow: 0 5px 14px rgba(118, 69, 35, 0.07);
+}
+
+.single-brand-filter__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.single-brand-filter__visual {
+    position: relative;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cdb8a7;
+    border-radius: 6px;
+    background: #ffffff;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.single-brand-filter__input:checked +
+.single-brand-filter__visual {
+    border-color: #f47a24;
+    background: #f47a24;
+}
+
+.single-brand-filter__input:checked +
+.single-brand-filter__visual::after {
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 6px;
+    height: 11px;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    content: "";
+    transform: rotate(45deg);
+}
+
+.single-brand-filter__input:focus-visible +
+.single-brand-filter__visual {
+    outline: 3px solid rgba(244, 122, 36, 0.22);
+    outline-offset: 3px;
+}
+
+.single-brand-filter__text {
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.single-brand-filter__note {
+    margin: 8px 4px 0;
+    color: #81776f;
+    font-size: 0.76rem;
+    line-height: 1.7;
+}
+
+@media screen and (max-width: 700px) {
+    .single-brand-filter {
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+
+    .single-brand-filter__label {
+        align-items: flex-start;
+        min-height: 50px;
+        padding: 12px;
+    }
+
+    .single-brand-filter__text {
+        font-size: 0.82rem;
+    }
+
+    .single-brand-filter__note {
+        font-size: 0.72rem;
+    }
+}
+
+
