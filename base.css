@@ -1062,7 +1062,7 @@ body.is-navigation-open {
 
 .site-header__logo-image-full{
     display:block;
-    width:min(760px,100%);
+    width:min(440px,100%);
     height:auto;
 }
 
@@ -1080,7 +1080,7 @@ body.is-navigation-open {
     }
 
     .site-header__logo-image-full{
-        width:520px;
+        width:360px;
     }
 }
 
@@ -1092,6 +1092,6 @@ body.is-navigation-open {
 
     .site-header__logo-image-full{
         width:100%;
-        max-width:330px;
+        max-width:240px;
     }
 }
