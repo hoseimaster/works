@@ -175,7 +175,8 @@ function createInitialFilters() {
         brands: [],
         years: [],
         interview: [],
-        siteStatuses: []
+        siteStatuses: [],
+        singleBrandOnly: false
     };
 }
 
