@@ -14,7 +14,8 @@ const DEFAULT_FILTERS = {
     brands: [],
     years: [],
     interview: [],
-    siteStatuses: []
+    siteStatuses: [],
+    singleBrandOnly: false
 };
 
 const DEFAULT_STATE = {
@@ -288,6 +289,20 @@ export function createArchiveStore(
             }
         );
 
+        if (
+            Object.prototype
+                .hasOwnProperty
+                .call(
+                    filters,
+                    "singleBrandOnly"
+                )
+        ) {
+            nextFilters.singleBrandOnly =
+                Boolean(
+                    filters.singleBrandOnly
+                );
+        }
+
         setState({
             filters:
                 nextFilters
@@ -397,6 +412,17 @@ export function createArchiveStore(
             filterKey === "keyword"
         ) {
             setKeyword("");
+            return;
+        }
+
+        if (
+            filterKey ===
+            "singleBrandOnly"
+        ) {
+            setFilters({
+                singleBrandOnly: false
+            });
+
             return;
         }
 
@@ -571,6 +597,11 @@ function normalizeFilters(
         coverTypes:
             normalizeFilterArray(
                 source.coverTypes
+            ),
+
+        singleBrandOnly:
+            Boolean(
+                source.singleBrandOnly
             )
     };
 }
@@ -712,7 +743,8 @@ function createDefaultFilters() {
         brands: [],
         years: [],
         interview: [],
-        siteStatuses: []
+        siteStatuses: [],
+        singleBrandOnly: false
     };
 }
 
@@ -799,7 +831,14 @@ function cloneState(
                 ...state
                     .filters
                     .siteStatuses
-            ]
+            ],
+
+            singleBrandOnly:
+                Boolean(
+                    state
+                        .filters
+                        .singleBrandOnly
+                )
         },
 
         sortType:
@@ -874,7 +913,13 @@ function areFiltersEqual(
 ) {
     if (
         filtersA.keyword !==
-        filtersB.keyword
+            filtersB.keyword ||
+        Boolean(
+            filtersA.singleBrandOnly
+        ) !==
+        Boolean(
+            filtersB.singleBrandOnly
+        )
     ) {
         return false;
     }
