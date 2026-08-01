@@ -594,11 +594,6 @@ function normalizeFilters(
                 source.siteStatuses
             ),
 
-        coverTypes:
-            normalizeFilterArray(
-                source.coverTypes
-            ),
-
         singleBrandOnly:
             Boolean(
                 source.singleBrandOnly
