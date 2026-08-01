@@ -1686,8 +1686,8 @@ body.is-modal-open {
 
 .single-brand-filter {
     margin-top: 18px;
-    padding-top: 18px;
-    border-top: 1px solid #eadfd6;
+    padding-top: 0;
+    border-top: 0;
 }
 
 .single-brand-filter__label {
@@ -1697,21 +1697,22 @@ body.is-modal-open {
     gap: 12px;
     min-height: 52px;
     padding: 12px 15px;
-    border: 1px solid #ead8c8;
+    border: 1px solid #e4e1de;
     border-radius: 12px;
-    background: #fffaf6;
-    color: #4f4a46;
+    background: #f6f5f4;
+    color: #555555;
     cursor: pointer;
     transition:
         border-color 0.2s ease,
         background-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        color 0.2s ease;
 }
 
 .single-brand-filter__label:hover {
-    border-color: #e3a372;
-    background: #fff6ef;
-    box-shadow: 0 5px 14px rgba(118, 69, 35, 0.07);
+    border-color: #d1ceca;
+    background: #f0efed;
+    box-shadow: 0 5px 14px rgba(55, 55, 55, 0.06);
 }
 
 .single-brand-filter__input {
@@ -1728,7 +1729,7 @@ body.is-modal-open {
     flex: 0 0 22px;
     width: 22px;
     height: 22px;
-    border: 2px solid #cdb8a7;
+    border: 2px solid #bdbdbd;
     border-radius: 6px;
     background: #ffffff;
     transition:
@@ -1738,8 +1739,8 @@ body.is-modal-open {
 
 .single-brand-filter__input:checked +
 .single-brand-filter__visual {
-    border-color: #f47a24;
-    background: #f47a24;
+    border-color: #8f8f8f;
+    background: #8f8f8f;
 }
 
 .single-brand-filter__input:checked +
@@ -1755,9 +1756,18 @@ body.is-modal-open {
     transform: rotate(45deg);
 }
 
+.single-brand-filter__label:has(
+    .single-brand-filter__input:checked
+) {
+    border-color: #b9b6b2;
+    background: #e8e6e3;
+    color: #333333;
+    box-shadow: 0 4px 12px rgba(55, 55, 55, 0.07);
+}
+
 .single-brand-filter__input:focus-visible +
 .single-brand-filter__visual {
-    outline: 3px solid rgba(244, 122, 36, 0.22);
+    outline: 3px solid rgba(120, 120, 120, 0.22);
     outline-offset: 3px;
 }
 
@@ -1769,7 +1779,7 @@ body.is-modal-open {
 
 .single-brand-filter__note {
     margin: 8px 4px 0;
-    color: #81776f;
+    color: #777777;
     font-size: 0.76rem;
     line-height: 1.7;
 }
@@ -1777,7 +1787,7 @@ body.is-modal-open {
 @media screen and (max-width: 700px) {
     .single-brand-filter {
         margin-top: 16px;
-        padding-top: 16px;
+        padding-top: 0;
     }
 
     .single-brand-filter__label {
@@ -1794,6 +1804,5 @@ body.is-modal-open {
         font-size: 0.72rem;
     }
 }
-
 
 
