@@ -249,11 +249,6 @@ function getFilterElements() {
                 "siteStatusFilterOptions"
             ),
 
-        coverTypeFilterOptions:
-            document.getElementById(
-                "coverTypeFilterOptions"
-            ),
-
         applyFilterButton:
             document.getElementById(
                 "applyFilterButton"
@@ -1672,8 +1667,7 @@ function updateResetButtonState(
             "categories",
             "brands",
             "interview",
-            "siteStatuses",
-            "coverTypes"
+            "siteStatuses"
         ].some((key) => {
             return (
                 filters[key] ?? []
