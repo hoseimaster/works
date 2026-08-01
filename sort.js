@@ -1,255 +1,591 @@
 /**
  * 制作物アーカイブ
- * 並び替え処理
+ * 状態管理
  */
 
 
 /* ========================================
-   並び順設定
+   初期状態
 ======================================== */
 
-const SORT_OPTIONS = {
-    "date-desc": {
-        label: "発行日の新しい順",
-        compare:
-            compareByDateDescending
-    },
-
-    "date-asc": {
-        label: "発行日の古い順",
-        compare:
-            compareByDateAscending
-    },
-
-    "title-asc": {
-        label: "タイトル昇順",
-        compare:
-            compareByTitleAscending
-    },
-
-    "title-desc": {
-        label: "タイトル降順",
-        compare:
-            compareByTitleDescending
-    }
+const DEFAULT_FILTERS = {
+    keyword: "",
+    categories: [],
+    brands: [],
+    years: [],
+    interview: [],
+    siteStatuses: [],
+    coverTypes: [],
+    singleBrandOnly: false
 };
 
-const DEFAULT_SORT_TYPE =
-    "date-desc";
+const DEFAULT_STATE = {
+    publications: [],
+    visiblePublications: [],
+    filters: DEFAULT_FILTERS,
+    sortType: "date-desc"
+};
 
 
 /* ========================================
-   初期化
+   ストア作成
 ======================================== */
 
 /**
- * 並び替え機能を初期化します。
+ * アーカイブ全体の状態管理ストアを作成します。
  *
- * @param {{
- *   store: object
- * }} options
+ * @param {object} initialState
+ * @returns {object}
  */
-export function initializeSort({
-    store
-}) {
-    if (!store) {
-        throw new Error(
-            "sort.jsの初期化にはstoreが必要です。"
-        );
-    }
+export function createArchiveStore(
+    initialState = {}
+) {
+    let state =
+        normalizeState({
+            ...DEFAULT_STATE,
+            ...initialState,
 
-    const elements =
-        getSortElements();
-
-    if (!elements.sortSelect) {
-        return;
-    }
-
-    renderSortOptions(
-        elements.sortSelect
-    );
-
-    elements.sortSelect
-        .addEventListener(
-            "change",
-            () => {
-                const sortType =
-                    normalizeSortType(
-                        elements
-                            .sortSelect
-                            .value
-                    );
-
-                store.setSortType(
-                    sortType
-                );
-
-                applySortToStore({
-                    store,
-                    sortType
-                });
+            filters: {
+                ...DEFAULT_FILTERS,
+                ...(
+                    initialState.filters ??
+                    {}
+                )
             }
+        });
+
+    const listeners =
+        new Set();
+
+    /**
+     * 現在の状態を取得します。
+     *
+     * 外部から直接変更されないよう、
+     * 配列とオブジェクトを複製して返します。
+     */
+    function getState() {
+        return cloneState(
+            state
         );
+    }
 
-    let previousSortSignature = "";
-
-    store.subscribe((state) => {
-        const sortType =
-            normalizeSortType(
-                state.sortType
-            );
-
+    /**
+     * 状態変更を購読します。
+     *
+     * 登録直後にも現在の状態を通知します。
+     *
+     * @param {Function} listener
+     * @returns {Function}
+     */
+    function subscribe(
+        listener
+    ) {
         if (
-            elements.sortSelect.value !==
-            sortType
+            typeof listener !==
+            "function"
         ) {
-            elements.sortSelect.value =
-                sortType;
+            throw new TypeError(
+                "subscribeには関数を指定してください。"
+            );
         }
 
-        const signature =
-            createSortSignature(
-                state.visiblePublications,
-                sortType
+        listeners.add(
+            listener
+        );
+
+        listener(
+            getState()
+        );
+
+        return () => {
+            listeners.delete(
+                listener
             );
+        };
+    }
+
+    /**
+     * 状態を部分更新します。
+     *
+     * @param {object|Function} updater
+     */
+    function setState(
+        updater
+    ) {
+        const currentState =
+            getState();
+
+        const partialState =
+            typeof updater ===
+            "function"
+                ? updater(
+                    currentState
+                )
+                : updater;
 
         if (
-            signature ===
-            previousSortSignature
+            !partialState ||
+            typeof partialState !==
+                "object" ||
+            Array.isArray(
+                partialState
+            )
         ) {
             return;
         }
 
-        previousSortSignature =
-            signature;
+        const nextState =
+            normalizeState({
+                ...state,
+                ...partialState,
 
-        const sortedPublications =
-            sortPublications(
-                state.visiblePublications,
-                sortType
-            );
+                filters:
+                    partialState.filters
+                        ? {
+                            ...state.filters,
+                            ...partialState.filters
+                        }
+                        : state.filters
+            });
 
         if (
-            !arePublicationListsEqual(
-                state.visiblePublications,
-                sortedPublications
+            areStatesEqual(
+                state,
+                nextState
             )
         ) {
-            store.setVisiblePublications(
-                sortedPublications
-            );
+            return;
         }
-    });
-}
+
+        state =
+            nextState;
+
+        notifyListeners(
+            listeners,
+            state
+        );
+    }
 
 
-/* ========================================
-   DOM取得
-======================================== */
+    /* ========================================
+       制作物データ
+    ======================================== */
 
-function getSortElements() {
-    return {
-        sortSelect:
-            document.getElementById(
-                "sortSelect"
-            ) ??
-            document.getElementById(
-                "sortOrder"
+    /**
+     * 制作物全件を設定します。
+     *
+     * @param {Array<object>} publications
+     */
+    function setPublications(
+        publications
+    ) {
+        const normalizedPublications =
+            normalizePublications(
+                publications
+            );
+
+        setState({
+            publications:
+                normalizedPublications
+        });
+    }
+
+    /**
+     * 現在表示する制作物を設定します。
+     *
+     * @param {Array<object>} publications
+     */
+    function setVisiblePublications(
+        publications
+    ) {
+        const normalizedPublications =
+            normalizePublications(
+                publications
+            );
+
+        setState({
+            visiblePublications:
+                normalizedPublications
+        });
+    }
+
+
+    /* ========================================
+       キーワード
+    ======================================== */
+
+    /**
+     * キーワードを設定します。
+     *
+     * @param {*} keyword
+     */
+    function setKeyword(
+        keyword
+    ) {
+        setState({
+            filters: {
+                keyword:
+                    normalizeKeyword(
+                        keyword
+                    )
+            }
+        });
+    }
+
+
+    /* ========================================
+       フィルター
+    ======================================== */
+
+    /**
+     * フィルターを部分更新します。
+     *
+     * @param {object} filters
+     */
+    function setFilters(
+        filters
+    ) {
+        if (
+            !filters ||
+            typeof filters !==
+                "object" ||
+            Array.isArray(
+                filters
             )
+        ) {
+            return;
+        }
+
+        const nextFilters = {};
+
+        if (
+            Object.prototype
+                .hasOwnProperty
+                .call(
+                    filters,
+                    "keyword"
+                )
+        ) {
+            nextFilters.keyword =
+                normalizeKeyword(
+                    filters.keyword
+                );
+        }
+
+        FILTER_ARRAY_KEYS.forEach(
+            (key) => {
+                if (
+                    Object.prototype
+                        .hasOwnProperty
+                        .call(
+                            filters,
+                            key
+                        )
+                ) {
+                    nextFilters[key] =
+                        normalizeFilterArray(
+                            filters[key]
+                        );
+                }
+            }
+        );
+
+        setState({
+            filters:
+                nextFilters
+        });
+    }
+
+    /**
+     * 指定したフィルター項目へ値を追加します。
+     *
+     * @param {string} filterKey
+     * @param {*} value
+     */
+    function addFilterValue(
+        filterKey,
+        value
+    ) {
+        if (
+            !FILTER_ARRAY_KEYS.includes(
+                filterKey
+            )
+        ) {
+            return;
+        }
+
+        const normalizedValue =
+            normalizeFilterValue(
+                value
+            );
+
+        if (!normalizedValue) {
+            return;
+        }
+
+        const currentValues =
+            state.filters[
+                filterKey
+            ] ?? [];
+
+        if (
+            currentValues.includes(
+                normalizedValue
+            )
+        ) {
+            return;
+        }
+
+        setFilters({
+            [filterKey]: [
+                ...currentValues,
+                normalizedValue
+            ]
+        });
+    }
+
+    /**
+     * 指定したフィルター値を削除します。
+     *
+     * @param {string} filterKey
+     * @param {*} value
+     */
+    function removeFilterValue(
+        filterKey,
+        value
+    ) {
+        if (
+            !FILTER_ARRAY_KEYS.includes(
+                filterKey
+            )
+        ) {
+            return;
+        }
+
+        const normalizedValue =
+            normalizeFilterValue(
+                value
+            );
+
+        const nextValues =
+            (
+                state.filters[
+                    filterKey
+                ] ?? []
+            ).filter(
+                (currentValue) => {
+                    return (
+                        currentValue !==
+                        normalizedValue
+                    );
+                }
+            );
+
+        setFilters({
+            [filterKey]:
+                nextValues
+        });
+    }
+
+    /**
+     * 指定したフィルターグループを解除します。
+     *
+     * @param {string} filterKey
+     */
+    function clearFilterGroup(
+        filterKey
+    ) {
+        if (
+            filterKey === "keyword"
+        ) {
+            setKeyword("");
+            return;
+        }
+
+        if (
+            !FILTER_ARRAY_KEYS.includes(
+                filterKey
+            )
+        ) {
+            return;
+        }
+
+        setFilters({
+            [filterKey]: []
+        });
+    }
+
+    /**
+     * 全フィルターを初期化します。
+     */
+    function resetFilters() {
+        setState({
+            filters:
+                createDefaultFilters()
+        });
+    }
+
+
+    /* ========================================
+       並び順
+    ======================================== */
+
+    /**
+     * 並び順を設定します。
+     *
+     * @param {*} sortType
+     */
+    function setSortType(
+        sortType
+    ) {
+        setState({
+            sortType:
+                normalizeSortType(
+                    sortType
+                )
+        });
+    }
+
+
+    /* ========================================
+       公開API
+    ======================================== */
+
+    return {
+        getState,
+        subscribe,
+        setState,
+
+        setPublications,
+        setVisiblePublications,
+
+        setKeyword,
+        setFilters,
+        addFilterValue,
+        removeFilterValue,
+        clearFilterGroup,
+        resetFilters,
+
+        setSortType
     };
 }
 
 
 /* ========================================
-   選択肢描画
+   定数
 ======================================== */
 
-/**
- * 並び順の選択肢を描画します。
- *
- * @param {HTMLSelectElement} select
- */
-function renderSortOptions(
-    select
+const FILTER_ARRAY_KEYS = [
+    "categories",
+    "brands",
+    "years",
+    "interview",
+    "siteStatuses",
+    "coverTypes"
+];
+
+const VALID_SORT_TYPES = [
+    "date-desc",
+    "date-asc",
+    "title-asc",
+    "title-desc"
+];
+
+
+/* ========================================
+   状態正規化
+======================================== */
+
+function normalizeState(
+    rawState
 ) {
-    const currentValue =
-        normalizeSortType(
-            select.value
+    const publications =
+        normalizePublications(
+            rawState.publications
         );
 
-    const fragment =
-        document.createDocumentFragment();
+    const visiblePublications =
+        normalizePublications(
+            rawState.visiblePublications
+        );
 
-    Object.entries(
-        SORT_OPTIONS
-    ).forEach(
-        ([value, config]) => {
-            const option =
-                document.createElement(
-                    "option"
-                );
+    return {
+        publications,
 
-            option.value =
-                value;
+        visiblePublications,
 
-            option.textContent =
-                config.label;
+        filters:
+            normalizeFilters(
+                rawState.filters
+            ),
 
-            fragment.appendChild(
-                option
-            );
-        }
-    );
-
-    select.replaceChildren(
-        fragment
-    );
-
-    select.value =
-        currentValue;
+        sortType:
+            normalizeSortType(
+                rawState.sortType
+            )
+    };
 }
 
 
-/* ========================================
-   ストア反映
-======================================== */
+function normalizeFilters(
+    filters
+) {
+    const source =
+        filters &&
+        typeof filters ===
+            "object" &&
+        !Array.isArray(
+            filters
+        )
+            ? filters
+            : {};
 
-function applySortToStore({
-    store,
-    sortType
-}) {
-    const state =
-        store.getState();
+    return {
+        keyword:
+            normalizeKeyword(
+                source.keyword
+            ),
 
-    const sortedPublications =
-        sortPublications(
-            state.visiblePublications,
-            sortType
-        );
+        categories:
+            normalizeFilterArray(
+                source.categories
+            ),
 
-    store.setVisiblePublications(
-        sortedPublications
-    );
+        brands:
+            normalizeFilterArray(
+                source.brands
+            ),
+
+        years:
+            normalizeFilterArray(
+                source.years
+            ),
+
+        interview:
+            normalizeFilterArray(
+                source.interview
+            ),
+
+        siteStatuses:
+            normalizeFilterArray(
+                source.siteStatuses
+            ),
+
+        coverTypes:
+            normalizeFilterArray(
+                source.coverTypes
+            ),
+
+        singleBrandOnly:
+            Boolean(
+                source.singleBrandOnly
+            )
+    };
 }
 
 
-/* ========================================
-   並び替え本体
-======================================== */
-
-/**
- * 制作物一覧を並び替えます。
- *
- * 元の配列は変更しません。
- *
- * @param {Array<object>} publications
- * @param {string} sortType
- * @returns {Array<object>}
- */
-export function sortPublications(
-    publications = [],
-    sortType =
-        DEFAULT_SORT_TYPE
+function normalizePublications(
+    publications
 ) {
     if (
         !Array.isArray(
@@ -259,333 +595,88 @@ export function sortPublications(
         return [];
     }
 
-    const normalizedSortType =
-        normalizeSortType(
-            sortType
-        );
-
-    const compare =
-        SORT_OPTIONS[
-            normalizedSortType
-        ].compare;
-
     return publications
-        .map(
-            (
-                publication,
-                originalIndex
-            ) => {
-                return {
-                    publication,
-                    originalIndex
-                };
-            }
-        )
-        .sort(
-            (itemA, itemB) => {
-                const result =
-                    compare(
-                        itemA.publication,
-                        itemB.publication
-                    );
-
-                if (result !== 0) {
-                    return result;
-                }
-
-                /*
-                 * 比較結果が同じ場合は
-                 * 元の順番を保持します。
-                 */
+        .filter(
+            (publication) => {
                 return (
-                    itemA.originalIndex -
-                    itemB.originalIndex
+                    publication &&
+                    typeof publication ===
+                        "object" &&
+                    !Array.isArray(
+                        publication
+                    )
                 );
             }
         )
         .map(
-            (item) =>
-                item.publication
+            (publication) => {
+                return {
+                    ...publication,
+
+                    brands:
+                        Array.isArray(
+                            publication.brands
+                        )
+                            ? [
+                                ...publication
+                                    .brands
+                            ]
+                            : [],
+
+                    siteStatuses:
+                        Array.isArray(
+                            publication
+                                .siteStatuses
+                        )
+                            ? [
+                                ...publication
+                                    .siteStatuses
+                            ]
+                            : []
+                };
+            }
         );
 }
 
 
-/* ========================================
-   日付順
-======================================== */
-
-function compareByDateDescending(
-    publicationA,
-    publicationB
+function normalizeKeyword(
+    keyword
 ) {
-    return comparePublicationDates(
-        publicationA,
-        publicationB,
-        "desc"
-    );
+    return String(
+        keyword ?? ""
+    )
+        .normalize("NFKC")
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .trim();
 }
 
 
-function compareByDateAscending(
-    publicationA,
-    publicationB
+function normalizeFilterArray(
+    values
 ) {
-    return comparePublicationDates(
-        publicationA,
-        publicationB,
-        "asc"
-    );
+    if (!Array.isArray(values)) {
+        return [];
+    }
+
+    const normalizedValues =
+        values
+            .map(
+                normalizeFilterValue
+            )
+            .filter(Boolean);
+
+    return [
+        ...new Set(
+            normalizedValues
+        )
+    ];
 }
 
 
-/**
- * 発行日を比較します。
- *
- * 不正な日付・未入力の日付は、
- * 昇順・降順のどちらでも最後に配置します。
- *
- * @param {object} publicationA
- * @param {object} publicationB
- * @param {"asc"|"desc"} direction
- * @returns {number}
- */
-function comparePublicationDates(
-    publicationA,
-    publicationB,
-    direction
-) {
-    const dateA =
-        getDateTimestamp(
-            publicationA
-                ?.publishDate
-        );
-
-    const dateB =
-        getDateTimestamp(
-            publicationB
-                ?.publishDate
-        );
-
-    const isValidA =
-        Number.isFinite(dateA);
-
-    const isValidB =
-        Number.isFinite(dateB);
-
-    if (
-        !isValidA &&
-        !isValidB
-    ) {
-        return compareFallbackValues(
-            publicationA,
-            publicationB
-        );
-    }
-
-    if (!isValidA) {
-        return 1;
-    }
-
-    if (!isValidB) {
-        return -1;
-    }
-
-    if (dateA !== dateB) {
-        return direction === "asc"
-            ? dateA - dateB
-            : dateB - dateA;
-    }
-
-    return compareFallbackValues(
-        publicationA,
-        publicationB
-    );
-}
-
-
-/**
- * YYYY-MM-DD形式の日付を
- * タイムスタンプへ変換します。
- *
- * 不正な値の場合はNaNを返します。
- *
- * @param {*} value
- * @returns {number}
- */
-function getDateTimestamp(
-    value
-) {
-    const dateText =
-        String(
-            value ?? ""
-        ).trim();
-
-    if (
-        !/^\d{4}-\d{2}-\d{2}$/
-            .test(dateText)
-    ) {
-        return Number.NaN;
-    }
-
-    const [
-        year,
-        month,
-        day
-    ] = dateText
-        .split("-")
-        .map(Number);
-
-    const date =
-        new Date(
-            year,
-            month - 1,
-            day
-        );
-
-    const isValid =
-        date.getFullYear() ===
-            year &&
-        date.getMonth() ===
-            month - 1 &&
-        date.getDate() ===
-            day;
-
-    if (!isValid) {
-        return Number.NaN;
-    }
-
-    return date.getTime();
-}
-
-
-/* ========================================
-   タイトル順
-======================================== */
-
-function compareByTitleAscending(
-    publicationA,
-    publicationB
-) {
-    const result =
-        compareJapaneseText(
-            publicationA?.title,
-            publicationB?.title
-        );
-
-    if (result !== 0) {
-        return result;
-    }
-
-    return compareFallbackValues(
-        publicationA,
-        publicationB
-    );
-}
-
-
-function compareByTitleDescending(
-    publicationA,
-    publicationB
-) {
-    const result =
-        compareJapaneseText(
-            publicationB?.title,
-            publicationA?.title
-        );
-
-    if (result !== 0) {
-        return result;
-    }
-
-    return compareFallbackValues(
-        publicationA,
-        publicationB
-    );
-}
-
-
-/* ========================================
-   補助比較
-======================================== */
-
-/**
- * タイトルなどの文字列を日本語向けに比較します。
- *
- * @param {*} valueA
- * @param {*} valueB
- * @returns {number}
- */
-function compareJapaneseText(
-    valueA,
-    valueB
-) {
-    const textA =
-        normalizeSortText(
-            valueA
-        );
-
-    const textB =
-        normalizeSortText(
-            valueB
-        );
-
-    if (
-        !textA &&
-        !textB
-    ) {
-        return 0;
-    }
-
-    if (!textA) {
-        return 1;
-    }
-
-    if (!textB) {
-        return -1;
-    }
-
-    return textA.localeCompare(
-        textB,
-        "ja",
-        {
-            sensitivity: "base",
-            numeric: true,
-            ignorePunctuation: true
-        }
-    );
-}
-
-
-/**
- * 日付やタイトルが同一の場合の
- * 安定した比較順を作ります。
- *
- * @param {object} publicationA
- * @param {object} publicationB
- * @returns {number}
- */
-function compareFallbackValues(
-    publicationA,
-    publicationB
-) {
-    const titleResult =
-        compareJapaneseText(
-            publicationA?.title,
-            publicationB?.title
-        );
-
-    if (titleResult !== 0) {
-        return titleResult;
-    }
-
-    return compareJapaneseText(
-        publicationA?.id,
-        publicationB?.id
-    );
-}
-
-
-function normalizeSortText(
+function normalizeFilterValue(
     value
 ) {
     return String(
@@ -596,92 +687,315 @@ function normalizeSortText(
 }
 
 
-/* ========================================
-   並び順正規化
-======================================== */
-
 function normalizeSortType(
     sortType
 ) {
-    const normalized =
+    const normalizedSortType =
         String(
             sortType ?? ""
         ).trim();
 
-    return Object.prototype
-        .hasOwnProperty
-        .call(
-            SORT_OPTIONS,
-            normalized
-        )
-        ? normalized
-        : DEFAULT_SORT_TYPE;
+    return VALID_SORT_TYPES.includes(
+        normalizedSortType
+    )
+        ? normalizedSortType
+        : "date-desc";
 }
 
 
 /* ========================================
-   再実行判定
+   初期値作成
 ======================================== */
 
-function createSortSignature(
-    publications,
-    sortType
+function createDefaultFilters() {
+    return {
+        keyword: "",
+        categories: [],
+        brands: [],
+        years: [],
+        interview: [],
+        siteStatuses: [],
+        coverTypes: [],
+        singleBrandOnly: false
+    };
+}
+
+
+/* ========================================
+   購読通知
+======================================== */
+
+function notifyListeners(
+    listeners,
+    state
 ) {
-    if (
-        !Array.isArray(
-            publications
-        )
-    ) {
-        return JSON.stringify({
-            sortType,
-            publications: []
-        });
-    }
+    const snapshot =
+        cloneState(
+            state
+        );
 
-    return JSON.stringify({
-        sortType,
+    listeners.forEach(
+        (listener) => {
+            try {
+                listener(
+                    snapshot
+                );
+            } catch (error) {
+                console.error(
+                    "状態変更の通知中にエラーが発生しました。",
+                    error
+                );
+            }
+        }
+    );
+}
 
+
+/* ========================================
+   複製
+======================================== */
+
+function cloneState(
+    state
+) {
+    return {
         publications:
-            publications.map(
-                (publication) => {
-                    return [
-                        publication.id,
-                        publication.publishDate,
-                        publication.title
-                    ].join("|");
-                }
+            state.publications.map(
+                clonePublication
+            ),
+
+        visiblePublications:
+            state
+                .visiblePublications
+                .map(
+                    clonePublication
+                ),
+
+        filters: {
+            keyword:
+                state.filters.keyword,
+
+            categories: [
+                ...state
+                    .filters
+                    .categories
+            ],
+
+            brands: [
+                ...state
+                    .filters
+                    .brands
+            ],
+
+            years: [
+                ...state
+                    .filters
+                    .years
+            ],
+
+            interview: [
+                ...state
+                    .filters
+                    .interview
+            ],
+
+            siteStatuses: [
+                ...state
+                    .filters
+                    .siteStatuses
+            ],
+
+            coverTypes: [
+                ...state
+                    .filters
+                    .coverTypes
+            ],
+
+            singleBrandOnly:
+                Boolean(
+                    state.filters
+                        .singleBrandOnly
+                )
+        },
+
+        sortType:
+            state.sortType
+    };
+}
+
+
+function clonePublication(
+    publication
+) {
+    return {
+        ...publication,
+
+        brands:
+            Array.isArray(
+                publication.brands
             )
-    });
+                ? [
+                    ...publication
+                        .brands
+                ]
+                : [],
+
+        siteStatuses:
+            Array.isArray(
+                publication
+                    .siteStatuses
+            )
+                ? [
+                    ...publication
+                        .siteStatuses
+                ]
+                : []
+    };
 }
 
 
 /* ========================================
-   配列比較
+   状態比較
 ======================================== */
 
-function arePublicationListsEqual(
-    listA,
-    listB
+function areStatesEqual(
+    stateA,
+    stateB
+) {
+    return (
+        stateA.sortType ===
+            stateB.sortType &&
+
+        areFiltersEqual(
+            stateA.filters,
+            stateB.filters
+        ) &&
+
+        arePublicationArraysEqual(
+            stateA.publications,
+            stateB.publications
+        ) &&
+
+        arePublicationArraysEqual(
+            stateA.visiblePublications,
+            stateB.visiblePublications
+        )
+    );
+}
+
+
+function areFiltersEqual(
+    filtersA,
+    filtersB
 ) {
     if (
-        !Array.isArray(listA) ||
-        !Array.isArray(listB)
+        filtersA.keyword !==
+            filtersB.keyword ||
+        Boolean(
+            filtersA.singleBrandOnly
+        ) !==
+        Boolean(
+            filtersB.singleBrandOnly
+        )
     ) {
         return false;
     }
 
+    return FILTER_ARRAY_KEYS.every(
+        (key) => {
+            return areStringArraysEqual(
+                filtersA[key],
+                filtersB[key]
+            );
+        }
+    );
+}
+
+
+function areStringArraysEqual(
+    arrayA,
+    arrayB
+) {
     if (
-        listA.length !==
-        listB.length
+        arrayA.length !==
+        arrayB.length
     ) {
         return false;
     }
 
-    return listA.every(
+    return arrayA.every(
+        (value, index) => {
+            return (
+                value ===
+                arrayB[index]
+            );
+        }
+    );
+}
+
+
+function arePublicationArraysEqual(
+    arrayA,
+    arrayB
+) {
+    if (
+        arrayA.length !==
+        arrayB.length
+    ) {
+        return false;
+    }
+
+    return arrayA.every(
         (publication, index) => {
+            const comparedPublication =
+                arrayB[index];
+
+            if (!comparedPublication) {
+                return false;
+            }
+
             return (
                 publication.id ===
-                listB[index]?.id
+                    comparedPublication.id &&
+
+                publication.title ===
+                    comparedPublication.title &&
+
+                publication.publishDate ===
+                    comparedPublication
+                        .publishDate &&
+
+                publication.category ===
+                    comparedPublication
+                        .category &&
+
+                publication.coverImage ===
+                    comparedPublication
+                        .coverImage &&
+
+                publication.detailUrl ===
+                    comparedPublication
+                        .detailUrl &&
+
+                publication.hasInterview ===
+                    comparedPublication
+                        .hasInterview &&
+
+                publication.coverType ===
+                    comparedPublication
+                        .coverType &&
+
+                areStringArraysEqual(
+                    publication.brands,
+                    comparedPublication
+                        .brands
+                ) &&
+
+                areStringArraysEqual(
+                    publication.siteStatuses,
+                    comparedPublication
+                        .siteStatuses
+                )
             );
         }
     );
