@@ -1105,7 +1105,7 @@ export const PUBLICATIONS = [
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim%40ster-cook-p%40d%21%21-%e4%bd%9c%e3%81%a3%e3%81%a6%e3%81%bf%e3%81%9f-vol-3/",
         publicationPermission: true,
         hasInterview: false,
-        siteStatuses: ["電子版公開中"],
+        siteStatuses: ["電子版販売中"],
         description: "アイマスに関する料理本になります。"
     },
 
