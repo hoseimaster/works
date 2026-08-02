@@ -1495,7 +1495,10 @@ export const PUBLICATIONS = [
         title: "HOSEI M@STER 2024",
         publishDate: "2024-08-12",
         category: "会誌",
-        brands: ["その他"],
+        brands: [
+           "学園アイドルマスター",
+           "その他"
+        ],
         keywords: ["ドリンク","運動","研究"],
         coverImage: "./publication-093.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseim-ster-2024/",
