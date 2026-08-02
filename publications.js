@@ -21,16 +21,16 @@ import {
  */
 export const PUBLICATION_CATEGORIES = [
     {
+        value: "リーフレット",
+        label: "リーフレット"
+    },
+    {
         value: "会誌",
         label: "会誌"
     },
     {
         value: "検定本",
         label: "検定本"
-    },
-    {
-        value: "リーフレット",
-        label: "リーフレット"
     },
     {
         value: "その他",
