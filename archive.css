@@ -745,8 +745,8 @@
 
 #emptyResetButton,
 .archive-button:focus-visible{
-    outline:none;
-    box-shadow:0 0 0 4px rgba(230,111,40,.18);
+    outline: none;
+    box-shadow: none;
 }
 
 
@@ -2156,3 +2156,10 @@ body.is-modal-open {
         font-size: 15px;
     }
 }
+
+/* 最終調整: 検索条件をリセット */
+.filter-modal__reset:focus-visible{
+    outline:none;
+    box-shadow:none;
+}
+
