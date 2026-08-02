@@ -1456,3 +1456,89 @@ body.is-navigation-open {
         line-height: 1.9;
     }
 }
+
+/* ========================================
+   最終調整
+   ご注意・検索外枠・フッター
+======================================== */
+
+/* 検索等の大外枠を少し薄く */
+.archive-toolbar {
+    border-color: #e8c9aa;
+    box-shadow:
+        0 10px 24px rgba(75, 45, 25, 0.06),
+        0 0 0 1px rgba(232, 201, 170, 0.16);
+}
+
+/* ご注意を中央へ配置 */
+.notice-section {
+    width: min(
+        760px,
+        calc(100% - var(--container-padding) * 2)
+    );
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px 0 24px;
+    text-align: center;
+}
+
+.notice-section__inner {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.notice-toggle-button {
+    justify-content: center;
+    width: min(100%, 560px);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 52px;
+    padding-left: 52px;
+    border-left-width: 1px;
+    text-align: center;
+}
+
+/* ご注意ボタン先頭の※を削除 */
+.notice-toggle-button::before {
+    display: none;
+    content: none;
+}
+
+.notice-panel {
+    width: 100%;
+    margin: 10px auto 0;
+    text-align: left;
+}
+
+/* 著作権表示の上側余白を小さく */
+.site-footer__copyright {
+    margin-top: 2px;
+}
+
+/* 著作権表示の直前にある要素の下余白を縮小 */
+.site-footer__top-link {
+    margin-bottom: 8px;
+}
+
+.footer-navigation {
+    margin-bottom: 4px;
+}
+
+@media screen and (max-width: 700px) {
+    .notice-section {
+        width: calc(100% - var(--container-padding) * 2);
+        padding-bottom: 18px;
+    }
+
+    .notice-toggle-button {
+        width: 100%;
+        padding-right: 44px;
+        padding-left: 44px;
+    }
+
+    .notice-panel {
+        text-align: left;
+    }
+}
+
