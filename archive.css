@@ -506,16 +506,18 @@
     display: inline-flex;
     align-items: center;
     min-height: 22px;
-    padding:
-        2px 8px;
+    padding: 2px 8px;
+
+    border: 1px solid #f3caa8;
     border-radius: 999px;
-    background: #f47a24;
-    color: #ffffff;
+
+    background: #f9dfc9;
+    color: #8a5429;
+
     font-size: 0.68rem;
     font-weight: 700;
     line-height: 1;
 }
-
 .publication-card__title {
     display: -webkit-box;
     overflow: hidden;
