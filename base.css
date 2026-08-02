@@ -1542,3 +1542,105 @@ body.is-navigation-open {
     }
 }
 
+/* ========================================
+   ページ上部へ戻るボタン
+   任意画像デザイン
+======================================== */
+
+.page-top-button {
+    position: fixed;
+    z-index: 1000;
+    right: 20px;
+    bottom: 20px;
+
+    display: block;
+
+    width: 72px;
+    height: 72px;
+    padding: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    background:
+        url("./page-top.png")
+        center / contain
+        no-repeat;
+    background-color: transparent;
+
+    color: transparent;
+
+    box-shadow: none;
+
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translateY(12px);
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+}
+
+.page-top-button[hidden] {
+    display: none;
+}
+
+.page-top-button.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.page-top-button:hover {
+    background-color: transparent;
+    opacity: 0.9;
+    transform:
+        translateY(-4px)
+        scale(1.05);
+}
+
+.page-top-button:active {
+    transform:
+        translateY(0)
+        scale(0.97);
+}
+
+.page-top-button:focus-visible {
+    outline: 3px solid rgba(120, 120, 120, 0.35);
+    outline-offset: 4px;
+}
+
+.page-top-button span,
+.page-top-button img,
+.page-top-button svg,
+.page-top-button::before,
+.page-top-button::after {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .page-top-button {
+        right: 12px;
+        bottom: 12px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-top-button {
+        transition: none;
+    }
+
+    .page-top-button:hover,
+    .page-top-button:active {
+        transform: none;
+    }
+}
+
+
