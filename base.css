@@ -1560,7 +1560,7 @@ body.is-navigation-open {
     border-radius: 0;
 
     background: transparent
-        url("../images/page-top-button.png")
+        url("./page-top.png")
         center center / contain
         no-repeat;
 
