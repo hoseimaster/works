@@ -18,7 +18,7 @@ import { getPublications } from "./publications.js";
         "学園アイドルマスター",
         "その他"
     ];
-    const VALID_SITE_STATUSES = ["電子版公開中", "非公開"];
+    const VALID_SITE_STATUSES = ["電子版公開中", "電子版販売中","非公開"];
 
     const errors = [];
     const warnings = [];
