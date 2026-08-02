@@ -86,6 +86,10 @@ export const SITE_STATUS_OPTIONS = [
     {
         value: "電子版公開中",
         label: "電子版公開中"
+    },
+     {
+        value: "電子版販売中",
+        label: "電子版販売中"
     }
 ];
 
