@@ -1644,3 +1644,9 @@ body.is-navigation-open {
 }
 
 
+
+/* 最終調整: ページ上部へ戻る */
+.page-top-button:focus-visible{
+    outline:none;
+    box-shadow:none;
+}
