@@ -2044,3 +2044,38 @@ body.is-modal-open {
     }
 }
 
+/* ========================================
+   検索条件の解説
+======================================== */
+
+.filter-group__note,
+.year-range-filter__note,
+.single-brand-filter__note {
+    margin: 12px 0 0;
+    padding: 0;
+    color: #8b8179;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    text-align: left;
+}
+
+.single-brand-filter__note {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+@media screen and (max-width: 700px) {
+    .filter-group__note,
+    .year-range-filter__note,
+    .single-brand-filter__note {
+        margin-top: 10px;
+        font-size: 0.72rem;
+        line-height: 1.65;
+        text-align: left;
+    }
+
+    .single-brand-filter__note {
+        margin-left: 0;
+        padding-left: 0;
+    }
+}
