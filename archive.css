@@ -1805,4 +1805,242 @@ body.is-modal-open {
     }
 }
 
+/* ========================================
+   最終調整
+   検索・タグ・リセット・ブランド・発行年
+======================================== */
+
+/* 検索・絞り込み・並び替え全体の外枠を少し薄く */
+.archive-toolbar {
+    border-color: #e8c9aa;
+    box-shadow:
+        0 10px 24px rgba(75, 45, 25, 0.06),
+        0 0 0 1px rgba(232, 201, 170, 0.16);
+}
+
+/* 絞り込みボタンを淡いオレンジに */
+.filter-button {
+    border-color: #eda46f;
+    background: #eda46f;
+    color: #ffffff;
+    box-shadow: 0 7px 16px rgba(226, 139, 83, 0.18);
+}
+
+.filter-button:hover {
+    border-color: #e4935c;
+    background: #e4935c;
+    box-shadow: 0 9px 20px rgba(226, 139, 83, 0.24);
+}
+
+.filter-button:active {
+    box-shadow: 0 3px 8px rgba(226, 139, 83, 0.16);
+}
+
+.filter-button .count {
+    background: #ffffff;
+    color: #d77d47;
+}
+
+/* 制作物カードの分類タグを淡い色に */
+.publication-card__category {
+    border: 1px solid #edb890;
+    background: #f8c9a5;
+    color: #754322;
+}
+
+/* 検索結果0件時のリセットボタンをグレーに */
+#emptyResetButton,
+.archive-button {
+    border-color: #c9c9c9;
+    background: #f5f5f5;
+    color: #666666;
+}
+
+#emptyResetButton:hover,
+.archive-button:hover {
+    border-color: #adadad;
+    background: #ebebeb;
+    color: #444444;
+    box-shadow: 0 6px 16px rgba(70, 70, 70, 0.12);
+}
+
+#emptyResetButton:active,
+.archive-button:active {
+    background: #e3e3e3;
+    box-shadow: none;
+}
+
+#emptyResetButton:focus-visible,
+.archive-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(120, 120, 120, 0.16);
+}
+
+/* 単一ブランドのみ表示：外側のボックスをなくし、チェックだけにする */
+.single-brand-filter {
+    margin-top: 16px;
+    padding: 0;
+    border: 0;
+}
+
+.single-brand-filter__label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #555555;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.single-brand-filter__label:hover,
+.single-brand-filter__label:has(
+    .single-brand-filter__input:checked
+) {
+    border: 0;
+    background: transparent;
+    color: #333333;
+    box-shadow: none;
+}
+
+.single-brand-filter__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.single-brand-filter__visual {
+    position: relative;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #bcbcbc;
+    border-radius: 4px;
+    background: #ffffff;
+}
+
+.single-brand-filter__input:checked +
+.single-brand-filter__visual {
+    border-color: #929292;
+    background: #929292;
+}
+
+.single-brand-filter__input:checked +
+.single-brand-filter__visual::after {
+    top: 2px;
+    left: 6px;
+    width: 5px;
+    height: 10px;
+}
+
+.single-brand-filter__input:focus-visible +
+.single-brand-filter__visual {
+    outline: 3px solid rgba(120, 120, 120, 0.20);
+    outline-offset: 3px;
+}
+
+.single-brand-filter__text {
+    font-size: 0.86rem;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.single-brand-filter__note {
+    margin: 6px 0 0 30px;
+    color: #858585;
+    font-size: 0.74rem;
+    line-height: 1.65;
+}
+
+/* スマートフォンの発行年を横並びのまま見やすく */
+@media screen and (max-width: 700px) {
+    .year-range-filter {
+        grid-template-columns:
+            minmax(0, 1fr)
+            24px
+            minmax(0, 1fr);
+        gap: 8px;
+        align-items: end;
+        width: 100%;
+        max-width: none;
+    }
+
+    .year-range-filter__field {
+        gap: 6px;
+    }
+
+    .year-range-filter__label {
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .year-range-filter__select {
+        min-height: 52px;
+        padding: 0 34px 0 12px;
+        border-radius: 12px;
+        background-color: #f7f6f5;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .year-range-filter__separator {
+        min-height: 52px;
+        color: #8a817a;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .year-range-filter__note {
+        margin-top: 10px;
+        font-size: 0.72rem;
+        line-height: 1.65;
+    }
+
+    .single-brand-filter {
+        margin-top: 14px;
+    }
+
+    .single-brand-filter__label {
+        align-items: center;
+        min-height: 28px;
+        padding: 0;
+    }
+
+    .single-brand-filter__text {
+        font-size: 0.8rem;
+    }
+
+    .single-brand-filter__note {
+        margin-left: 30px;
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .year-range-filter {
+        grid-template-columns:
+            minmax(0, 1fr)
+            18px
+            minmax(0, 1fr);
+        gap: 5px;
+    }
+
+    .year-range-filter__select {
+        padding-right: 26px;
+        padding-left: 8px;
+        font-size: 15px;
+    }
+
+    .year-range-filter__separator {
+        font-size: 0.9rem;
+    }
+}
 
