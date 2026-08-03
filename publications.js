@@ -34,7 +34,7 @@ export const PUBLICATION_CATEGORIES = [
     },
     {
         value: "その他",
-        label: "その他"
+        label: "その他出版物"
     },
     {
         value: "グッズ・特典",
