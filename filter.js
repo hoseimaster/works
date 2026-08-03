@@ -386,15 +386,21 @@ function initializeYearRange({
             }
         }
 
-        selectedYearFrom = yearFrom;
-        selectedYearTo = yearTo;
+        selectedYearFrom =
+            yearFrom || "";
+
+        selectedYearTo =
+            yearTo || "";
+
+        const selectedYears =
+            createSelectedYears(
+                years,
+                selectedYearFrom,
+                selectedYearTo
+            );
 
         store.setFilters({
-            years: createSelectedYears(
-                years,
-                yearFrom,
-                yearTo
-            )
+            years: selectedYears
         });
     };
 
@@ -1170,9 +1176,13 @@ function clearYearRange(
 ) {
     selectedYearFrom = "";
     selectedYearTo = "";
+
     if (
         elements.yearFromSelect
     ) {
+        elements.yearFromSelect
+            .selectedIndex = 0;
+
         elements.yearFromSelect
             .value = "";
     }
@@ -1180,6 +1190,9 @@ function clearYearRange(
     if (
         elements.yearToSelect
     ) {
+        elements.yearToSelect
+            .selectedIndex = 0;
+
         elements.yearToSelect
             .value = "";
     }
@@ -1570,20 +1583,51 @@ function synchronizeFilterInputs(
 
     if (
         elements.yearFromSelect &&
-        document.activeElement !==
-            elements.yearFromSelect
+        elements.yearToSelect
     ) {
-        elements.yearFromSelect.value =
-            selectedYearFrom;
-    }
+        const selectedYears =
+            Array.isArray(
+                filters.years
+            )
+                ? filters.years
+                : [];
 
-    if (
-        elements.yearToSelect &&
-        document.activeElement !==
+        if (
+            selectedYears.length === 0
+        ) {
+            selectedYearFrom = "";
+            selectedYearTo = "";
+
+            elements.yearFromSelect
+                .selectedIndex = 0;
+
             elements.yearToSelect
-    ) {
-        elements.yearToSelect.value =
-            selectedYearTo;
+                .selectedIndex = 0;
+
+            elements.yearFromSelect
+                .value = "";
+
+            elements.yearToSelect
+                .value = "";
+        } else {
+            if (
+                document.activeElement !==
+                elements.yearFromSelect
+            ) {
+                elements.yearFromSelect
+                    .value =
+                        selectedYearFrom;
+            }
+
+            if (
+                document.activeElement !==
+                elements.yearToSelect
+            ) {
+                elements.yearToSelect
+                    .value =
+                        selectedYearTo;
+            }
+        }
     }
 }
 
@@ -1666,6 +1710,7 @@ function updateResetButtonState(
         [
             "categories",
             "brands",
+            "years",
             "interview",
             "siteStatuses"
         ].some((key) => {
