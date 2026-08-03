@@ -8,7 +8,7 @@ import { getPublications } from "./publications.js";
 (() => {
     "use strict";
 
-    const VALID_CATEGORIES = ["会誌", "検定本", "リーフレット", "その他"];
+    const VALID_CATEGORIES = ["会誌", "検定本", "リーフレット", "その他", "グッズ・特典"];
     const VALID_BRANDS = [
         "THE IDOLM@STER",
         "シンデレラガールズ",
