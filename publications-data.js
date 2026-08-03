@@ -1590,9 +1590,31 @@ export const PUBLICATIONS = [
         siteStatuses: ["電子版公開中"],
         description: "作詞家の烏屋茶房様へのインタビューを掲載しております。"
     },
+   
+    {
+        id: "publication-99",
+        title: "ミニキャラシールセット",
+        publishDate: "2026-08-16",
+        category: "グッズ・特典",
+       brands: [
+            "THE IDOLM@STER",
+            "シンデレラガールズ",
+            "ミリオンライブ！",
+            "SideM",
+            "シャイニーカラーズ",
+            "学園アイドルマスター"
+        ],
+        keywords: ["HOSEIM@STER2026"],
+        coverImage: "./publication-099.png",
+        detailUrl: "",
+        publicationPermission: true,
+        hasInterview: false,
+        siteStatuses: ["非公開"],
+        description: "C108での「HOSEIM@STER 2026」購入特典です。"
+    },
 
     {
-        id: "publication-099",
+        id: "publication-100",
         title: "HOSEIM@STER 2026",
         publishDate: "2026-08-16",
         category: "会誌",
@@ -1606,27 +1628,12 @@ export const PUBLICATIONS = [
             "その他"
         ],
         keywords: ["イラスト","占い","コミケ","コミックマーケット108","C108","アケマス","ファッション","コーデ"],
-        coverImage: "./publication-099.png",
+        coverImage: "./publication-100.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
         description: "当会の今ある全てを結集した同人誌になります。"
-    },
-
-    {
-        id: "publication-100",
-        title: "",
-        publishDate: "運用試験用",
-        category: "運用試験用",
-        brands: ["運用試験用"],
-        keywords: ["運用試験用"],
-        coverImage: "./publication-100.png",
-        detailUrl: "",
-        publicationPermission: false,
-        hasInterview: false,
-        siteStatuses: ["運用試験用"],
-        description: "運用試験用"
     },
 
     {
