@@ -33,9 +33,13 @@ export const PUBLICATION_CATEGORIES = [
         label: "検定本"
     },
     {
-        value: "その他",
-        label: "その他"
-    }
+        value: "その他出版物",
+        label: "その他出版物"
+    },
+    {
+        value: "グッズ・特典",
+        label: "グッズ・特典"
+    },
 ];
 
 
