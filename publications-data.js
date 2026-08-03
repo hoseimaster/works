@@ -489,7 +489,7 @@ export const PUBLICATIONS = [
         id: "publication-028",
         title: "アニメ「THE IDOLM@STER」コメンタリーCD",
         publishDate: "2013-12-31",
-        category: "その他",
+        category: "グッズ・特典",
         brands: ["THE IDOLM@STER"],
         keywords: ["グッズ"],
         coverImage: "./publication-028.png",
@@ -664,7 +664,7 @@ export const PUBLICATIONS = [
         id: "publication-039",
         title: "アイマスは人生ゲーム（仮）",
         publishDate: "2015-08-01",
-        category: "その他",
+        category: "グッズ・特典",
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
