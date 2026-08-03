@@ -1544,30 +1544,39 @@ body.is-navigation-open {
 
 /* ========================================
    ページ上部へ戻るボタン
+   画像をそのまま使用
 ======================================== */
 
 .page-top-button {
     position: fixed;
+    z-index: 1000;
     right: 20px;
     bottom: 20px;
-    z-index: 1000;
 
+    display: block;
     width: 96px;
     height: 96px;
-
+    margin: 0;
     padding: 0;
-    border: none;
+
+    overflow: visible;
+
+    border: 0;
     border-radius: 0;
+    outline: 0;
 
-    background: transparent
-        url("./page-top.png")
-        center center / contain
-        no-repeat;
-
-    box-shadow: none;
+    background-color: transparent;
+    background-image: url("./page-top.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 
     color: transparent;
     font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+
+    box-shadow: none;
 
     cursor: pointer;
 
@@ -1578,8 +1587,13 @@ body.is-navigation-open {
     transform: translateY(12px);
 
     transition:
-        opacity .25s ease,
-        transform .25s ease;
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+.page-top-button[hidden] {
+    display: none !important;
 }
 
 .page-top-button.is-visible {
@@ -1590,58 +1604,72 @@ body.is-navigation-open {
 }
 
 .page-top-button:hover {
-    transform: translateY(-4px) scale(1.05);
+    background-color: transparent;
+    box-shadow: none;
+    transform:
+        translateY(-4px)
+        scale(1.05);
 }
 
 .page-top-button:active {
-    transform: scale(.96);
+    background-color: transparent;
+    box-shadow: none;
+    transform:
+        translateY(0)
+        scale(0.96);
 }
 
+.page-top-button:focus,
 .page-top-button:focus-visible {
-    outline: none;
+    outline: 0;
     box-shadow: none;
 }
 
-/* 元の矢印を非表示 */
-
-.page-top-button svg,
-.page-top-button span,
+/* 旧デザインの矢印・丸・装飾を完全に非表示 */
+.page-top-button > span,
+.page-top-button > svg,
+.page-top-button > img,
 .page-top-button::before,
 .page-top-button::after {
-    display: none;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    content: none !important;
+    box-shadow: none !important;
 }
 
 /* タブレット */
-
-@media (max-width:900px) {
-
+@media screen and (max-width: 900px) {
     .page-top-button {
-        width: 82px;
-        height: 82px;
-
         right: 16px;
         bottom: 16px;
+        width: 82px;
+        height: 82px;
     }
-
 }
 
-/* スマホ */
-
-@media (max-width:700px) {
-
+/* スマートフォン */
+@media screen and (max-width: 700px) {
     .page-top-button {
-        width: 68px;
-        height: 68px;
-
         right: 12px;
         bottom: 12px;
+        width: 68px;
+        height: 68px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-top-button {
+        transition: none;
     }
 
+    .page-top-button:hover,
+    .page-top-button:active {
+        transform: none;
+    }
 }
 
-
-/* 最終調整: ページ上部へ戻る */
-.page-top-button:focus-visible{
-    outline:none;
-    box-shadow:none;
-}
