@@ -1328,7 +1328,7 @@ function collectActiveFilters(
         years: "発行年",
         interview: "インタビュー",
         siteStatuses:
-            "サイト掲載状況"
+            "制作物公開状況"
     };
 
     Object.entries(
