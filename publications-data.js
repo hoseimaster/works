@@ -1610,11 +1610,29 @@ export const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
-        description: "C108での「HOSEIM@STER 2026」購入特典です。"
+        description: "C108での新刊「HOSEIM@STER 2026」購入特典です。"
+    },
+
+   {
+        id: "publication-100",
+        title: "限定ポストカード",
+        publishDate: "2026-08-16",
+        category: "グッズ・特典",
+        brands: [
+            "シンデレラガールズ",
+            "学園アイドルマスター"
+        ],
+        keywords: ["HOSEIM@STER 2026"],
+        coverImage: "./publication-100.png",
+        detailUrl: "",
+        publicationPermission: true,
+        hasInterview: false,
+        siteStatuses: ["非公開"],
+        description: "C108での新刊「HOSEIM@STER 2026」と既刊「学マス検定」の同時購入特典です。"
     },
 
     {
-        id: "publication-100",
+        id: "publication-101",
         title: "HOSEIM@STER 2026",
         publishDate: "2026-08-16",
         category: "会誌",
@@ -1628,27 +1646,12 @@ export const PUBLICATIONS = [
             "その他"
         ],
         keywords: ["イラスト","占い","コミケ","コミックマーケット108","C108","アケマス","ファッション","コーデ"],
-        coverImage: "./publication-100.png",
+        coverImage: "./publication-101.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
         description: "当会の今ある全てを結集した同人誌になります。"
-    },
-
-    {
-        id: "publication-101",
-        title: "",
-        publishDate: "2026-08-16",
-        category: "",
-        brands: [""],
-        keywords: [""],
-        coverImage: "./publication-101.png",
-        detailUrl: "",
-        publicationPermission: false,
-        hasInterview: false,
-        siteStatuses: [""],
-        description: ""
     },
 
     {
