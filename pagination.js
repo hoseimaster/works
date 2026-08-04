@@ -102,12 +102,6 @@ export function initializePagination({
                         currentPage =
                             requestedPage;
 
-                        /*
-                         * タッチ・クリック後にフォーカス色が
-                         * 残り続けないよう、操作直後に解除します。
-                         */
-                        button.blur();
-
                         applyPagination();
 
                         scrollToResults(
