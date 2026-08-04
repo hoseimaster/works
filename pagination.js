@@ -102,6 +102,12 @@ export function initializePagination({
                         currentPage =
                             requestedPage;
 
+                        /*
+                         * クリック・タップ後にフォーカス色が
+                         * 残り続けないようにします。
+                         */
+                        button.blur();
+
                         applyPagination();
 
                         scrollToResults(
@@ -453,7 +459,24 @@ function createPageSizeControl() {
 }
 
 function getExistingSortArea() {
+    /*
+     * 検索ボックス内・検索結果ヘッダー内のどちらに
+     * 並び替えが置かれていても取得し、
+     * 表示件数の隣へ移動します。
+     */
     return (
+        document.querySelector(
+            ".archive-toolbar .archive-sort"
+        ) ??
+        document.querySelector(
+            ".archive-toolbar .sort-area"
+        ) ??
+        document.querySelector(
+            ".archive-results-header .archive-sort"
+        ) ??
+        document.querySelector(
+            ".archive-results-header .sort-area"
+        ) ??
         document.querySelector(
             ".archive-sort"
         ) ??
