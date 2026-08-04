@@ -562,13 +562,13 @@ function updateSummary({
 
     if (filteredCount === 0) {
         summary.textContent =
-            "0件を表示";
+            "0件を表示中";
 
         return;
     }
 
     summary.textContent =
-        `${startIndex + 1}〜${endIndex}件を表示`;
+        `${startIndex + 1}〜${endIndex}件を表示中`;
 }
 
 
