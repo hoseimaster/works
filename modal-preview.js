@@ -20,7 +20,7 @@ const PUBLICATION_MAP = new Map(
 const PREVIEW_MODAL_CONFIG = Object.freeze({
     enabledOnDesktop: true,
     enabledOnTablet: true,
-    enabledOnMobile: false,
+    enabledOnMobile: true,
     desktopMinWidth: 1024,
     tabletMinWidth: 701,
     closeAnimationDuration: 180
