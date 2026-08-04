@@ -3004,3 +3004,21 @@ body.is-modal-open {
         line-height:1.65;
     }
 }
+
+/* ========================================
+   表示件数・並び替えのフォーカス調整
+======================================== */
+
+.archive-pagination-controls__select:focus,
+.archive-pagination-controls__sort .archive-sort__select:focus {
+    outline: none;
+    border-color: #f47a24;
+    box-shadow: none;
+}
+
+.archive-pagination-controls__select:focus-visible,
+.archive-pagination-controls__sort .archive-sort__select:focus-visible {
+    outline: none;
+    border-color: #f47a24;
+    box-shadow: none;
+}
