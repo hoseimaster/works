@@ -22,6 +22,10 @@ import {
 } from "./sort.js";
 
 import {
+    initializePagination
+} from "./pagination.js";
+
+import {
     initializeRenderer
 } from "./render.js";
 
@@ -91,6 +95,10 @@ function initializeArchivePage() {
             });
 
         initializeRenderer({
+            store
+        });
+
+        initializePagination({
             store
         });
 
