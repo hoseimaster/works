@@ -591,13 +591,13 @@ function updateSummary({
 
     if (filteredCount === 0) {
         summary.textContent =
-            "0件を表示";
+            "表示できる制作物がありません";
 
         return;
     }
 
     summary.textContent =
-        `${startIndex + 1}〜${endIndex}件を表示`;
+        `${startIndex + 1}〜${endIndex}件を表示中`;
 }
 
 
