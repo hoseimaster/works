@@ -646,6 +646,23 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-091",
         title: "THE IDOLM@STER MILLION LIVE! 10thLIVE TOUR Act-4 MILLION THE@TER!!!! Memorial Pamphlet",
         previewDescription: `
+■内容
+今回は、ミリオンライブに携わっているクリエイターの皆様へのインタビューを掲載しております！ぜひお手に取ってみてくださいね！
+⑴ mekakushe様(X:@_mekakushe_) 『グッドサイン』『私は花、あなたは太陽』
+⑵ MEG. ME様(X:@megmemikoto) 『夢にかけるRainbow』 
+⑶ 原田篤様(X:@phevott2) 『Glow Map』 
+■イラスト
+【表紙】ima 様(X:@ima8765) 
+【挿絵】まっちゅ 様、さかな 様、コドネリ 様、しみず 様、Dorao、さなか、づま、キュートなみゆきちゃんbot、ささ、つくよみ：
+■制作
+Dorao、ぽっきー、ささ、つくよみ：、あさやけ、あすぱら。、くろ
+■制作ご支援の方々（敬略称）
+Ken1、あさやけ、つくよみ：、かなろあ、トカラ、あすぱら。、くろ、にとらー、kaito、羽毛布団、ころーね、匿名、蒼海、はるかぜひかり、パックス、涼（suzu）、しがーる、すさ、シャキシャキリンゴ
+■協力（掲載順）
+【インタビュー】原田篤 様(X:@phevott2)
+【インタビュー】MEG.ME 様(X:@megmemikoto)
+【インタビュー】mekakushe 様(X:@_mekakushe_)
+【インタビュー】ima 様(X:@ima8765)
 `
     },
 
@@ -653,6 +670,17 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-092",
         title: "THE IDOLM@STER SHINY COLORS 6thLIVE TOUR Come and Unite! Fantastic Fireworks Memorial Leaflet?",
         previewDescription: `
+■内容
+2024年4月24日に行われた、「THE IDOLM@STER SHINY COLORS 6thLIVE Come and Unite！　Fantastic Fireworks」にて配布いたしましたリーフレットの電子版になります。 今回は作詞家の鈴木静那様にインタビューさせていただきました。 
+■イラスト
+【表紙・挿絵】さなか（X：＠Riric_rock）
+■編集
+めんへん（X：＠menhenP）
+■文責
+あすぱら。（X：＠asupararaaa_ms)
+■協力
+【インタビュー】鈴木静那 様 （X:＠suzukishizuna）
+
 `
     },
 
@@ -660,6 +688,19 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-093",
         title: "HOSEI M@STER 2024",
         previewDescription: `
+■内容
+・アイドルのカバー曲考えてみた
+・アイドルが飲んでいるドリンク、プロデューサーも飲んでみた［学園アイドルマスター］
+・法マスイラスト部による絵
+■イラスト
+【表紙・挿絵】めんへん（X:@menhenP）
+【挿絵】めるくま（X:@menhenP ）、さなか（X:＠Riric_rock ）、づま（X:＠KimamanaZuma）、ささ（X:＠ima_sasa ）、柾洞也
+■編集・校正
+ めんへん（X:@menhenP ）
+■文責
+にとらー、めんへん（X:@menhenP ）
+■企画協力
+法政大学アイドルマスター研究会会員
 `
     },
 
@@ -667,6 +708,31 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-094",
         title: "学マス検定",
         previewDescription: `
+■内容紹介
+学園アイドルマスター関連の問題を収録。
+当会は10年以上前から赤本の制作を行っており、赤本はシリーズ化しています！
+【１】　アイドルのプロフィールについての問題
+【２】　アイマス検定対策問題
+【３】　楽曲についての問題
+【４】　プロデュースについての問題
+解答・解説
+■例題
+【１】『学園アイドルマスター』に登場するアイドルについて、以下の問いに答えよ。
+問1　以下のアイドルプロフィール中に存在する空欄①に当てはまる語句を答えよ。
+名前：花海咲季
+年齢：16歳
+身長：（①）㎝
+スリーサイズ：84/55/80
+特技：運動全般、家事全般、マッサージ
+
+この程度の問題なら楽勝ですよね。本編にはもっと難しい問題が多数掲載されています。学マスの知識に自信のある方は是非挑んでみてください！
+
+■編集
+Ken1（X:＠xio1740672)
+■作問
+法政大学アイドルマスター研究会　赤本チーム
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -674,6 +740,17 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-095",
         title: "学園アイドルマスター The 1st Period　Memorial Leaflet",
         previewDescription: `
+■内容
+　2025年5月24日・25日開催の「学園アイドルマスター The 1st Period Spotlight Star」と、2025年5月31日・6月1日開催の「学園アイドルマスター The 1st Period Harmony Star」を記念したリーフレットとなっております。
+『Fluorite』と『Yellow Big Bang！』の作詞を担当された、やぎぬまかな様へのインタビューを掲載しております！
+■イラスト
+【表紙】ふわ（X：＠uqxqu_u)
+■ご協力
+【インタビュー】やぎぬまかな 様（X：@ygnm_kana）
+■編集
+Ken1（X：＠xio1740672）
+■文責　
+トカラ (X：@EVERRISING0428)
 `
     },
 
@@ -681,6 +758,18 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-096",
         title: "THE IDOLM@STER SideM 10th ANNIVERSARY ST@GE ～P@SSION-ING!!!～ Memorial Leaflet",
         previewDescription: `
+■内容
+　2025年7月12日・13日開催の「THE IDOLM@STER SideM 10th ANNIVERSARY ST@GE ～P@SSION-ING!!!～」を記念したパンフレットとなっております。
+『Reason!!』や『Take a StuMp!』など数多くの楽曲の作詞を担当された、松井洋平様へのインタビューを掲載しております！
+■イラスト
+【表紙】さなか（X：@Riric_rock)
+【挿絵】25GR （X：@nknk_gra)
+■ご協力
+　【インタビュー】松井洋平 様（X：@y_matwee) 
+■編集・文責　
+　しの（X：@sino_ryry)，ミナツキ（X：@RengeminatukiP）
+■制作
+　もっきゆ，つくよみ：，しの，羽毛布団，ミナツキ，伊達巻き，25GR，さなか，ニット
 `
     },
 
@@ -688,6 +777,20 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-097",
         title: "THE IDOLM@STER 765PRO ALLSTARS LIVE ～NEVER END IDOL!!!!!!!!!!!!!～ Memorial Leaflet",
         previewDescription: `
+■内容紹介
+　2025年8月2日・3日開催の「THE IDOLM@STER 765PRO ALLSTARS LIVE ～NEVER END IDOL!!!!!!!!!!!!!～ 」を記念したパンフレットとなっております。
+『9:02 pm』『Here we go!!』『GO MY WAY!!』をはじめとする「アイドルマスター」シリーズの楽曲を数多く手がける作詞家のyura様へのインタビューを掲載しております！
+■イラスト
+【表紙】あめくも（X：@AmeyayoiP）
+【挿絵】さかうち，柾洞也，ふわ（X：@uqxqu_u），うに
+■ご協力
+【インタビュー】yura様（X：@yura0810）
+■編集
+　Ken1（X：＠xio1740672） 
+■文責
+　はるとも（X：@Pharutomo_ku） ，ハロとも（X：@key_HARORO_Tomo）
+■制作
+　はるとも，ハロとも，さかうち，らむ，トカラ
 `
     },
 
@@ -695,6 +798,28 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-098",
         title: "THE IDOLM@STER M@STERS OF IDOL WORLD 2025 Memorial Leaflet",
         previewDescription: `
+■内容紹介
+　2025年12月13日・14日開催の「THE IDOLM@STER M@STERS OF IDOL WORLD 2025」を記念したリーフレットとなっております。
+　今回は『CQ』や『VOY@GER』『Howling over the World』など、その他多くのアイマス楽曲の作詞を担当されている烏屋茶房様へのインタビューを掲載しております！
+　また、表紙には『THE IDOLM@STR MILLION LIVE! THEATER DAYS Brand New Song』や『ミリオンライ ブ! シアターデイズ4コマ シアターの日常』などを手掛けるima様のイラストを、承諾を得て使わせていただきました。
+ 
+■イラスト提供
+【　　表紙　　】ima 様（Ｘ：@ima8765）
+ 
+■ご協力
+【インタビュー】烏屋茶房 様（Ⅹ：＠tghgworks_krsy)
+【　コメント　】ima 様（Ｘ：@ima8765）
+【　配布協力　】大阪大学アイドルマスター研究会 様（Ｘ：@imas_handai） 
+【　特別協力　】法政大学後援会補助事業
+ 
+■主催・文責
+　さかうち
+ 
+■編集
+　Ken1
+ 
+■制作
+　なべ、中田、すのーら、こけらタンニン、睡眠、羽毛布団
 `
     },
 
