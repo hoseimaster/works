@@ -30,11 +30,6 @@ import {
 } from "./modal.js";
 
 
-import {
-    initializePagination
-} from "./pagination.js";
-
-
 /* ========================================
    ページ初期化
 ======================================== */
@@ -60,6 +55,10 @@ function initializeArchivePage() {
         );
 
         initializePageTopButton(
+            elements
+        );
+
+        initializeFilterModalFocusGuard(
             elements
         );
 
@@ -92,10 +91,6 @@ function initializeArchivePage() {
             });
 
         initializeRenderer({
-            store
-        });
-
-        initializePagination({
             store
         });
 
@@ -148,6 +143,16 @@ function getMainElements() {
         pageTopButton:
             document.getElementById(
                 "pageTopButton"
+            ),
+
+        filterModal:
+            document.getElementById(
+                "filterModal"
+            ),
+
+        siteFooter:
+            document.querySelector(
+                ".site-footer"
             ),
 
         loadingMessage:
@@ -453,12 +458,21 @@ function initializePageTopButton(
         return;
     }
 
+    const footer =
+        elements.siteFooter;
+
+    let isFooterVisible = false;
+
     const updateButtonVisibility =
         throttle(
             () => {
-                const shouldShow =
+                const shouldShowByScroll =
                     window.scrollY >
                     400;
+
+                const shouldShow =
+                    shouldShowByScroll &&
+                    !isFooterVisible;
 
                 button.hidden =
                     !shouldShow;
@@ -468,12 +482,46 @@ function initializePageTopButton(
                     shouldShow
                 );
             },
-            100
+            80
         );
+
+    if (
+        footer &&
+        "IntersectionObserver" in
+        window
+    ) {
+        const footerObserver =
+            new IntersectionObserver(
+                (entries) => {
+                    isFooterVisible =
+                        entries.some(
+                            (entry) =>
+                                entry.isIntersecting
+                        );
+
+                    updateButtonVisibility();
+                },
+                {
+                    /*
+                     * フッターに重なる直前から消し、
+                     * 著作権表示やリンクを隠さないようにします。
+                     */
+                    rootMargin:
+                        "0px 0px 72px 0px",
+                    threshold: 0
+                }
+            );
+
+        footerObserver.observe(
+            footer
+        );
+    }
 
     button.addEventListener(
         "click",
         () => {
+            button.blur();
+
             window.scrollTo({
                 top: 0,
                 behavior:
@@ -492,7 +540,111 @@ function initializePageTopButton(
         }
     );
 
+    window.addEventListener(
+        "resize",
+        updateButtonVisibility,
+        {
+            passive: true
+        }
+    );
+
     updateButtonVisibility();
+}
+
+
+/* ========================================
+   絞り込みモーダルのフォーカス制御
+======================================== */
+
+/**
+ * モーダルを開いた直後にキーワード入力欄が
+ * 自動選択される挙動を抑止します。
+ *
+ * モーダル自体へ一時的にフォーカスを置くことで、
+ * スマートフォンのキーボードも勝手に開きません。
+ */
+function initializeFilterModalFocusGuard(
+    elements
+) {
+    const modal =
+        elements.filterModal;
+
+    if (!modal) {
+        return;
+    }
+
+    if (
+        !modal.hasAttribute(
+            "tabindex"
+        )
+    ) {
+        modal.setAttribute(
+            "tabindex",
+            "-1"
+        );
+    }
+
+    const releaseKeywordFocus =
+        () => {
+            const activeElement =
+                document.activeElement;
+
+            if (
+                activeElement instanceof
+                    HTMLInputElement &&
+                modal.contains(
+                    activeElement
+                )
+            ) {
+                activeElement.blur();
+            }
+
+            /*
+             * モーダルが表示された次の描画タイミングで
+             * 入力欄以外へフォーカスを移します。
+             */
+            window.requestAnimationFrame(
+                () => {
+                    modal.focus({
+                        preventScroll: true
+                    });
+                }
+            );
+        };
+
+    const observer =
+        new MutationObserver(
+            () => {
+                const isOpen =
+                    !modal.hidden &&
+                    modal.classList.contains(
+                        "is-open"
+                    );
+
+                if (!isOpen) {
+                    return;
+                }
+
+                releaseKeywordFocus();
+            }
+        );
+
+    observer.observe(
+        modal,
+        {
+            attributes: true,
+            attributeFilter: [
+                "class",
+                "hidden",
+                "aria-hidden"
+            ]
+        }
+    );
+
+    document.addEventListener(
+        "archive:filter-modal-open",
+        releaseKeywordFocus
+    );
 }
 
 
