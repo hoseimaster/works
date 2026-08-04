@@ -30,6 +30,11 @@ import {
 } from "./modal.js";
 
 
+import {
+    initializePagination
+} from "./pagination.js";
+
+
 /* ========================================
    ページ初期化
 ======================================== */
@@ -87,6 +92,10 @@ function initializeArchivePage() {
             });
 
         initializeRenderer({
+            store
+        });
+
+        initializePagination({
             store
         });
 
@@ -175,8 +184,7 @@ function createInitialFilters() {
         brands: [],
         years: [],
         interview: [],
-        siteStatuses: [],
-        singleBrandOnly: false
+        siteStatuses: []
     };
 }
 
