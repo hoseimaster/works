@@ -2864,3 +2864,105 @@ body.is-modal-open {
         transition: none;
     }
 }
+
+/* ========================================
+   検索欄とページ操作欄の配置復元
+======================================== */
+
+/*
+ * 検索ボックスは
+ * 「キーワード検索」と「絞り込み」のみにします。
+ */
+.archive-toolbar {
+    display: flex;
+    align-items: center;
+}
+
+.archive-toolbar > .search-area {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
+
+.archive-toolbar > .filter-button {
+    flex: 0 0 auto;
+}
+
+/*
+ * pagination.jsによって移動される前の一瞬だけ、
+ * 並び替えが検索欄内に表示されることを防ぎます。
+ */
+.archive-toolbar > .archive-sort,
+.archive-toolbar > .sort-area {
+    display: none;
+}
+
+/*
+ * 表示件数の隣へ移動した後は通常表示へ戻します。
+ */
+.archive-pagination-controls__actions
+.archive-pagination-controls__sort,
+.archive-pagination-controls__actions
+.archive-pagination-controls__sort.archive-sort,
+.archive-pagination-controls__actions
+.archive-pagination-controls__sort.sort-area {
+    display: grid;
+}
+
+/*
+ * 表示件数と並び替えを検索結果一覧の上で横並びにします。
+ */
+.archive-pagination-controls__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* プルダウン内の文字は通常の太さ */
+.archive-pagination-controls__select,
+.archive-pagination-controls__sort
+.archive-sort__select {
+    font-weight: 400;
+}
+
+/* ラベルとプルダウンの間隔を詰める */
+.archive-pagination-controls__size,
+.archive-pagination-controls__sort,
+.archive-pagination-controls__sort.archive-sort,
+.archive-pagination-controls__sort.sort-area {
+    gap: 4px;
+    grid-template-columns:
+        68px
+        168px;
+}
+
+@media screen and (max-width: 700px) {
+    .archive-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .archive-toolbar > .search-area,
+    .archive-toolbar > .filter-button {
+        width: 100%;
+    }
+
+    .archive-pagination-controls__actions {
+        align-items: flex-end;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .archive-pagination-controls__size,
+    .archive-pagination-controls__sort,
+    .archive-pagination-controls__sort.archive-sort,
+    .archive-pagination-controls__sort.sort-area {
+        gap: 3px;
+        grid-template-columns:
+            60px
+            132px;
+        width: auto;
+    }
+}
+
