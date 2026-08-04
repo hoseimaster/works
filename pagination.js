@@ -108,6 +108,12 @@ export function initializePagination({
                          */
                         button.blur();
 
+                        window.requestAnimationFrame(
+                            () => {
+                                button.blur();
+                            }
+                        );
+
                         applyPagination();
 
                         scrollToResults(
