@@ -4,6 +4,15 @@
  */
 
 
+const IMAGE_PRELOAD_DELAY = 1200;
+const IMAGE_PRELOAD_IDLE_TIMEOUT = 1800;
+
+let imagePreloadGeneration = 0;
+let imagePreloadTimer = null;
+let imagePreloadIdleHandle = null;
+const preloadedImagePaths = new Set();
+
+
 /* ========================================
    初期化
 ======================================== */
@@ -157,6 +166,10 @@ function renderArchive({
     renderPublicationList(
         visiblePublications,
         elements.publicationList
+    );
+
+    scheduleImagePreload(
+        visiblePublications
     );
 
     updateEmptyMessage({
@@ -386,6 +399,299 @@ function createPublicationImageArea(
     );
 
     return imageArea;
+}
+
+
+/* ========================================
+   表示外画像の段階的プリロード
+======================================== */
+
+/**
+ * 現在の検索結果に含まれる表示外画像を、
+ * 初期表示を妨げないタイミングで順番に読み込みます。
+ *
+ * 通信量節約設定や低速回線では実行しません。
+ *
+ * @param {Array<object>} publications
+ */
+function scheduleImagePreload(
+    publications
+) {
+    cancelScheduledImagePreload();
+
+    if (
+        !Array.isArray(publications) ||
+        publications.length <= 4 ||
+        shouldSkipImagePreload()
+    ) {
+        return;
+    }
+
+    const generation =
+        ++imagePreloadGeneration;
+
+    const paths =
+        createImagePreloadQueue(
+            publications
+        );
+
+    if (paths.length === 0) {
+        return;
+    }
+
+    imagePreloadTimer =
+        window.setTimeout(
+            () => {
+                imagePreloadTimer = null;
+
+                scheduleIdleTask(
+                    () => {
+                        preloadImagesSequentially({
+                            paths,
+                            generation
+                        });
+                    }
+                );
+            },
+            IMAGE_PRELOAD_DELAY
+        );
+}
+
+/**
+ * 画像パスを重複なしでキュー化します。
+ * 先頭4件は通常表示側で優先読み込みされるため除外します。
+ *
+ * @param {Array<object>} publications
+ * @returns {Array<string>}
+ */
+function createImagePreloadQueue(
+    publications
+) {
+    const uniquePaths =
+        new Set();
+
+    publications
+        .slice(4)
+        .forEach(
+            (publication) => {
+                const path =
+                    normalizeImagePath(
+                        publication.thumbnailImage ??
+                        publication.coverImage
+                    );
+
+                if (
+                    path &&
+                    !preloadedImagePaths.has(
+                        path
+                    )
+                ) {
+                    uniquePaths.add(
+                        path
+                    );
+                }
+            }
+        );
+
+    return [
+        ...uniquePaths
+    ];
+}
+
+/**
+ * 1枚ずつ順番に読み込みます。
+ * 検索条件が変わった場合は古いキューを停止します。
+ *
+ * @param {{
+ *   paths: Array<string>,
+ *   generation: number
+ * }} options
+ */
+function preloadImagesSequentially({
+    paths,
+    generation
+}) {
+    if (
+        generation !==
+        imagePreloadGeneration
+    ) {
+        return;
+    }
+
+    const nextPath =
+        paths.shift();
+
+    if (!nextPath) {
+        return;
+    }
+
+    const image =
+        new Image();
+
+    image.decoding =
+        "async";
+
+    image.fetchPriority =
+        "low";
+
+    const continuePreload =
+        () => {
+            if (
+                generation !==
+                imagePreloadGeneration
+            ) {
+                return;
+            }
+
+            scheduleIdleTask(
+                () => {
+                    preloadImagesSequentially({
+                        paths,
+                        generation
+                    });
+                }
+            );
+        };
+
+    image.addEventListener(
+        "load",
+        () => {
+            preloadedImagePaths.add(
+                nextPath
+            );
+
+            continuePreload();
+        },
+        {
+            once: true
+        }
+    );
+
+    image.addEventListener(
+        "error",
+        continuePreload,
+        {
+            once: true
+        }
+    );
+
+    image.src =
+        nextPath;
+}
+
+/**
+ * ブラウザが空いている時間に処理します。
+ * requestIdleCallback非対応環境ではsetTimeoutを使用します。
+ *
+ * @param {Function} callback
+ */
+function scheduleIdleTask(
+    callback
+) {
+    if (
+        "requestIdleCallback" in
+        window
+    ) {
+        imagePreloadIdleHandle =
+            window.requestIdleCallback(
+                () => {
+                    imagePreloadIdleHandle =
+                        null;
+
+                    callback();
+                },
+                {
+                    timeout:
+                        IMAGE_PRELOAD_IDLE_TIMEOUT
+                }
+            );
+
+        return;
+    }
+
+    imagePreloadIdleHandle =
+        window.setTimeout(
+            () => {
+                imagePreloadIdleHandle =
+                    null;
+
+                callback();
+            },
+            120
+        );
+}
+
+/**
+ * 保留中の開始処理を取り消し、
+ * 以前のプリロードキューを無効化します。
+ */
+function cancelScheduledImagePreload() {
+    imagePreloadGeneration++;
+
+    if (
+        imagePreloadTimer !==
+        null
+    ) {
+        window.clearTimeout(
+            imagePreloadTimer
+        );
+
+        imagePreloadTimer =
+            null;
+    }
+
+    if (
+        imagePreloadIdleHandle ===
+        null
+    ) {
+        return;
+    }
+
+    if (
+        "cancelIdleCallback" in
+        window
+    ) {
+        window.cancelIdleCallback(
+            imagePreloadIdleHandle
+        );
+    } else {
+        window.clearTimeout(
+            imagePreloadIdleHandle
+        );
+    }
+
+    imagePreloadIdleHandle =
+        null;
+}
+
+/**
+ * 通信量節約設定や低速回線ではプリロードを停止します。
+ *
+ * @returns {boolean}
+ */
+function shouldSkipImagePreload() {
+    const connection =
+        navigator.connection ??
+        navigator.mozConnection ??
+        navigator.webkitConnection;
+
+    if (!connection) {
+        return false;
+    }
+
+    if (
+        connection.saveData ===
+        true
+    ) {
+        return true;
+    }
+
+    return [
+        "slow-2g",
+        "2g"
+    ].includes(
+        connection.effectiveType
+    );
 }
 
 
