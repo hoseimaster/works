@@ -3022,3 +3022,20 @@ body.is-modal-open {
     border-color: #f47a24;
     box-shadow: none;
 }
+
+/* ========================================
+   PC版：件数表示とプリロード線の間隔調整
+======================================== */
+
+@media screen and (min-width: 701px) {
+    .archive-results-header {
+        margin-bottom: 4px;
+        padding-bottom: 0;
+    }
+
+    .image-preload-progress {
+        margin:
+            0 0
+            18px;
+    }
+}
