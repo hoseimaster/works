@@ -2856,3 +2856,38 @@ body.is-modal-open {
         margin-top:10px;
     }
 }
+
+/* ========================================
+   NEWバッジ
+======================================== */
+
+.publication-card__new {
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgb(244 122 36 / 88%);
+    color: #ffffff;
+    font-size: 0.66rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+}
+
+@media screen and (max-width: 700px) {
+    .publication-card__new {
+        top: 8px;
+        left: 8px;
+        min-height: 20px;
+        padding: 3px 7px;
+        font-size: 0.62rem;
+    }
+}
+
