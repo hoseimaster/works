@@ -1656,16 +1656,16 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-102",
-        title: "タイトルを入力してください",
-        publishDate: "2030-08-16",
-        category: "リーフレット",
+        title: "",
+        publishDate: "",
+        category: "",
         brands: [""],
         keywords: [""],
         coverImage: "./publication-102.png",
         detailUrl: "",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
-        siteStatuses: ["非公開"],
-        description: "制作物の紹介文を入力してください。"
+        siteStatuses: [""],
+        description: ""
     }
 ];
