@@ -2687,3 +2687,121 @@ body.is-modal-open {
     }
 }
 
+
+
+/* ========================================
+   スマートフォン表示・フッター最終調整
+======================================== */
+
+@media screen and (max-width: 700px) {
+    /* 制作物一覧は1列表示 */
+    .publication-list {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+
+    /* 表示件数・並び替えを右寄せして小型化 */
+    .archive-pagination-controls__actions {
+        display: flex !important;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 7px;
+        width: 100%;
+    }
+
+    .archive-pagination-controls__size,
+    .archive-pagination-controls__sort,
+    .archive-pagination-controls__sort.archive-sort,
+    .archive-pagination-controls__sort.sort-area {
+        display: grid;
+        grid-template-columns: 64px 132px;
+        gap: 6px;
+        width: auto;
+        font-size: 0.72rem;
+    }
+
+    .archive-pagination-controls__label,
+    .archive-pagination-controls__sort .archive-sort__label {
+        font-size: 0.72rem;
+        text-align: right;
+    }
+
+    .archive-pagination-controls__select,
+    .archive-pagination-controls__sort .archive-sort__select {
+        width: 132px;
+        min-width: 132px;
+        max-width: 132px;
+        height: 38px;
+        min-height: 38px;
+        padding-right: 25px;
+        padding-left: 9px;
+        font-size: 14px;
+    }
+
+    /* ページ切り替えは必ず1行に収める */
+    .archive-pagination {
+        flex-wrap: nowrap;
+        gap: 4px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .archive-pagination__button {
+        min-width: 34px;
+        min-height: 36px;
+        padding: 5px 7px;
+        font-size: 0.74rem;
+    }
+
+    .archive-pagination__button--previous,
+    .archive-pagination__button--next {
+        min-width: 52px;
+    }
+
+    .archive-pagination__ellipsis {
+        min-width: 18px;
+        min-height: 36px;
+        font-size: 0.75rem;
+    }
+}
+
+/* フッターリンクの下線を削除 */
+.site-footer a,
+.footer-navigation__list a {
+    text-decoration: none !important;
+}
+
+/* フッター全体の余白を縮小 */
+.site-footer {
+    padding-top: 24px !important;
+    padding-bottom: 16px !important;
+}
+
+.site-footer__inner {
+    row-gap: 10px !important;
+}
+
+.footer-navigation__list {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    gap: 6px 18px !important;
+}
+
+.site-footer__copyright,
+.footer-copyright,
+.site-footer small {
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+}
+
+@media screen and (max-width: 700px) {
+    .site-footer {
+        padding-top: 18px !important;
+        padding-bottom: 12px !important;
+    }
+
+    .footer-navigation__list {
+        margin-bottom: 6px !important;
+        gap: 4px 14px !important;
+    }
+}
