@@ -2435,10 +2435,9 @@ body.is-modal-open {
 }
 
 /* ========================================
-   表示件数・表示順の配置調整
+   表示件数・並び替え・ページネーション
 ======================================== */
 
-/* 検索欄はキーワード検索と絞り込みのみ */
 .archive-toolbar {
     align-items: center;
 }
@@ -2451,46 +2450,63 @@ body.is-modal-open {
     flex: 0 0 auto;
 }
 
-/* pagination.jsによって検索欄から移動した表示順 */
-.archive-pagination-controls__sort.sort-area,
-.archive-pagination-controls__sort.archive-sort {
-    flex: 0 1 auto;
-    width: auto;
-    min-width: 0;
+.archive-pagination-controls {
+    margin: 0 0 28px;
+}
+
+.archive-pagination-controls[hidden],
+.archive-pagination[hidden] {
+    display: none !important;
+}
+
+.archive-pagination-controls__top {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.archive-pagination-controls__summary {
     margin: 0;
+    color: #555555;
+    font-size: 0.9rem;
+    line-height: 1.7;
 }
 
-.archive-pagination-controls__sort .archive-sort__select {
-    width: auto;
-    min-width: 150px;
+.archive-pagination-controls__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-end;
 }
-
-@media screen and (max-width: 700px) {
-    .archive-pagination-controls__sort.sort-area,
-    .archive-pagination-controls__sort.archive-sort {
-        width: 100%;
-    }
-
-    .archive-pagination-controls__sort .archive-sort__select {
-        width: 100%;
-        min-width: 0;
-    }
-}
-
-
-
-/* ========================================
-   表示件数・並び替え 同一サイズ
-======================================== */
 
 .archive-pagination-controls__size,
 .archive-pagination-controls__sort,
 .archive-pagination-controls__sort.archive-sort,
 .archive-pagination-controls__sort.sort-area {
     display: grid;
-    grid-template-columns: auto 168px;
+    grid-template-columns: 72px 168px;
     gap: 8px;
     align-items: center;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    color: #666666;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.archive-pagination-controls__label,
+.archive-pagination-controls__sort .archive-sort__label {
+    display: inline-block;
+    margin: 0;
+    color: #666666;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
 }
 
 .archive-pagination-controls__select,
@@ -2501,18 +2517,122 @@ body.is-modal-open {
     max-width: 168px;
     height: 40px;
     min-height: 40px;
+    margin: 0;
     padding: 0 30px 0 12px;
     border: 1px solid #d8d8d8;
     border-radius: 9px;
     background-color: #ffffff;
     color: #333333;
+    font: inherit;
     font-size: 0.82rem;
     font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+
+.archive-pagination-controls__select:hover,
+.archive-pagination-controls__sort .archive-sort__select:hover {
+    border-color: #d8aa87;
+    background-color: #fffaf6;
+}
+
+.archive-pagination-controls__select:focus-visible,
+.archive-pagination-controls__sort .archive-sort__select:focus-visible {
+    border-color: #d9905f;
+    outline: 3px solid rgb(217 144 95 / 16%);
+    outline-offset: 2px;
+}
+
+.archive-pagination-controls__sort.sort-area,
+.archive-pagination-controls__sort.archive-sort {
+    flex: none;
+    min-width: 0;
+}
+
+.archive-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.archive-pagination--bottom {
+    margin-top: 34px;
+    margin-bottom: 8px;
+}
+
+.archive-pagination__button {
+    display: inline-grid;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 7px 11px;
+    border: 1px solid #dedad6;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #555555;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    place-items: center;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.archive-pagination__button:hover:not(:disabled) {
+    border-color: #e6b58f;
+    background: #fff5ed;
+    color: #a95720;
+    transform: translateY(-1px);
+}
+
+.archive-pagination__button.is-current {
+    border-color: #eda46f;
+    background: #eda46f;
+    color: #ffffff;
+    cursor: default;
+}
+
+.archive-pagination__button:disabled {
+    border-color: #ece9e6;
+    background: #f5f4f3;
+    color: #b7b4b1;
+    cursor: default;
+}
+
+.archive-pagination__button:focus-visible {
+    outline: 3px solid rgb(120 120 120 / 18%);
+    outline-offset: 2px;
+}
+
+.archive-pagination__ellipsis {
+    display: inline-grid;
+    min-width: 28px;
+    min-height: 42px;
+    color: #888888;
+    place-items: center;
 }
 
 @media screen and (max-width: 700px) {
+    .archive-pagination-controls {
+        margin-bottom: 24px;
+    }
+
+    .archive-pagination-controls__top {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .archive-pagination-controls__actions {
+        display: grid;
         grid-template-columns: 1fr;
+        gap: 8px;
+        width: 100%;
     }
 
     .archive-pagination-controls__size,
@@ -2521,6 +2641,12 @@ body.is-modal-open {
     .archive-pagination-controls__sort.sort-area {
         grid-template-columns: 72px minmax(0, 1fr);
         width: 100%;
+        font-size: 0.75rem;
+    }
+
+    .archive-pagination-controls__label,
+    .archive-pagination-controls__sort .archive-sort__label {
+        font-size: 0.75rem;
     }
 
     .archive-pagination-controls__select,
@@ -2532,44 +2658,32 @@ body.is-modal-open {
         min-height: 44px;
         font-size: 16px;
     }
-}
 
+    .archive-pagination {
+        gap: 6px;
+    }
 
-/* ========================================
-   下部ページネーション
-======================================== */
-
-.archive-pagination--bottom {
-    margin-top: 34px;
-    margin-bottom: 8px;
-}
-
-@media screen and (max-width: 700px) {
     .archive-pagination--bottom {
         margin-top: 28px;
         margin-bottom: 4px;
     }
-}
 
+    .archive-pagination__button {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 6px 9px;
+        font-size: 0.78rem;
+    }
 
-/* ========================================
-   並び替えラベル表示
-======================================== */
-
-.archive-pagination-controls__sort .archive-sort__label {
-    display: inline-block;
-    margin: 0;
-    color: #666666;
-    font-size: 0.8rem;
-    font-weight: 700;
-    line-height: 1.4;
-    white-space: nowrap;
-}
-
-@media screen and (max-width: 700px) {
-    .archive-pagination-controls__sort .archive-sort__label {
-        font-size: 0.75rem;
+    .archive-pagination__button--previous,
+    .archive-pagination__button--next {
+        min-width: 62px;
     }
 }
 
+@media screen and (max-width: 430px) {
+    .archive-pagination__button--number {
+        min-width: 36px;
+    }
+}
 
