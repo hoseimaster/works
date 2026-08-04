@@ -4,14 +4,17 @@
  */
 
 
-const IMAGE_PRELOAD_DELAY = 1200;
-const IMAGE_PRELOAD_IDLE_TIMEOUT = 1800;
+const IMAGE_PRELOAD_DELAY = 300;
+const IMAGE_PRELOAD_CONCURRENCY = 3;
+const IMAGE_PRELOAD_RETRY_DELAY = 120;
 
 let imagePreloadGeneration = 0;
 let imagePreloadTimer = null;
-let imagePreloadIdleHandle = null;
+let imagePreloadResumeTimer = null;
 let imagePreloadLoadedCount = 0;
 let imagePreloadTotalCount = 0;
+let imagePreloadActiveCount = 0;
+let imagePreloadQueue = [];
 const preloadedImagePaths = new Set();
 
 
@@ -41,6 +44,8 @@ export function initializeRenderer({
     initializeImagePreloadProgress(
         elements
     );
+
+    initializeImagePreloadRuntime();
 
     initializePublicationListEvents(
         elements
@@ -418,10 +423,40 @@ function createPublicationImageArea(
 ======================================== */
 
 /**
+ * タブの表示状態が変わった際に、
+ * 非表示中は停止し、復帰時にすぐ再開します。
+ */
+function initializeImagePreloadRuntime() {
+    if (
+        document.documentElement.dataset
+            .imagePreloadRuntimeReady ===
+        "true"
+    ) {
+        return;
+    }
+
+    document.documentElement.dataset
+        .imagePreloadRuntimeReady =
+        "true";
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+            if (
+                !document.hidden &&
+                imagePreloadQueue.length > 0
+            ) {
+                schedulePreloadPump(
+                    0
+                );
+            }
+        }
+    );
+}
+
+/**
  * 現在の検索結果に含まれる表示外画像を、
- * 初期表示を妨げないタイミングで順番に読み込みます。
- *
- * 通信量節約設定や低速回線では実行しません。
+ * 初期表示を妨げない速度で並列プリロードします。
  *
  * @param {Array<object>} publications
  */
@@ -437,9 +472,13 @@ function scheduleImagePreload(
             )
             : [];
 
+    imagePreloadQueue =
+        [...paths];
+
     imagePreloadLoadedCount = 0;
     imagePreloadTotalCount =
         paths.length;
+    imagePreloadActiveCount = 0;
 
     updateImagePreloadProgress();
 
@@ -452,30 +491,16 @@ function scheduleImagePreload(
         return;
     }
 
-    const generation =
-        ++imagePreloadGeneration;
+    imagePreloadGeneration++;
 
-    imagePreloadTimer =
-        window.setTimeout(
-            () => {
-                imagePreloadTimer = null;
-
-                scheduleIdleTask(
-                    () => {
-                        preloadImagesSequentially({
-                            paths,
-                            generation
-                        });
-                    }
-                );
-            },
-            IMAGE_PRELOAD_DELAY
-        );
+    schedulePreloadPump(
+        IMAGE_PRELOAD_DELAY
+    );
 }
 
 /**
  * 画像パスを重複なしでキュー化します。
- * 先頭4件は通常表示側で優先読み込みされるため除外します。
+ * 先頭4件は表示用として優先読み込みされるため除外します。
  *
  * @param {Array<object>} publications
  * @returns {Array<string>}
@@ -509,22 +534,90 @@ function createImagePreloadQueue(
             }
         );
 
-    return [
-        ...uniquePaths
-    ];
+    return [...uniquePaths];
 }
 
 /**
- * 1枚ずつ順番に読み込みます。
- * 検索条件が変わった場合は古いキューを停止します。
+ * プリロード処理の再開を予約します。
+ *
+ * @param {number} delay
+ */
+function schedulePreloadPump(
+    delay = 0
+) {
+    if (
+        imagePreloadResumeTimer !==
+        null
+    ) {
+        window.clearTimeout(
+            imagePreloadResumeTimer
+        );
+    }
+
+    imagePreloadResumeTimer =
+        window.setTimeout(
+            () => {
+                imagePreloadResumeTimer =
+                    null;
+
+                pumpImagePreloadQueue();
+            },
+            delay
+        );
+}
+
+/**
+ * 最大3枚まで同時に読み込みます。
+ * 入力処理が待機している場合は、少し待ってから再開します。
+ */
+function pumpImagePreloadQueue() {
+    if (
+        document.hidden ||
+        shouldPauseForUserInput()
+    ) {
+        schedulePreloadPump(
+            IMAGE_PRELOAD_RETRY_DELAY
+        );
+
+        return;
+    }
+
+    const generation =
+        imagePreloadGeneration;
+
+    while (
+        imagePreloadActiveCount <
+            IMAGE_PRELOAD_CONCURRENCY &&
+        imagePreloadQueue.length > 0
+    ) {
+        const nextPath =
+            imagePreloadQueue.shift();
+
+        preloadSingleImage({
+            path:
+                nextPath,
+            generation
+        });
+    }
+
+    if (
+        imagePreloadQueue.length === 0 &&
+        imagePreloadActiveCount === 0
+    ) {
+        completeImagePreloadProgress();
+    }
+}
+
+/**
+ * 画像を1枚読み込みます。
  *
  * @param {{
- *   paths: Array<string>,
+ *   path: string,
  *   generation: number
  * }} options
  */
-function preloadImagesSequentially({
-    paths,
+function preloadSingleImage({
+    path,
     generation
 }) {
     if (
@@ -534,14 +627,7 @@ function preloadImagesSequentially({
         return;
     }
 
-    const nextPath =
-        paths.shift();
-
-    if (!nextPath) {
-        completeImagePreloadProgress();
-
-        return;
-    }
+    imagePreloadActiveCount++;
 
     const image =
         new Image();
@@ -552,29 +638,18 @@ function preloadImagesSequentially({
     image.fetchPriority =
         "low";
 
-    const continuePreload =
-        () => {
-            if (
-                generation !==
-                imagePreloadGeneration
-            ) {
-                return;
-            }
+    let settled = false;
 
-            scheduleIdleTask(
-                () => {
-                    preloadImagesSequentially({
-                        paths,
-                        generation
-                    });
-                }
-            );
-        };
-
-    const finishCurrentImage =
+    const finish =
         ({
             succeeded
         }) => {
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+
             if (
                 generation !==
                 imagePreloadGeneration
@@ -584,9 +659,15 @@ function preloadImagesSequentially({
 
             if (succeeded) {
                 preloadedImagePaths.add(
-                    nextPath
+                    path
                 );
             }
+
+            imagePreloadActiveCount =
+                Math.max(
+                    imagePreloadActiveCount - 1,
+                    0
+                );
 
             imagePreloadLoadedCount =
                 Math.min(
@@ -596,13 +677,13 @@ function preloadImagesSequentially({
 
             updateImagePreloadProgress();
 
-            continuePreload();
+            pumpImagePreloadQueue();
         };
 
     image.addEventListener(
         "load",
         () => {
-            finishCurrentImage({
+            finish({
                 succeeded: true
             });
         },
@@ -614,7 +695,7 @@ function preloadImagesSequentially({
     image.addEventListener(
         "error",
         () => {
-            finishCurrentImage({
+            finish({
                 succeeded: false
             });
         },
@@ -624,58 +705,48 @@ function preloadImagesSequentially({
     );
 
     image.src =
-        nextPath;
+        path;
 }
 
 /**
- * ブラウザが空いている時間に処理します。
- * requestIdleCallback非対応環境ではsetTimeoutを使用します。
+ * ユーザー入力が待機中なら、
+ * プリロード開始を少し遅らせます。
  *
- * @param {Function} callback
+ * @returns {boolean}
  */
-function scheduleIdleTask(
-    callback
-) {
+function shouldPauseForUserInput() {
+    const isInputPending =
+        navigator.scheduling
+            ?.isInputPending;
+
     if (
-        "requestIdleCallback" in
-        window
+        typeof isInputPending !==
+        "function"
     ) {
-        imagePreloadIdleHandle =
-            window.requestIdleCallback(
-                () => {
-                    imagePreloadIdleHandle =
-                        null;
-
-                    callback();
-                },
-                {
-                    timeout:
-                        IMAGE_PRELOAD_IDLE_TIMEOUT
-                }
-            );
-
-        return;
+        return false;
     }
 
-    imagePreloadIdleHandle =
-        window.setTimeout(
-            () => {
-                imagePreloadIdleHandle =
-                    null;
-
-                callback();
-            },
-            120
+    try {
+        return isInputPending.call(
+            navigator.scheduling,
+            {
+                includeContinuous:
+                    true
+            }
         );
+    } catch {
+        return false;
+    }
 }
 
 /**
- * 保留中の開始処理を取り消し、
- * 以前のプリロードキューを無効化します。
+ * 保留中の処理と古いキューを無効化します。
  */
 function cancelScheduledImagePreload() {
     imagePreloadGeneration++;
 
+    imagePreloadQueue = [];
+    imagePreloadActiveCount = 0;
     imagePreloadLoadedCount = 0;
     imagePreloadTotalCount = 0;
 
@@ -689,32 +760,20 @@ function cancelScheduledImagePreload() {
             imagePreloadTimer
         );
 
-        imagePreloadTimer =
-            null;
+        imagePreloadTimer = null;
     }
 
     if (
-        imagePreloadIdleHandle ===
+        imagePreloadResumeTimer !==
         null
     ) {
-        return;
-    }
-
-    if (
-        "cancelIdleCallback" in
-        window
-    ) {
-        window.cancelIdleCallback(
-            imagePreloadIdleHandle
-        );
-    } else {
         window.clearTimeout(
-            imagePreloadIdleHandle
+            imagePreloadResumeTimer
         );
-    }
 
-    imagePreloadIdleHandle =
-        null;
+        imagePreloadResumeTimer =
+            null;
+    }
 }
 
 /**
@@ -786,7 +845,7 @@ function initializeImagePreloadProgress(
 }
 
 /**
- * 現在のプリロード進捗率をCSS変数へ反映します。
+ * 現在のプリロード進捗率を線へ反映します。
  */
 function updateImagePreloadProgress() {
     const progress =
@@ -846,7 +905,6 @@ function completeImagePreloadProgress() {
         "is-complete"
     );
 }
-
 
 /**
  * 通信量節約設定や低速回線ではプリロードを停止します。
