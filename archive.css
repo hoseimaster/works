@@ -2743,14 +2743,28 @@ body.is-modal-open {
         flex-wrap: nowrap;
         gap: 4px;
         width: 100%;
-        overflow: hidden;
+        padding:
+            4px 2px
+            2px;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-padding-inline: 2px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .archive-pagination::-webkit-scrollbar {
+        display: none;
     }
 
     .archive-pagination__button {
+        box-sizing: border-box;
         min-width: 34px;
         min-height: 36px;
         padding: 5px 7px;
         font-size: 0.74rem;
+        line-height: 1;
+        overflow: visible;
     }
 
     .archive-pagination__button--previous,
