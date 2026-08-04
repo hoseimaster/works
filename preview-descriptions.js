@@ -1,6 +1,8 @@
 /**
- * プレビューモーダル専用説明文
+ * プレビューモーダル専用説明文　編集可能
  * previewDescription が空欄なら description が表示されます。
+ * 未記載可能
+ * 必ず``の間に記載する。(``の間なら普通に改行できます)
  */
 
 export const PREVIEW_DESCRIPTIONS = [
