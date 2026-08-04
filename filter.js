@@ -1069,7 +1069,6 @@ function initializeGroupClearButtons({
                     }
 
                     if (
-                        filterKey === "year" ||
                         filterKey === "years" ||
                         filterKey === "yearRange" ||
                         filterKey === "yearFrom" ||
@@ -1332,7 +1331,7 @@ function collectActiveFilters(
         years: "発行年",
         interview: "インタビュー",
         siteStatuses:
-            "制作物公開状況"
+            "サイト掲載状況"
     };
 
     Object.entries(
@@ -1825,10 +1824,16 @@ export function matchesKeyword(
         return true;
     }
 
+    const previewDescription =
+        getPreviewDescription(
+            publication.id
+        );
+
     const searchableValues = [
         publication.title,
         publication.category,
         publication.description,
+        previewDescription,
         publication.publishDate,
         ...(publication.brands ?? []),
         ...(publication.siteStatuses ?? []),
@@ -2217,4 +2222,3 @@ function debounce(
             );
     };
 }
-
