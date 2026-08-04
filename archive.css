@@ -2961,7 +2961,7 @@ body.is-modal-open {
         gap: 3px;
         grid-template-columns:
             60px
-            132px;
+            148px;
         width: auto;
     }
 }
