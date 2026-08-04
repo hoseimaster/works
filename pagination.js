@@ -102,6 +102,12 @@ export function initializePagination({
                         currentPage =
                             requestedPage;
 
+                        /*
+                         * タッチ・クリック後にフォーカス色が
+                         * 残り続けないよう、操作直後に解除します。
+                         */
+                        button.blur();
+
                         applyPagination();
 
                         scrollToResults(
@@ -562,13 +568,13 @@ function updateSummary({
 
     if (filteredCount === 0) {
         summary.textContent =
-            "0件を表示中";
+            "0件を表示";
 
         return;
     }
 
     summary.textContent =
-        `${startIndex + 1}〜${endIndex}件を表示中`;
+        `${startIndex + 1}〜${endIndex}件を表示`;
 }
 
 
