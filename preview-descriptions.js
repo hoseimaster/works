@@ -50,7 +50,6 @@ export const PREVIEW_DESCRIPTIONS = [
 
 ■協力
 ごー、くぎょり
-
 `
     },
 
