@@ -2434,4 +2434,142 @@ body.is-modal-open {
     }
 }
 
+/* ========================================
+   表示件数・表示順の配置調整
+======================================== */
+
+/* 検索欄はキーワード検索と絞り込みのみ */
+.archive-toolbar {
+    align-items: center;
+}
+
+.archive-toolbar > .search-area {
+    flex: 1 1 auto;
+}
+
+.archive-toolbar > .filter-button {
+    flex: 0 0 auto;
+}
+
+/* pagination.jsによって検索欄から移動した表示順 */
+.archive-pagination-controls__sort.sort-area,
+.archive-pagination-controls__sort.archive-sort {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+}
+
+.archive-pagination-controls__sort .archive-sort__select {
+    width: auto;
+    min-width: 150px;
+}
+
+@media screen and (max-width: 700px) {
+    .archive-pagination-controls__sort.sort-area,
+    .archive-pagination-controls__sort.archive-sort {
+        width: 100%;
+    }
+
+    .archive-pagination-controls__sort .archive-sort__select {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+
+/* ========================================
+   表示件数・並び替え 同一サイズ
+======================================== */
+
+.archive-pagination-controls__size,
+.archive-pagination-controls__sort,
+.archive-pagination-controls__sort.archive-sort,
+.archive-pagination-controls__sort.sort-area {
+    display: grid;
+    grid-template-columns: auto 168px;
+    gap: 8px;
+    align-items: center;
+}
+
+.archive-pagination-controls__select,
+.archive-pagination-controls__sort .archive-sort__select {
+    box-sizing: border-box;
+    width: 168px;
+    min-width: 168px;
+    max-width: 168px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0 30px 0 12px;
+    border: 1px solid #d8d8d8;
+    border-radius: 9px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 700px) {
+    .archive-pagination-controls__actions {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-pagination-controls__size,
+    .archive-pagination-controls__sort,
+    .archive-pagination-controls__sort.archive-sort,
+    .archive-pagination-controls__sort.sort-area {
+        grid-template-columns: 72px minmax(0, 1fr);
+        width: 100%;
+    }
+
+    .archive-pagination-controls__select,
+    .archive-pagination-controls__sort .archive-sort__select {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        height: 44px;
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+
+/* ========================================
+   下部ページネーション
+======================================== */
+
+.archive-pagination--bottom {
+    margin-top: 34px;
+    margin-bottom: 8px;
+}
+
+@media screen and (max-width: 700px) {
+    .archive-pagination--bottom {
+        margin-top: 28px;
+        margin-bottom: 4px;
+    }
+}
+
+
+/* ========================================
+   並び替えラベル表示
+======================================== */
+
+.archive-pagination-controls__sort .archive-sort__label {
+    display: inline-block;
+    margin: 0;
+    color: #666666;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 700px) {
+    .archive-pagination-controls__sort .archive-sort__label {
+        font-size: 0.75rem;
+    }
+}
+
 
