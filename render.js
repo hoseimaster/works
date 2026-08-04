@@ -410,6 +410,32 @@ function createPublicationImageArea(
         );
     }
 
+    if (
+        shouldDisplayNewBadge(
+            publication.publishDate
+        )
+    ) {
+        const newBadge =
+            document.createElement(
+                "span"
+            );
+
+        newBadge.className =
+            "publication-card__new";
+
+        newBadge.textContent =
+            "NEW";
+
+        newBadge.setAttribute(
+            "aria-label",
+            "新着"
+        );
+
+        imageArea.appendChild(
+            newBadge
+        );
+    }
+
     imageArea.appendChild(
         image
     );
@@ -1672,6 +1698,79 @@ function initializePublicationListEvents(
 /* ========================================
    データ整形
 ======================================== */
+
+/**
+ * 発行日からNEW表示の対象か判定します。
+ *
+ * 未来の日付は常に表示し、
+ * 過去の日付は当日を含む31日以内だけ表示します。
+ *
+ * @param {*} value
+ * @returns {boolean}
+ */
+function shouldDisplayNewBadge(
+    value
+) {
+    const dateText =
+        String(value ?? "").trim();
+
+    if (
+        !isValidDateFormat(
+            dateText
+        )
+    ) {
+        return false;
+    }
+
+    const [
+        year,
+        month,
+        day
+    ] = dateText
+        .split("-")
+        .map(Number);
+
+    const publishDate =
+        new Date(
+            year,
+            month - 1,
+            day
+        );
+
+    publishDate.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+    const today =
+        new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+    const elapsedDays =
+        Math.floor(
+            (
+                today.getTime() -
+                publishDate.getTime()
+            ) /
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
+        );
+
+    return elapsedDays <= 31;
+}
+
 
 /**
  * 発行日を日本語表示へ変換します。
