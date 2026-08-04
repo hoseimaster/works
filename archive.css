@@ -2842,3 +2842,17 @@ body.is-modal-open {
         transition: none;
     }
 }
+
+/* ========================================
+   プルダウンとページ番号の間隔調整
+======================================== */
+
+.archive-pagination{
+    margin-top:12px;
+}
+
+@media screen and (max-width:700px){
+    .archive-pagination{
+        margin-top:10px;
+    }
+}
