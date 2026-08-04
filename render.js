@@ -201,10 +201,11 @@ function renderPublicationList(
         document.createDocumentFragment();
 
     publications.forEach(
-        (publication) => {
+        (publication, index) => {
             fragment.appendChild(
                 createPublicationCard(
-                    publication
+                    publication,
+                    index
                 )
             );
         }
@@ -222,10 +223,12 @@ function renderPublicationList(
  * 制作物カードを作成します。
  *
  * @param {object} publication
+ * @param {number} index
  * @returns {HTMLElement}
  */
 function createPublicationCard(
-    publication
+    publication,
+    index
 ) {
     const article =
         document.createElement(
@@ -266,7 +269,8 @@ function createPublicationCard(
 
     const imageArea =
         createPublicationImageArea(
-            publication
+            publication,
+            index
         );
 
     const content =
@@ -298,7 +302,8 @@ function createPublicationCard(
  * @returns {HTMLElement}
  */
 function createPublicationImageArea(
-    publication
+    publication,
+    index
 ) {
     const imageArea =
         document.createElement(
@@ -319,22 +324,39 @@ function createPublicationImageArea(
             publication
         );
 
-    image.loading = "lazy";
+    /*
+     * 読み込み前から画像領域を確保し、
+     * レイアウトのずれを防ぎます。
+     */
+    image.width = 700;
+    image.height = 990;
+
     image.decoding = "async";
 
-    const coverImage =
+    /*
+     * 最初に見える可能性が高い画像だけ優先し、
+     * それ以外は遅延読み込みにします。
+     */
+    const isPriorityImage =
+        Number.isInteger(index) &&
+        index >= 0 &&
+        index < 4;
+
+    image.loading =
+        isPriorityImage
+            ? "eager"
+            : "lazy";
+
+    image.fetchPriority =
+        isPriorityImage
+            ? "high"
+            : "low";
+
+    const imagePath =
         normalizeImagePath(
+            publication.thumbnailImage ??
             publication.coverImage
         );
-
-    if (coverImage) {
-        image.src = coverImage;
-    } else {
-        applyFallbackImage(
-            image,
-            publication.title
-        );
-    }
 
     image.addEventListener(
         "error",
@@ -348,6 +370,16 @@ function createPublicationImageArea(
             once: true
         }
     );
+
+    if (imagePath) {
+        image.src =
+            imagePath;
+    } else {
+        applyFallbackImage(
+            image,
+            publication.title
+        );
+    }
 
     imageArea.appendChild(
         image
@@ -1308,6 +1340,7 @@ function createPublicationSignature(
                 publication.id,
                 publication.title,
                 publication.publishDate,
+                publication.thumbnailImage,
                 publication.coverImage,
                 publication.detailUrl,
                 publication.category,
