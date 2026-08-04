@@ -1,0 +1,534 @@
+/**
+ * 制作物アーカイブ
+ * 制作物プレビューモーダル専用スタイル
+ */
+
+/* ========================================
+   モーダル全体
+======================================== */
+
+.preview-modal {
+    position: fixed;
+    z-index: 1200;
+    inset: 0;
+    display: grid;
+    padding: 28px;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+        opacity 0.18s ease,
+        visibility 0.18s ease;
+    place-items: center;
+}
+
+.preview-modal[hidden] {
+    display: none;
+}
+
+.preview-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.preview-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(24 22 20 / 62%);
+    backdrop-filter: blur(2px);
+}
+
+.preview-modal__panel {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: min(1080px, 94vw);
+    max-height: min(860px, 90vh);
+    border: 1px solid rgb(244 122 36 / 18%);
+    border-radius: 22px;
+    background: #fffdf9;
+    box-shadow: 0 30px 90px rgb(0 0 0 / 30%);
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+.preview-modal.is-open
+.preview-modal__panel {
+    opacity: 1;
+    transform: none;
+}
+
+.preview-modal__panel.is-changing
+.preview-modal__content {
+    opacity: 0.45;
+    transform: translateY(3px);
+}
+
+body.is-preview-modal-open {
+    overflow: hidden;
+}
+
+/* ========================================
+   閉じるボタン
+======================================== */
+
+.preview-modal__close {
+    position: absolute;
+    z-index: 4;
+    top: 14px;
+    right: 14px;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: #4a4a4a;
+    font: inherit;
+    font-size: 1.45rem;
+    cursor: pointer;
+    box-shadow: 0 5px 16px rgb(0 0 0 / 12%);
+    transition:
+        background-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+    place-items: center;
+}
+
+.preview-modal__close:hover {
+    background: #ffffff;
+    color: #e66f28;
+    transform: rotate(4deg);
+}
+
+.preview-modal__close:focus-visible {
+    outline: 3px solid rgb(244 122 36 / 28%);
+    outline-offset: 3px;
+}
+
+/* ========================================
+   左右2カラム
+======================================== */
+
+.preview-modal__content {
+    display: grid;
+    grid-template-columns:
+        minmax(320px, 44%)
+        minmax(0, 1fr);
+    gap: 34px;
+    align-items: stretch;
+    min-height: 620px;
+    padding: 34px;
+    transition:
+        opacity 0.12s ease,
+        transform 0.12s ease;
+}
+
+.preview-modal__visual {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-modal__image-area {
+    position: relative;
+    overflow: hidden;
+    width: min(100%, 430px);
+    aspect-ratio: 7 / 9.9;
+    border-radius: 14px;
+    background: #f0f0f0;
+    box-shadow: 0 16px 38px rgb(35 35 35 / 18%);
+}
+
+.preview-modal__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-modal__new {
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgb(244 122 36 / 90%);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+}
+
+.preview-modal__new[hidden] {
+    display: none;
+}
+
+/* ========================================
+   右側情報
+======================================== */
+
+.preview-modal__information {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    padding: 20px 10px 6px 0;
+}
+
+.preview-modal__header-information {
+    flex: 0 0 auto;
+    max-height: none;
+    padding-right: 52px;
+    overflow: visible;
+}
+
+.preview-modal__date {
+    margin: 0 0 10px;
+    color: #8a8179;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.preview-modal__title {
+    margin: 0;
+    color: #252525;
+    font-size: clamp(1.18rem, 1.65vw, 1.62rem);
+    font-weight: 750;
+    line-height: 1.36;
+    letter-spacing: 0.015em;
+    overflow-wrap: anywhere;
+}
+
+.preview-modal__category {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: 26px;
+    margin-top: 16px;
+    padding: 3px 10px;
+    border: 1px solid #e8b98f;
+    border-radius: 999px;
+    background: #fff4ea;
+    color: #915528;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.preview-modal__category[hidden] {
+    display: none;
+}
+
+.preview-modal__brands,
+.preview-modal__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.preview-modal__brands[hidden],
+.preview-modal__badges[hidden] {
+    display: none;
+}
+
+.preview-modal__brand,
+.preview-modal__badge {
+    padding: 4px 8px;
+    border: 1px solid #e5e2df;
+    border-radius: 7px;
+    background: #f8f7f6;
+    color: #666666;
+    font-size: 0.7rem;
+    line-height: 1.35;
+}
+
+.preview-modal__badge {
+    border-color: #e5e2df;
+    background: #f8f7f6;
+    color: #666666;
+}
+
+.preview-modal__badge--interview {
+    border-color: transparent;
+    background: #fff0cc;
+    color: #8f5a00;
+}
+
+.preview-modal__badge--status {
+    border-color: transparent;
+    background: #eaf4ff;
+    color: #286b9e;
+}
+
+.preview-modal__badge--cover {
+    border-color: transparent;
+    background: #f1ecff;
+    color: #6743a2;
+}
+
+.preview-modal__description {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 20px 0 0;
+    padding-right: 10px;
+    color: #666666;
+    font-size: 0.92rem;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ========================================
+   前後移動・詳細ボタン
+======================================== */
+
+.preview-modal__navigation {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 0;
+}
+
+.preview-modal__navigation-button {
+    display: inline-flex;
+    gap: 9px;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 10px 16px;
+    border: 1px solid #ded9d4;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #555555;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 650;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgb(55 45 35 / 6%);
+    transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.preview-modal__navigation-button:hover:not(:disabled) {
+    border-color: #e7a87a;
+    background: #fff7f0;
+    color: #b95f1d;
+    box-shadow: 0 8px 18px rgb(201 119 55 / 13%);
+    transform: translateY(-1px);
+}
+
+.preview-modal__navigation-button:active:not(:disabled) {
+    box-shadow: none;
+    transform: none;
+}
+
+.preview-modal__navigation-button:focus-visible {
+    outline: 3px solid rgb(244 122 36 / 22%);
+    outline-offset: 3px;
+}
+
+.preview-modal__navigation-button:disabled {
+    border-color: #e9e7e5;
+    background: #f5f4f3;
+    color: #b4b1ae;
+    cursor: default;
+    box-shadow: none;
+}
+
+.preview-modal__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.preview-modal__detail-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 178px;
+    min-height: 44px;
+    padding: 8px 20px;
+    border: 1px solid #e98748;
+    border-radius: 10px;
+    background: #ed965d;
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 7px 16px rgb(226 139 83 / 19%);
+    transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+}
+
+.preview-modal__detail-button:hover {
+    border-color: #df7e40;
+    background: #df8750;
+    box-shadow: 0 9px 20px rgb(226 139 83 / 24%);
+    transform: translateY(-1px);
+}
+
+.preview-modal__detail-button:active {
+    box-shadow: none;
+    transform: none;
+}
+
+.preview-modal__detail-button:focus-visible {
+    outline: 3px solid rgb(244 122 36 / 25%);
+    outline-offset: 3px;
+}
+
+
+
+.preview-modal__detail-button.is-disabled,
+.preview-modal__detail-button[aria-disabled="true"] {
+    border-color: #d8d5d2;
+    background: #efeeec;
+    color: #999591;
+    cursor: default;
+    box-shadow: none;
+    pointer-events: none;
+    transform: none;
+}
+
+/* ========================================
+   将来のタブレット・スマートフォン対応
+======================================== */
+
+@media screen and (max-width: 1023px) {
+    .preview-modal {
+        padding: 18px;
+    }
+
+    .preview-modal__panel {
+        width: min(760px, 96vw);
+        max-height: 94dvh;
+    }
+
+    .preview-modal__content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        min-height: 0;
+        max-height: 94dvh;
+        padding: 26px;
+        overflow-y: auto;
+    }
+
+    .preview-modal__image-area {
+        width: min(100%, 360px);
+    }
+
+    .preview-modal__information {
+        padding: 0;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+    .preview-modal {
+        align-items: end;
+        padding:
+            max(10px, env(safe-area-inset-top))
+            0
+            0;
+    }
+
+    .preview-modal__panel {
+        width: 100%;
+        max-height:
+            calc(
+                100dvh -
+                env(safe-area-inset-top)
+            );
+        border-right: 0;
+        border-bottom: 0;
+        border-left: 0;
+        border-radius: 18px 18px 0 0;
+    }
+
+    .preview-modal__content {
+        max-height:
+            calc(
+                100dvh -
+                env(safe-area-inset-top)
+            );
+        padding:
+            22px
+            max(16px, env(safe-area-inset-right))
+            max(18px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
+    }
+
+    .preview-modal__close {
+        top: 10px;
+        right: max(10px, env(safe-area-inset-right));
+    }
+
+    .preview-modal__image-area {
+        width: min(100%, 300px);
+    }
+
+    .preview-modal__header-information {
+        padding-right: 46px;
+    }
+
+    .preview-modal__title {
+        font-size: 1.18rem;
+    }
+
+    .preview-modal__navigation {
+        gap: 8px;
+    }
+
+    .preview-modal__navigation-button {
+        min-height: 48px;
+        padding: 8px 10px;
+        font-size: 0.78rem;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .preview-modal__navigation {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   アニメーション抑制
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .preview-modal,
+    .preview-modal__panel,
+    .preview-modal__content,
+    .preview-modal__close,
+    .preview-modal__navigation-button,
+    .preview-modal__detail-button {
+        transition: none;
+    }
+}
