@@ -1478,7 +1478,7 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-092",
-        title: "THE IDOLM@STER SHINY COLORS 6thLIVE TOUR Come and Unite! Fantastic Fireworks Memorial Leaflet?",
+        title: "THE IDOLM@STER SHINY COLORS 6thLIVE TOUR Come and Unite! Fantastic Fireworks Memorial Leaflet",
         publishDate: "2024-04-20",
         category: "リーフレット",
         brands: ["シャイニーカラーズ"],
