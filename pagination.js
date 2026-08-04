@@ -226,7 +226,6 @@ export function initializePagination({
         );
 
         updateSummary({
-            totalCount,
             filteredCount,
             startIndex,
             endIndex,
@@ -552,7 +551,6 @@ function removeExistingPagination() {
 ======================================== */
 
 function updateSummary({
-    totalCount,
     filteredCount,
     startIndex,
     endIndex,
@@ -564,25 +562,12 @@ function updateSummary({
 
     if (filteredCount === 0) {
         summary.textContent =
-            `全${totalCount}件中 0件を表示`;
-
-        return;
-    }
-
-    if (
-        filteredCount ===
-        totalCount
-    ) {
-        summary.textContent =
-            `全${totalCount}件中 ` +
-            `${startIndex + 1}〜${endIndex}件を表示`;
+            "0件を表示";
 
         return;
     }
 
     summary.textContent =
-        `全${totalCount}件中 ` +
-        `${filteredCount}件が該当・` +
         `${startIndex + 1}〜${endIndex}件を表示`;
 }
 
@@ -617,7 +602,11 @@ function renderPaginationButtons({
 
     createPageNumbers({
         currentPage,
-        totalPages
+        totalPages,
+        compact:
+            window.matchMedia(
+                "(max-width: 700px)"
+            ).matches
     }).forEach(
         (pageNumber) => {
             if (
@@ -729,8 +718,51 @@ function createPageButton({
 
 function createPageNumbers({
     currentPage,
-    totalPages
+    totalPages,
+    compact = false
 }) {
+    if (compact) {
+        if (totalPages <= 4) {
+            return Array.from(
+                {
+                    length:
+                        totalPages
+                },
+                (_, index) =>
+                    index + 1
+            );
+        }
+
+        if (currentPage <= 2) {
+            return [
+                1,
+                2,
+                "ellipsis",
+                totalPages
+            ];
+        }
+
+        if (
+            currentPage >=
+            totalPages - 1
+        ) {
+            return [
+                1,
+                "ellipsis",
+                totalPages - 1,
+                totalPages
+            ];
+        }
+
+        return [
+            1,
+            "ellipsis",
+            currentPage,
+            "ellipsis",
+            totalPages
+        ];
+    }
+
     if (totalPages <= 7) {
         return Array.from(
             {
@@ -923,4 +955,3 @@ function savePageSize(
         // localStorageが利用できない場合も、そのまま動作させます。
     }
 }
-
