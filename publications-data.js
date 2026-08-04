@@ -1645,7 +1645,7 @@ export const PUBLICATIONS = [
             "学園アイドルマスター",
             "その他"
         ],
-        keywords: ["イラスト","占い","コミケ","コミックマーケット108","C108","アケマス","ファッション","コーデ"],
+        keywords: ["イラスト","占い","コミケ","コミックマーケット108","C108","アケマス","U149","ファッション","コーデ"],
         coverImage: "./publication-101.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
