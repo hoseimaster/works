@@ -10,6 +10,8 @@ const IMAGE_PRELOAD_IDLE_TIMEOUT = 1800;
 let imagePreloadGeneration = 0;
 let imagePreloadTimer = null;
 let imagePreloadIdleHandle = null;
+let imagePreloadLoadedCount = 0;
+let imagePreloadTotalCount = 0;
 const preloadedImagePaths = new Set();
 
 
@@ -35,6 +37,10 @@ export function initializeRenderer({
 
     const elements =
         getRenderElements();
+
+    initializeImagePreloadProgress(
+        elements
+    );
 
     initializePublicationListEvents(
         elements
@@ -107,6 +113,11 @@ function getRenderElements() {
         errorMessage:
             document.getElementById(
                 "errorMessage"
+            ),
+
+        preloadProgress:
+            document.getElementById(
+                "imagePreloadProgress"
             )
     };
 }
@@ -419,25 +430,30 @@ function scheduleImagePreload(
 ) {
     cancelScheduledImagePreload();
 
+    const paths =
+        Array.isArray(publications)
+            ? createImagePreloadQueue(
+                publications
+            )
+            : [];
+
+    imagePreloadLoadedCount = 0;
+    imagePreloadTotalCount =
+        paths.length;
+
+    updateImagePreloadProgress();
+
     if (
-        !Array.isArray(publications) ||
-        publications.length <= 4 ||
+        paths.length === 0 ||
         shouldSkipImagePreload()
     ) {
+        completeImagePreloadProgress();
+
         return;
     }
 
     const generation =
         ++imagePreloadGeneration;
-
-    const paths =
-        createImagePreloadQueue(
-            publications
-        );
-
-    if (paths.length === 0) {
-        return;
-    }
 
     imagePreloadTimer =
         window.setTimeout(
@@ -522,6 +538,8 @@ function preloadImagesSequentially({
         paths.shift();
 
     if (!nextPath) {
+        completeImagePreloadProgress();
+
         return;
     }
 
@@ -553,14 +571,40 @@ function preloadImagesSequentially({
             );
         };
 
+    const finishCurrentImage =
+        ({
+            succeeded
+        }) => {
+            if (
+                generation !==
+                imagePreloadGeneration
+            ) {
+                return;
+            }
+
+            if (succeeded) {
+                preloadedImagePaths.add(
+                    nextPath
+                );
+            }
+
+            imagePreloadLoadedCount =
+                Math.min(
+                    imagePreloadLoadedCount + 1,
+                    imagePreloadTotalCount
+                );
+
+            updateImagePreloadProgress();
+
+            continuePreload();
+        };
+
     image.addEventListener(
         "load",
         () => {
-            preloadedImagePaths.add(
-                nextPath
-            );
-
-            continuePreload();
+            finishCurrentImage({
+                succeeded: true
+            });
         },
         {
             once: true
@@ -569,7 +613,11 @@ function preloadImagesSequentially({
 
     image.addEventListener(
         "error",
-        continuePreload,
+        () => {
+            finishCurrentImage({
+                succeeded: false
+            });
+        },
         {
             once: true
         }
@@ -628,6 +676,11 @@ function scheduleIdleTask(
 function cancelScheduledImagePreload() {
     imagePreloadGeneration++;
 
+    imagePreloadLoadedCount = 0;
+    imagePreloadTotalCount = 0;
+
+    updateImagePreloadProgress();
+
     if (
         imagePreloadTimer !==
         null
@@ -663,6 +716,137 @@ function cancelScheduledImagePreload() {
     imagePreloadIdleHandle =
         null;
 }
+
+/**
+ * 「全○件」と「○〜○件を表示」の間に置く
+ * 控えめなプリロード進捗線を生成します。
+ *
+ * @param {object} elements
+ */
+function initializeImagePreloadProgress(
+    elements
+) {
+    const existing =
+        document.getElementById(
+            "imagePreloadProgress"
+        );
+
+    if (existing) {
+        elements.preloadProgress =
+            existing;
+
+        return;
+    }
+
+    const resultsHeader =
+        document.querySelector(
+            ".archive-results-header"
+        );
+
+    if (!resultsHeader) {
+        return;
+    }
+
+    const progress =
+        document.createElement(
+            "div"
+        );
+
+    progress.id =
+        "imagePreloadProgress";
+
+    progress.className =
+        "image-preload-progress";
+
+    progress.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    const bar =
+        document.createElement(
+            "span"
+        );
+
+    bar.className =
+        "image-preload-progress__bar";
+
+    progress.appendChild(
+        bar
+    );
+
+    resultsHeader.after(
+        progress
+    );
+
+    elements.preloadProgress =
+        progress;
+
+    updateImagePreloadProgress();
+}
+
+/**
+ * 現在のプリロード進捗率をCSS変数へ反映します。
+ */
+function updateImagePreloadProgress() {
+    const progress =
+        document.getElementById(
+            "imagePreloadProgress"
+        );
+
+    if (!progress) {
+        return;
+    }
+
+    const ratio =
+        imagePreloadTotalCount > 0
+            ? imagePreloadLoadedCount /
+                imagePreloadTotalCount
+            : 0;
+
+    const normalizedRatio =
+        Math.min(
+            Math.max(
+                ratio,
+                0
+            ),
+            1
+        );
+
+    progress.style.setProperty(
+        "--image-preload-progress",
+        `${normalizedRatio * 100}%`
+    );
+
+    progress.classList.toggle(
+        "is-complete",
+        normalizedRatio >= 1
+    );
+}
+
+/**
+ * プリロード対象がない場合や完了時に100%へ進めます。
+ */
+function completeImagePreloadProgress() {
+    const progress =
+        document.getElementById(
+            "imagePreloadProgress"
+        );
+
+    if (!progress) {
+        return;
+    }
+
+    progress.style.setProperty(
+        "--image-preload-progress",
+        "100%"
+    );
+
+    progress.classList.add(
+        "is-complete"
+    );
+}
+
 
 /**
  * 通信量節約設定や低速回線ではプリロードを停止します。
