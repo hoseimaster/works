@@ -25,7 +25,7 @@
  *   YYYY-MM-DD形式で入力
  *
  * category
- *   「会誌」「検定本」「リーフレット」「その他」と同じ表記で指定（単独）
+ *   「会誌」「検定本」「リーフレット」「その他」「グッズ・特典」と同じ表記で指定（単独）
  *
  * brands
  *   「THE IDOLM@STER」「シンデレラガールズ」「ミリオンライブ!」「SideM」「シャイニーカラーズ」「学園アイドルマスター」と同じ表記を配列で指定（複数可）
@@ -1628,7 +1628,7 @@ export const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
-        description: "C108での新刊「HOSEIM@STER 2026」と既刊「学マス検定」の同時購入特典です。"
+        description: "C108での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同時購入特典です。"
     },
 
     {
