@@ -10,6 +10,10 @@ import {
     getPublicationYears
 } from "./publications.js";
 
+import {
+    getPreviewDescription
+} from "./preview-descriptions.js";
+
 const KEYWORD_INPUT_DELAY = 300;
 
 let selectedYearFrom = "";
