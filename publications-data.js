@@ -50,6 +50,7 @@
  * description
  *   一覧へ表示する説明文を記入
  *
+ *
  */
 
 export const PUBLICATIONS = [
