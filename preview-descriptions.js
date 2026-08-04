@@ -289,6 +289,15 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-040",
         title: "HOSEIM@STER 2015学園祭号",
         previewDescription: `
+2015年度の法政大学の学園祭「自主法政祭」に合わせて制作した機関誌です。
+表紙イラストは会員のてらだPが担当。アニメも経てますます盛り上がりを見せるシンデレラガールズより、塩見周子です。
+■内容
+①学生P（プロデューサー）に聞いた！シンデレラガールズの魅力調べM@S！！
+②シンデレラ3rdセットリスト予想
+③新入生座談会
+④ほか 
+■イラスト
+ 【表紙】てらだ
 `
     },
 
@@ -296,6 +305,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-041",
         title: "HOSEIM@STER 2015 SideM 1st号",
         previewDescription: `
+■内容
+SideM1stライブ「THE IDOLM@STER SideM 1st STAGE〜ST@RTING!〜」会場の舞浜アンフィシアター周辺にて配布したリーフレットです。 会員によるSideMのキャラクターに関する考察を掲載。
+■イラスト
+【表紙】みなと様（X：@minato10、PixivID：2323701）
 `
     },
 
@@ -303,6 +316,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-042",
         title: "アイドルマスター検定3 10周年記念版",
         previewDescription: `
+■内容紹介
+今回はアイマスオールジャンルからの出題です。 
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -324,6 +341,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-045",
         title: "HOSEIM@STER CINDERELLA GIRLS 4th LIVE Memorial Leaflet",
         previewDescription: `
+■内容紹介
+「Orange Sapphire」「気持ちいいよね 一等賞!」「明日また会えるよね」「この空の下」など数々の楽曲の作詞作曲をされたFunta様の今回のライブに向けたコメントをいただきました。また、会員による『ライブの「ここ」が見たい！』をDAY1とDAY2に分けて掲載。
+■イラスト
+【表紙】喫茶店ひより〔旧名：喫茶店くるみ〕（X:＠kisskunlove)
+■協力
+【インタビュー】Funta様
 `
     },
 
@@ -331,6 +354,19 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-046",
         title: "HOSEIM@STER 2016 学園祭号",
         previewDescription: `
+■内容
+・法政アイマス研究会年表
+・ファンをオトすアイドルたち～シンデレラガールズ編～
+・チェキを取りたい～ミリオンライブ編～
+・SideMのアイドルに歌ってもらいたいアイマス曲
+・ミリオンタロット占い～考察～
+・曲紹介～紹介してみた～
+・アイドルマスターXENOGLOSSIA 考察
+・新入生座談会
+・ヴィーナス・新田美波
+・他
+■イラスト
+【表紙】菜羅（X:@riyfia）
 `
     },
 
@@ -338,6 +374,13 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-047",
         title: "アイドルマスターセンター試験 実践問題集2016",
         previewDescription: `
+■内容紹介
+「７６５」「シンデレラ」「ミリオン」の基礎から応用までを、なんとこの一冊で対策出来ちゃいます！
+今回の難易度は初級～中級程度となっておりますので、今のあなたの力量を測るにはうってつけの教材です！総ページ数は60以上！
+■価格
+500円　※現在は販売しておりません。
+■イラスト
+【表紙】hebiko 
 `
     },
 
@@ -345,6 +388,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-048",
         title: "HOSEIM@STER ライブ会場考察号",
         previewDescription: `
+■内容
+過去のライブ演出や、会場周辺の施設の情報など、現地参加したPの生の情報が満載！地方会場の情報も収録されているので、来年のシンデレラ５thツアーの役に立つ…かも？
+■イラスト
+【表紙】菜羅（X:@riyfia）
 `
     },
 
@@ -359,6 +406,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-050",
         title: "HOSEIM@STER 2017 SideM 2nd Shining Side",
         previewDescription: `
+■内容
+sideM２ndライブですが、1stから引き続き今回も当会機関紙『HOUSEI M@STRER』のsideM特別号を2日間2種類制作しました。実はこちら、1日目表紙の天道輝と2日目裏の天ケ瀬冬馬がつながるようなイラストになっています。是非両日ともにお受け取りください！ほんとうに315ですね～
+■イラスト
+【表紙】菜羅（X:@riyfia）
 `
     },
 
@@ -366,6 +417,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-051",
         title: "HOSEIM@STER 2017 SideM 2nd Brilliant Side",
         previewDescription: `
+■内容
+sideM２ndライブですが、1stから引き続き今回も当会機関紙『HOUSEI M@STRER』のsideM特別号を2日間2種類制作しました。実はこちら、1日目表紙の天道輝と2日目裏の天ケ瀬冬馬がつながるようなイラストになっています。是非両日ともにお受け取りください！ほんとうに315ですね～ 
+■イラスト
+【表紙】菜羅（X:@riyfia）
 `
     },
 
@@ -373,6 +428,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-052",
         title: "HOSEIM@STER MILLION 4th MEMORIAL LEAFLET",
         previewDescription: `
+■内容
+今回は、「ミリオンライブは好きだけど、ゲームってどうやって遊んでいけばいいのかわからないから…」という方向けにミリオンライブの遊び方の一部を紹介！
+■イラスト
+ 【表紙】竹輪（X:@chikuwa2014）
 `
     },
 
@@ -380,6 +439,13 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-053",
         title: "HOSEIM@STER CINDERELLA GIRLS 5thLIVE Memorial Leaflet",
         previewDescription: `
+■内容紹介
+今回は、パ・リーグTV Lite(@ptv_lite )様、スニリプ(@sni_rep )様からコメントをいただきました！！
+■イラスト
+【表紙】きいも様(X:@kmotand )（pixivID:Kmotand）
+■協力
+【インタビュー】パ・リーグTV Lite 様(Ｘ:@ptv_lite )
+【インタビュー】スニッカーズ ＃スニリプキャンペーン事務局 様(Ｘ:@sni_rep )
 `
     },
 
@@ -387,6 +453,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-054",
         title: "HOSEiMM@STER 夏コミ号　作中の料理を作ってみた?",
         previewDescription: `
+■内容
+今回は料理に挑戦しました！！ アイマスの作中に出てくる料理をド素人の会員たちはちゃんと再現出来たのか！？ 
+■イラスト
+【表紙】喫茶店ひより（旧名：喫茶店くるみ ）（X:＠kisskunlove)
+■価格
+800円　※現在は販売しておりません。
 `
     },
 
@@ -394,6 +466,14 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-055",
         title: "HOSEiM@STER 2017 学園祭号",
         previewDescription: `
+■内容
+・法政アイマス研究会年表
+・新入生座談会
+・杏奈のvivid旅行記
+・アイドルマスター．KR座談会
+・他
+■イラスト
+【表紙】竹輪（X:@chikuwa2014）
 `
     },
 
@@ -401,6 +481,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-056",
         title: "HOSEiM@STER 2017 winter 作ってみた? Vol.2",
         previewDescription: `
+■内容
+前回に引き続き、作中に登場する料理に挑戦しました！ 果たしてインスタ映えする料理はできたのか？それともTwitter映えしてしまうのか！？ 
+■イラスト
+【表紙】Unknown
 `
     },
 
@@ -408,6 +492,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-057",
         title: "DRAFT 2017",
         previewDescription: `
+■内容
+会内で俄かに流行中(?)の遊び『ドラフト』についてや、モバマスのフリートレードにおけるアイドルの出品総額についてまとめました！一番タカネのアイドルは誰だ！？ 
+■価格
+400円　※現在は販売しておりません。
+■イラスト
+【表紙】あらし、菜羅（X:@riyfia）
 `
     },
 
@@ -422,6 +512,13 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-059",
         title: "HOSEiM@STER 2018 学園祭号",
         previewDescription: `
+■内容
+・デレマスドラフト会議
+・会場考察2018学祭編
+・新入生座談会2018
+・他
+■イラスト
+【表紙】竹輪（X:@chikuwa2014）
 `
     },
 
@@ -429,6 +526,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-060",
         title: "HOSEi M@STER 2018 Cinderella 6th Leaflet -MetLife Dome-",
         previewDescription: `
+■内容紹介
+「モバマスの始め方」について書きました。27日から始まるアニバーサリーイベント向けて少しでも力になれたら幸いです。製作者曰く「センスの無さを痛感した」そうです。文章が決まってもレイアウトや文字の色、フォント、背景色で苦しんだみたいです。そんな彼の血と汗の結晶を少しでも感じて頂けたら幸いです。(関係無いとは思いますが、編集担当者は公演後に入院しました。)
+■イラスト
+【表紙】菜羅(X:@riyfia)
 `
     },
 
@@ -436,6 +537,13 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-061",
         title: "HOSEi M@STER 2018 Cinderella 6th Leaflet -NAGOYA DOME-",
         previewDescription: `
+■内容紹介
+インタビュー記事に加えて以前行ったアンケートの結果を掲載!! 
+■表紙
+【表紙】竹輪(X:@chikuwa2014)
+■協力
+【インタビュー】前橋市役所 政策部 市政発信課 様
+【アンケート】アンケートに回答してくださった皆様
 `
     },
 
@@ -443,6 +551,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-062",
         title: "SideM検定",
         previewDescription: `
+■内容紹介
+3年ぶりに赤本が帰ってきました! 当会の会員達が作成した解き応えのある問題に、ぜひ挑戦してみてください！
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -450,6 +562,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-063",
         title: "シャイニーカラーズ検定",
         previewDescription: `
+■内容紹介
+3年ぶりに赤本が帰ってきました! 当会の会員達が作成した解き応えのある問題に、ぜひ挑戦してみてください ！
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -457,6 +573,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-064",
         title: "ミリシタ検定",
         previewDescription: `
+■内容紹介
+お馴染みの"検定本"『ミリシタ検定』を新刊として頒布！ 
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -464,6 +584,14 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-065",
         title: "HOSEIM@STER CINDERELLA 7th Leaflet MAKUHARI MESSE",
         previewDescription: `
+■内容紹介
+幕張公演に向けて久川姉妹の記事を掲載!!
+■イラスト
+【表紙】pastel(X:@crepastel) 
+■文章
+デビパンダ（X:＠devipanda_imas ）、わかば（X:@KiriWakaba）
+■編集
+コバヤシ〔みらいん〕（X:＠mirainwonder）
 `
     },
 
@@ -471,6 +599,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-066",
         title: "HOSEIM@STER CINDERELLA 7th Leaflet KYOCERADOME",
         previewDescription: `
+■内容紹介
+作詞家の夕野ヨシミ様(@shatyou)へのインタビューです！
+■ イラスト
+【表紙】Dorao(X:@DOR4O_01）
+■協力
+【インタビュー】夕野ヨシミ 様(X:@shatyou)
 `
     },
 
@@ -478,6 +612,15 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-067",
         title: "Hosei m@ster Cook p@d!! ~作ってみた vol.3~",
         previewDescription: `
+■内容
+アイドルマスターシリーズオンリーイベント「歌姫庭園24」に向け制作した、作中料理再現本です。
+大人気の「いちごパスタ」から、そんなのあったっけ？となるような料理まで、全6レシピを収録。
+かわいい表紙や挿絵イラストにも注目です！ 
+■イラスト
+【表紙】ブラウン
+【挿絵】さなか（X:＠Riric_rock）、めど
+■編集
+ぽっきー
 `
     },
 
@@ -485,6 +628,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-068",
         title: "HOSEIM@STER SHINYCOLORS 3RD LIVE LEAFLET NAGOYA",
         previewDescription: `
+■内容
+アイドルマスターシャイニーカラーズ、その3rdライブツアー開催を記念して制作したリーフレットになります！ 当会会員の「ライブのここが見たい！」のほか、披露されるかもしれない楽曲のレビューなどを掲載しています。 
+■イラスト
+【表紙】アイスココア（X:＠ebiebiebisu2000）
 `
     },
 
@@ -492,6 +639,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-069",
         title: "THE IDOLM@STER MILLION LIVE! 7thLIVE Q@MP FLYER!!! Reburn Memorial Leaflet",
         previewDescription: `
+■内容
+ミリオンライブ7th LIVE Reburn「Q@MP FLYER!!!」にて、オンラインで配布したリーフレットです。
+ライブのために作られた完全新規衣装についてや、ライブを待ち焦がれていた会員による見どころなどを掲載！
+表紙、挿絵イラストは当会会員のさなかPが担当。2020年の公演中止を経て再燃したライブへ臨む、アイドルたちの静かな熱さが表現されています。  
+■イラスト
+【表紙・挿絵】さなか（X:＠Riric_rock）
 `
     },
 
@@ -499,6 +652,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-070",
         title: "HOSEIM@STER SHINYCOLORS 3rd LIVE Leaflet FUKUOKA",
         previewDescription: `
+■内容
+シャイニーカラーズ3rdライブツアー、福岡公演に合わせてオンライン配布したリーフレットです。
+千秋楽を迎えるツアーへ向けた会員の意気込みや、披露される楽曲のレビューも掲載。
+表紙イラストは会員のアイスココアPが担当。ライブでも大活躍の芹沢あさひをカッコよく描いていただきました。  
+■イラスト
+【表紙】アイスココア（X:＠ebiebiebisu2000）
 `
     },
 
@@ -513,6 +672,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-072",
         title: "THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND!!! Merry Maerchen Land Memorial leaflet 2021 10.2-3 @West Japan General Exhibition Center",
         previewDescription: `
+■内容紹介
+（今後追加予定） 
+■イラスト
+【表紙】づま（X:＠KimamanaZuma）
 `
     },
 
@@ -520,6 +683,14 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-073",
         title: "シャイニーカラーズ検定Ⅱ",
         previewDescription: `
+■内容紹介
+当会の名物(？)である赤本の「シャイニーカラーズ検定Ⅱ」を頒布します！ シャニマスの知識力に自信のある方、ぜひチャレンジしてみてください！！！
+■イラスト
+【挿絵】アイスココア（X:＠ebiebiebisu2000）
+■編集
+さなか（X:＠Riric_rock ）、ぽっきー
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。
 `
     },
 
@@ -527,6 +698,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-074",
         title: "THE IDOLM@STER SideM 6thLIVE TOUR ～NEXT DESTIN@TION!～ Side TOKYO Memorial leaflet",
         previewDescription: `
+■内容
+2022年1月９日、10日開催の「THE IDOLM@STER SideM 6thLIVE TOUR ～NEXT DESTIN@TION!～ Side TOKYO」開催を記念したリーフレットです！ 会員とSideMの出会いや、触れることになったきっかけなどを掲載しています！ 
+■イラスト
+【表紙】さなか（X:＠Riric_rock）
 `
     },
 
@@ -534,6 +709,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-075",
         title: "THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND TOUR!!! Tropical Land Memorial leaflet 2022 1.29-30",
         previewDescription: `
+■内容紹介
+今回も当会は電子リーフレットを作成いたしました。内容は今回の公演でソロ曲が初披露となるアイドルから道明寺歌鈴ちゃんのソロ曲についてです。
+■イラスト
+【表紙】づま（X:＠KimamanaZuma）
+■編集
+ぽっきー
 `
     },
 
@@ -541,6 +722,13 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-076",
         title: "THE IDOLM@STER MILLION LIVE! 8thLIVE Twelw@ve Memorial Leaflet",
         previewDescription: `
+■内容
+2022年2月12日、13日に開催された「THE IDOLM＠STER MILLION LIVE! 8thLIVE Twelw@ve」を記念し作成した、電子リーフレットになります。 当会会員によるユニット紹介、ライブへ向けた期待のコメントなどを掲載しております。 
+■イラスト
+【表紙】ささ（X:＠ima_sasa)
+【挿絵】づま（X:＠KimamanaZuma）
+■編集・文責
+さなか（X:@Riric_rock）
 `
     },
 
@@ -548,6 +736,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-077",
         title: "THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND!!!　@BELLUNA DOME 2022.4/2~4/3 MEMORIAL LEAFLET",
         previewDescription: `
+■内容紹介
+2022年4月2日、3日に開催された「THE IDOLM@STER CINDERELLA GIRLS 10th ANNIVERSARY M@GICAL WONDERLAND!!!」を記念し作成した、電子リーフレットになります。 当会会員による思い出に残っているライブの場面やライブへ向けた期待のコメントを掲載しております。 
+■イラスト
+【表紙 】づま (X:＠KimamanaZuma)
+■編集・文責
+ささ (X:＠ima_sasa)
 `
     },
 
@@ -555,6 +749,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-078",
         title: "THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み、今を越えて。 MEMORIAL LEAFLET?",
         previewDescription: `
+■内容
+2022年4月23日、24日に開催された「THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み、今を越えて。」を記念し作成した、電子リーフレットになります。 当会会員による「想像をこえたシャニマスの思い出」、ライブへ向けた期待のコメントなどを掲載しております。 
+■イラスト
+【表紙】アイスココア(X:＠ebiebiebisu2000)
+■編集・文責
+さなか(X:＠Riric_rock)
 `
     },
 
@@ -562,6 +762,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-079",
         title: "THE IDOLM@STER 765PRO ALLSTARS LIVE SUNRICH COLORFUL MEMORIAL LEAFLET?",
         previewDescription: `
+■内容紹介
+7月9日、10日開催の「THE IDOLM@STER 765PRO ALLSTARS LIVE SUNRICH COLORFUL」を記念したリーフレットになります！ 
+■イラスト
+【表紙】ささ（X:＠ima_sasa）
+■編集・文責
+ささ（X:＠ima_sasa） 
 `
     },
 
@@ -576,6 +782,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-081",
         title: "THE IDOLM@STER CINDERELLA GIRLS LIKE4LIVE #cg_ootd MEMORIAL LEAFLET",
         previewDescription: `
+■内容紹介
+2022年9月3日、4日に開催された「THE IDOLM@STER CINDERELLA GIRLS LIKE4LIVE #cg_ootd｣を記念し作成した、電子リーフレットになります。 当会会員による｢#(ハッシュタグ)｣にまつわる企画を掲載しております。 
+■イラスト
+【表紙】づま(X:＠KimamanaZuma) 
+■編集・文責
+づま (X:＠KimamanaZuma)  
 `
     },
 
@@ -583,6 +795,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-082",
         title: "THE IDOLM@STER SHINY COLORS 283PRODUCTION UNIT LIVE MUGEN BEAT MEMORIAL LEAFLET",
         previewDescription: `
+■内容
+作詞家の渡邊亜希子様へのインタビューを掲載。
+■イラスト
+【表紙】さなか（X:＠Riric_rock）
+■協力
+【インタビュー】渡邊亜希子 様 
 `
     },
 
@@ -590,6 +808,10 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-083",
         title: "ミリシタ検定Ⅱ",
         previewDescription: `
+■内容紹介
+ミリシタの知識に自信のあるプロデューサーさんは、ぜひチャレンジしてみてくださいね！
+
+※この検定本は公式様の「全国プロデューサー検定（アイマス検定）」とは一切関係ございません。 
 `
     },
 
@@ -597,6 +819,15 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-084",
         title: "202301.14-01.15 @Nippon Budokan THE IDOL M@STER MILLION LIVE! 9th LIVE ChoruSp@rklle!!!!! Memorial leaflet",
         previewDescription: `
+■内容
+今回は『きまぐれユモレスク』を作詞作曲された、mekakushe様へのインタビューを掲載しております！ 
+■イラスト
+【表紙】づま（X:＠KimamanaZuma）
+【挿絵】ささ（X:＠ima_sasa）
+■編集・文責
+ささ（X:＠ima_sasa）
+■協力
+mekakushe 様(X：@_mekakushe_）
 `
     },
 
@@ -604,6 +835,15 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-085",
         title: "THE IDOLM@STER M@STERS OF IDOL WORLD!!!!! 2023 Memorial Leaflet",
         previewDescription: `
+■内容
+『VOY@GER』の作詞をはじめ、多くのブランドに作詞作曲提供を行なっている烏屋茶房様へのインタビューとなっております！ 
+■イラスト
+【表紙】さなか（X:＠Riric_rock）
+【挿絵】コドネリ、づま（X:＠KimamanaZuma ）、ささ（X:＠ima_sasa）
+■編集・文責
+ぽっきー、ATFX
+■ご協力
+【インタビュー】烏屋茶房 様 
 `
     },
 
@@ -611,6 +851,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-086",
         title: "THE IDOLM@STER SHINY COLORS 5thLIVE If I_wings.Memorial Reaflet",
         previewDescription: `
+■内容
+2023年3月18、19日に開催されます「THE IDOLM@STER SHINY COLORS 5thLIVE IF I_wings.」を記念し作成した電子リーフレットになります。 今回は「If I_produce.」というテーマで当会会員による企画を実施しております。
+■イラスト
+【表紙】ささ（X：＠ima_sasa)
+■編集
+しの（X：＠sino_ryry)
 `
     },
 
@@ -618,6 +864,12 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-087",
         title: "THE IDOLM@STER MILION LIVE! 10thLIVE TOUR Act-1 H@PPY 4 YOU! Memorial Leaflet",
         previewDescription: `
+■内容
+2023年4月22、23日に開催された「THE iDOLM@STER MILLION LIVE! 10thLIVETOUR Act-1　H@PPY 4 YOU！」を記念し作成した電子リーフレットになります。今回は「H@PPYになれるミリオン楽曲コンペ」というテーマで当会会員による企画を実施しております。
+■イラスト
+【表紙】さなか（X：＠Riric_rock）
+■編集・文責
+あすぱら。（X：＠asupararaaa_ms) 
 `
     },
 
@@ -625,6 +877,11 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-088",
         title: "THE IDOLM@STER MILLION LIVE! 10thLIVE 5 TO SP@RKLE Act-2 Memorial Leaflet",
         previewDescription: `
+■内容
+THE iDOLM@STER MILLION LIVE! 10thLIVETOUR Act-2「5 TO SP@RKLE」の開催記念リーフレットです。
+■イラスト
+【表紙】キュートなミユキちゃんbot
+
 `
     },
 
@@ -632,6 +889,14 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-089",
         title: "THE IDOLM@STER SideM 8th STAGE ～ALL H@NDS TOGETHER～ MEMORIAL LEAFLET?",
         previewDescription: `
+■内容
+今回の内容は、神速一魂の二人のソロなど、『49 ELEMENTS』シリーズにおいて数多くの作詞を手掛けている新谷風太様へのインタビューとなっています！ 
+■イラスト
+【表紙・挿絵】さなか（X:@Riric_rock)
+■編集・文責
+めんへん(X:@menhenP)、ささ(X:@ima_sasa)
+■協力
+【インタビュー】新谷風太 様(X:@ShintaniFuta)
 `
     },
 
@@ -639,6 +904,19 @@ export const PREVIEW_DESCRIPTIONS = [
         id: "publication-090",
         title: "HOSEI M@STER 2023",
         previewDescription: `
+■内容
+ ・法マスAct-4披露曲予想BINGO! 
+Act-4でやりそうな楽曲でビンゴを作ろう！
+ ・法マス会場ガイド2023!!
+法マスの会場ガイド第二弾
+ ・スポーツ！スポーツ！スポーツ！
+オタク、お金がないから会場まで歩きました
+ ・社会人にBouncing Smile!を聴かせると仕事を辞めるのか？
+インターネットやめろ つまんないことやめろ
+■イラスト
+【表紙】ささ(X:@ima_sasa)
+■編集
+ ささ(X:@ima_sasa)
 `
     },
 
@@ -680,7 +958,6 @@ Ken1、あさやけ、つくよみ：、かなろあ、トカラ、あすぱら�
 あすぱら。（X：＠asupararaaa_ms)
 ■協力
 【インタビュー】鈴木静那 様 （X:＠suzukishizuna）
-
 `
     },
 
