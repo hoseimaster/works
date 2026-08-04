@@ -1422,6 +1422,10 @@ Ken1（X：＠xio1740672）
         id: "publication-99",
         title: "ミニキャラシールセット",
         previewDescription: `
+C108での新刊「HOSEIM@STER 2026」の購入特典になります。
+
+■イラスト
+　睡眠
 `
     },
 
@@ -1429,6 +1433,11 @@ Ken1（X：＠xio1740672）
         id: "publication-100",
         title: "限定ポストカード",
         previewDescription: `
+C108での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同時購入特典になります。
+
+■イラスト
+【赤城みりあさん】睡眠
+【十王星南さん】25GR
 `
     },
 
