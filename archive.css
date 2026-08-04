@@ -1794,11 +1794,11 @@ body.is-modal-open {
     color: #d77d47;
 }
 
-/* 制作物カードの分類タグを淡い色に */
+/* 制作物カードの分類タグ */
 .publication-card__category {
-    border: 1px solid #edb890;
-    background: #f8c9a5;
-    color: #754322;
+    border: 1px solid #e8b98f;
+    background: #fff4ea;
+    color: #9b5a28;
 }
 
 /* 検索結果0件時のリセットボタンをグレーに */
