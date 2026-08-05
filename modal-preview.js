@@ -4,10 +4,6 @@ import {getPreviewDescription} from "./preview-descriptions.js";
 /**
  * 制作物アーカイブ
  * 制作物プレビューモーダル
- *
- * 現在はPCのみ有効です。
- * 将来スマートフォンで有効にする場合は、
- * PREVIEW_MODAL_CONFIG.enabledOnMobile を true に変更します。
  */
 
 const PUBLICATION_MAP = new Map(
@@ -1020,11 +1016,35 @@ function replaceBadgeList(
  * @returns {string}
  */
 function normalizeUrl(value) {
-    const url = String(value ?? "").trim();
+    const url =
+        String(
+            value ?? ""
+        ).trim();
 
-    if (!url || url === "#") {
+    if (
+        !url ||
+        url === "#"
+    ) {
         return "";
     }
 
-    return url;
+    let parsed;
+
+    try {
+        parsed = new URL(
+            url,
+            document.baseURI
+        );
+    } catch {
+        return "";
+    }
+
+    if (
+        parsed.protocol !== "http:" &&
+        parsed.protocol !== "https:"
+    ) {
+        return "";
+    }
+
+    return parsed.href;
 }
