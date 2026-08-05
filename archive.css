@@ -2983,3 +2983,92 @@ and (max-width: 1180px) {
         border-radius: 18px;
     }
 }
+
+/* ========================================
+   プリロード状態表示
+======================================== */
+
+.image-preload-status-row {
+    display: flex;
+    min-height: 12px;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: -8px 0 2px;
+    pointer-events: none;
+}
+
+.image-preload-status {
+    display: inline-block;
+    color: #e88648;
+    font-size: 0.56rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.025em;
+    text-align: right;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(2px);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.image-preload-status.is-loading,
+.image-preload-status.is-complete,
+.image-preload-status.is-error {
+    opacity: 0.78;
+    transform: none;
+}
+
+.image-preload-status.is-hiding {
+    opacity: 0;
+    transform: translateY(-1px);
+}
+
+.image-preload-status.is-loading::after {
+    display: inline-block;
+    width: 1.15em;
+    overflow: hidden;
+    content: "...";
+    vertical-align: bottom;
+    animation:
+        image-preload-status-dots
+        1.15s
+        steps(4, end)
+        infinite;
+}
+
+.image-preload-status.is-error {
+    opacity: 0.9;
+}
+
+@keyframes image-preload-status-dots {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 1.15em;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .image-preload-status-row {
+        min-height: 11px;
+        margin-top: -6px;
+    }
+
+    .image-preload-status {
+        font-size: 0.52rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .image-preload-status {
+        transition: none;
+    }
+
+    .image-preload-status.is-loading::after {
+        animation: none;
+    }
+}
