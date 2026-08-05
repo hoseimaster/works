@@ -1262,7 +1262,7 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-078",
-        title: "THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み、今を越えて。 MEMORIAL LEAFLET?",
+        title: "THE IDOLM@STER SHINY COLORS 4thLIVE 空は澄み、今を越えて。 MEMORIAL LEAFLET",
         publishDate: "2022-04-23",
         category: "リーフレット",
         brands: ["シャイニーカラーズ"],
@@ -1277,7 +1277,7 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-079",
-        title: "THE IDOLM@STER 765PRO ALLSTARS LIVE SUNRICH COLORFUL MEMORIAL LEAFLET?",
+        title: "THE IDOLM@STER 765PRO ALLSTARS LIVE SUNRICH COLORFUL MEMORIAL LEAFLET",
         publishDate: "2022-07-09",
         category: "リーフレット",
         brands: ["THE IDOLM@STER"],
@@ -1433,7 +1433,7 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-089",
-        title: "THE IDOLM@STER SideM 8th STAGE ～ALL H@NDS TOGETHER～ MEMORIAL LEAFLET?",
+        title: "THE IDOLM@STER SideM 8th STAGE ～ALL H@NDS TOGETHER～ MEMORIAL LEAFLET",
         publishDate: "2023-10-28",
         category: "リーフレット",
         brands: ["SideM"],
