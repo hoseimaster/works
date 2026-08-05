@@ -1,11 +1,8 @@
-/* ========================================
-  ※※本コード編集厳禁※※
-======================================== */
-
 /**
  * 制作物アーカイブ
  * ページ専用スタイル
  */
+
 
 /* ========================================
    ページ全体
@@ -762,12 +759,7 @@
     z-index: 1000;
     inset: 0;
     display: grid;
-    overflow: hidden;
-    padding:
-        max(28px, env(safe-area-inset-top))
-        max(28px, env(safe-area-inset-right))
-        max(28px, env(safe-area-inset-bottom))
-        max(28px, env(safe-area-inset-left));
+    padding: 28px;
     background:
         rgb(27 24 22 / 58%);
     opacity: 0;
@@ -788,25 +780,20 @@
 }
 
 .filter-modal__panel {
+    position: relative;
+    z-index: 1;
     display: flex;
     overflow: hidden;
     width:
         min(
-            94vw,
-            1040px
+            1040px,
+            94vw
         );
     min-height: 0;
     max-height:
-        calc(
-            100vh -
-            max(56px, env(safe-area-inset-top)) -
-            max(56px, env(safe-area-inset-bottom))
-        );
-    max-height:
-        calc(
-            100svh -
-            max(56px, env(safe-area-inset-top)) -
-            max(56px, env(safe-area-inset-bottom))
+        min(
+            860px,
+            90vh
         );
     flex-direction: column;
     border:
@@ -1401,28 +1388,20 @@ body.is-modal-open {
     }
 
     .filter-modal {
-        display: grid;
-        overflow: hidden;
+        align-items: center;
         padding:
             max(10px, env(safe-area-inset-top))
             max(10px, env(safe-area-inset-right))
             max(10px, env(safe-area-inset-bottom))
             max(10px, env(safe-area-inset-left));
-        place-items: center;
     }
 
     .filter-modal__panel {
-        width: min(100%, 700px);
+        width: 100%;
         min-height: 0;
         max-height:
             calc(
-                100vh -
-                max(20px, env(safe-area-inset-top)) -
-                max(20px, env(safe-area-inset-bottom))
-            );
-        max-height:
-            calc(
-                100svh -
+                100dvh -
                 max(20px, env(safe-area-inset-top)) -
                 max(20px, env(safe-area-inset-bottom))
             );
@@ -2966,30 +2945,41 @@ and (max-width: 1180px) {
 }
 
 /* ========================================
-   アプリ内ブラウザの表示領域対策
+   プレビューモーダル準拠の検索モーダル表示
 ======================================== */
 
-@supports not (height: 100svh) {
-    @media (max-width: 700px) {
-        .filter-modal {
-            padding: 10px;
-        }
-
-        .filter-modal__panel {
-            max-height: calc(100vh - 20px);
-        }
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+    .filter-modal {
+        align-items: center;
+        padding:
+            max(10px, env(safe-area-inset-top))
+            max(10px, env(safe-area-inset-right))
+            max(10px, env(safe-area-inset-bottom))
+            max(10px, env(safe-area-inset-left));
     }
-}
 
-@media (max-width: 700px) {
-    .filter-modal__header,
-    .filter-modal__footer {
-        flex-shrink: 0;
+    .filter-modal__panel {
+        width: 100%;
+        min-height: 0;
+        max-height:
+            calc(
+                100dvh -
+                max(20px, env(safe-area-inset-top)) -
+                max(20px, env(safe-area-inset-bottom))
+            );
+        border-radius: 16px;
     }
 
     .filter-modal__body {
         min-height: 0;
         flex: 1 1 auto;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media screen and (orientation: portrait) and (max-width: 700px) {
+    .filter-modal__panel {
+        border-radius: 18px;
     }
 }
