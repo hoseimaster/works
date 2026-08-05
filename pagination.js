@@ -3,7 +3,7 @@
  * 表示件数切り替え・ページネーション
  */
 
-const PAGE_SIZE_OPTIONS = [20, 50, 100, "all"];
+const PAGE_SIZE_OPTIONS = [20, 50, 100, 149, "all"];
 const DEFAULT_PAGE_SIZE = 20;
 const STORAGE_KEY = "archivePageSize";
 const TOUCH_FEEDBACK_DURATION = 400;
@@ -987,7 +987,7 @@ function normalizePageSize(
     const numberValue =
         Number(value);
 
-    return [20, 50, 100]
+    return [20, 50, 100, 149]
         .includes(numberValue)
             ? numberValue
             : DEFAULT_PAGE_SIZE;
