@@ -1502,6 +1502,15 @@ C108での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同時購
 
 ];
 
+const PREVIEW_DESCRIPTION_MAP = new Map(
+    PREVIEW_DESCRIPTIONS.map((entry) => [
+        String(entry.id ?? "").trim(),
+        String(
+            entry.previewDescription ?? ""
+        ).trim()
+    ])
+);
+
 /**
  * 制作物IDからプレビュー専用説明文を取得します。
  *
@@ -1523,20 +1532,9 @@ export function getPreviewDescription(
         return "";
     }
 
-    const item =
-        PREVIEW_DESCRIPTIONS.find(
-            (entry) => {
-                return (
-                    String(
-                        entry.id ?? ""
-                    ).trim() ===
-                    normalizedId
-                );
-            }
-        );
-
-    return String(
-        item?.previewDescription ?? ""
-    ).trim();
+    return (
+        PREVIEW_DESCRIPTION_MAP.get(
+            normalizedId
+        ) ?? ""
+    );
 }
-
