@@ -1502,7 +1502,7 @@ Ken1（X：＠xio1740672）
 　今回は『CQ』や『VOY@GER』『Howling over the World』など、その他多くのアイマス楽曲の作詞を担当されている烏屋茶房様へのインタビューを掲載しております！
 　また、表紙には『THE IDOLM@STR MILLION LIVE! THEATER DAYS Brand New Song』や『ミリオンライ ブ! シアターデイズ4コマ シアターの日常』などを手掛けるima様のイラストを、承諾を得て使わせていただきました。
  
-■イラスト担当提供
+■イラスト提供
 【　　表紙　　】ima 様（Ｘ：@ima8765）
  
 ■ご協力
