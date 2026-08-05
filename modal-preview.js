@@ -32,6 +32,12 @@ let currentIndex = -1;
 let previouslyFocusedElement = null;
 let isInitialized = false;
 
+const PREVIEW_ITEM_CACHE =
+    new WeakMap();
+
+const PRELOADED_PREVIEW_IMAGES =
+    new Set();
+
 initializePreviewModal();
 
 /**
@@ -338,6 +344,15 @@ function createPreviewModal() {
  * @returns {object}
  */
 function createPreviewItemFromCard(cardLink) {
+    const cachedItem =
+        PREVIEW_ITEM_CACHE.get(
+            cardLink
+        );
+
+    if (cachedItem) {
+        return cachedItem;
+    }
+
     const image = cardLink.querySelector(
         ".publication-card__image"
     );
@@ -388,7 +403,7 @@ function createPreviewItemFromCard(cardLink) {
         };
     }).filter((badge) => badge.label);
 
-    return {
+    const previewItem = {
         detailUrl: normalizeUrl(
             publication.detailUrl ??
             cardLink.getAttribute("href")
@@ -447,6 +462,13 @@ function createPreviewItemFromCard(cardLink) {
             )
         )
     };
+
+    PREVIEW_ITEM_CACHE.set(
+        cardLink,
+        previewItem
+    );
+
+    return previewItem;
 }
 
 /**
@@ -549,6 +571,10 @@ function showPreviewItem(
             previewItems[currentIndex]
         );
 
+        preloadAdjacentPreviewImages(
+            currentIndex
+        );
+
         modalElements.panel.classList.remove(
             "is-changing"
         );
@@ -568,6 +594,51 @@ function showPreviewItem(
         120
     );
 }
+
+/**
+ * 現在位置の前後画像だけを低優先度で先読みします。
+ *
+ * @param {number} index
+ */
+function preloadAdjacentPreviewImages(
+    index
+) {
+    [
+        index - 1,
+        index + 1
+    ].forEach((targetIndex) => {
+        const imageUrl =
+            previewItems[
+                targetIndex
+            ]?.imageUrl;
+
+        if (
+            !imageUrl ||
+            PRELOADED_PREVIEW_IMAGES.has(
+                imageUrl
+            )
+        ) {
+            return;
+        }
+
+        PRELOADED_PREVIEW_IMAGES.add(
+            imageUrl
+        );
+
+        const image =
+            new Image();
+
+        image.decoding =
+            "async";
+
+        image.fetchPriority =
+            "low";
+
+        image.src =
+            imageUrl;
+    });
+}
+
 
 /**
  * 表示内容を更新します。
