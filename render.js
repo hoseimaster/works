@@ -18,6 +18,8 @@ let imagePreloadResumeTimer = null;
 let imagePreloadLoadedCount = 0;
 let imagePreloadTotalCount = 0;
 let imagePreloadActiveCount = 0;
+let imagePreloadFailedCount = 0;
+let imagePreloadStatusTimer = null;
 let imagePreloadQueue = [];
 const preloadedImagePaths = new Set();
 
@@ -127,6 +129,11 @@ function getRenderElements() {
         preloadProgress:
             document.getElementById(
                 "imagePreloadProgress"
+            ),
+
+        preloadStatus:
+            document.getElementById(
+                "imagePreloadStatus"
             )
     };
 }
@@ -519,8 +526,15 @@ function scheduleImagePreload(
     imagePreloadTotalCount =
         paths.length;
     imagePreloadActiveCount = 0;
+    imagePreloadFailedCount = 0;
 
     updateImagePreloadProgress();
+
+    if (paths.length > 0) {
+        updateImagePreloadStatus(
+            "loading"
+        );
+    }
 
     if (
         paths.length === 0 ||
@@ -701,6 +715,8 @@ function preloadSingleImage({
                 preloadedImagePaths.add(
                     path
                 );
+            } else {
+                imagePreloadFailedCount++;
             }
 
             imagePreloadActiveCount =
@@ -789,8 +805,10 @@ function cancelScheduledImagePreload() {
     imagePreloadActiveCount = 0;
     imagePreloadLoadedCount = 0;
     imagePreloadTotalCount = 0;
+    imagePreloadFailedCount = 0;
 
     updateImagePreloadProgress();
+    hideImagePreloadStatus();
 
     if (
         imagePreloadTimer !==
@@ -846,6 +864,36 @@ function initializeImagePreloadProgress(
         return;
     }
 
+    const statusRow =
+        document.createElement(
+            "div"
+        );
+
+    statusRow.className =
+        "image-preload-status-row";
+
+    const status =
+        document.createElement(
+            "span"
+        );
+
+    status.id =
+        "imagePreloadStatus";
+
+    status.className =
+        "image-preload-status";
+
+    status.setAttribute(
+        "aria-live",
+        "polite"
+    );
+
+    status.hidden = true;
+
+    statusRow.appendChild(
+        status
+    );
+
     const progress =
         document.createElement(
             "div"
@@ -875,11 +923,15 @@ function initializeImagePreloadProgress(
     );
 
     resultsHeader.after(
+        statusRow,
         progress
     );
 
     elements.preloadProgress =
         progress;
+
+    elements.preloadStatus =
+        status;
 
     updateImagePreloadProgress();
 }
@@ -944,6 +996,138 @@ function completeImagePreloadProgress() {
     progress.classList.add(
         "is-complete"
     );
+
+    updateImagePreloadStatus(
+        imagePreloadFailedCount > 0
+            ? "error"
+            : "complete"
+    );
+}
+
+
+/**
+ * プリロード状態表示を更新します。
+ *
+ * @param {"loading"|"complete"|"error"} state
+ */
+function updateImagePreloadStatus(
+    state
+) {
+    const element =
+        document.getElementById(
+            "imagePreloadStatus"
+        );
+
+    if (!element) {
+        return;
+    }
+
+    if (
+        imagePreloadStatusTimer !==
+        null
+    ) {
+        window.clearTimeout(
+            imagePreloadStatusTimer
+        );
+
+        imagePreloadStatusTimer =
+            null;
+    }
+
+    element.classList.remove(
+        "is-loading",
+        "is-complete",
+        "is-error",
+        "is-hiding"
+    );
+
+    const config = {
+        loading: {
+            text:
+                "制作物データ読み込み中",
+            className:
+                "is-loading"
+        },
+
+        complete: {
+            text:
+                "制作物データ読み込み完了",
+            className:
+                "is-complete"
+        },
+
+        error: {
+            text:
+                "制作物データ読み込みエラー",
+            className:
+                "is-error"
+        }
+    }[state];
+
+    if (!config) {
+        hideImagePreloadStatus();
+
+        return;
+    }
+
+    element.textContent =
+        config.text;
+
+    element.hidden = false;
+
+    window.requestAnimationFrame(
+        () => {
+            element.classList.add(
+                config.className
+            );
+        }
+    );
+
+    if (state === "complete") {
+        imagePreloadStatusTimer =
+            window.setTimeout(
+                () => {
+                    element.classList.add(
+                        "is-hiding"
+                    );
+
+                    imagePreloadStatusTimer =
+                        window.setTimeout(
+                            () => {
+                                hideImagePreloadStatus();
+                            },
+                            220
+                        );
+                },
+                1100
+            );
+    }
+}
+
+
+/**
+ * プリロード状態表示を非表示にします。
+ */
+function hideImagePreloadStatus() {
+    const element =
+        document.getElementById(
+            "imagePreloadStatus"
+        );
+
+    if (!element) {
+        return;
+    }
+
+    element.hidden = true;
+
+    element.classList.remove(
+        "is-loading",
+        "is-complete",
+        "is-error",
+        "is-hiding"
+    );
+
+    element.textContent = "";
 }
 
 /**
