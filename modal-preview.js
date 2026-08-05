@@ -23,7 +23,7 @@ const PREVIEW_MODAL_CONFIG = Object.freeze({
     enabledOnMobile: true,
     desktopMinWidth: 1024,
     tabletMinWidth: 701,
-    closeAnimationDuration: 180
+    closeAnimationDuration: 100
 });
 
 let modalElements = null;
@@ -231,31 +231,29 @@ function createPreviewModal() {
 
                     <p class="preview-modal__description"></p>
 
-                    <div class="preview-modal__footer">
-                        <a
-                            class="preview-modal__detail-button"
-                            href="#"
-                        >
-                            詳細ページを見る
-                        </a>
-                    </div>
-
-                    <div class="preview-modal__navigation">
+                    <div class="preview-modal__actions">
                         <button
                             class="preview-modal__navigation-button"
                             type="button"
                             data-preview-previous
                         >
                             <span aria-hidden="true">←</span>
-                            <span>前の制作物</span>
+                            <span>前へ</span>
                         </button>
+
+                        <a
+                            class="preview-modal__detail-button"
+                            href="#"
+                        >
+                            詳細ページを見る
+                        </a>
 
                         <button
                             class="preview-modal__navigation-button"
                             type="button"
                             data-preview-next
                         >
-                            <span>次の制作物</span>
+                            <span>次へ</span>
                             <span aria-hidden="true">→</span>
                         </button>
                     </div>
@@ -489,6 +487,14 @@ function openPreviewModal(selectedIndex) {
             ? document.activeElement
             : null;
 
+    /*
+     * 表示前に内容を反映し、
+     * モーダルが空の状態で描画される時間をなくします。
+     */
+    showPreviewItem(selectedIndex, {
+        animate: false
+    });
+
     modalElements.root.hidden = false;
     document.body.classList.add(
         "is-preview-modal-open"
@@ -498,10 +504,6 @@ function openPreviewModal(selectedIndex) {
         modalElements.root.classList.add(
             "is-open"
         );
-    });
-
-    showPreviewItem(selectedIndex, {
-        animate: false
     });
 
     modalElements.closeButton.focus({
@@ -591,7 +593,7 @@ function showPreviewItem(
 
     window.setTimeout(
         update,
-        120
+        70
     );
 }
 
