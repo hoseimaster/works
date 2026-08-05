@@ -1502,6 +1502,11 @@ C108での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同時購
 
 ];
 
+
+/**
+ * 以下編集厳禁
+ */
+
 const PREVIEW_DESCRIPTION_MAP = new Map(
     PREVIEW_DESCRIPTIONS.map((entry) => [
         String(entry.id ?? "").trim(),
