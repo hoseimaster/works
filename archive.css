@@ -2113,13 +2113,15 @@ body.is-modal-open {
    タブレット版 発行年フィルター調整
 ======================================== */
 
-@media screen and (min-width: 701px) and (max-width: 900px) {
+@media screen
+and (orientation: landscape)
+and (min-width: 701px)
+and (max-width: 1180px) {
     .year-range-filter {
         grid-template-columns:
             minmax(0, 1fr)
             28px
             minmax(0, 1fr);
-
         width: 100%;
         max-width: none;
         gap: 12px;
@@ -2133,56 +2135,52 @@ body.is-modal-open {
     }
 
     .year-range-filter__label {
+        color: #59514b;
         font-size: 0.8rem;
+        font-weight: 800;
         text-align: center;
     }
 
     .year-range-filter__select {
         width: 100%;
         min-width: 0;
-        min-height: 54px;
-        height: 54px;
-
+        min-height: 58px;
+        height: 58px;
         padding:
-            0 40px
-            0 16px;
-
+            0 44px
+            0 18px;
         border: 1px solid #e4e1de;
         border-radius: 999px;
-
         background-color: #f6f5f4;
         color: #555555;
-
-        font-size: 16px;
+        font-size: 0.88rem;
         font-weight: 700;
         line-height: 1;
-
         box-shadow: none;
+        appearance: auto;
+        -webkit-appearance: auto;
     }
 
     .year-range-filter__select:hover {
-        border-color: #d1ceca;
-        background-color: #f0efed;
+        border-color: #edb48d;
+        background-color: #fff9f4;
     }
 
     .year-range-filter__select:focus {
-        border-color: #bdbdbd;
-        background-color: #ffffff;
+        border-color: #f47a24;
+        background-color: #fffdf9;
         outline: none;
         box-shadow:
             0 0 0 3px
-            rgba(120, 120, 120, 0.14);
+            rgb(244 122 36 / 12%);
     }
 
     .year-range-filter__separator {
-        min-height: 54px;
-        height: 54px;
-
-        color: #777777;
-
+        min-height: 58px;
+        height: 58px;
+        color: #8a8179;
         font-size: 1rem;
         line-height: 1;
-
         place-items: center;
     }
 
@@ -2687,34 +2685,42 @@ body.is-modal-open {
 .site-footer {
     padding-top: 24px !important;
     padding-bottom: 16px !important;
-    line-height: 1.8;
+    line-height: 1.55;
 }
 
 .site-footer__inner {
-    row-gap: 10px !important;
+    row-gap: 0 !important;
 }
 
 .site-footer a,
 .footer-navigation__list a {
-    line-height: 1.8;
+    line-height: 1.45;
     text-decoration: none !important;
+}
+
+.footer-navigation {
+    margin: 0 !important;
+}
+
+.footer-navigation + .footer-navigation {
+    margin-top: 1px !important;
 }
 
 .footer-navigation__list {
     margin-top: 0 !important;
-    margin-bottom: 8px !important;
-    gap: 6px 18px !important;
-    row-gap: 8px;
+    margin-bottom: 0 !important;
+    gap: 0 18px !important;
+    row-gap: 0;
 }
 
 .footer-navigation__list li {
-    line-height: 1.8;
+    line-height: 1.45;
 }
 
 .site-footer__copyright {
-    margin-top: 18px;
-    margin-bottom: 0 !important;
-    line-height: 1.7;
+    margin-top: 0;
+    margin-bottom: 9px !important;
+    line-height: 1.55;
 }
 
 /* ========================================
