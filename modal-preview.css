@@ -110,7 +110,8 @@ body.is-preview-modal-open {
 }
 
 /* ========================================
-   左右2カラム
+   通常版：左右2カラム
+   PC・横向きタブレット・横向きスマートフォン
 ======================================== */
 
 .preview-modal__content {
@@ -403,8 +404,6 @@ body.is-preview-modal-open {
     outline-offset: 3px;
 }
 
-
-
 .preview-modal__detail-button.is-disabled,
 .preview-modal__detail-button[aria-disabled="true"] {
     border-color: #d8d5d2;
@@ -417,132 +416,62 @@ body.is-preview-modal-open {
 }
 
 /* ========================================
-   将来のタブレット・スマートフォン対応
+   横向きの小型画面調整
+   横向きスマートフォン・小型タブレット
 ======================================== */
 
-@media screen and (max-width: 1023px) {
+@media screen and (orientation: landscape) and (max-height: 760px) {
     .preview-modal {
-        padding: 18px;
+        padding: 14px;
     }
 
     .preview-modal__panel {
-        width: min(760px, 96vw);
+        width: min(980px, 96vw);
         max-height: 94dvh;
     }
 
     .preview-modal__content {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            minmax(220px, 38%)
+            minmax(0, 1fr);
         gap: 24px;
-        min-height: 0;
+        min-height: min(560px, calc(94dvh - 28px));
         max-height: 94dvh;
-        padding: 26px;
-        overflow-y: auto;
+        padding: 24px;
     }
 
     .preview-modal__image-area {
-        width: min(100%, 360px);
+        width: min(100%, 350px);
     }
 
     .preview-modal__information {
-        padding: 0;
+        padding-top: 8px;
     }
 
-}
-
-@media screen and (max-width: 700px) {
-    .preview-modal {
-        align-items: end;
-        padding:
-            max(10px, env(safe-area-inset-top))
-            0
-            0;
-    }
-
-    .preview-modal__panel {
-        width: 100%;
-        max-height:
-            calc(
-                100dvh -
-                env(safe-area-inset-top)
-            );
-        border-right: 0;
-        border-bottom: 0;
-        border-left: 0;
-        border-radius: 18px 18px 0 0;
-    }
-
-    .preview-modal__content {
-        max-height:
-            calc(
-                100dvh -
-                env(safe-area-inset-top)
-            );
-        padding:
-            22px
-            max(16px, env(safe-area-inset-right))
-            max(18px, env(safe-area-inset-bottom))
-            max(16px, env(safe-area-inset-left));
-    }
-
-    .preview-modal__close {
-        top: 10px;
-        right: max(10px, env(safe-area-inset-right));
-    }
-
-    .preview-modal__image-area {
-        width: min(100%, 300px);
-    }
-
-    .preview-modal__header-information {
-        padding-right: 46px;
-    }
-
-    .preview-modal__title {
-        font-size: 1.18rem;
-    }
-
-    .preview-modal__navigation {
-        gap: 8px;
+    .preview-modal__description {
+        margin-top: 14px;
+        font-size: 0.86rem;
+        line-height: 1.75;
     }
 
     .preview-modal__navigation-button {
-        min-height: 48px;
-        padding: 8px 10px;
-        font-size: 0.78rem;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    .preview-modal__navigation {
-        grid-template-columns: 1fr;
+        min-height: 46px;
     }
 }
 
 /* ========================================
-   アニメーション抑制
+   縦型画面版
+   スマートフォン・縦向きタブレット
 ======================================== */
 
-@media (prefers-reduced-motion: reduce) {
-    .preview-modal,
-    .preview-modal__panel,
-    .preview-modal__content,
-    .preview-modal__close,
-    .preview-modal__navigation-button,
-    .preview-modal__detail-button {
-        transition: none;
-    }
-}
-
-/* ========================================
-   スマートフォン版プレビューモーダル
-======================================== */
-
-@media screen and (max-width: 700px) {
+@media screen and (orientation: portrait) and (max-width: 1024px) {
     .preview-modal {
+        align-items: center;
         padding:
             max(10px, env(safe-area-inset-top))
-            10px
-            max(10px, env(safe-area-inset-bottom));
+            max(10px, env(safe-area-inset-right))
+            max(10px, env(safe-area-inset-bottom))
+            max(10px, env(safe-area-inset-left));
     }
 
     .preview-modal__panel {
@@ -559,24 +488,26 @@ body.is-preview-modal-open {
     .preview-modal__content {
         display: grid;
         grid-template-columns:
-            minmax(110px, 40%)
+            minmax(120px, 40%)
             minmax(0, 1fr);
         grid-template-rows:
             auto
-            minmax(90px, 1fr)
+            minmax(100px, 1fr)
             auto
             auto;
         gap: 14px 16px;
-        min-height: 0;
+        width: 100%;
         height:
             min(
-                680px,
+                760px,
                 calc(100dvh - 40px)
             );
+        min-height: 0;
+        max-height: none;
         padding: 44px 16px 16px;
+        overflow: hidden;
     }
 
-    /* 左上：表紙画像 */
     .preview-modal__visual {
         grid-column: 1;
         grid-row: 1;
@@ -593,10 +524,10 @@ body.is-preview-modal-open {
             rgb(35 35 35 / 14%);
     }
 
-    /* 右上：発行日・タイトル・タグ */
     .preview-modal__information {
         display: contents;
         min-width: 0;
+        min-height: 0;
         padding: 0;
     }
 
@@ -612,15 +543,15 @@ body.is-preview-modal-open {
 
     .preview-modal__date {
         margin-bottom: 6px;
-        font-size: 0.7rem;
+        font-size: 0.72rem;
         line-height: 1.4;
     }
 
     .preview-modal__title {
         font-size: clamp(
-            0.92rem,
-            4vw,
-            1.12rem
+            0.94rem,
+            3.2vw,
+            1.2rem
         );
         line-height: 1.4;
     }
@@ -645,7 +576,6 @@ body.is-preview-modal-open {
         line-height: 1.3;
     }
 
-    /* 下段：説明文だけスクロール */
     .preview-modal__description {
         grid-column: 1 / -1;
         grid-row: 2;
@@ -662,14 +592,14 @@ body.is-preview-modal-open {
             rgb(0 0 0 / 8%);
         overflow-x: hidden;
         overflow-y: auto;
-        font-size: 0.82rem;
+        font-size: 0.84rem;
         line-height: 1.75;
         white-space: pre-wrap;
         overscroll-behavior: contain;
+        scrollbar-gutter: auto;
         -webkit-overflow-scrolling: touch;
     }
 
-    /* 詳細ページボタン */
     .preview-modal__footer {
         grid-column: 1 / -1;
         grid-row: 3;
@@ -683,7 +613,6 @@ body.is-preview-modal-open {
         font-size: 0.8rem;
     }
 
-    /* 前後移動 */
     .preview-modal__navigation {
         grid-column: 1 / -1;
         grid-row: 4;
@@ -711,5 +640,103 @@ body.is-preview-modal-open {
         min-height: 20px;
         padding: 3px 7px;
         font-size: 0.58rem;
+    }
+}
+
+/* ========================================
+   縦型スマートフォン微調整
+======================================== */
+
+@media screen and (orientation: portrait) and (max-width: 700px) {
+    .preview-modal {
+        align-items: center;
+        padding:
+            max(10px, env(safe-area-inset-top))
+            max(10px, env(safe-area-inset-right))
+            max(10px, env(safe-area-inset-bottom))
+            max(10px, env(safe-area-inset-left));
+    }
+
+    .preview-modal__panel {
+        width: 100%;
+        max-height:
+            calc(
+                100dvh -
+                max(20px, env(safe-area-inset-top)) -
+                max(20px, env(safe-area-inset-bottom))
+            );
+        border: 1px solid rgb(244 122 36 / 18%);
+        border-radius: 18px;
+    }
+
+    .preview-modal__content {
+        grid-template-columns:
+            minmax(105px, 39%)
+            minmax(0, 1fr);
+        gap: 12px 14px;
+        height:
+            min(
+                760px,
+                calc(
+                    100dvh -
+                    max(20px, env(safe-area-inset-top)) -
+                    max(20px, env(safe-area-inset-bottom))
+                )
+            );
+        padding:
+            44px
+            max(16px, env(safe-area-inset-right))
+            max(16px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
+    }
+
+    .preview-modal__title {
+        font-size: clamp(
+            0.9rem,
+            4vw,
+            1.08rem
+        );
+    }
+
+    .preview-modal__description {
+        font-size: 0.82rem;
+    }
+}
+
+/* ========================================
+   極小画面
+======================================== */
+
+@media screen and (orientation: portrait) and (max-width: 380px) {
+    .preview-modal__content {
+        grid-template-columns:
+            minmax(96px, 37%)
+            minmax(0, 1fr);
+        gap: 10px 12px;
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .preview-modal__header-information {
+        padding-right: 30px;
+    }
+
+    .preview-modal__navigation {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   アニメーション抑制
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .preview-modal,
+    .preview-modal__panel,
+    .preview-modal__content,
+    .preview-modal__close,
+    .preview-modal__navigation-button,
+    .preview-modal__detail-button {
+        transition: none;
     }
 }
