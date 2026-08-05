@@ -2593,14 +2593,22 @@ and (max-width: 1180px) {
 }
 
 @media (hover: none), (pointer: coarse) {
-    .archive-pagination__button:active:not(:disabled):not(.is-current) {
+    .archive-pagination__button:active:not(:disabled):not(.is-current),
+    .archive-pagination.is-tapped-previous
+    .archive-pagination__button--previous:not(:disabled),
+    .archive-pagination.is-tapped-next
+    .archive-pagination__button--next:not(:disabled) {
         border-color: #e6b58f;
         background: #fff5ed;
         color: #a95720;
         transform: none;
     }
 
-    .archive-pagination__button:not(:active):not(:disabled):not(.is-current),
+    .archive-pagination:not(.is-tapped-previous)
+    .archive-pagination__button--previous:not(:active):not(:disabled),
+    .archive-pagination:not(.is-tapped-next)
+    .archive-pagination__button--next:not(:active):not(:disabled),
+    .archive-pagination__button--number:not(:active):not(:disabled):not(.is-current),
     .archive-pagination__button:focus:not(:focus-visible):not(:disabled):not(.is-current) {
         border-color: #dedad6;
         background: #ffffff;
