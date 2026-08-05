@@ -355,7 +355,8 @@ body.is-preview-modal-open {
         -webkit-tap-highlight-color: transparent;
     }
 
-    .preview-modal__navigation-button:active:not(:disabled) {
+    .preview-modal__navigation-button:active:not(:disabled),
+    .preview-modal__navigation-button.is-tapped:not(:disabled) {
         border-color: #e7a87a;
         background: #fff7f0;
         color: #b95f1d;
@@ -363,8 +364,8 @@ body.is-preview-modal-open {
         transform: none;
     }
 
-    .preview-modal__navigation-button:not(:active):not(:disabled),
-    .preview-modal__navigation-button:focus:not(:focus-visible):not(:disabled) {
+    .preview-modal__navigation-button:not(:active):not(.is-tapped):not(:disabled),
+    .preview-modal__navigation-button:focus:not(:focus-visible):not(.is-tapped):not(:disabled) {
         border-color: #ded9d4;
         background: #ffffff;
         color: #555555;
