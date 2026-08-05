@@ -7,19 +7,6 @@
  * 制作物一覧の描画処理
  */
 
-/**
- * プレリロードエラーコード対応表
- *
- * E001：制作物データが見つからない
- * E002：制作物データの形式が不正
- * E003：制作物の必須データが不足
- * E004：プレビュー説明データの読み込み失敗
- * E005：画像データの初期化失敗
- * E006：制作物画像の読み込み失敗
- * E007：ネットワークエラー
- * E999：想定外のエラー
- *
- */
 
 const IMAGE_PRELOAD_DELAY = 300;
 const IMAGE_PRELOAD_CONCURRENCY = 3;
@@ -554,9 +541,6 @@ function scheduleImagePreload(
         shouldSkipImagePreload()
     ) {
         completeImagePreloadProgress();
-        updateImagePreloadStatus(
-            "complete"
-        );
 
         return;
     }
@@ -904,11 +888,6 @@ function initializeImagePreloadProgress(
         "polite"
     );
 
-    status.setAttribute(
-        "aria-atomic",
-        "true"
-    );
-
     status.hidden = true;
 
     statusRow.appendChild(
@@ -1027,20 +1006,7 @@ function completeImagePreloadProgress() {
 
 
 /**
- * プリロード状態の小さなテキスト表示を更新します。
- *
- * エラーコード対応表（表示・処理には影響しない管理用コメント）
- * E001：制作物データが見つからない
- * E002：制作物データの形式が不正
- * E003：制作物の必須データが不足
- * E004：プレビュー説明データの読み込み失敗
- * E005：画像データの初期化失敗
- * E006：制作物画像の読み込み失敗
- * E007：ネットワークエラー
- * E999：想定外のエラー
- *
- * 現在この関数で検出しているエラーは、
- * 画像プリロード失敗のためE006を表示します。
+ * プリロード状態表示を更新します。
  *
  * @param {"loading"|"complete"|"error"} state
  */
@@ -1092,7 +1058,7 @@ function updateImagePreloadStatus(
 
         error: {
             text:
-                "制作物データ読み込みエラー（E006）",
+                "制作物データ読み込みエラー",
             className:
                 "is-error"
         }
@@ -1100,6 +1066,7 @@ function updateImagePreloadStatus(
 
     if (!config) {
         hideImagePreloadStatus();
+
         return;
     }
 
@@ -1162,7 +1129,6 @@ function hideImagePreloadStatus() {
 
     element.textContent = "";
 }
-
 
 /**
  * 通信量節約設定や低速回線ではプリロードを停止します。
