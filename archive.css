@@ -2585,11 +2585,32 @@ body.is-modal-open {
         transform 0.2s ease;
 }
 
-.archive-pagination__button:hover:not(:disabled):not(.is-current) {
-    border-color: #e6b58f;
-    background: #fff5ed;
-    color: #a95720;
-    transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+    .archive-pagination__button:hover:not(:disabled):not(.is-current) {
+        border-color: #e6b58f;
+        background: #fff5ed;
+        color: #a95720;
+        transform: translateY(-1px);
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .archive-pagination__button:active:not(:disabled):not(.is-current) {
+        border-color: #e6b58f;
+        background: #fff5ed;
+        color: #a95720;
+        transform: none;
+    }
+
+    .archive-pagination__button:not(:active):not(:disabled):not(.is-current),
+    .archive-pagination__button:focus:not(:focus-visible):not(:disabled):not(.is-current) {
+        border-color: #dedad6;
+        background: #ffffff;
+        color: #555555;
+        outline: none;
+        box-shadow: none;
+        transform: none;
+    }
 }
 
 .archive-pagination__button.is-current {
