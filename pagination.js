@@ -6,6 +6,7 @@
 const PAGE_SIZE_OPTIONS = [20, 50, 100, 149, "all"];
 const DEFAULT_PAGE_SIZE = 20;
 const STORAGE_KEY = "archivePageSize";
+const TOUCH_FEEDBACK_DURATION = 400;
 
 /**
  * 表示件数切り替えとページネーションを初期化します。
@@ -101,6 +102,12 @@ export function initializePagination({
 
                         currentPage =
                             requestedPage;
+
+                        showPaginationTouchFeedback({
+                            container:
+                                paginationElement,
+                            button
+                        });
 
                         /*
                          * クリック・タップ後にフォーカス色が
@@ -274,6 +281,83 @@ export function initializePagination({
         elements.paginationBottom.hidden =
             shouldHidePagination;
     }
+}
+
+
+/**
+ * タッチ端末で「前へ」「次へ」の押下色を
+ * DOM再描画後も400ms維持します。
+ *
+ * @param {{
+ *   container: HTMLElement,
+ *   button: HTMLButtonElement
+ * }} options
+ */
+function showPaginationTouchFeedback({
+    container,
+    button
+}) {
+    if (
+        !container ||
+        !button ||
+        !isTouchInterface()
+    ) {
+        return;
+    }
+
+    const isPrevious =
+        button.classList.contains(
+            "archive-pagination__button--previous"
+        );
+
+    const isNext =
+        button.classList.contains(
+            "archive-pagination__button--next"
+        );
+
+    if (
+        !isPrevious &&
+        !isNext
+    ) {
+        return;
+    }
+
+    const className =
+        isPrevious
+            ? "is-tapped-previous"
+            : "is-tapped-next";
+
+    container.classList.remove(
+        "is-tapped-previous",
+        "is-tapped-next"
+    );
+
+    void container.offsetWidth;
+
+    container.classList.add(
+        className
+    );
+
+    window.setTimeout(
+        () => {
+            container.classList.remove(
+                className
+            );
+        },
+        TOUCH_FEEDBACK_DURATION
+    );
+}
+
+
+/**
+ * タッチ操作を中心とする端末か判定します。
+ *
+ * @returns {boolean}
+ */
+function isTouchInterface() {
+    return window.matchMedia(
+        "(hover: none), (pointer: coarse)"
+    ).matches;
 }
 
 
