@@ -1377,21 +1377,16 @@ body.is-modal-open {
     }
 
     .filter-modal {
-        align-items: flex-end;
-        padding: 0;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
     }
 
     .filter-modal__panel {
-        width: 100%;
-        max-height: 92vh;
-        border-right: 0;
-        border-bottom: 0;
-        border-left: 0;
-        border-radius:
-            20px
-            20px
-            0
-            0;
+        width: min(96vw, 700px);
+        max-height: 94dvh;
+        border: 1px solid rgb(244 122 36 / 22%);
+        border-radius: 18px;
     }
 
     .filter-modal__header {
