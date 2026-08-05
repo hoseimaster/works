@@ -16,6 +16,9 @@ import {
 
 const KEYWORD_INPUT_DELAY = 300;
 
+const SEARCH_TEXT_CACHE =
+    new WeakMap();
+
 let selectedYearFrom = "";
 let selectedYearTo = "";
 
@@ -1824,28 +1827,10 @@ export function matchesKeyword(
         return true;
     }
 
-    const previewDescription =
-        getPreviewDescription(
-            publication.id
-        );
-
-    const searchableValues = [
-        publication.title,
-        publication.category,
-        publication.description,
-        previewDescription,
-        publication.publishDate,
-        ...(publication.brands ?? []),
-        ...(publication.siteStatuses ?? []),
-        ...(publication.keywords ?? [])
-    ];
-
     const searchableText =
-        searchableValues
-            .map(
-                normalizeSearchText
-            )
-            .join(" ");
+        getPublicationSearchText(
+            publication
+        );
 
     const keywordParts =
         normalizedKeyword
@@ -1858,6 +1843,63 @@ export function matchesKeyword(
                 .includes(part);
         }
     );
+}
+
+
+/**
+ * 制作物ごとの検索対象文字列を取得します。
+ * 同一オブジェクトは初回生成後の文字列を再利用します。
+ *
+ * @param {object} publication
+ * @returns {string}
+ */
+function getPublicationSearchText(
+    publication
+) {
+    if (
+        !publication ||
+        typeof publication !== "object"
+    ) {
+        return "";
+    }
+
+    const cachedText =
+        SEARCH_TEXT_CACHE.get(
+            publication
+        );
+
+    if (
+        typeof cachedText === "string"
+    ) {
+        return cachedText;
+    }
+
+    const previewDescription =
+        getPreviewDescription(
+            publication.id
+        );
+
+    const searchableText = [
+        publication.title,
+        publication.category,
+        publication.description,
+        previewDescription,
+        publication.publishDate,
+        ...(publication.brands ?? []),
+        ...(publication.siteStatuses ?? []),
+        ...(publication.keywords ?? [])
+    ]
+        .map(
+            normalizeSearchText
+        )
+        .join(" ");
+
+    SEARCH_TEXT_CACHE.set(
+        publication,
+        searchableText
+    );
+
+    return searchableText;
 }
 
 
