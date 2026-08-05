@@ -404,6 +404,9 @@
 
 .publication-card {
     min-width: 0;
+    content-visibility: auto;
+    contain: layout paint style;
+    contain-intrinsic-size: 420px 640px;
 }
 
 .publication-card__link {
@@ -2890,4 +2893,3 @@ body.is-modal-open {
         font-size: 0.62rem;
     }
 }
-
