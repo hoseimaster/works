@@ -955,9 +955,9 @@ body.is-navigation-open {
 .site-footer__top-link a{color:#777;font-size:.9rem;text-decoration:none;}
 .site-footer__top-link a:hover{color:#f47a24;text-decoration:underline;}
 .site-footer__rule{display:none;}
-.site-footer__copyright{margin:0 0 12px;color:#808080;font-size:.9rem;line-height:1.7;}
+.site-footer__copyright{margin:0 0 9px;color:#808080;font-size:.9rem;line-height:1.55;}
 .footer-navigation{margin:0;}
-.footer-navigation+.footer-navigation{margin-top:6px;}
+.footer-navigation+.footer-navigation{margin-top:1px;}
 .footer-navigation__list{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:0;padding:0;list-style:none;gap:0;}
 .footer-navigation__list li{display:flex;align-items:center;}
 .footer-navigation__list li:not(:last-child)::after{content:"|";margin:0 6px;color:#bfbfbf;}
@@ -1489,40 +1489,88 @@ body.is-navigation-open {
 }
 
 .notice-toggle-button {
-    justify-content: center;
-    width: min(100%, 560px);
+    justify-content: flex-start;
+    width: min(100%, 620px);
     margin-right: auto;
     margin-left: auto;
-    padding-right: 52px;
-    padding-left: 52px;
-    border-left-width: 1px;
-    text-align: center;
+    padding:
+        13px
+        52px
+        13px
+        18px;
+    border: 1px solid #ead8c8;
+    border-left: 4px solid #e7863e;
+    border-radius: 12px;
+    background: #fffaf6;
+    color: #625b55;
+    text-align: left;
+    box-shadow: 0 5px 16px rgba(85, 55, 35, 0.05);
 }
 
-/* ご注意ボタン先頭の※を削除 */
+/* 「ご注意」の視認性を高める控えめなアイコン */
 .notice-toggle-button::before {
-    display: none;
-    content: none;
+    display: inline-grid;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #f6d5bd;
+    color: #a95720;
+    content: "!";
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1;
+    place-items: center;
+}
+
+.notice-toggle-button[aria-expanded="true"] {
+    border-color: #dfb28e;
+    border-left-color: #db7229;
+    background: #fff6ef;
+    color: #a95720;
 }
 
 .notice-panel {
-    width: 100%;
-    margin: 10px auto 0;
+    width: min(100%, 620px);
+    margin: 8px auto 0;
+    padding: 20px 22px;
+    border: 1px solid #eadfd6;
+    border-radius: 0 0 12px 12px;
+    background: #fffdfb;
     text-align: left;
+    box-shadow: 0 8px 22px rgba(70, 45, 30, 0.05);
 }
 
-/* 著作権表示の上側余白を小さく */
+.notice-panel p {
+    color: #625e5a;
+    font-size: 0.84rem;
+    line-height: 1.85;
+}
+
+.notice-panel p + p {
+    margin-top: 10px;
+}
+
+/* 著作権表示とリンク群の間だけ少し余白を設ける */
 .site-footer__copyright {
-    margin-top: 2px;
+    margin-top: 0;
+    margin-bottom: 9px;
+    line-height: 1.55;
 }
 
-/* 著作権表示の直前にある要素の下余白を縮小 */
+/* ページトップリンクと著作権表示の間隔を控えめにする */
 .site-footer__top-link {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
+/* 各リンク群同士の間隔はほぼなくす */
 .footer-navigation {
-    margin-bottom: 4px;
+    margin: 0;
+}
+
+.footer-navigation + .footer-navigation {
+    margin-top: 1px;
 }
 
 @media screen and (max-width: 700px) {
@@ -1533,11 +1581,23 @@ body.is-navigation-open {
 
     .notice-toggle-button {
         width: 100%;
-        padding-right: 44px;
-        padding-left: 44px;
+        padding:
+            11px
+            44px
+            11px
+            14px;
+    }
+
+    .notice-toggle-button::before {
+        flex-basis: 22px;
+        width: 22px;
+        height: 22px;
+        margin-right: 8px;
     }
 
     .notice-panel {
+        width: 100%;
+        padding: 17px 16px;
         text-align: left;
     }
 }
@@ -1672,4 +1732,3 @@ body.is-navigation-open {
         transform: none;
     }
 }
-
