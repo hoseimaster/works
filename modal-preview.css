@@ -215,14 +215,14 @@ body.is-preview-modal-open {
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
-    min-height: 26px;
-    margin-top: 16px;
-    padding: 3px 10px;
+    min-height: 24px;
+    margin-top: 14px;
+    padding: 2px 8px;
     border: 1px solid #e8b98f;
     border-radius: 999px;
     background: #fff4ea;
     color: #915528;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
 }
 
@@ -234,8 +234,8 @@ body.is-preview-modal-open {
 .preview-modal__badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
-    margin: 12px 0 0;
+    gap: 6px;
+    margin: 10px 0 0;
     padding: 0;
     list-style: none;
 }
@@ -247,13 +247,13 @@ body.is-preview-modal-open {
 
 .preview-modal__brand,
 .preview-modal__badge {
-    padding: 4px 8px;
+    padding: 3px 7px;
     border: 1px solid #e5e2df;
     border-radius: 7px;
     background: #f8f7f6;
     color: #666666;
-    font-size: 0.7rem;
-    line-height: 1.35;
+    font-size: 0.66rem;
+    line-height: 1.3;
 }
 
 .preview-modal__badge {
@@ -300,12 +300,14 @@ body.is-preview-modal-open {
    前後移動・詳細ボタン
 ======================================== */
 
-.preview-modal__navigation {
+.preview-modal__actions {
     display: grid;
     grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 14px;
+        minmax(0, 1fr)
+        minmax(150px, 1.2fr)
+        minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 16px;
     padding-top: 0;
 }
 
@@ -385,19 +387,14 @@ body.is-preview-modal-open {
     box-shadow: none;
 }
 
-.preview-modal__footer {
-    display: flex;
-    justify-content: center;
-    margin-top: 18px;
-}
-
 .preview-modal__detail-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 178px;
-    min-height: 44px;
-    padding: 8px 20px;
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+    padding: 8px 14px;
     border: 1px solid #e98748;
     border-radius: 10px;
     background: #ed965d;
@@ -519,7 +516,6 @@ body.is-preview-modal-open {
         grid-template-rows:
             auto
             minmax(100px, 1fr)
-            auto
             auto;
         gap: 14px 16px;
         width: 100%;
@@ -583,23 +579,23 @@ body.is-preview-modal-open {
     }
 
     .preview-modal__category {
-        min-height: 22px;
-        margin-top: 10px;
-        padding: 2px 7px;
-        font-size: 0.62rem;
+        min-height: 20px;
+        margin-top: 8px;
+        padding: 2px 6px;
+        font-size: 0.58rem;
     }
 
     .preview-modal__brands,
     .preview-modal__badges {
-        gap: 5px;
-        margin-top: 7px;
+        gap: 4px;
+        margin-top: 6px;
     }
 
     .preview-modal__brand,
     .preview-modal__badge {
-        padding: 3px 6px;
-        font-size: 0.6rem;
-        line-height: 1.3;
+        padding: 2px 5px;
+        font-size: 0.56rem;
+        line-height: 1.25;
     }
 
     .preview-modal__description {
@@ -626,30 +622,28 @@ body.is-preview-modal-open {
         -webkit-overflow-scrolling: touch;
     }
 
-    .preview-modal__footer {
+    .preview-modal__actions {
         grid-column: 1 / -1;
         grid-row: 3;
+        grid-template-columns:
+            minmax(0, 0.8fr)
+            minmax(138px, 1.4fr)
+            minmax(0, 0.8fr);
+        gap: 7px;
         margin-top: 0;
     }
 
     .preview-modal__detail-button {
-        min-width: 160px;
-        min-height: 42px;
-        padding: 7px 16px;
-        font-size: 0.8rem;
-    }
-
-    .preview-modal__navigation {
-        grid-column: 1 / -1;
-        grid-row: 4;
-        gap: 8px;
-        margin-top: 0;
+        min-width: 0;
+        min-height: 44px;
+        padding: 7px 8px;
+        font-size: 0.72rem;
     }
 
     .preview-modal__navigation-button {
         min-height: 44px;
-        padding: 8px 10px;
-        font-size: 0.74rem;
+        padding: 7px 6px;
+        font-size: 0.72rem;
     }
 
     .preview-modal__close {
@@ -747,9 +741,6 @@ body.is-preview-modal-open {
         padding-right: 30px;
     }
 
-    .preview-modal__navigation {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ========================================
