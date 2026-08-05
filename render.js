@@ -360,26 +360,36 @@ function createPublicationImageArea(
     image.width = 700;
     image.height = 990;
 
-    image.decoding = "async";
-
     /*
-     * 最初に見える可能性が高い画像だけ優先し、
-     * それ以外は遅延読み込みにします。
+     * 先頭画像へ通信とデコードの優先度を集中させます。
+     * 2〜4枚目は遅延させず読み込みつつ、
+     * 先頭画像と帯域を奪い合わないよう通常優先度にします。
      */
-    const isPriorityImage =
+    const isFirstImage =
+        Number.isInteger(index) &&
+        index === 0;
+
+    const isInitialImage =
         Number.isInteger(index) &&
         index >= 0 &&
         index < 4;
 
     image.loading =
-        isPriorityImage
+        isInitialImage
             ? "eager"
             : "lazy";
 
     image.fetchPriority =
-        isPriorityImage
+        isFirstImage
             ? "high"
-            : "low";
+            : isInitialImage
+                ? "auto"
+                : "low";
+
+    image.decoding =
+        isFirstImage
+            ? "sync"
+            : "async";
 
     const imagePath =
         normalizeImagePath(
