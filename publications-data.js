@@ -1668,7 +1668,7 @@ export const PUBLICATIONS = [
         keywords: [""],
         coverImage: "./publication-102.png",
         detailUrl: "",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
         siteStatuses: [""],
         description: ""
