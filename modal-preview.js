@@ -1,6 +1,10 @@
 import { PUBLICATIONS } from "./publications-data.js";
 import {getPreviewDescription} from "./preview-descriptions.js";
 
+/* ========================================
+  ※※本コード編集厳禁※※
+======================================== */
+
 /**
  * 制作物アーカイブ
  * 制作物プレビューモーダル
