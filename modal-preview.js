@@ -23,7 +23,8 @@ const PREVIEW_MODAL_CONFIG = Object.freeze({
     enabledOnMobile: true,
     desktopMinWidth: 1024,
     tabletMinWidth: 701,
-    closeAnimationDuration: 100
+    closeAnimationDuration: 100,
+    touchFeedbackDuration: 400
 });
 
 let modalElements = null;
@@ -322,16 +323,77 @@ function createPreviewModal() {
 
     elements.previousButton.addEventListener(
         "click",
-        showPreviousItem
+        () => {
+            showTouchFeedback(
+                elements.previousButton
+            );
+
+            showPreviousItem();
+        }
     );
 
     elements.nextButton.addEventListener(
         "click",
-        showNextItem
+        () => {
+            showTouchFeedback(
+                elements.nextButton
+            );
+
+            showNextItem();
+        }
     );
 
     return elements;
 }
+
+/**
+ * タッチ端末でボタンの押下色を一定時間表示します。
+ *
+ * @param {HTMLButtonElement} button
+ */
+function showTouchFeedback(button) {
+    if (
+        !button ||
+        !isTouchInterface()
+    ) {
+        return;
+    }
+
+    button.classList.remove(
+        "is-tapped"
+    );
+
+    void button.offsetWidth;
+
+    button.classList.add(
+        "is-tapped"
+    );
+
+    window.setTimeout(
+        () => {
+            button.classList.remove(
+                "is-tapped"
+            );
+
+            button.blur();
+        },
+        PREVIEW_MODAL_CONFIG
+            .touchFeedbackDuration
+    );
+}
+
+
+/**
+ * タッチ操作を中心とする端末か判定します。
+ *
+ * @returns {boolean}
+ */
+function isTouchInterface() {
+    return window.matchMedia(
+        "(hover: none), (pointer: coarse)"
+    ).matches;
+}
+
 
 /**
  * カードDOMからプレビュー表示用データを作成します。
