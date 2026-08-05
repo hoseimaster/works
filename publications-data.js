@@ -1668,5 +1668,65 @@ export const PUBLICATIONS = [
         hasInterview: false,
         siteStatuses: [""],
         description: ""
+    },
+
+   {
+        id: "publication-103",
+        title: "",
+        publishDate: "",
+        category: "",
+        brands: [""],
+        keywords: [""],
+        coverImage: "./publication-103.png",
+        detailUrl: "",
+        publicationPermission: false,
+        hasInterview: false,
+        siteStatuses: [""],
+        description: ""
+    },
+
+   {
+        id: "publication-104",
+        title: "",
+        publishDate: "",
+        category: "",
+        brands: [""],
+        keywords: [""],
+        coverImage: "./publication-104.png",
+        detailUrl: "",
+        publicationPermission: false,
+        hasInterview: false,
+        siteStatuses: [""],
+        description: ""
+    },
+
+   {
+        id: "publication-105",
+        title: "",
+        publishDate: "",
+        category: "",
+        brands: [""],
+        keywords: [""],
+        coverImage: "./publication-105.png",
+        detailUrl: "",
+        publicationPermission: false,
+        hasInterview: false,
+        siteStatuses: [""],
+        description: ""
+    },
+
+   {
+        id: "publication-106",
+        title: "",
+        publishDate: "",
+        category: "",
+        brands: [""],
+        keywords: [""],
+        coverImage: "./publication-106.png",
+        detailUrl: "",
+        publicationPermission: false,
+        hasInterview: false,
+        siteStatuses: [""],
+        description: ""
     }
 ];
