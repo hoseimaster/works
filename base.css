@@ -996,7 +996,7 @@ body.is-navigation-open {
 
 /* キーワード入力文字を左端寄りに配置 */
 .archive-keyword__input {
-    padding-left: 12px;
+    padding-left: 10px;
 }
 
 .archive-keyword__input::placeholder {
