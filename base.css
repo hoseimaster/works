@@ -783,7 +783,7 @@ body.is-navigation-open {
 .search-area input{
     width:100%;
     height:54px;
-    padding:0 20px 0 6px;
+    padding:0 20px 0 10px;
 
     border:1px solid #dddddd;
     border-radius:16px;
