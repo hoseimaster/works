@@ -3072,3 +3072,16 @@ and (max-width: 1180px) {
         animation: none;
     }
 }
+
+
+/* ========================================
+   700～770px
+   キーワード入力欄横幅修正
+======================================== */
+@media screen and (min-width:700px) and (max-width:770px){
+    .archive-toolbar{display:flex;flex-wrap:wrap;gap:14px;}
+    .search-area{flex:1 1 100%;width:100%;max-width:none;min-width:0;}
+    .archive-keyword__input,
+    .filter-text-input{width:100%;}
+    .sort-area{flex:1 1 220px;min-width:220px;}
+}
