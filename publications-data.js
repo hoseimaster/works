@@ -1675,7 +1675,7 @@ export const PUBLICATIONS = [
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
-        description: "HOSEIM@STER 2026の電子版限定ページになります。イラストのラフや没案などをまとめています。"
+        description: "「HOSEIM@STER 2026」の電子版限定ページになります。イラストのラフや没案などをまとめています。"
     },
 
    {
