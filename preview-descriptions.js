@@ -1672,7 +1672,7 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
 
     {
         id: "publication-102",
-        title: "",
+        title: "電子書籍版限定ページ",
         previewDescription: `
 HOSEIM@STER 2026の電子版限定ページになります。
 企画の没案やイラストのラフ、没案などをまとめています。
