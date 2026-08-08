@@ -1657,17 +1657,25 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-102",
-        title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
-        keywords: [""],
-        coverImage: "./publication-102.png",
-        detailUrl: "",
-        publicationPermission: false,
+        title: "電子書籍版限定ページ",
+        publishDate: "2026-08-16",
+        category: "会誌",
+        brands: [
+            "THE IDOLM@STER",
+            "シンデレラガールズ",
+            "ミリオンライブ！",
+            "SideM",
+            "シャイニーカラーズ",
+            "学園アイドルマスター",
+            "その他"
+        ],
+        keywords: ["中田,25GR,なべ,さかうち,カトナ"],
+        coverImage: "",
+        detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
+        publicationPermission: true,
         hasInterview: false,
-        siteStatuses: [""],
-        description: ""
+        siteStatuses: ["電子版公開中"],
+        description: "HOSEIM@STER 2026の電子版限定ページになります。イラストのラフや没案などをまとめています。"
     },
 
    {
