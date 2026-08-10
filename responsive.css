@@ -391,16 +391,7 @@
 ======================================== */
 
 @media screen and (max-height: 520px) and (orientation: landscape) {
-    /*
-     * 横向きスマートフォンでは画面の高さが小さく、
-     * 700px以下の縦向き用レイアウトが適用されない場合があります。
-     *
-     * archive-toolbar が横並びのままだと、
-     * .search-area が filter-button / sort-area と幅を分け合うため、
-     * キーワード入力欄だけが不自然に短くなります。
-     *
-     * 横向きでも検索欄を縦向きと同じく全幅で確保します。
-     */
+    
     .archive-toolbar {
         flex-direction: column;
         align-items: stretch;
