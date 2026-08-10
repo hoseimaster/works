@@ -3085,3 +3085,8 @@ and (max-width: 1180px) {
     .filter-text-input{width:100%;}
     .sort-area{flex:1 1 220px;min-width:220px;}
 }
+
+.archive-image img {
+    user-select: none;
+    -webkit-user-drag: none;
+}
