@@ -789,6 +789,7 @@ body.is-navigation-open {
     border-radius:16px;
 
     background:#ffffff;
+    font-weight: 400;
 
     font-size:15px;
     transition:.25s;
@@ -984,6 +985,7 @@ body.is-navigation-open {
     border: 1px solid #eadfd4;
     border-radius: 999px;
     background: #fffdfb;
+    font-weight: 400;
     font-size: 15px;
     transition: .2s;
     box-shadow: none;
