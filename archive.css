@@ -3091,23 +3091,3 @@ and (max-width: 1180px) {
     -webkit-user-drag: none;
 }
 
-.archive-image {
-    position: relative;
-}
-
-.archive-image::after {
-    content: "SAMPLE";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-25deg);
-
-    color: rgba(255, 255, 255, 0.45);
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-}
