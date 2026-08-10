@@ -1674,7 +1674,7 @@ export const PUBLICATIONS = [
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
         hasInterview: false,
-        siteStatuses: ["電子版公開中"],
+        siteStatuses: ["非公開"],
         description: "「HOSEIM@STER 2026」の電子版限定ページになります。イラストのラフや没案などをまとめています。"
     },
 
