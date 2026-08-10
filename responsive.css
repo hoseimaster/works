@@ -410,48 +410,46 @@
    横向きスマートフォン
 ======================================== */
 
-@media screen and (max-height: 520px) and (orientation: landscape) {
-    /*
-     * stretch・全画面化・角丸解除は中央配置を壊すため使用しません。
-     */
-    .filter-modal {
-        display: grid;
-        align-items: center;
-        justify-items: center;
-        padding:
-            max(8px, env(safe-area-inset-top))
-            max(8px, env(safe-area-inset-right))
-            max(8px, env(safe-area-inset-bottom))
-            max(8px, env(safe-area-inset-left));
+@media screen and (max-height: 800px) and (orientation: landscape) {
+    
+    .archive-toolbar {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-   .archive-pagination-controls__actions {
+    .archive-pagination-controls__actions {
     flex: 0 0 auto;
     flex-wrap: nowrap;
-　　}
+}
+
+    .search-area,
+    .filter-button,
+    .sort-area {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .archive-keyword__input {
+        width: 100%;
+    }
+
+    .filter-modal {
+        align-items: stretch;
+    }
 
     .filter-modal__panel {
         width: min(760px, 100%);
-        min-height: 0;
-        max-height:
-            calc(
-                100dvh -
-                max(16px, env(safe-area-inset-top)) -
-                max(16px, env(safe-area-inset-bottom))
-            );
-        margin: auto;
-        border: 1px solid rgb(244 122 36 / 22%);
-        border-radius: 16px;
+        max-height: 100vh;
+        margin: 0 auto;
+        border-radius: 0;
     }
 
     .filter-modal__header {
         min-height: 58px;
+        border-radius: 0;
     }
 
     .filter-modal__body {
-        min-height: 0;
-        flex: 1 1 auto;
-        overflow-y: auto;
         padding-bottom: 18px;
     }
 
