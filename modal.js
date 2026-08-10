@@ -86,6 +86,21 @@ export function initializeFilterModal({
             return;
         }
 
+        /*
+         * aria-hidden を設定する前にフォーカスをモーダル外へ戻す。
+         * モーダル内のボタン等にフォーカスが残ったまま
+         * aria-hidden="true" にすると、アクセシビリティ警告が発生する。
+         */
+        if (
+            restoreFocus &&
+            previouslyFocusedElement instanceof
+                HTMLElement
+        ) {
+            previouslyFocusedElement.focus();
+        } else if (restoreFocus) {
+            elements.openButton.focus();
+        }
+
         elements.modal.classList.remove(
             "is-open"
         );
@@ -111,16 +126,6 @@ export function initializeFilterModal({
         document.body.classList.remove(
             "is-modal-open"
         );
-
-        if (
-            restoreFocus &&
-            previouslyFocusedElement instanceof
-                HTMLElement
-        ) {
-            previouslyFocusedElement.focus();
-        } else if (restoreFocus) {
-            elements.openButton.focus();
-        }
 
         previouslyFocusedElement =
             null;
