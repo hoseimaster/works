@@ -406,6 +406,11 @@
         align-items: stretch;
     }
 
+   .archive-pagination-controls__actions {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+　　　}
+
     .search-area,
     .filter-button,
     .sort-area {
