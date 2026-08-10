@@ -991,6 +991,10 @@ body.is-navigation-open {
     box-shadow: none;
 }
 
+#modalKeywordInput {
+    font-weight: 400;
+}
+
 .archive-keyword__input:hover,
 .filter-text-input:hover{
     border-color: #dcc7b0;
