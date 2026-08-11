@@ -1594,7 +1594,7 @@ export const PUBLICATIONS = [
    
     {
         id: "publication-99",
-        title: "ミニキャラシールセット",
+        title: "HOSEIM@STER 2026 【特典】ミニキャラシールセット",
         publishDate: "2026-08-16",
         category: "グッズ・特典",
        brands: [
@@ -1616,7 +1616,7 @@ export const PUBLICATIONS = [
 
    {
         id: "publication-100",
-        title: "限定ポストカード",
+        title: "HOSEIM@STER 2026 【特典】限定ポストカード",
         publishDate: "2026-08-16",
         category: "グッズ・特典",
         brands: [
@@ -1657,9 +1657,9 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-102",
-        title: "電子書籍版限定ページ",
+        title: "HOSEIM@STER 2026 【特典】電子書籍版限定ページ",
         publishDate: "2026-08-16",
-        category: "会誌",
+        category: "グッズ・特典",
         brands: [
             "THE IDOLM@STER",
             "シンデレラガールズ",
