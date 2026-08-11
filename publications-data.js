@@ -1670,7 +1670,7 @@ export const PUBLICATIONS = [
             "その他"
         ],
         keywords: ["中田,25GR,なべ,さかうち,カトナ"],
-        coverImage: "",
+        coverImage: "./publication-102.png",
         detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
         publicationPermission: true,
         hasInterview: false,
