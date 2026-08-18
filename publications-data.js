@@ -1671,7 +1671,7 @@ export const PUBLICATIONS = [
         ],
         keywords: ["中田,25GR,なべ,さかうち,カトナ"],
         coverImage: "./publication-102.png",
-        detailUrl: "https://www.hoseimaster-web.com/l/hoseimaster2026/",
+        detailUrl: "",
         publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["非公開"],
