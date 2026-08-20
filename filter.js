@@ -10,14 +10,7 @@ import {
     getPublicationYears
 } from "./publications.js";
 
-import {
-    getPreviewDescription
-} from "./preview-descriptions.js";
-
 const KEYWORD_INPUT_DELAY = 300;
-
-const SEARCH_TEXT_CACHE =
-    new WeakMap();
 
 let selectedYearFrom = "";
 let selectedYearTo = "";
@@ -1072,6 +1065,7 @@ function initializeGroupClearButtons({
                     }
 
                     if (
+                        filterKey === "year" ||
                         filterKey === "years" ||
                         filterKey === "yearRange" ||
                         filterKey === "yearFrom" ||
@@ -1334,7 +1328,7 @@ function collectActiveFilters(
         years: "発行年",
         interview: "インタビュー",
         siteStatuses:
-            "制作物公開状況"
+            "サイト掲載状況"
     };
 
     Object.entries(
@@ -1471,6 +1465,24 @@ function removeActiveFilter({
 
         store.setFilters({
             singleBrandOnly: false
+        });
+
+        return;
+    }
+
+    /*
+     * 発行年は範囲指定なので、
+     * 「発行年」の解除ボタンを押した場合は
+     * 配列から1年だけ削除するのではなく、
+     * From / To の両方を完全に解除する。
+     */
+    if (
+        filterKey === "years"
+    ) {
+        clearYearRange(elements);
+
+        store.setFilters({
+            years: []
         });
 
         return;
@@ -1827,10 +1839,22 @@ export function matchesKeyword(
         return true;
     }
 
+    const searchableValues = [
+        publication.title,
+        publication.category,
+        publication.description,
+        publication.publishDate,
+        ...(publication.brands ?? []),
+        ...(publication.siteStatuses ?? []),
+        ...(publication.keywords ?? [])
+    ];
+
     const searchableText =
-        getPublicationSearchText(
-            publication
-        );
+        searchableValues
+            .map(
+                normalizeSearchText
+            )
+            .join(" ");
 
     const keywordParts =
         normalizedKeyword
@@ -1843,63 +1867,6 @@ export function matchesKeyword(
                 .includes(part);
         }
     );
-}
-
-
-/**
- * 制作物ごとの検索対象文字列を取得します。
- * 同一オブジェクトは初回生成後の文字列を再利用します。
- *
- * @param {object} publication
- * @returns {string}
- */
-function getPublicationSearchText(
-    publication
-) {
-    if (
-        !publication ||
-        typeof publication !== "object"
-    ) {
-        return "";
-    }
-
-    const cachedText =
-        SEARCH_TEXT_CACHE.get(
-            publication
-        );
-
-    if (
-        typeof cachedText === "string"
-    ) {
-        return cachedText;
-    }
-
-    const previewDescription =
-        getPreviewDescription(
-            publication.id
-        );
-
-    const searchableText = [
-        publication.title,
-        publication.category,
-        publication.description,
-        previewDescription,
-        publication.publishDate,
-        ...(publication.brands ?? []),
-        ...(publication.siteStatuses ?? []),
-        ...(publication.keywords ?? [])
-    ]
-        .map(
-            normalizeSearchText
-        )
-        .join(" ");
-
-    SEARCH_TEXT_CACHE.set(
-        publication,
-        searchableText
-    );
-
-    return searchableText;
 }
 
 
