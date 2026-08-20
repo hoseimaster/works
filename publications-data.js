@@ -1669,7 +1669,7 @@ export const PUBLICATIONS = [
             "学園アイドルマスター",
             "その他"
         ],
-        keywords: ["中田,25GR,なべ,さかうち,カトナ"],
+        keywords: ["中田,25GR,なべ,さかうち,カトナ,C108,ラフ,没案"],
         coverImage: "./publication-102.png",
         detailUrl: "",
         publicationPermission: true,
