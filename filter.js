@@ -91,7 +91,8 @@ const SEARCH_SYNONYM_DICTIONARY = [
             "sidem"
         ],
         exclude: []
-    }
+    },
+
 ];
 
 const SEARCH_TEXT_CACHE = new WeakMap();
