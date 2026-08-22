@@ -1684,14 +1684,14 @@ export const PUBLICATIONS = [
 
    {
         id: "publication-103",
-        title: "",
-        publishDate: "",
+        title: "システム正常動作確認用",
+        publishDate: "2027-08-22",
         category: "",
         brands: [""],
         keywords: [""],
         coverImage: "./publication-103.png",
         detailUrl: "",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
         siteStatuses: [""],
         description: ""
