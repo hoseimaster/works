@@ -92,7 +92,16 @@ const SEARCH_SYNONYM_DICTIONARY = [
         ],
         exclude: []
     },
-
+    {
+        name: "コミケ",
+        keywords: [
+            "夏コミ",
+            "C108",
+            "冬コミ",
+            "即売会"
+        ],
+        exclude: []
+    }
 ];
 
 const SEARCH_TEXT_CACHE = new WeakMap();
