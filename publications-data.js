@@ -393,7 +393,10 @@ export const PUBLICATIONS = [
         title: "インフィニー 冬ライブ号2013",
         publishDate: "2013-02-10",
         category: "会誌",
-        brands: ["THE IDOLM@STER"],
+        brands:[
+        "THE IDOLM@STER",
+        "シンデレラガールズ"
+  　　  ],
         keywords: [],
         coverImage: "./publication-023.png",
         detailUrl: "https://www.hoseimaster-web.com/l/%e3%82%a4%e3%83%b3%e3%83%95%e3%82%a3%e3%83%8b%e3%83%bc-%e5%86%ac%e3%83%a9%e3%82%a4%e3%83%96%e5%8f%b72013/",
