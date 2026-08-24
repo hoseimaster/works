@@ -209,14 +209,16 @@ function createPreviewModal() {
 
                 <div class="preview-modal__information">
                     <div class="preview-modal__header-information">
-                        <p class="preview-modal__date"></p>
+                        <div class="preview-modal__meta">
+                            <p class="preview-modal__date"></p>
+
+                            <div class="preview-modal__category" hidden></div>
+                        </div>
 
                         <h2
                             id="publicationPreviewTitle"
                             class="preview-modal__title"
                         ></h2>
-
-                        <div class="preview-modal__category" hidden></div>
 
                         <ul
                             class="preview-modal__brands"
