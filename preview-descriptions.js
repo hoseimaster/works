@@ -1688,8 +1688,23 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
 
      {
         id: "publication-103",
-        title: "",
+        title: "THE IDOLM@STER MILLION LIVE! 14thLIVE Memorial Leaflet",
         previewDescription: `
+■内容紹介
+　2026年09月19日・20日開催の「THE IDOLM@STER MILLION LIVE! 14thLIVE 」を記念したリーフレットとなっております。
+　『ミラージュ・ミラー』や『dear... 』など、主演である4人の楽曲を多く手掛けているKOH様へのインタビューを掲載しております！
+
+■ご協力
+　【インタビュー】　KOH 様　(X：@K_O_H777 ) 
+
+■イラスト
+　【表紙】25GR (X：@nknk_gra)
+
+■主催・文責・編集
+　　すのーら
+
+■制作
+　　あっぷる、蟹、さかうち、C、SpeRanza、中田、なべ
 `
     },
 
