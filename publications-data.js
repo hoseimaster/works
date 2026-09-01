@@ -1687,17 +1687,17 @@ export const PUBLICATIONS = [
 
    {
         id: "publication-103",
-        title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
-        keywords: [""],
+        title: "THE IDOLM@STER MILLION LIVE! 14thLIVE Memorial Leaflet",
+        publishDate: "2026-09-19",
+        category: "リーフレット",
+        brands: ["ミリオンライブ！"],
+        keywords: ["馬場このみ,徳川まつり"],
         coverImage: "./publication-103.png",
-        detailUrl: "",
+        detailUrl: "https://www.hoseimaster-web.com/l/million14-ml/",
         publicationPermission: false,
         hasInterview: true,
-        siteStatuses: [""],
-        description: ""
+        siteStatuses: ["配布終了後 電子版公開予定"],
+        description: "作詞・作曲・編曲のKOH様へのインタビューを掲載しております！"
     },
 
    {
