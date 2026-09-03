@@ -270,6 +270,97 @@ export function initializeFilters({
             );
         }
     });
+
+    initializeFiltersFromURL({
+        store,
+        elements
+    });
+}
+
+
+/* ========================================
+   URLから絞り込み
+======================================== */
+
+function initializeFiltersFromURL({
+    store,
+    elements
+}) {
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const category =
+        params.get("category");
+
+    if (!category) {
+        return;
+    }
+
+    const container =
+        elements.categoryFilterOptions;
+
+    if (!container) {
+        return;
+    }
+
+    const normalizedCategory =
+        normalizeFilterValue(
+            category
+        );
+
+    const checkbox =
+        Array.from(
+            container.querySelectorAll(
+                'input[type="checkbox"][data-filter-key="categories"]'
+            )
+        ).find((input) => {
+            const label =
+                input
+                    .closest(".filter-option")
+                    ?.querySelector(
+                        ".filter-option__label"
+                    );
+
+            const inputValue =
+                normalizeFilterValue(
+                    input.value
+                );
+
+            const labelValue =
+                normalizeFilterValue(
+                    label?.textContent
+                );
+
+            if (
+                normalizedCategory ===
+                "leaflet"
+            ) {
+                return (
+                    labelValue ===
+                    "リーフレット"
+                );
+            }
+
+            return (
+                inputValue ===
+                normalizedCategory ||
+                labelValue ===
+                normalizedCategory
+            );
+        });
+
+    if (!checkbox) {
+        return;
+    }
+
+    checkbox.checked = true;
+
+    applyCheckedFilters(
+        store,
+        elements
+    );
 }
 
 
@@ -1966,20 +2057,6 @@ export function matchesKeyword(
 }
 
 
-/**
- * 制作物ごとの検索対象文字列を取得します。
- *
- * title
- * category
- * description
- * preview-descriptions.js
- * publishDate
- * brands
- * siteStatuses
- * keywords
- *
- * をすべて検索対象にします。
- */
 function getPublicationSearchText(
     publication
 ) {
@@ -2032,9 +2109,6 @@ function getPublicationSearchText(
 }
 
 
-/**
- * 検索語をスペース単位で分割します。
- */
 function splitSearchWords(
     keyword
 ) {
@@ -2049,15 +2123,6 @@ function splitSearchWords(
 }
 
 
-/**
- * 1つの検索語について
- *
- * 1. 類義語辞典
- * 2. 部分一致
- * 3. 文字類似度
- *
- * の順番で判定します。
- */
 function matchesSearchPart(
     searchPart,
     searchableText
@@ -2103,14 +2168,6 @@ function matchesSearchPart(
 }
 
 
-/**
- * 検索用類義語辞典を使った検索。
- *
- * 重要：
- * 「アイドルマスター」と
- * 「学園アイドルマスター」は
- * 別グループとして扱います。
- */
 function matchesSynonymDictionary(
     searchPart,
     searchableText
@@ -2203,12 +2260,6 @@ function matchesSynonymDictionary(
 }
 
 
-/**
- * 文字類似度による検索。
- *
- * 類似度を高めに設定しているため、
- * かなり近い入力だけを拾います。
- */
 function matchesByCharacterSimilarity(
     searchPart,
     searchableText
@@ -2248,10 +2299,6 @@ function matchesByCharacterSimilarity(
 }
 
 
-/**
- * 検索対象文字列から
- * 類似度比較用の短い候補文字列を作ります。
- */
 function createSearchCandidates(
     text,
     targetLength
@@ -2291,12 +2338,6 @@ function createSearchCandidates(
 }
 
 
-/**
- * 文字列類似度。
- *
- * Levenshtein距離を基準にして、
- * 完全一致に近いものだけを通します。
- */
 function calculateStringSimilarity(
     valueA,
     valueB
