@@ -1694,10 +1694,10 @@ export const PUBLICATIONS = [
         keywords: ["馬場このみ,徳川まつり"],
         coverImage: "./publication-103.png",
         detailUrl: "https://www.hoseimaster-web.com/l/million14-ml/",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: true,
         siteStatuses: ["配布終了後 電子版公開予定"],
-        description: "作詞・作曲・編曲のKOH様へのインタビューを掲載しております！"
+        description: "作詞・作曲・編曲家のKOH様へのインタビューを掲載しております！"
     },
 
    {
