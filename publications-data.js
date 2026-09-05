@@ -1703,15 +1703,15 @@ export const PUBLICATIONS = [
    {
         id: "publication-104",
         title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
+        publishDate: "2026-09-18",
+        category: "リーフレット",
+        brands: ["シャイニーカラーズ"],
         keywords: [""],
         coverImage: "./publication-104.png",
-        detailUrl: "",
+        detailUrl: "https://www.hoseimaster-web.com/l/283proslc-msp-ml/",
         publicationPermission: false,
         hasInterview: false,
-        siteStatuses: [""],
+        siteStatuses: ["電子版公開中"],
         description: ""
     },
 
