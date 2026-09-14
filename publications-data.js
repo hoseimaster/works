@@ -1702,8 +1702,8 @@ export const PUBLICATIONS = [
 
    {
         id: "publication-104",
-        title: "",
-        publishDate: "2026-09-18",
+        title: "283 PRODUCTION Solo Live Collection -Master ShowPiece- Memorial Leaflet",
+        publishDate: "2026-09-21",
         category: "リーフレット",
         brands: ["シャイニーカラーズ"],
         keywords: [""],
@@ -1712,7 +1712,7 @@ export const PUBLICATIONS = [
         publicationPermission: false,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
-        description: ""
+        description: "「今後出てほしい衣装のコンセプトや演出、小道具」をテーマにした企画を掲載しています。"
     },
 
    {
