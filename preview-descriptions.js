@@ -1710,8 +1710,22 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
 
      {
         id: "publication-104",
-        title: "",
+        title: "283 PRODUCTION Solo Live Collection -Master ShowPiece- Memorial Leaflet",
         previewDescription: `
+■内容紹介
+　2026年09月26日・27日開催の「283 PRODUCTION Solo Live Collection ーMaster ShowPieceー」を記念した電子リーフレットとなっております。「今後出てほしい衣装のコンセプトや演出、小道具」をテーマにした企画を実施しております。
+　
+■イラスト
+【表紙】25GR (X：@nknk_gra)
+
+■主催・文責
+　KMADH・蟹
+
+■編集
+　KMADH
+
+■制作
+　中田、すのーら、サノマル、馳倅、こけらタンニン
 `
     },
 
