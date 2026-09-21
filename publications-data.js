@@ -1709,7 +1709,7 @@ export const PUBLICATIONS = [
         keywords: [""],
         coverImage: "./publication-104.png",
         detailUrl: "https://www.hoseimaster-web.com/l/283proslc-msp-ml/",
-        publicationPermission: false,
+        publicationPermission: true,
         hasInterview: false,
         siteStatuses: ["電子版公開中"],
         description: "「今後出てほしい衣装のコンセプトや演出、小道具」をテーマにした企画を掲載しています。"
