@@ -1,1464 +1,796 @@
 <!DOCTYPE html>
-
 <html lang="ja">
-
 <head>
-
     <meta charset="UTF-8">
-
-
-
     <meta
-
         name="viewport"
-
         content="width=device-width, initial-scale=1.0"
-
     >
-
-
-
     <meta
-
         name="description"
-
         content="法政大学アイドルマスター研究会がこれまでに制作した出版物を、関連ブランドや発行年などから検索できるアーカイブページです。"
-
     >
-
-
-
     <title>
-
         制作物アーカイブス｜法政大学アイドルマスター研究会
-
     </title>
-
-
-
     <!-- CSS -->
-
     <link rel="stylesheet" href="./css/base.css">
-
     <link rel="stylesheet" href="./css/archive.css">
-
     <link rel="stylesheet" href="./css/responsive.css">
-
     <link rel="stylesheet" href="./css/modal-preview.css">
     <link rel="stylesheet" href="./css/admin.css">
-
-
-
+    <link rel="stylesheet" href="./css/admin-feedback.css">
+    <link rel="stylesheet" href="./css/admin-validation.css">
 </head>
-
-
-
 <body>
-
     <!-- JavaScriptが使用できない環境向け -->
     <noscript><style>.requires-javascript { display: none !important; }</style></noscript>
-
     <!-- ========================================
-
          サイトヘッダー
-
     ========================================= -->
-
     <header class="site-header">
-
         <div class="site-header__inner">
-
             <a
-
                 class="site-header__logo"
-
                 href="https://www.hoseimaster-web.com/"
-
                 aria-label="法政大学アイドルマスター研究会 ホーム"
-
             >
-
                 <img
-
                     src="./asset/header-logo.png"
-
                     alt="法政大学アイドルマスター研究会"
-
                     class="site-header__logo-image-full"
-
                 >
-
             </a>
-
-
-
             <button
-
                 id="menuToggleButton"
-
                 class="site-header__menu-button"
-
                 type="button"
-
                 aria-controls="globalNavigation"
-
                 aria-expanded="false"
-
                 aria-label="メニューを開く"
-
             >
-
                 <span class="site-header__menu-icon" aria-hidden="true">
-
                     <span></span>
-
                     <span></span>
-
                     <span></span>
-
                 </span>
-
             </button>
-
-
-
             <nav
-
                 id="globalNavigation"
-
                 class="global-navigation"
-
                 aria-label="メインメニュー"
-
             >
-
                 <ul class="global-navigation__list">
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/">Home</a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/about-us/">About Us</a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/news/">News</a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a
-
                             href="https://www.hoseimaster-web.com/works-new/"
-
                             aria-current="page"
-
                         >
-
                             Works
-
                         </a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/gallery/">Gallery</a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/event/">Event</a>
-
                     </li>
-
-
-
                     <li class="global-navigation__item">
-
                         <a href="https://www.hoseimaster-web.com/contact-us/">Contact Us</a>
-
                     </li>
-
                 </ul>
-
             </nav>
-
         </div>
-
     </header>
-
-
-
-
-
     <!-- ========================================
-
          メインコンテンツ
-
     ========================================= -->
-
     <main class="archive-main">
-
         <div class="archive-container">
-
-
-
             <!-- ページタイトル -->
-
             <header class="archive-heading">
-
-
-
                 <h1 class="archive-heading__title">
-
                     制作物アーカイブス
-
                 </h1>
-
-
-
             </header>
-
-
-
-
-
             <!-- JavaScript無効時の案内 -->
-
             <noscript>
-
                 <div class="archive-message archive-message--error">
-
                     <p>
-
                         制作物の検索機能を利用するには、
-
                         JavaScriptを有効にしてください。
-
                     </p>
-
                 </div>
-
             </noscript>
-
-
-
-
-
             <!-- ========================================
-
                  検索・絞り込みツールバー
-
             ========================================= -->
-
             <section
-
                 class="archive-toolbar requires-javascript"
-
                 aria-label="制作物の検索と絞り込み"
-
             >
-
                 <!-- キーワード検索 -->
-
                 <div class="search-area">
-
                         <input
-
                             id="keywordInput"
-
                             class="archive-keyword__input"
-
                             type="search"
-
                             name="keyword"
-
                             placeholder="キーワードで検索..."
-
                             autocomplete="off"
-
                         >
-
                     </div>
-
-
-
                     <button
-
                         id="openFilterButton"
-
                         class="filter-button"
-
                         type="button"
-
                         aria-controls="filterModal"
-
                         aria-expanded="false"
-
                     >
-
                         絞り込み検索
-
                         <span id="filterCount" class="count" hidden>0</span>
-
                     </button>
-
-
-
                     <div class="sort-area sort-area--source">
-
                         <label class="visually-hidden" for="sortSelect">並び替え</label>
-
                         <select id="sortSelect" class="archive-sort__select" name="sort">
-
                             <option value="date-desc">⇅ 新しい順</option>
-
                             <option value="date-asc">⇅ 古い順</option>
-
                             <option value="title-asc">⇅ タイトル順（昇順）</option>
-
                             <option value="title-desc">⇅ タイトル順（降順）</option>
-
                         </select>
-
                     </div>
-
                 </section>
-
-
-
-
-
             <!-- ========================================
-
                  選択中の検索条件
-
             ========================================= -->
-
             <section
-
                 id="activeFiltersSection"
-
                 class="active-filters requires-javascript"
-
                 aria-labelledby="activeFiltersTitle"
-
                 hidden
-
             >
-
                 <div class="active-filters__header">
-
                     <h2
-
                         id="activeFiltersTitle"
-
                         class="active-filters__title"
-
                     >
-
                         選択中の条件
-
                     </h2>
-
-
-
                     <button
-
                         id="clearAllFiltersButton"
-
                         class="active-filters__clear"
-
                         type="button"
-
                     >
-
                         すべて解除
-
                     </button>
-
                 </div>
-
-
-
                 <div
-
                     id="activeFilters"
-
                     class="active-filters__list"
-
                     aria-live="polite"
-
                 >
-
                     <!-- JSで条件タグを生成 -->
-
                 </div>
-
             </section>
-
-
-
-
-
             <!-- ========================================
-
                  検索結果情報
-
             ========================================= -->
-
             <section
-
                 class="archive-results-header"
-
                 aria-labelledby="resultsHeading"
-
             >
-
                 <div>
-
                     <h2
-
                         id="resultsHeading"
-
                         class="archive-results-header__title"
-
                     >
-
                         制作物一覧
-
                     </h2>
-
-
-
                     <p
-
                         id="resultSummary"
-
                         class="archive-results-header__summary"
-
                         aria-live="polite"
-
                     >
-
                         全
-
                         <strong id="resultCount">0</strong>
-
                         件
-
                     </p>
-
                 </div>
-
             </section>
-
-
-
-
-
             <!-- 読み込み中 -->
-
             <div
-
                 id="loadingMessage"
-
                 class="archive-message"
-
                 role="status"
-
             >
-
                 <p>制作物を読み込んでいます。</p>
-
             </div>
-
-
-
-
-
             <!-- エラー表示 -->
-
             <div
-
                 id="errorMessage"
-
                 class="archive-message archive-message--error"
-
                 role="alert"
-
                 hidden
-
             >
-
                 <p>
-
                     制作物データを表示できませんでした。
-
                     ページを再読み込みしてください。
-
                 </p>
-
             </div>
-
-
-
-
-
             <!-- 検索結果なし -->
-
             <div
-
                 id="emptyMessage"
-
                 class="archive-message archive-message--empty"
-
                 hidden
-
             >
-
                 <h2 class="archive-message__title">
-
                     該当する制作物がありません
-
                 </h2>
-
-
-
                 <p>
-
                     検索条件を変更して、もう一度お試しください。
-
                 </p>
-
-
-
                 <button
-
                     id="emptyResetButton"
-
                     class="archive-button"
-
                     type="button"
-
                 >
-
                     検索条件をリセット
-
                 </button>
-
             </div>
-
-
-
-
-
             <!-- ========================================
-
                  制作物カード一覧
-
             ========================================= -->
-
             <section
-
                 id="publicationList"
-
                 class="publication-list"
-
                 aria-label="制作物の検索結果"
-
             >
-
                 <!-- JavaScriptで制作物カードを生成 -->
-
             </section>
-
-
-
         </div>
-
     </main>
-
-
-
-
-
     <!-- ========================================
-
          検索条件モーダル
-
     ========================================= -->
-
     <div
-
         id="filterModal"
-
         class="filter-modal requires-javascript"
-
         role="dialog"
-
         aria-modal="true"
-
         aria-labelledby="filterModalTitle"
-
         hidden
-
     >
-
         <!-- 背景 -->
-
         <div
-
             class="filter-modal__backdrop"
-
             data-modal-close
-
             aria-hidden="true"
-
         ></div>
-
-
-
         <!-- モーダル本体 -->
-
         <div class="filter-modal__panel">
-
             <header class="filter-modal__header">
-
                 <h2
-
                     id="filterModalTitle"
-
                     class="filter-modal__title"
-
                 >
-
                     検索条件
-
                 </h2>
-
-
-
                 <button
-
                     class="filter-modal__close"
-
                     type="button"
-
                     data-modal-close
-
                     aria-label="検索条件を閉じる"
-
                 >
-
                     <span aria-hidden="true">×</span>
-
                 </button>
-
             </header>
-
-
-
-
-
             <div class="filter-modal__body">
-
                 <!-- モーダル内キーワード -->
-
                 <section class="filter-group">
-
                     <h3 class="filter-group__title">
-
                         キーワード
-
                     </h3>
-
-
-
                     <label
-
                         class="visually-hidden"
-
                         for="modalKeywordInput"
-
                     >
-
                         キーワードで検索...
-
                     </label>
-
-
-
                     <input
-
                         id="modalKeywordInput"
-
                         class="filter-text-input"
-
                         type="search"
-
                         placeholder="キーワードで検索..."
-
                         autocomplete="off"
-
                     >
-
                 </section>
-
-
-
-
-
                 <!-- 分類 -->
-
                 <section
-
                     class="filter-group"
-
                     aria-labelledby="categoryFilterTitle"
-
                 >
-
                     <div class="filter-group__heading">
-
                         <h3
-
                             id="categoryFilterTitle"
-
                             class="filter-group__title"
-
                         >
-
                             分類
-
                         </h3>
-
-
-
                         <button
-
                             class="filter-group__clear"
-
                             type="button"
-
                             data-clear-filter="categories"
-
                         >
-
                             選択解除
-
                         </button>
-
                     </div>
-
-
-
                     <div
-
                         id="categoryFilterOptions"
-
                         class="filter-options filter-options--buttons"
-
                     >
-
                         <!-- publications.jsのデータからJSで生成 -->
-
                     </div>
-
                 </section>
-
-
-
-
-
                 <!-- ブランド -->
-
                 <section
-
                     class="filter-group"
-
                     aria-labelledby="brandFilterTitle"
-
                 >
-
                     <div class="filter-group__heading">
-
                         <h3
-
                             id="brandFilterTitle"
-
                             class="filter-group__title"
-
                         >
-
                             ブランド
-
                         </h3>
-
-
-
                         <button
-
                             class="filter-group__clear"
-
                             type="button"
-
                             data-clear-filter="brands"
-
                         >
-
                             選択解除
-
                         </button>
-
                     </div>
-
-
-
                     <div
-
                         id="brandFilterOptions"
-
                         class="filter-options filter-options--buttons"
-
                     >
-
                         <!-- JavaScriptで生成 -->
-
                     </div>
-
-
-
                     <div class="single-brand-filter">
-
                         <label class="single-brand-filter__label">
-
                             <input
-
                                 id="singleBrandOnlyCheckbox"
-
                                 class="single-brand-filter__input"
-
                                 type="checkbox"
-
                             >
-
-
-
                             <span
-
                                 class="single-brand-filter__visual"
-
                                 aria-hidden="true"
-
                             ></span>
-
-
-
                             <span class="single-brand-filter__text">
-
                                 複数のブランドに関連する制作物を除外する
-
                             </span>
-
                         </label>
-
-
-
                         <p class="filter-group__note single-brand-filter__note">
-
                             1つのブランドの情報のみが掲載されている制作物を表示します。
-
                         </p>
-
                     </div>
-
                 </section>
-
-
-
-
-
                 <!-- 発行年 -->
-
                 <section
-
                     class="filter-group"
-
                     aria-labelledby="yearFilterTitle"
-
                     data-filter-group="year"
-
                 >
-
                     <div class="filter-group__heading">
-
                         <h3
-
                             id="yearFilterTitle"
-
                             class="filter-group__title"
-
                         >
-
                             発行年
-
                         </h3>
-
-
-
                         <button
-
                             class="filter-group__clear"
-
                             type="button"
-
                             data-clear-filter="year"
-
                         >
-
                             選択解除
-
                         </button>
-
                     </div>
-
-
-
                     <div class="year-range-filter">
-
                         <label class="year-range-filter__field">
-
                             <span class="year-range-filter__label">
-
                                 下限
-
                             </span>
-
-
-
                             <select
-
                                 id="yearFromSelect"
-
                                 class="year-range-filter__select"
-
                             >
-
                                 <option value="">
-
                                     指定なし
-
                                 </option>
-
                             </select>
-
                         </label>
-
-
-
                         <span
-
                             class="year-range-filter__separator"
-
                             aria-hidden="true"
-
                         >
-
                             〜
-
                         </span>
-
-
-
                         <label class="year-range-filter__field">
-
                             <span class="year-range-filter__label">
-
                                 上限
-
                             </span>
-
-
-
                             <select
-
                                 id="yearToSelect"
-
                                 class="year-range-filter__select"
-
                             >
-
                                 <option value="">
-
                                     指定なし
-
                                 </option>
-
                             </select>
-
                         </label>
-
                     </div>
-
-
-
                     <p class="year-range-filter__note">
-
                         片方だけ指定した場合は、未指定側を全期間として検索します。
-
                     </p>
-
                 </section>
-
-
-
-
-
                 <!-- インタビュー -->
-
                 <section
-
                     class="filter-group"
-
                     aria-labelledby="interviewFilterTitle"
-
                 >
-
                     <div class="filter-group__heading">
-
                         <h3
-
                             id="interviewFilterTitle"
-
                             class="filter-group__title"
-
                         >
-
                             インタビュー
-
                         </h3>
-
-
-
                         <button
-
                             class="filter-group__clear"
-
                             type="button"
-
                             data-clear-filter="interview"
-
                         >
-
                             選択解除
-
                         </button>
-
                     </div>
-
-
-
                     <div
-
                         id="interviewFilterOptions"
-
                         class="filter-options"
-
                     >
-
                         <!-- JavaScriptで生成 -->
-
                     </div>
-
-
-
                     <p class="filter-group__note">
-
                         作詞・作曲家様などのアイマス関係者様へのインタビューの掲載の有無です。
-
                     </p>
-
                 </section>
-
-
-
-
-
                 <!-- 制作物公開状況 -->
-
                 <section
-
                     class="filter-group"
-
                     aria-labelledby="siteStatusFilterTitle"
-
                 >
-
                     <div class="filter-group__heading">
-
                         <h3
-
                             id="siteStatusFilterTitle"
-
                             class="filter-group__title"
-
                         >
-
                             制作物公開状況
-
                         </h3>
-
-
-
                         <button
-
                             class="filter-group__clear"
-
                             type="button"
-
                             data-clear-filter="siteStatuses"
-
                         >
-
                             選択解除
-
                         </button>
-
                     </div>
-
-
-
                     <div
-
                         id="siteStatusFilterOptions"
-
                         class="filter-options"
-
                     >
-
                         <!-- JavaScriptで生成 -->
-
                     </div>
-
-
-
                     <p class="filter-group__note">
-
                         一部制作物は詳細ページからサイト上や公式BOOTHなどにて電子版を閲覧することができます。
-
                     </p>
-
                 </section>
-
             </div>
-
-
-
-
-
             <!-- モーダル下部 -->
-
             <footer class="filter-modal__footer">
-
                 <button
-
                     id="resetFilterButton"
-
                     class="filter-modal__reset"
-
                     type="button"
-
                 >
-
                     条件をリセット
-
                 </button>
-
-
-
                 <button
-
                     id="applyFilterButton"
-
                     class="filter-modal__apply"
-
                     type="button"
-
                 >
-
                     <span>この条件で検索</span>
-
-
-
                     <span
-
                         id="modalResultCount"
-
                         class="filter-modal__result-count"
-
                         aria-live="polite"
-
                     >
-
                         0件
-
                     </span>
-
                 </button>
-
             </footer>
-
         </div>
-
     </div>
-
-
-
-
-
     <!-- ========================================
-
          ページ上部へ戻る
-
     ========================================= -->
-
     <button
-
         id="pageTopButton"
-
         class="page-top-button"
-
         type="button"
-
         aria-label="ページ上部へ戻る"
-
         hidden
-
     >
-
         <span aria-hidden="true">↑</span>
-
     </button>
-
-
-
-
-
     <!-- ========================================
-
          ご注意
-
     ========================================= -->
-
-
-
     <section class="notice-section">
-
         <div class="notice-section__inner">
-
             <button id="noticeToggleButton" class="notice-toggle-button" type="button" aria-controls="noticePanel" aria-expanded="false">
-
                 ご注意
-
             </button>
-
-
-
             <div id="noticePanel" class="notice-panel" hidden>
-
                 <p>※リーフレットや会誌類の制作物の発行者は全て「法政大学アイドルマスター研究会」です。</p>
-
                 <p>※リーフレットや会誌類の制作物はバンダイナムコエンターテインメント様、並びにその他各所とは一切無関係に制作されております。</p>
-
                 <p>※リーフレットや会誌類の制作物の内容やそれに関する情報、記載されたURL等は制作した当時のままとなっており、現在の情報とは異なっている場合がございます。あらかじめご了承ください。</p>
-
                 <p>※リーフレットや会誌類の制作物について、ご協力いただいたアイマス関係者様並びにイラストレーター様へのお問い合わせ等はご遠慮ください。</p>
-
                 <p>※電子版リーフレットの公開は予告なく終了する場合があります。</p>
-
                 <p>※リーフレットや会誌類の制作物の一部又は全部を無断で複写・複製（コピー・スキャン・デジタル化等）・転載すること及びオークションサイトなどを通じて有償で譲渡する行為は禁止とさせていただきます。当会はそうした行為により発生したトラブルの一切の責任を負いません。</p>
-
                 <p>※本サイト上では、無償または有償で頒布した一部の出版物を、「リーフレット」と総称している場合があります。</p>
-
                 <p>※リーフレットや会誌類の制作物について問い合わせ等がございましたら本サイト内の「お問い合わせフォーム」よりご連絡ください。</p>
-
                 <p>【ページトップボタンイラスト：中田】</p>
-
             </div>
-
         </div>
-
     </section>
-
-
-
     <!-- ========================================
-
          フッター
-
     ========================================= -->
-
     <footer class="site-footer">
-
         <div class="site-footer__inner">
-
-
-
             <div class="site-footer__rule" aria-hidden="true"></div>
-
-
-
             <p class="site-footer__copyright">
-
                 <small>©法政大学アイドルマスター研究会. All rights reserved.</small>
-
             </p>
-
-
-
             <nav class="footer-navigation footer-navigation--legal" aria-label="サイト情報">
-
                 <ul class="footer-navigation__list">
-
                     <li><a href="https://www.hoseimaster-web.com/privacy-policy/">個人情報保護方針</a></li>
-
                     <li><a href="https://www.hoseimaster-web.com/terms-of-use/">利用規約</a></li>
-
                     <li><a href="https://www.hoseimaster-web.com/about-site/">本サイトについて</a></li>
-
+                    <li><a href="#admin">管理者専用</a></li>
                 </ul>
-
             </nav>
-
-
-
             <nav class="footer-navigation footer-navigation--social" aria-label="公式リンク">
-
                 <ul class="footer-navigation__list">
-
                     <li><a href="https://hosei-imas.booth.pm/" target="_blank" rel="noopener noreferrer">公式BOOTH</a></li>
-
                     <li><a href="https://x.com/hoseimaster?s=20" target="_blank" rel="noopener noreferrer">公式X</a></li>
-
                     <li><a href="https://ameblo.jp/hoseimaster/" target="_blank" rel="noopener noreferrer">公式Blog</a></li>
-
                     <li><a href="https://www.hoseimaster-web.com/sitemap/">サイトマップ</a></li>
-
                 </ul>
-
             </nav>
-
         </div>
-
-        <div class="archive-admin-entry"><a href="./index.html#admin">管理者用</a></div>
     </footer>
-
-
-
-
-
     <!-- JavaScript -->
-
 <div id="archiveAdminRoot" hidden>
   <div class="admin-shell">
     <header class="admin-header">
-      <div><a class="admin-return" href="./index.html">← 制作物アーカイブへ戻る</a><p class="admin-eyebrow">WORKS ARCHIVE</p><h1>制作物管理</h1></div>
+      <div>
+        <a class="admin-return" href="./index.html">← 制作物アーカイブへ戻る</a>
+        <p class="admin-eyebrow">WORKS ARCHIVE</p>
+        <h1>制作物管理</h1>
+      </div>
       <button id="logout" type="button" class="admin-button admin-button--secondary" hidden>ログアウト</button>
     </header>
+    <div id="adminValidation" class="admin-validation" aria-label="制作物データの確認" hidden>
+      <details class="admin-validation-group admin-validation-group--notice">
+        <summary>注意項目 <span id="validationNoticeCount">0</span>件</summary>
+        <ul id="validationNotices">
+        </ul>
+      </details>
+      <details class="admin-validation-group admin-validation-group--warning">
+        <summary>警告項目 <span id="validationWarningCount">0</span>件</summary>
+        <ul id="validationWarnings">
+        </ul>
+      </details>
+      <details class="admin-validation-group admin-validation-group--error">
+        <summary>エラー項目 <span id="validationErrorCount">0</span>件</summary>
+        <ul id="validationErrors">
+        </ul>
+      </details>
+    </div>
     <section id="login" class="admin-panel admin-login">
-      <div class="admin-intro"><span class="admin-step">管理者専用</span><h2>ログイン</h2><p>制作物の登録・編集には管理者アカウントでのログインが必要です。</p></div>
+      <div class="admin-intro">
+        <span class="admin-step">管理者専用</span>
+        <h2>ログイン</h2>
+        <p>制作物の登録・編集には管理者アカウントでのログインが必要です。</p>
+      </div>
       <form id="loginForm" class="admin-form">
-        <label>メールアドレス<input name="email" type="email" required autocomplete="username"></label>
-        <label>パスワード<input name="password" type="password" required autocomplete="current-password"></label>
-        <p id="loginError" class="admin-login-error" role="alert" hidden></p>
+        <label>メールアドレス<input name="email" type="email" required autocomplete="username">
+        </label>
+        <label>パスワード<input name="password" type="password" required autocomplete="current-password">
+        </label>
+        <p id="loginError" class="admin-login-error" role="alert" hidden>
+        </p>
         <button type="submit" class="admin-button admin-button--primary">ログイン</button>
       </form>
     </section>
     <section id="management" class="admin-panel" hidden>
-      <div class="admin-panel-header"><div><span class="admin-step">一覧・編集</span><h2>制作物一覧</h2><p>発行日の新しい順に表示しています。</p></div><button id="new" type="button" class="admin-button admin-button--create">＋ 新規登録</button></div>
-      <div class="admin-summary-grid">
-        <div class="priority"><h3>公開保留中 <span id="holdCount">0</span>件</h3><div id="holdList"></div></div>
-        <div class="priority"><h3>公開予定 <span id="scheduledCount">0</span>件</h3><div id="scheduledList"></div></div>
+      <div class="admin-panel-header">
+        <div>
+          <span class="admin-step">一覧・編集</span>
+          <h2>制作物一覧</h2>
+          <p>発行日の新しい順に表示しています。</p>
+        </div>
+        <button id="new" type="button" class="admin-button admin-button--create">＋ 新規登録</button>
       </div>
-      <div class="admin-list-heading"><h3>すべての制作物</h3><label class="admin-search-label">制作物を検索<input id="search" type="search" placeholder="ID・タイトルで検索"></label></div>
-      <div id="list" class="admin-list"></div>
+      <div class="admin-summary-grid">
+        <div class="priority">
+          <h3>公開保留中 <span id="holdCount">0</span>件</h3>
+          <div id="holdList">
+          </div>
+        </div>
+        <div class="priority">
+          <h3>公開予定 <span id="scheduledCount">0</span>件</h3>
+          <div id="scheduledList">
+          </div>
+        </div>
+      </div>
+      <div class="admin-list-heading">
+        <h3>すべての制作物</h3>
+        <label class="admin-search-label">制作物を検索<input id="search" type="search" placeholder="ID・タイトルで検索">
+        </label>
+      </div>
+      <div id="list" class="admin-list">
+      </div>
     </section>
     <section id="editor" class="admin-panel" hidden>
-      <div class="admin-panel-header"><div><span class="admin-step">情報入力</span><h2 id="editorTitle">制作物を編集</h2><p>入力後、公開内容を確認できます。</p></div><button id="back" type="button" class="admin-button admin-button--secondary">一覧に戻る</button></div>
-      <form id="editForm" class="admin-form">
-        <div class="admin-form-grid"><label>制作物ID<input name="id" required readonly></label><label>発行日<input name="publishDate" type="date" required></label></div>
-        <label>タイトル<input name="title" required></label>
-        <label>カテゴリー<select name="category" required><option value="">選択してください</option><option>会誌</option><option>リーフレット</option><option>検定本</option><option value="その他">その他出版物</option><option>グッズ・特典</option></select></label>
-        <fieldset><legend>ブランド（1つ以上選択）</legend><div id="brandOptions" class="admin-brand-grid"></div></fieldset>
-        <label>キーワード（任意・改行区切り）<textarea name="keywords"></textarea></label>
-        <label>表紙画像のパス<input name="coverImage" required></label><p class="note">新規登録時は制作物IDに合わせて自動入力します。必要に応じてパスを変更できます。画像自体はDBに保存しません。</p>
-        <label>詳細ページURL（任意）<input name="detailUrl" type="url"></label>
-        <label>サイト状況<select name="siteStatuses" required><option value="">選択してください</option><option value="非公開">非公開</option><option value="電子版公開中">電子版公開中</option><option value="電子版販売中">電子版販売中</option></select></label>
-        <label>簡単な説明<textarea name="description" rows="4" required></textarea></label>
-        <label>プレビュー用の詳細説明（任意）<textarea name="previewDescription" rows="9"></textarea></label>
-        <fieldset><legend>インタビュー</legend><div class="admin-inline-options"><label class="check"><input name="hasInterview" type="radio" value="yes" required>あり</label><label class="check"><input name="hasInterview" type="radio" value="no" required>なし</label></div></fieldset>
-        <fieldset><legend>公開設定</legend><div class="admin-release-options"><label class="check"><input type="radio" name="releaseMode" value="hold" checked>公開保留</label><label class="check"><input type="radio" name="releaseMode" value="now">保存後すぐ公開</label><label class="check"><input type="radio" name="releaseMode" value="scheduled">日時を指定して公開（日本時間）</label></div><label>公開日時（日本時間）<input name="releaseAt" type="datetime-local"></label></fieldset>
-        <div class="actions"><button type="submit" class="admin-button admin-button--primary">内容を確認</button><button type="button" id="delete" class="admin-button admin-button--danger" hidden>この制作物を削除</button></div>
+      <div class="admin-panel-header">
+        <div>
+          <span class="admin-step">情報入力</span>
+          <h2 id="editorTitle">制作物を編集</h2>
+          <p>入力後、公開内容を確認できます。</p>
+        </div>
+        <button id="back" type="button" class="admin-button admin-button--secondary">一覧に戻る</button>
+      </div>
+      <form id="editForm" class="admin-form" autocomplete="off">
+        <div class="admin-form-grid">
+          <label>制作物ID<input name="id" required readonly>
+          </label>
+          <label>発行日<input name="publishDate" type="date" required>
+          </label>
+        </div>
+        <label>タイトル<input name="title" required>
+        </label>
+        <label>カテゴリー<select name="category" required>
+            <option value="">選択してください</option>
+            <option>会誌</option>
+            <option>リーフレット</option>
+            <option>検定本</option>
+            <option value="その他">その他出版物</option>
+            <option>グッズ・特典</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>ブランド（1つ以上選択）</legend>
+          <div id="brandOptions" class="admin-brand-grid">
+          </div>
+        </fieldset>
+        <label>キーワード（任意・改行区切り）<textarea name="keywords">
+          </textarea>
+        </label>
+        <label>表紙画像のパス<input name="coverImage" required>
+        </label>
+        <p class="note">新規登録時は制作物IDに合わせて自動入力します。必要に応じてパスを変更できます。画像自体はDBに保存しません。</p>
+        <label>詳細ページURL（任意）<input name="detailUrl" type="url">
+        </label>
+        <label>サイト状況<select name="siteStatuses" required>
+            <option value="">選択してください</option>
+            <option value="非公開">非公開</option>
+            <option value="電子版公開中">電子版公開中</option>
+            <option value="電子版販売中">電子版販売中</option>
+          </select>
+        </label>
+        <label>簡単な説明<textarea name="description" rows="4" required>
+          </textarea>
+        </label>
+        <label>プレビュー用の詳細説明（任意）<textarea name="previewDescription" rows="9">
+          </textarea>
+        </label>
+        <fieldset>
+          <legend>インタビュー</legend>
+          <div class="admin-inline-options">
+            <label class="check">
+              <input name="hasInterview" type="radio" value="yes" required>あり</label>
+            <label class="check">
+              <input name="hasInterview" type="radio" value="no" required>なし</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>公開設定</legend>
+          <div class="admin-release-options">
+            <label class="check">
+              <input type="radio" name="releaseMode" value="hold" checked>公開保留</label>
+            <label class="check">
+              <input type="radio" name="releaseMode" value="now">保存後すぐ公開</label>
+            <label class="check">
+              <input type="radio" name="releaseMode" value="scheduled">日時を指定して公開（日本時間）</label>
+          </div>
+          <label>公開日時（日本時間）<input name="releaseAt" type="datetime-local">
+          </label>
+        </fieldset>
+        <div class="actions admin-editor-actions">
+          <button type="button" id="delete" class="admin-button admin-button--danger" hidden>この制作物を削除</button>
+          <button type="submit" class="admin-button admin-button--primary">内容を確認</button>
+        </div>
       </form>
     </section>
-    <section id="review" class="admin-panel" hidden><div class="admin-panel-header"><div><span class="admin-step">最終確認</span><h2>公開内容の確認</h2><p>入力内容と公開設定を確認してください。</p></div></div><div id="reviewContent" class="admin-review"></div><div class="actions"><button id="reviewBack" type="button" class="admin-button admin-button--secondary">修正する</button><button id="confirmSave" type="button" class="admin-button admin-button--create">この内容で保存</button></div></section>
-    <p id="message" role="status" aria-live="polite"></p>
+    <section id="review" class="admin-panel" hidden>
+      <div class="admin-panel-header">
+        <div>
+          <span class="admin-step">最終確認</span>
+          <h2>公開内容の確認</h2>
+          <p>入力内容と公開設定を確認してください。</p>
+        </div>
+      </div>
+      <div id="reviewContent" class="admin-review">
+      </div>
+      <div class="actions">
+        <button id="reviewBack" type="button" class="admin-button admin-button--secondary">修正する</button>
+        <button id="confirmSave" type="button" class="admin-button admin-button--create">この内容で保存</button>
+      </div>
+    </section>
+    <p id="message" role="status" aria-live="polite">
+    </p>
+    <dialog id="deleteDialog" class="admin-delete-dialog" aria-labelledby="deleteDialogTitle" aria-describedby="deleteDialogDescription">
+      <h2 id="deleteDialogTitle">制作物を削除</h2>
+      <p id="deleteDialogDescription">以下の制作物を削除します。この操作は元に戻せません。制作物IDも再利用できません。</p>
+      <dl id="deleteDialogDetails" class="admin-delete-details">
+      </dl>
+      <div class="actions admin-delete-actions">
+        <button id="cancelDelete" type="button" class="admin-button admin-button--secondary">キャンセル</button>
+        <button id="confirmDelete" type="button" class="admin-button admin-button--danger">削除する</button>
+      </div>
+    </dialog>
+    <div id="adminToast" class="admin-toast" role="status" aria-live="polite" hidden>
+    </div>
   </div>
 </div>
-
     <script type="module" src="./js/main.js"></script>
-
     <script type="module" src="./js/modal-preview.js"></script>
     <script type="module" src="./js/admin.js"></script>
-
-
-
-
-
     <script>
-
 document.addEventListener("DOMContentLoaded",()=>{
-
  const b=document.getElementById("noticeToggleButton");
-
  const p=document.getElementById("noticePanel");
-
  if(!b||!p)return;
-
  b.addEventListener("click",()=>{
-
    const open=b.getAttribute("aria-expanded")==="true";
-
    b.setAttribute("aria-expanded",String(!open));
-
    p.hidden=open;
-
  });
-
 });
-
     </script>
-
 </body>
-
 </html>
