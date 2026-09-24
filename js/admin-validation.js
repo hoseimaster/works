@@ -1,6 +1,7 @@
 import { validateAdminPublications } from './validate.js';
 
 export function updateAdminValidation(records) {
+  if (!document.getElementById('adminValidation')) return;
   const result = validateAdminPublications(records);
   const groups = [
     [result.notices, 'validationNoticeCount', 'validationNotices'],
