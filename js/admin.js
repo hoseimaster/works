@@ -1,10 +1,11 @@
 import { api, signIn, signOut, signedIn, refreshSession } from './supabase-api.js';
 import { $, initForm, fillForm, readForm, toDb, fromDb, showReview, verifyAdmin } from './admin-form.js';
-import { showAdminToast, showDeleteDialog } from './admin-feedback.js';
+import { ensureAdminFeedback, showAdminToast, showDeleteDialog } from './admin-feedback.js';
 import { updateAdminValidation } from './admin-validation.js';
 
 const root = $('archiveAdminRoot');
 const form = $('editForm');
+ensureAdminFeedback(root);
 initForm(form);
 
 let records = [];
@@ -22,7 +23,7 @@ function screen(name) {
     $(id).hidden = id !== name;
   }
   $('logout').hidden = name === 'login';
-  $('adminValidation').hidden = name === 'login';
+  if ($('adminValidation')) $('adminValidation').hidden = name === 'login';
   for (const input of $('loginForm').elements) {
     input.disabled = name !== 'login';
   }
@@ -231,7 +232,14 @@ $('confirmSave').onclick = () => guarded(async () => {
       ...options, method: 'PATCH'
     });
   } else {
-    await api('/rest/v1/archive_publications', { ...options, method: 'POST' });
+    try {
+      await api('/rest/v1/archive_publications', { ...options, method: 'POST' });
+    } catch (error) {
+      if (error.status === 409 || error.code === '23505') {
+        throw Error('同じ制作物IDが先に登録されました。一覧に戻って新規登録し直してください。');
+      }
+      throw error;
+    }
   }
   pending = null;
   await load();
