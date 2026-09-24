@@ -255,6 +255,14 @@ export function validateAdminPublications(publications) {
             field => checkString(item, index, field, true)
         );
 
+        if (!isEmpty(item.id) && !/^publication-[0-9]{6}$/.test(item.id)) {
+            addIssue(
+                "error", item, index, "id",
+                "id は publication-000001 のように数字6桁で指定してください。",
+                item.id
+            );
+        }
+
         checkOptionalField(
             item,
             index,
