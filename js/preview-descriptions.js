@@ -1677,17 +1677,6 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
 
     {
         id: "publication-102",
-        title: "電子書籍版限定ページ",
-        previewDescription: `
-「HOSEIM@STER 2026」の電子版限定ページになります。
-企画の没案やイラストのラフ、没案などをまとめています。
-
-※本誌は「HOSEIM@STER 2026」30ページに掲載されているQRコードより閲覧できます。
-`
-    },
-
-     {
-        id: "publication-103",
         title: "THE IDOLM@STER MILLION LIVE! 14thLIVE Memorial Leaflet",
         previewDescription: `
 ■内容紹介
@@ -1711,7 +1700,7 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
     },
 
      {
-        id: "publication-104",
+        id: "publication-103",
         title: "283 PRODUCTION Solo Live Collection -Master ShowPiece- Memorial Leaflet",
         previewDescription: `
 ■内容紹介
@@ -1730,6 +1719,13 @@ C108現地での既刊「学マス検定」と新刊「HOSEIM@STER 2026」の同
 　中田、すのーら、サノマル、馳倅、こけらタンニン
 
  ※電子版は詳細ページにて閲覧できます。
+`
+    },
+
+     {
+        id: "publication-104",
+        title: "",
+        previewDescription: `
 `
     },
 
