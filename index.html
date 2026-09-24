@@ -1411,7 +1411,7 @@
         <label>カテゴリー<select name="category" required><option value="">選択してください</option><option>会誌</option><option>リーフレット</option><option>検定本</option><option value="その他">その他出版物</option><option>グッズ・特典</option></select></label>
         <fieldset><legend>ブランド（1つ以上選択）</legend><div id="brandOptions" class="admin-brand-grid"></div></fieldset>
         <label>キーワード（任意・改行区切り）<textarea name="keywords"></textarea></label>
-        <label>表紙画像のパス<input name="coverImage" readonly></label><p class="note">表紙画像をGitHubの cover フォルダへ配置してください。画像自体はDBに保存しません。</p>
+        <label>表紙画像のパス<input name="coverImage" required></label><p class="note">新規登録時は制作物IDに合わせて自動入力します。必要に応じてパスを変更できます。画像自体はDBに保存しません。</p>
         <label>詳細ページURL（任意）<input name="detailUrl" type="url"></label>
         <label>サイト状況<select name="siteStatuses" required><option value="">選択してください</option><option value="非公開">非公開</option><option value="電子版公開中">電子版公開中</option><option value="電子版販売中">電子版販売中</option></select></label>
         <label>簡単な説明<textarea name="description" rows="4" required></textarea></label>
