@@ -5,6 +5,7 @@
 
 import {
     getPublications,
+    loadPublications,
     validatePublications
 } from "./publications.js";
 
@@ -49,7 +50,7 @@ document.addEventListener(
 /**
  * アーカイブページ全体を初期化します。
  */
-function initializeArchivePage() {
+async function initializeArchivePage() {
     const elements =
         getMainElements();
 
@@ -67,7 +68,7 @@ function initializeArchivePage() {
         );
 
         const publications =
-            getPublications();
+            await loadPublications();
 
         validatePublicationData(
             publications
@@ -119,6 +120,25 @@ function initializeArchivePage() {
         exposeArchiveDebugTools(
             store
         );
+
+        let refreshing = false;
+        async function refreshPublishedWorks() {
+            if (refreshing || document.hidden) return;
+            refreshing = true;
+            try {
+                const latest = await loadPublications();
+                store.setPublications(sortPublications(latest, store.getState().sortType));
+            } catch (error) {
+                console.error("公開作品の自動更新に失敗しました。", error);
+            } finally {
+                refreshing = false;
+            }
+        }
+        window.setInterval(refreshPublishedWorks, 10000);
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden) refreshPublishedWorks();
+        });
+        window.addEventListener("online", refreshPublishedWorks);
     } catch (error) {
         console.error(
             "制作物アーカイブの初期化に失敗しました。",
