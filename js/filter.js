@@ -10,101 +10,11 @@ import {
     getPublicationYears
 } from "./publications.js";
 
-import {
-    getPreviewDescription
-} from "./preview-descriptions.js";
 
 const KEYWORD_INPUT_DELAY = 300;
 
-const SEARCH_SIMILARITY_THRESHOLD = 0.82;
-const SEARCH_MIN_SIMILARITY_LENGTH = 3;
-
-/* ========================================
-   類似語辞典　name：検索対象の名前、keywords：検索対象のキーワード、exclude：除外キーワード
-======================================== */
-
-const SEARCH_SYNONYM_DICTIONARY = [
-    {
-        name: "アイドルマスター",
-        keywords: [
-            "アイマス",
-            "imas", 
-            "im@s",
-            "idolmaster"
-        ],
-        exclude: [
-            "学園アイドルマスター",
-            "学マス",
-            "学園アイマス",
-            "gakumasu",
-            "gakuenidolmaster"
-        ]
-    },
-    {
-        name: "学園アイドルマスター",
-        keywords: [
-            "学マス",
-            "学園アイマス",
-            "gakumasu",
-            "gakuenidolmaster"
-        ],
-        exclude: [
-            "the idolmaster"
-        ]
-    },
-    {
-        name: "シャイニーカラーズ",
-        keywords: [
-            "シャニマス",
-            "シャニ",
-            "シャイニーカラーズ",
-            "shinycolors"
-        ],
-        exclude: []
-    },
-    {
-        name: "シンデレラガールズ",
-        keywords: [
-            "デレマス",
-            "デレ",
-            "シンデレラガールズ",
-            "cinderella"
-        ],
-        exclude: []
-    },
-    {
-        name: "ミリオンライブ",
-        keywords: [
-            "ミリマス",
-            "ミリシタ",
-            "ミリオン",
-            "millionlive"
-        ],
-        exclude: []
-    },
-    {
-        name: "SideM",
-        keywords: [
-            "サイドエム",
-            "さいどえむ",
-            "エムマス",
-            "sidem"
-        ],
-        exclude: []
-    },
-    {
-        name: "コミケ",
-        keywords: [
-            "夏コミ",
-            "C108",
-            "冬コミ",
-            "即売会"
-        ],
-        exclude: []
-    }
-];
-
-const SEARCH_TEXT_CACHE = new WeakMap();
+const SEARCH_TEXT_CACHE =
+    new WeakMap();
 
 let selectedYearFrom = "";
 let selectedYearTo = "";
@@ -270,97 +180,6 @@ export function initializeFilters({
             );
         }
     });
-
-    initializeFiltersFromURL({
-        store,
-        elements
-    });
-}
-
-
-/* ========================================
-   URLから絞り込み
-======================================== */
-
-function initializeFiltersFromURL({
-    store,
-    elements
-}) {
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const category =
-        params.get("category");
-
-    if (!category) {
-        return;
-    }
-
-    const container =
-        elements.categoryFilterOptions;
-
-    if (!container) {
-        return;
-    }
-
-    const normalizedCategory =
-        normalizeFilterValue(
-            category
-        );
-
-    const checkbox =
-        Array.from(
-            container.querySelectorAll(
-                'input[type="checkbox"][data-filter-key="categories"]'
-            )
-        ).find((input) => {
-            const label =
-                input
-                    .closest(".filter-option")
-                    ?.querySelector(
-                        ".filter-option__label"
-                    );
-
-            const inputValue =
-                normalizeFilterValue(
-                    input.value
-                );
-
-            const labelValue =
-                normalizeFilterValue(
-                    label?.textContent
-                );
-
-            if (
-                normalizedCategory ===
-                "leaflet"
-            ) {
-                return (
-                    labelValue ===
-                    "リーフレット"
-                );
-            }
-
-            return (
-                inputValue ===
-                normalizedCategory ||
-                labelValue ===
-                normalizedCategory
-            );
-        });
-
-    if (!checkbox) {
-        return;
-    }
-
-    checkbox.checked = true;
-
-    applyCheckedFilters(
-        store,
-        elements
-    );
 }
 
 
@@ -562,12 +381,10 @@ function initializeYearRange({
                 yearFromSelect
             ) {
                 yearTo = yearFrom;
-
                 yearToSelect.value =
                     yearTo;
             } else {
                 yearFrom = yearTo;
-
                 yearFromSelect.value =
                     yearFrom;
             }
@@ -625,20 +442,14 @@ function createSelectedYears(
         .filter((year) => {
             if (
                 normalizedFrom &&
-                year <
-                    Number(
-                        normalizedFrom
-                    )
+                year < Number(normalizedFrom)
             ) {
                 return false;
             }
 
             if (
                 normalizedTo &&
-                year >
-                    Number(
-                        normalizedTo
-                    )
+                year > Number(normalizedTo)
             ) {
                 return false;
             }
@@ -848,8 +659,8 @@ function createFilterCheckbox({
 
     const text =
         document.createElement(
-        "span"
-    );
+            "span"
+        );
 
     text.className =
         "filter-option__label";
@@ -891,7 +702,6 @@ function createCheckboxId(
         safeValue || index
     ].join("-");
 }
-
 
 /* ========================================
    キーワード検索
@@ -1259,7 +1069,6 @@ function initializeGroupClearButtons({
                     }
 
                     if (
-                        filterKey === "year" ||
                         filterKey === "years" ||
                         filterKey === "yearRange" ||
                         filterKey === "yearFrom" ||
@@ -1622,7 +1431,6 @@ function createActiveFilterButton(
     return button;
 }
 
-
 function removeActiveFilter({
     store,
     elements,
@@ -1644,6 +1452,7 @@ function removeActiveFilter({
         return;
     }
 
+
     if (
         filterKey ===
         "singleBrandOnly"
@@ -1659,18 +1468,6 @@ function removeActiveFilter({
 
         store.setFilters({
             singleBrandOnly: false
-        });
-
-        return;
-    }
-
-    if (
-        filterKey === "years"
-    ) {
-        clearYearRange(elements);
-
-        store.setFilters({
-            years: []
         });
 
         return;
@@ -1926,6 +1723,7 @@ function updateResetButtonState(
             ).length > 0;
         });
 
+
     const hasKeyword =
         Boolean(
             String(
@@ -2013,10 +1811,6 @@ export function filterPublications(
 }
 
 
-/* ========================================
-   キーワード検索
-======================================== */
-
 export function matchesKeyword(
     publication,
     keyword
@@ -2036,27 +1830,26 @@ export function matchesKeyword(
         );
 
     const keywordParts =
-        splitSearchWords(
-            normalizedKeyword
-        );
-
-    if (
-        keywordParts.length === 0
-    ) {
-        return true;
-    }
+        normalizedKeyword
+            .split(/\s+/)
+            .filter(Boolean);
 
     return keywordParts.every(
         (part) => {
-            return matchesSearchPart(
-                part,
-                searchableText
-            );
+            return searchableText
+                .includes(part);
         }
     );
 }
 
 
+/**
+ * 制作物ごとの検索対象文字列を取得します。
+ * 同一オブジェクトは初回生成後の文字列を再利用します。
+ *
+ * @param {object} publication
+ * @returns {string}
+ */
 function getPublicationSearchText(
     publication
 ) {
@@ -2073,16 +1866,13 @@ function getPublicationSearchText(
         );
 
     if (
-        typeof cachedText ===
-        "string"
+        typeof cachedText === "string"
     ) {
         return cachedText;
     }
 
     const previewDescription =
-        getPreviewDescription(
-            publication.id
-        );
+        publication.previewDescription || "";
 
     const searchableText = [
         publication.title,
@@ -2097,7 +1887,6 @@ function getPublicationSearchText(
         .map(
             normalizeSearchText
         )
-        .filter(Boolean)
         .join(" ");
 
     SEARCH_TEXT_CACHE.set(
@@ -2108,351 +1897,6 @@ function getPublicationSearchText(
     return searchableText;
 }
 
-
-function splitSearchWords(
-    keyword
-) {
-    return String(
-        keyword ?? ""
-    )
-        .split(/\s+/)
-        .map(
-            normalizeSearchText
-        )
-        .filter(Boolean);
-}
-
-
-function matchesSearchPart(
-    searchPart,
-    searchableText
-) {
-    const normalizedSearchPart =
-        normalizeSearchText(
-            searchPart
-        );
-
-    if (!normalizedSearchPart) {
-        return true;
-    }
-
-    const dictionaryMatch =
-        matchesSynonymDictionary(
-            normalizedSearchPart,
-            searchableText
-        );
-
-    if (dictionaryMatch) {
-        return true;
-    }
-
-    if (
-        searchableText.includes(
-            normalizedSearchPart
-        )
-    ) {
-        return true;
-    }
-
-    if (
-        normalizedSearchPart.length <
-        SEARCH_MIN_SIMILARITY_LENGTH
-    ) {
-        return false;
-    }
-
-    return matchesByCharacterSimilarity(
-        normalizedSearchPart,
-        searchableText
-    );
-}
-
-
-function matchesSynonymDictionary(
-    searchPart,
-    searchableText
-) {
-    const normalizedSearchPart =
-        normalizeSearchText(
-            searchPart
-        );
-
-    for (
-        const entry
-        of SEARCH_SYNONYM_DICTIONARY
-    ) {
-        const canonical =
-            normalizeSearchText(
-                entry.name
-            );
-
-        const keywords =
-            [
-                entry.name,
-                ...(entry.keywords ?? [])
-            ]
-                .map(
-                    normalizeSearchText
-                )
-                .filter(Boolean);
-
-        const matchedDictionaryTerm =
-            keywords.some(
-                (keyword) => {
-                    return (
-                        keyword ===
-                        normalizedSearchPart
-                    );
-                }
-            );
-
-        if (
-            !matchedDictionaryTerm
-        ) {
-            continue;
-        }
-
-        const excludedTerms =
-            (
-                entry.exclude ?? []
-            )
-                .map(
-                    normalizeSearchText
-                )
-                .filter(Boolean);
-
-        if (
-            excludedTerms.some(
-                (excludedTerm) => {
-                    return (
-                        searchableText.includes(
-                            excludedTerm
-                        )
-                    );
-                }
-            )
-        ) {
-            return false;
-        }
-
-        if (
-            searchableText.includes(
-                canonical
-            )
-        ) {
-            return true;
-        }
-
-        if (
-            keywords.some(
-                (keyword) => {
-                    return searchableText.includes(
-                        keyword
-                    );
-                }
-            )
-        ) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-
-function matchesByCharacterSimilarity(
-    searchPart,
-    searchableText
-) {
-    const normalizedSearchPart =
-        normalizeSearchText(
-            searchPart
-        );
-
-    if (
-        normalizedSearchPart.length <
-        SEARCH_MIN_SIMILARITY_LENGTH
-    ) {
-        return false;
-    }
-
-    const candidates =
-        createSearchCandidates(
-            searchableText,
-            normalizedSearchPart.length
-        );
-
-    return candidates.some(
-        (candidate) => {
-            const similarity =
-                calculateStringSimilarity(
-                    normalizedSearchPart,
-                    candidate
-                );
-
-            return (
-                similarity >=
-                SEARCH_SIMILARITY_THRESHOLD
-            );
-        }
-    );
-}
-
-
-function createSearchCandidates(
-    text,
-    targetLength
-) {
-    const normalizedText =
-        normalizeSearchText(
-            text
-        );
-
-    if (
-        normalizedText.length <=
-        targetLength
-    ) {
-        return [
-            normalizedText
-        ];
-    }
-
-    const candidates = [];
-
-    for (
-        let index = 0;
-        index <=
-        normalizedText.length -
-            targetLength;
-        index++
-    ) {
-        candidates.push(
-            normalizedText.slice(
-                index,
-                index + targetLength
-            )
-        );
-    }
-
-    return candidates;
-}
-
-
-function calculateStringSimilarity(
-    valueA,
-    valueB
-) {
-    const a =
-        normalizeSearchText(
-            valueA
-        );
-
-    const b =
-        normalizeSearchText(
-            valueB
-        );
-
-    if (!a || !b) {
-        return 0;
-    }
-
-    if (a === b) {
-        return 1;
-    }
-
-    const maxLength =
-        Math.max(
-            a.length,
-            b.length
-        );
-
-    if (maxLength === 0) {
-        return 1;
-    }
-
-    const distance =
-        calculateLevenshteinDistance(
-            a,
-            b
-        );
-
-    return (
-        1 -
-        distance / maxLength
-    );
-}
-
-
-function calculateLevenshteinDistance(
-    valueA,
-    valueB
-) {
-    const a =
-        Array.from(valueA);
-
-    const b =
-        Array.from(valueB);
-
-    const previous =
-        Array.from(
-            {
-                length:
-                    b.length + 1
-            },
-            (_, index) => index
-        );
-
-    for (
-        let i = 1;
-        i <= a.length;
-        i++
-    ) {
-        const current =
-            new Array(
-                b.length + 1
-            );
-
-        current[0] = i;
-
-        for (
-            let j = 1;
-            j <= b.length;
-            j++
-        ) {
-            const substitutionCost =
-                a[i - 1] ===
-                b[j - 1]
-                    ? 0
-                    : 1;
-
-            current[j] =
-                Math.min(
-                    current[j - 1] + 1,
-                    previous[j] + 1,
-                    previous[j - 1] +
-                        substitutionCost
-                );
-        }
-
-        for (
-            let j = 0;
-            j < current.length;
-            j++
-        ) {
-            previous[j] =
-                current[j];
-        }
-    }
-
-    return previous[
-        b.length
-    ];
-}
-
-
-/* ========================================
-   単一ブランドのみ表示
-======================================== */
 
 function matchesSingleBrandOnly(
     publicationBrands,
@@ -2554,9 +1998,7 @@ function matchesYearGroup(
     selectedYears
 ) {
     if (
-        !Array.isArray(
-            selectedYears
-        ) ||
+        !Array.isArray(selectedYears) ||
         selectedYears.length === 0
     ) {
         return true;
@@ -2580,7 +2022,6 @@ function matchesYearGroup(
         }
     );
 }
-
 
 function extractPublicationYear(
     publishDate
@@ -2646,22 +2087,18 @@ function matchesInterviewGroup(
     return selectedValues.some(
         (selectedValue) => {
             if (
-                selectedValue ===
-                "yes"
+                selectedValue === "yes"
             ) {
                 return (
-                    hasInterview ===
-                    true
+                    hasInterview === true
                 );
             }
 
             if (
-                selectedValue ===
-                "no"
+                selectedValue === "no"
             ) {
                 return (
-                    hasInterview !==
-                    true
+                    hasInterview !== true
                 );
             }
 
@@ -2669,7 +2106,6 @@ function matchesInterviewGroup(
         }
     );
 }
-
 
 /* ========================================
    フィルター値正規化
@@ -2699,16 +2135,8 @@ function normalizeSearchText(
         .normalize("NFKC")
         .toLocaleLowerCase("ja")
         .replace(
-            /[\s　]+/g,
-            ""
-        )
-        .replace(
-            /[・･]/g,
-            ""
-        )
-        .replace(
-            /[‐-‒–—―ー]/g,
-            "-"
+            /\s+/g,
+            " "
         )
         .trim();
 }
