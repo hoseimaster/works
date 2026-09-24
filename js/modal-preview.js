@@ -1,17 +1,10 @@
-import { PUBLICATIONS } from "./publications-data.js";
-import {getPreviewDescription} from "./preview-descriptions.js";
+import { getPublicationById } from "./publications.js";
 
 /**
  * 制作物アーカイブ
  * 制作物プレビューモーダル
  */
 
-const PUBLICATION_MAP = new Map(
-    PUBLICATIONS.map((publication) => [
-        String(publication.id ?? ""),
-        publication
-    ])
-);
 
 const PREVIEW_MODAL_CONFIG = Object.freeze({
     enabledOnDesktop: true,
@@ -209,16 +202,14 @@ function createPreviewModal() {
 
                 <div class="preview-modal__information">
                     <div class="preview-modal__header-information">
-                        <div class="preview-modal__meta">
-                            <p class="preview-modal__date"></p>
-
-                            <div class="preview-modal__category" hidden></div>
-                        </div>
+                        <p class="preview-modal__date"></p>
 
                         <h2
                             id="publicationPreviewTitle"
                             class="preview-modal__title"
                         ></h2>
+
+                        <div class="preview-modal__category" hidden></div>
 
                         <ul
                             class="preview-modal__brands"
@@ -424,7 +415,7 @@ function createPreviewItemFromCard(cardLink) {
     );
 
     const publication =
-        PUBLICATION_MAP.get(publicationId) ??
+        getPublicationById(publicationId) ??
         {};
 
     const badges = Array.from(
@@ -506,9 +497,7 @@ function createPreviewItemFromCard(cardLink) {
             ),
         badges,
         previewDescription: (
-            getPreviewDescription(
-                publicationId
-            ) ||
+            String(publication.previewDescription ?? "").trim() ||
             String(
                 publication.description ??
                 ""
