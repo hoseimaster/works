@@ -1,12 +1,10 @@
 /**
- * validate.js
- * publications.js のデータ検証
+ * 制作物データを管理者画面で検証する。公開画面では呼び出さない。
  */
-
-import { loadPublications } from "./publications.js";
-
-(async () => {
-    "use strict";
+export function validateAdminPublications(publications) {
+    if (!Array.isArray(publications)) {
+        return {errors: [{種別: "エラー", 固有番号: "ID未設定", 確認箇所: "publication", 内容: "制作物データは配列で指定してください。", 現在値: String(publications)}], warnings: [], notices: [], total: 0};
+    }
 
     const VALID_CATEGORIES = ["会誌", "検定本", "リーフレット", "その他", "グッズ・特典"];
     const VALID_BRANDS = [
@@ -390,87 +388,7 @@ import { loadPublications } from "./publications.js";
         });
     }
 
-    function printResults(data) {
-        console.group(
-            "%cpublications-date.js 自動検証結果",
-            "font-size:16px;font-weight:bold;"
-        );
-
-        console.log(`制作物件数: ${data.length}`);
-        console.log(`エラー件数: ${errors.length}`);
-        console.log(`警告件数: ${warnings.length}`);
-        console.log(`確認事項件数: ${notices.length}`);
-
-        if (errors.length) {
-            console.groupCollapsed(
-                `%cエラー ${errors.length}件`,
-                "color:#c62828;font-weight:bold;"
-            );
-            console.table(errors);
-            console.groupEnd();
-        } else {
-            console.log(
-                "%cエラーはありません。",
-                "color:#2e7d32;font-weight:bold;"
-            );
-        }
-
-        if (warnings.length) {
-            console.groupCollapsed(
-                `%c警告 ${warnings.length}件`,
-                "color:#ed6c02;font-weight:bold;"
-            );
-            console.table(warnings);
-            console.groupEnd();
-        } else {
-            console.log(
-                "%c警告はありません。",
-                "color:#2e7d32;font-weight:bold;"
-            );
-        }
-
-        if (notices.length) {
-            console.groupCollapsed(
-                `%c確認事項 ${notices.length}件`,
-                "color:#1565c0;font-weight:bold;"
-            );
-            console.table(notices);
-            console.groupEnd();
-        } else {
-            console.log(
-                "%c確認事項はありません。",
-                "color:#2e7d32;font-weight:bold;"
-            );
-        }
-
-        console.log(
-            "詳細確認用:",
-            {
-                errors,
-                warnings,
-                notices
-            }
-        );
-
-        console.groupEnd();
-
-        window.publicationValidationResults = {
-            errors,
-            warnings,
-            notices
-        };
-    }
-
-    const publications = await loadPublications();
-
-    if (!Array.isArray(publications)) {
-        console.error(
-            "getPublications() の戻り値が配列ではありません。publications.js を確認してください。"
-        );
-        return;
-    }
-
     publications.forEach(validateItem);
     checkDuplicateIds(publications);
-    printResults(publications);
-})();
+    return {errors, warnings, notices, total: publications.length};
+}
