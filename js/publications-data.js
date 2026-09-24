@@ -1657,32 +1657,32 @@ export const PUBLICATIONS = [
 
     {
         id: "publication-102",
-        title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
+        title: "THE IDOLM@STER MILLION LIVE! 14thLIVE Memorial Leaflet",
+        publishDate: "2026-09-19",
+        category: "リーフレット",
+        brands: ["ミリオンライブ！"],
         keywords: [""],
         coverImage: "./cover/publication-102.png",
-        detailUrl: "",
-        publicationPermission: false,
-        hasInterview: false,
-        siteStatuses: [""],
-        description: ""
+        detailUrl: "https://www.hoseimaster-web.com/l/million14-ml/",
+        publicationPermission: true,
+        hasInterview: true,
+        siteStatuses: ["電子版公開中"],
+        description: "KOH様へのインタビューを掲載しております！"
     },
 
    {
         id: "publication-103",
-        title: "",
-        publishDate: "",
-        category: "",
-        brands: [""],
+        title: "283 PRODUCTION Solo Live Collection -Master ShowPiece- Memorial Leaflet",
+        publishDate: "2026-09-21",
+        category: "リーフレット",
+        brands: ["シャイニーカラーズ"],
         keywords: [""],
         coverImage: "./cover/publication-103.png",
-        detailUrl: "",
-        publicationPermission: false,
+        detailUrl: "https://www.hoseimaster-web.com/l/283proslc-msp-ml/",
+        publicationPermission: true,
         hasInterview: false,
-        siteStatuses: [""],
-        description: ""
+        siteStatuses: ["電子版公開中"],
+        description: "「今後出てほしい衣装のコンセプトや演出、小道具」をテーマにした企画を実施しております。"
     },
 
    {
