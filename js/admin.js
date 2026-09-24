@@ -2,6 +2,7 @@ import { api, signIn, signOut, signedIn, refreshSession } from './supabase-api.j
 import { $, initForm, fillForm, readForm, toDb, fromDb, showReview, verifyAdmin } from './admin-form.js';
 import { ensureAdminFeedback, showAdminToast, showDeleteDialog } from './admin-feedback.js';
 import { updateAdminValidation } from './admin-validation.js';
+import { findMissingCovers } from './admin-cover-check.js';
 
 const root = $('archiveAdminRoot');
 const form = $('editForm');
@@ -13,6 +14,8 @@ let editing = null;
 let pending = null;
 let authorized = false;
 let assignedId = null;
+let coverCheckGeneration = 0;
+let missingCoverIds = new Set();
 
 function message(value) {
   $('message').textContent = value;
@@ -78,9 +81,17 @@ async function load() {
     b.publishDate.localeCompare(a.publishDate) ||
     Number(b.id.split('-')[1]) - Number(a.id.split('-')[1])
   );
+  const generation = ++coverCheckGeneration;
+  missingCoverIds = new Set();
   updateAdminValidation(records);
   draw();
   screen('management');
+  findMissingCovers(records).then(missing => {
+    if (generation !== coverCheckGeneration || !authorized) return;
+    missingCoverIds = new Set(missing.map(item => item.id));
+    updateAdminValidation(records, missing);
+    draw();
+  });
 }
 
 function status(item) {
@@ -106,6 +117,12 @@ function drawRows(target, items) {
     name.textContent = item.title || '（タイトル未設定）';
     sub.textContent = `${item.id} · ${item.publishDate || '発行日未設定'} · ${status(item)}`;
     info.append(name, sub);
+    if (missingCoverIds.has(item.id)) {
+      const warning = document.createElement('p');
+      warning.textContent = '⚠ 表紙画像が見つかりません';
+      warning.style.color = '#a64b19';
+      info.append(warning);
+    }
     button.type = 'button';
     button.textContent = '編集';
     button.onclick = () => edit(item);
@@ -181,6 +198,8 @@ $('loginForm').onsubmit = event => {
 $('logout').onclick = () => {
   signOut();
   authorized = false;
+  coverCheckGeneration++;
+  missingCoverIds = new Set();
   records = [];
   screen('login');
   message('ログアウトしました。');
