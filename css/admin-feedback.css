@@ -1,16 +1,90 @@
-#archiveAdminRoot .admin-editor-actions > [type="submit"]{margin-left:auto}
-#archiveAdminRoot .admin-delete-dialog:not([open]){display:none}
-#archiveAdminRoot .admin-delete-dialog{width:min(480px,calc(100% - 32px));max-height:calc(100vh - 40px);overflow:auto;border:1px solid #efd5d2;border-radius:18px;padding:26px;background:#fff;color:#382d25;box-shadow:0 22px 70px rgba(43,25,20,.24)}
-#archiveAdminRoot .admin-delete-dialog::backdrop{background:rgba(34,27,24,.52)}
-#archiveAdminRoot .admin-delete-dialog h2{margin:0 0 10px;color:#9f3033}
-#archiveAdminRoot .admin-delete-dialog p{font-size:14px;color:#63584e;line-height:1.65;margin:0 0 18px}
-#archiveAdminRoot .admin-delete-details{margin:0 0 22px;padding:14px 16px;border-radius:12px;background:#fff6f4;border:1px solid #f4dfda;display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:14px;overflow-wrap:anywhere}
-#archiveAdminRoot .admin-delete-details dt{font-weight:700;color:#73584c}
-#archiveAdminRoot .admin-delete-details dd{margin:0}
-#archiveAdminRoot .admin-delete-actions{justify-content:flex-end}
-#archiveAdminRoot .admin-toast[hidden]{display:none}
-#archiveAdminRoot .admin-toast{position:fixed;right:20px;bottom:20px;z-index:1100;max-width:min(390px,calc(100vw - 32px));padding:13px 18px;border-radius:12px;box-shadow:0 12px 32px rgba(42,35,29,.18);font-size:14px;font-weight:700;line-height:1.5;overflow-wrap:anywhere}
-#archiveAdminRoot .admin-toast--create{background:#e8f6ee;border:1px solid #8fcea5;color:#226b42}
-#archiveAdminRoot .admin-toast--edit{background:#eaf3ff;border:1px solid #9cbde6;color:#275a8e}
-#archiveAdminRoot .admin-toast--delete,#archiveAdminRoot .admin-toast--error{background:#fff0ef;border:1px solid #e7a6a0;color:#a13738}
-@media(max-width:520px){#archiveAdminRoot .admin-toast{right:12px;bottom:12px}}
+#archiveAdminRoot .admin-editor-actions > [type="submit"] {
+  margin-left:auto
+}
+#archiveAdminRoot .admin-delete-dialog:not([open]) {
+  display:none
+}
+#archiveAdminRoot .admin-delete-dialog {
+  width:min(480px,calc(100% - 32px));
+  max-height:calc(100vh - 40px);
+  overflow:auto;
+  border:1px solid #efd5d2;
+  border-radius:18px;
+  padding:26px;
+  background:#fff;
+  color:#382d25;
+  box-shadow:0 22px 70px rgba(43,25,20,.24)
+}
+#archiveAdminRoot .admin-delete-dialog::backdrop {
+  background:rgba(34,27,24,.52)
+}
+#archiveAdminRoot .admin-delete-dialog h2 {
+  margin:0 0 10px;
+  color:#9f3033
+}
+#archiveAdminRoot .admin-delete-dialog p {
+  font-size:14px;
+  color:#63584e;
+  line-height:1.65;
+  margin:0 0 18px
+}
+#archiveAdminRoot .admin-delete-details {
+  margin:0 0 22px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:#fff6f4;
+  border:1px solid #f4dfda;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:7px 16px;
+  font-size:14px;
+  overflow-wrap:anywhere
+}
+#archiveAdminRoot .admin-delete-details dt {
+  font-weight:700;
+  color:#73584c
+}
+#archiveAdminRoot .admin-delete-details dd {
+  margin:0
+}
+#archiveAdminRoot .admin-delete-actions {
+  justify-content:flex-end
+}
+#archiveAdminRoot .admin-toast[hidden] {
+  display:none
+}
+#archiveAdminRoot .admin-toast {
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:1100;
+  max-width:min(390px,calc(100vw - 32px));
+  padding:13px 18px;
+  border-radius:12px;
+  box-shadow:0 12px 32px rgba(42,35,29,.18);
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  overflow-wrap:anywhere
+}
+#archiveAdminRoot .admin-toast--create {
+  background:#e8f6ee;
+  border:1px solid #8fcea5;
+  color:#226b42
+}
+#archiveAdminRoot .admin-toast--edit {
+  background:#eaf3ff;
+  border:1px solid #9cbde6;
+  color:#275a8e
+}
+#archiveAdminRoot .admin-toast--delete,#archiveAdminRoot .admin-toast--error {
+  background:#fff0ef;
+  border:1px solid #e7a6a0;
+  color:#a13738
+}
+@media(max-width:520px) {
+  #archiveAdminRoot .admin-toast {
+    right:12px;
+    bottom:12px
+  }
+}
