@@ -1,55 +1,319 @@
-body.archive-admin-mode > :not(#archiveAdminRoot):not(script){display:none!important}
-#archiveAdminRoot[hidden],#archiveAdminRoot section[hidden],#archiveAdminRoot button[hidden]{display:none!important}
-#archiveAdminRoot{min-height:100vh;background:linear-gradient(160deg,#fff9f3 0%,#fff4e9 62%,#fefaf6 100%);color:#382d25;font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;line-height:1.6}
-#archiveAdminRoot *{box-sizing:border-box}
-#archiveAdminRoot .admin-shell{max-width:1000px;margin:auto;padding:32px 22px 70px}
-#archiveAdminRoot .admin-header,#archiveAdminRoot .admin-panel-header,#archiveAdminRoot .actions,#archiveAdminRoot .admin-list-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-#archiveAdminRoot .admin-header{margin-bottom:28px}
-#archiveAdminRoot .admin-return{color:#895838;text-decoration:none;font-size:14px;font-weight:600}
-#archiveAdminRoot .admin-return:hover{text-decoration:underline}
-#archiveAdminRoot .admin-eyebrow{margin:18px 0 0;color:#db7730;font-size:12px;letter-spacing:.13em;font-weight:800}
-#archiveAdminRoot h1{margin:2px 0;font-size:clamp(25px,4vw,34px);line-height:1.3}
-#archiveAdminRoot h2{font-size:22px;line-height:1.4;margin:6px 0}
-#archiveAdminRoot h3{font-size:17px;margin:0}
-#archiveAdminRoot .admin-panel{background:#fff;border:1px solid #efddca;border-radius:20px;padding:28px;box-shadow:0 12px 32px rgba(105,58,20,.08);margin:16px 0}
-#archiveAdminRoot .admin-panel-header{padding-bottom:22px;border-bottom:1px solid #f1e5d9;margin-bottom:24px}
-#archiveAdminRoot .admin-panel-header p,#archiveAdminRoot .admin-intro p{margin:6px 0 0;color:#786b60;font-size:14px}
-#archiveAdminRoot .admin-step{color:#bb5e1a;background:#fff1e3;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:700}
-#archiveAdminRoot .admin-login{max-width:520px;margin:42px auto;padding:36px}
-#archiveAdminRoot .admin-login .admin-intro{margin-bottom:20px}
-#archiveAdminRoot label{display:block;font-size:14px;font-weight:700;margin:17px 0 7px}
-#archiveAdminRoot input:not([type=checkbox]):not([type=radio]),#archiveAdminRoot textarea,#archiveAdminRoot select{display:block;width:100%;border:1px solid #dac8b6;border-radius:10px;padding:11px 13px;margin-top:7px;background:#fff;color:#382d25;font:inherit;font-size:15px;min-height:44px}
-#archiveAdminRoot textarea{resize:vertical;min-height:92px;white-space:pre-wrap}
-#archiveAdminRoot input:focus-visible,#archiveAdminRoot textarea:focus-visible,#archiveAdminRoot select:focus-visible,#archiveAdminRoot button:focus-visible{outline:3px solid #f8bb87;outline-offset:2px}
-#archiveAdminRoot input[readonly]{background:#f6f3ef;color:#62594f;cursor:default}
-#archiveAdminRoot fieldset{border:1px solid #ebdfd1;border-radius:12px;padding:14px 17px;margin:23px 0}
-#archiveAdminRoot legend{font-size:14px;font-weight:800;padding:0 6px}
-#archiveAdminRoot .check{display:flex;gap:8px;align-items:center;margin:6px 0;cursor:pointer}
-#archiveAdminRoot .check input{accent-color:#ea7728;flex:none}
-#archiveAdminRoot .admin-form-grid,#archiveAdminRoot .admin-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-#archiveAdminRoot .admin-brand-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 18px}
-#archiveAdminRoot .admin-release-options{display:flex;gap:12px 24px;flex-wrap:wrap}
-#archiveAdminRoot .note{margin:0 0 14px;font-size:13px;color:#786b60}
-#archiveAdminRoot .admin-button{border:0;border-radius:10px;padding:11px 19px;color:#fff;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:filter .15s,transform .15s;min-height:43px}
-#archiveAdminRoot .admin-button:hover{filter:brightness(.94);transform:translateY(-1px)}
-#archiveAdminRoot .admin-button--primary{background:#e87928}
-#archiveAdminRoot .admin-button--create{background:#39865b}
-#archiveAdminRoot .admin-button--danger{background:#ba4444}
-#archiveAdminRoot .admin-button--secondary{background:#eee7df;color:#51473e}
-#archiveAdminRoot .admin-login .admin-button{width:100%;margin-top:16px}
-#archiveAdminRoot .priority{background:#fff9f3;border:1px solid #f0dcc8;border-radius:14px;padding:18px;margin:0}
-#archiveAdminRoot .priority h3{color:#7e4f30;margin-bottom:10px}
-#archiveAdminRoot .priority .item:last-child{border:0}
-#archiveAdminRoot .admin-list-heading{margin-top:28px;margin-bottom:12px}
-#archiveAdminRoot .admin-search-label{margin:0;min-width:min(100%,270px)}
-#archiveAdminRoot .item{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 5px;border-bottom:1px solid #eee5dc}
-#archiveAdminRoot .item strong{font-size:15px;overflow-wrap:anywhere}
-#archiveAdminRoot .item p{font-size:12px;color:#76695e;margin:5px 0 0}
-#archiveAdminRoot .item button{flex:none;border:1px solid #e9b58a;border-radius:8px;padding:7px 14px;background:#fff4e9;color:#a44b11;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
-#archiveAdminRoot .item button:hover{background:#ffe9d3}
-#archiveAdminRoot .admin-review{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 20px;margin-bottom:22px}
-#archiveAdminRoot .admin-review p{border-bottom:1px solid #eee5dc;margin:0;padding:10px 4px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
-#archiveAdminRoot .admin-review strong{display:block;color:#766251;font-size:12px;margin-bottom:3px}
-#archiveAdminRoot #message{min-height:24px;margin:18px 2px;color:#a32c35;font-size:14px;font-weight:700}
-#archiveAdminRoot .admin-login-error{margin:0;padding:12px 14px;border:1px solid #e7a7ab;border-radius:10px;background:#fff0f0;color:#a32c35;font-size:14px;font-weight:700;line-height:1.6}
-@media(max-width:680px){#archiveAdminRoot .admin-shell{padding:18px 12px 44px}#archiveAdminRoot .admin-panel{padding:20px 16px;border-radius:15px}#archiveAdminRoot .admin-login{margin:18px auto}#archiveAdminRoot .admin-form-grid,#archiveAdminRoot .admin-summary-grid,#archiveAdminRoot .admin-review{grid-template-columns:1fr}#archiveAdminRoot .admin-brand-grid{grid-template-columns:1fr}#archiveAdminRoot .item{align-items:flex-start}#archiveAdminRoot .item button{align-self:center}}
+body.archive-admin-mode > :not(#archiveAdminRoot):not(script) {
+  display:none!important
+}
+#archiveAdminRoot[hidden],#archiveAdminRoot section[hidden],#archiveAdminRoot button[hidden] {
+  display:none!important
+}
+#archiveAdminRoot {
+  min-height:100vh;
+  background:linear-gradient(160deg,#fff9f3 0%,#fff4e9 62%,#fefaf6 100%);
+  color:#382d25;
+  font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+  line-height:1.6
+}
+#archiveAdminRoot * {
+  box-sizing:border-box
+}
+#archiveAdminRoot .admin-shell {
+  max-width:1000px;
+  margin:auto;
+  padding:32px 22px 70px
+}
+#archiveAdminRoot .admin-header,#archiveAdminRoot .admin-panel-header,#archiveAdminRoot .actions,#archiveAdminRoot .admin-list-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap
+}
+#archiveAdminRoot .admin-header {
+  margin-bottom:28px
+}
+#archiveAdminRoot .admin-return {
+  color:#895838;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600
+}
+#archiveAdminRoot .admin-return:hover {
+  text-decoration:underline
+}
+#archiveAdminRoot .admin-eyebrow {
+  margin:18px 0 0;
+  color:#db7730;
+  font-size:12px;
+  letter-spacing:.13em;
+  font-weight:800
+}
+#archiveAdminRoot h1 {
+  margin:2px 0;
+  font-size:clamp(25px,4vw,34px);
+  line-height:1.3
+}
+#archiveAdminRoot h2 {
+  font-size:22px;
+  line-height:1.4;
+  margin:6px 0
+}
+#archiveAdminRoot h3 {
+  font-size:17px;
+  margin:0
+}
+#archiveAdminRoot .admin-panel {
+  background:#fff;
+  border:1px solid #efddca;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 12px 32px rgba(105,58,20,.08);
+  margin:16px 0
+}
+#archiveAdminRoot .admin-panel-header {
+  padding-bottom:22px;
+  border-bottom:1px solid #f1e5d9;
+  margin-bottom:24px
+}
+#archiveAdminRoot .admin-panel-header p,#archiveAdminRoot .admin-intro p {
+  margin:6px 0 0;
+  color:#786b60;
+  font-size:14px
+}
+#archiveAdminRoot .admin-step {
+  color:#bb5e1a;
+  background:#fff1e3;
+  border-radius:99px;
+  padding:4px 10px;
+  font-size:12px;
+  font-weight:700
+}
+#archiveAdminRoot .admin-login {
+  max-width:520px;
+  margin:42px auto;
+  padding:36px
+}
+#archiveAdminRoot .admin-login .admin-intro {
+  margin-bottom:20px
+}
+#archiveAdminRoot label {
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin:17px 0 7px
+}
+#archiveAdminRoot input:not([type=checkbox]):not([type=radio]),#archiveAdminRoot textarea,#archiveAdminRoot select {
+  display:block;
+  width:100%;
+  border:1px solid #dac8b6;
+  border-radius:10px;
+  padding:11px 13px;
+  margin-top:7px;
+  background:#fff;
+  color:#382d25;
+  font:inherit;
+  font-size:15px;
+  min-height:44px
+}
+#archiveAdminRoot textarea {
+  resize:vertical;
+  min-height:92px;
+  white-space:pre-wrap
+}
+#archiveAdminRoot input:focus-visible,#archiveAdminRoot textarea:focus-visible,#archiveAdminRoot select:focus-visible,#archiveAdminRoot button:focus-visible {
+  outline:3px solid #f8bb87;
+  outline-offset:2px
+}
+#archiveAdminRoot input[readonly] {
+  background:#f6f3ef;
+  color:#62594f;
+  cursor:default
+}
+#archiveAdminRoot fieldset {
+  border:1px solid #ebdfd1;
+  border-radius:12px;
+  padding:14px 17px;
+  margin:23px 0
+}
+#archiveAdminRoot legend {
+  font-size:14px;
+  font-weight:800;
+  padding:0 6px
+}
+#archiveAdminRoot .check {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin:6px 0;
+  cursor:pointer
+}
+#archiveAdminRoot .check input {
+  accent-color:#ea7728;
+  flex:none
+}
+#archiveAdminRoot .admin-form-grid,#archiveAdminRoot .admin-summary-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px
+}
+#archiveAdminRoot .admin-brand-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:4px 18px
+}
+#archiveAdminRoot .admin-release-options {
+  display:flex;
+  gap:12px 24px;
+  flex-wrap:wrap
+}
+#archiveAdminRoot .note {
+  margin:0 0 14px;
+  font-size:13px;
+  color:#786b60
+}
+#archiveAdminRoot .admin-button {
+  border:0;
+  border-radius:10px;
+  padding:11px 19px;
+  color:#fff;
+  font:inherit;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:filter .15s,transform .15s;
+  min-height:43px
+}
+#archiveAdminRoot .admin-button:hover {
+  filter:brightness(.94);
+  transform:translateY(-1px)
+}
+#archiveAdminRoot .admin-button--primary {
+  background:#e87928
+}
+#archiveAdminRoot .admin-button--create {
+  background:#39865b
+}
+#archiveAdminRoot .admin-button--danger {
+  background:#ba4444
+}
+#archiveAdminRoot .admin-button--secondary {
+  background:#eee7df;
+  color:#51473e
+}
+#archiveAdminRoot .admin-login .admin-button {
+  width:100%;
+  margin-top:16px
+}
+#archiveAdminRoot .priority {
+  background:#fff9f3;
+  border:1px solid #f0dcc8;
+  border-radius:14px;
+  padding:18px;
+  margin:0
+}
+#archiveAdminRoot .priority h3 {
+  color:#7e4f30;
+  margin-bottom:10px
+}
+#archiveAdminRoot .priority .item:last-child {
+  border:0
+}
+#archiveAdminRoot .admin-list-heading {
+  margin-top:28px;
+  margin-bottom:12px
+}
+#archiveAdminRoot .admin-search-label {
+  margin:0;
+  min-width:min(100%,270px)
+}
+#archiveAdminRoot .item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:15px 5px;
+  border-bottom:1px solid #eee5dc
+}
+#archiveAdminRoot .item strong {
+  font-size:15px;
+  overflow-wrap:anywhere
+}
+#archiveAdminRoot .item p {
+  font-size:12px;
+  color:#76695e;
+  margin:5px 0 0
+}
+#archiveAdminRoot .item button {
+  flex:none;
+  border:1px solid #e9b58a;
+  border-radius:8px;
+  padding:7px 14px;
+  background:#fff4e9;
+  color:#a44b11;
+  font:inherit;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer
+}
+#archiveAdminRoot .item button:hover {
+  background:#ffe9d3
+}
+#archiveAdminRoot .admin-review {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px 20px;
+  margin-bottom:22px
+}
+#archiveAdminRoot .admin-review p {
+  border-bottom:1px solid #eee5dc;
+  margin:0;
+  padding:10px 4px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-size:14px
+}
+#archiveAdminRoot .admin-review strong {
+  display:block;
+  color:#766251;
+  font-size:12px;
+  margin-bottom:3px
+}
+#archiveAdminRoot #message {
+  min-height:24px;
+  margin:18px 2px;
+  color:#a32c35;
+  font-size:14px;
+  font-weight:700
+}
+#archiveAdminRoot .admin-login-error {
+  margin:0;
+  padding:12px 14px;
+  border:1px solid #e7a7ab;
+  border-radius:10px;
+  background:#fff0f0;
+  color:#a32c35;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.6
+}
+@media(max-width:680px) {
+  #archiveAdminRoot .admin-shell {
+    padding:18px 12px 44px
+  }
+  #archiveAdminRoot .admin-panel {
+    padding:20px 16px;
+    border-radius:15px
+  }
+  #archiveAdminRoot .admin-login {
+    margin:18px auto
+  }
+  #archiveAdminRoot .admin-form-grid,#archiveAdminRoot .admin-summary-grid,#archiveAdminRoot .admin-review {
+    grid-template-columns:1fr
+  }
+  #archiveAdminRoot .admin-brand-grid {
+    grid-template-columns:1fr
+  }
+  #archiveAdminRoot .item {
+    align-items:flex-start
+  }
+  #archiveAdminRoot .item button {
+    align-self:center
+  }
+}
