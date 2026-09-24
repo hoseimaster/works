@@ -4,9 +4,35 @@
  */
 
 
-import {
-    PUBLICATIONS
-} from "./publications-data.js";
+import { api } from "./supabase-api.js";
+
+export const PUBLICATIONS = [];
+
+export async function loadPublications() {
+    const now = Date.now();
+    const releaseLimit = encodeURIComponent(new Date(now).toISOString());
+    const rows = await api(`/rest/v1/archive_publications?select=*&publication_permission=eq.true&or=(release_at.is.null,release_at.lte.${releaseLimit})&order=publish_date.desc,id.desc`);
+    PUBLICATIONS.splice(0, PUBLICATIONS.length, ...rows.filter(row =>
+        row.publication_permission === true &&
+        (row.release_at == null || (Number.isFinite(Date.parse(row.release_at)) && Date.parse(row.release_at) <= Date.now()))
+    ).map(row => ({
+        id: row.id,
+        title: row.title,
+        publishDate: row.publish_date || "",
+        category: row.category,
+        brands: row.brands || [],
+        keywords: row.keywords || [],
+        coverImage: row.cover_path ?? `./cover/${row.id}.png`,
+        detailUrl: row.detail_url || "",
+        publicationPermission: row.publication_permission,
+        releaseAt: row.release_at,
+        hasInterview: row.has_interview,
+        siteStatuses: row.site_statuses || [],
+        description: row.description || "",
+        previewDescription: row.preview_description || ""
+    })));
+    return getPublications();
+}
 
 
 /* ========================================
@@ -117,7 +143,9 @@ export function getPublications() {
             return (
                 publication
                     .publicationPermission ===
-                true
+                true &&
+                (!publication.releaseAt ||
+                    (Number.isFinite(Date.parse(publication.releaseAt)) && Date.parse(publication.releaseAt) <= Date.now()))
             );
         })
         .map(
@@ -164,7 +192,9 @@ export function getPublicationById(
             }
         );
 
-    return publication
+    return publication && publication.publicationPermission === true &&
+        (!publication.releaseAt ||
+            (Number.isFinite(Date.parse(publication.releaseAt)) && Date.parse(publication.releaseAt) <= Date.now()))
         ? clonePublication(
             publication
         )
