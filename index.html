@@ -18,10 +18,10 @@
     </title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="./base.css">
-    <link rel="stylesheet" href="./archive.css">
-    <link rel="stylesheet" href="./responsive.css">
-    <link rel="stylesheet" href="./modal-preview.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/archive.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/modal-preview.css">
 
     <!-- JavaScriptが使用できない環境向け -->
     <noscript>
@@ -45,7 +45,7 @@
                 aria-label="法政大学アイドルマスター研究会 ホーム"
             >
                 <img
-                    src="./header-logo.jpg"
+                    src="./asset/header-logo.png"
                     alt="法政大学アイドルマスター研究会"
                     class="site-header__logo-image-full"
                 >
@@ -286,7 +286,7 @@
                     class="archive-button"
                     type="button"
                 >
-                    検索条件を全てリセット
+                    検索条件をリセット
                 </button>
             </div>
 
@@ -369,7 +369,7 @@
                 </section>
 
 
-                <!-- 制作物分類 -->
+                <!-- 分類 -->
                 <section
                     class="filter-group"
                     aria-labelledby="categoryFilterTitle"
@@ -379,7 +379,7 @@
                             id="categoryFilterTitle"
                             class="filter-group__title"
                         >
-                            制作物分類
+                            分類
                         </h3>
 
                         <button
@@ -400,7 +400,7 @@
                 </section>
 
 
-                <!-- 関連ブランド -->
+                <!-- ブランド -->
                 <section
                     class="filter-group"
                     aria-labelledby="brandFilterTitle"
@@ -410,7 +410,7 @@
                             id="brandFilterTitle"
                             class="filter-group__title"
                         >
-                            関連ブランド
+                            ブランド
                         </h3>
 
                         <button
@@ -443,7 +443,7 @@
                             ></span>
 
                             <span class="single-brand-filter__text">
-                                複数のブランドに関連する制作物を検索から除外する
+                                複数のブランドに関連する制作物を除外する
                             </span>
                         </label>
 
@@ -517,7 +517,7 @@
                     </div>
 
                     <p class="year-range-filter__note">
-                        期間を片方だけ指定した場合は、未指定側を全期間として検索します。
+                        片方だけ指定した場合は、未指定側を全期間として検索します。
                     </p>
                 </section>
 
@@ -552,7 +552,7 @@
                     </div>
 
                     <p class="filter-group__note">
-                        作詞・作曲家様などのアイマス関係者様へのインタビューの掲載の有無を選択できます。
+                        作詞・作曲家様などのアイマス関係者様へのインタビューの掲載の有無です。
                     </p>
                 </section>
 
@@ -600,7 +600,7 @@
                     class="filter-modal__reset"
                     type="button"
                 >
-                    条件を全てリセット
+                    条件をリセット
                 </button>
 
                 <button
@@ -648,7 +648,6 @@
             </button>
 
             <div id="noticePanel" class="notice-panel" hidden>
-                <p>※本システムは通信環境の良いところでご利用ください。</p>
                 <p>※リーフレットや会誌類の制作物の発行者は全て「法政大学アイドルマスター研究会」です。</p>
                 <p>※リーフレットや会誌類の制作物はバンダイナムコエンターテインメント様、並びにその他各所とは一切無関係に制作されております。</p>
                 <p>※リーフレットや会誌類の制作物の内容やそれに関する情報、記載されたURL等は制作した当時のままとなっており、現在の情報とは異なっている場合がございます。あらかじめご了承ください。</p>
@@ -695,8 +694,8 @@
 
 
     <!-- JavaScript -->
-    <script type="module" src="./main.js"></script>
-    <script type="module" src="./modal-preview.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/modal-preview.js"></script>
 
 
     <script>
