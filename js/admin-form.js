@@ -69,7 +69,7 @@ export function fillForm(form, item) {
 export function readForm(form, { id }) {
   const get = name => form.elements.namedItem(name).value.trim();
   const coverImage = get('coverImage');
-  if (!/^publication-\d+$/.test(id)) {
+  if (!/^publication-[0-9]{6}$/.test(id)) {
     throw Error('制作物IDを取得できません。一覧から操作し直してください。');
   }
   if (!coverImage) throw Error('表紙画像のパスを入力してください。');
