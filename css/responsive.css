@@ -1,2261 +1,521 @@
-/**
- * 制作物アーカイブ
- * 検索・絞り込み処理
- */
+/* ========================================
+   制作物アーカイブ
+   レスポンシブ調整
+======================================== */
 
-import {
-    PUBLICATION_CATEGORIES,
-    BRAND_OPTIONS,
-    SITE_STATUS_OPTIONS,
-    getPublicationYears
-} from "./publications.js";
+/*
+    読み込み順：
+    base.css → archive.css → responsive.css
 
+    このファイルでは、実際のHTMLで使用しているクラス名に合わせて
+    画面幅ごとの最終調整のみを行います。
 
-const KEYWORD_INPUT_DELAY = 300;
-
-const SEARCH_TEXT_CACHE =
-    new WeakMap();
-
-let selectedYearFrom = "";
-let selectedYearTo = "";
-
-const FILTER_GROUP_CONFIG = [
-    {
-        stateKey: "categories",
-        containerId: "categoryFilterOptions",
-        options: PUBLICATION_CATEGORIES
-    },
-    {
-        stateKey: "brands",
-        containerId: "brandFilterOptions",
-        options: BRAND_OPTIONS
-    },
-    {
-        stateKey: "interview",
-        containerId: "interviewFilterOptions",
-        options: [
-            {
-                value: "yes",
-                label: "あり"
-            },
-            {
-                value: "no",
-                label: "なし"
-            }
-        ]
-    },
-    {
-        stateKey: "siteStatuses",
-        containerId: "siteStatusFilterOptions",
-        options: SITE_STATUS_OPTIONS
-    }
-];
+    制作物一覧の列数は archive.css 側の設定をそのまま使用します。
+*/
 
 
 /* ========================================
-   初期化
+   ノートPC・小型デスクトップ
+   1200px以下
 ======================================== */
 
-export function initializeFilters({
-    store,
-    publications = []
-}) {
-    if (!store) {
-        throw new Error(
-            "filter.jsの初期化にはstoreが必要です。"
+@media screen and (max-width: 1200px) {
+    :root {
+        --container-width: 1040px;
+    }
+
+    .site-header__inner,
+    .site-footer__inner,
+    .archive-container,
+    .notice-section__inner {
+        width: min(
+            var(--container-width),
+            calc(100% - var(--container-padding) * 2)
         );
     }
 
-    const elements =
-        getFilterElements();
+    .global-navigation__list {
+        gap: 16px;
+    }
 
-    const filterConfig =
-        createFilterConfig();
+    .global-navigation__item a {
+        font-size: 0.78rem;
+    }
+}
 
-    renderFilterOptions(
-        filterConfig,
-        elements
-    );
 
-    initializeYearRange({
-        store,
-        publications,
-        elements
-    });
+/* ========================================
+   タブレット・小型画面
+   900px以下
+======================================== */
 
-    initializeKeywordSearch({
-        store,
-        elements
-    });
+@media screen and (max-width: 900px) {
+    :root {
+        --container-padding: 20px;
+    }
 
-    initializeFilterOptionEvents({
-        store,
-        elements
-    });
+    .archive-main {
+        padding-top: 34px;
+        padding-bottom: 72px;
+    }
 
-    initializeSingleBrandFilter({
-        store,
-        elements
-    });
+    .archive-heading {
+        width: 100%;
+        max-width: 680px;
+        margin-right: auto;
+        margin-left: auto;
+    }
 
-    initializeFilterButtons({
-        store,
-        elements
-    });
+    .archive-heading__title {
+        font-size: clamp(2rem, 7vw, 3rem);
+    }
 
-    initializeGroupClearButtons({
-        store,
-        elements
-    });
+    .archive-toolbar {
+        padding: 18px;
+    }
 
-    initializeActiveFilterEvents({
-        store,
-        elements
-    });
+    .publication-list {
+        gap: 36px 24px;
+    }
 
-    initializeEmptyResetButton({
-        store,
-        elements
-    });
+    /* archive.css側の中央配置・高さ計算を維持し、横幅だけ調整 */
+    .filter-modal__panel {
+        width: min(100%, 720px);
+    }
 
-    let previousFilterSignature = "";
+    .notice-panel {
+        max-width: 100%;
+    }
+}
 
-    store.subscribe((state) => {
-        synchronizeFilterInputs(
-            state.filters,
-            elements
-        );
 
-        renderActiveFilters(
-            state.filters,
-            elements.activeFilterList,
-            elements.activeFiltersSection
-        );
+/* ========================================
+   スマートフォン
+   700px以下
+======================================== */
 
-        updateFilterCount(
-            state.filters,
-            elements.filterCount
-        );
+@media screen and (max-width: 700px) {
+    :root {
+        --container-padding: 16px;
+    }
 
-        updateResetButtonState(
-            state.filters,
-            elements
-        );
+    body {
+        font-size: 0.95rem;
+    }
 
-        const filteredPublications =
-            filterPublications(
-                state.publications,
-                state.filters
+    .archive-main {
+        padding-top: 26px;
+        padding-bottom: 60px;
+    }
+
+    .archive-heading {
+        margin-bottom: 36px;
+    }
+
+    .archive-heading__title {
+        font-size: clamp(1.8rem, 9vw, 2.5rem);
+        letter-spacing: 0.02em;
+    }
+
+    .archive-heading__description {
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 0.95rem;
+        line-height: 1.9;
+    }
+
+    .archive-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        padding: 16px;
+    }
+
+    .search-area,
+    .filter-button,
+    .sort-area {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .archive-keyword__input,
+    .filter-button,
+    .archive-sort__select,
+    .filter-text-input {
+        min-height: 50px;
+        font-size: 16px;
+    }
+
+    .filter-button {
+        justify-content: center;
+    }
+
+    .archive-results-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .publication-list {
+        gap: 28px 16px;
+    }
+
+    /*
+     * プレビューモーダルと同じ中央配置・safe-area対応。
+     * 下寄せ表示を発生させる指定は置きません。
+     */
+    .filter-modal {
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding:
+            max(10px, env(safe-area-inset-top))
+            max(10px, env(safe-area-inset-right))
+            max(10px, env(safe-area-inset-bottom))
+            max(10px, env(safe-area-inset-left));
+    }
+
+    .filter-modal__panel {
+        width: min(100%, 700px);
+        min-height: 0;
+        max-height:
+            calc(
+                100dvh -
+                max(20px, env(safe-area-inset-top)) -
+                max(20px, env(safe-area-inset-bottom))
             );
+        border: 1px solid rgb(244 122 36 / 22%);
+        border-radius: 18px;
+    }
 
-        updateModalResultCount(
-            filteredPublications.length,
-            elements.modalResultCount
-        );
+    .filter-modal__header {
+        flex: 0 0 auto;
+        padding: 18px 20px;
+    }
 
-        const currentSignature =
-            createFilterSignature(
-                state.publications,
-                state.filters
+    .filter-modal__body {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 22px 18px;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-options,
+    #brandFilterOptions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .filter-option,
+    #brandFilterOptions .filter-option {
+        min-height: 52px;
+        padding: 10px 12px;
+    }
+
+    .filter-option__label {
+        font-size: 0.78rem;
+    }
+
+    .filter-modal__footer {
+        position: relative;
+        flex: 0 0 auto;
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .filter-modal__reset,
+    .filter-modal__apply {
+        min-width: 0;
+        flex: 1;
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    #emptyResetButton,
+    .archive-button {
+        min-height: 50px;
+    }
+
+    .notice-section {
+        padding: 16px 0 14px;
+    }
+
+    .notice-panel {
+        padding: 20px 18px;
+    }
+
+    .notice-panel p {
+        font-size: 0.82rem;
+        line-height: 1.85;
+    }
+
+    .site-footer {
+        padding-top: 36px;
+        padding-bottom: 26px;
+    }
+
+    .footer-navigation__list {
+        row-gap: 4px;
+    }
+
+    .footer-navigation__list a {
+        font-size: 0.78rem;
+    }
+}
+
+
+/* ========================================
+   小型スマートフォン
+   430px以下
+======================================== */
+
+@media screen and (max-width: 430px) {
+    :root {
+        --container-padding: 12px;
+    }
+
+    .archive-main {
+        padding-top: 22px;
+    }
+
+    .archive-heading {
+        margin-bottom: 30px;
+    }
+
+    .archive-heading__title {
+        font-size: clamp(1.65rem, 10vw, 2.15rem);
+    }
+
+    .archive-heading__description {
+        font-size: 0.86rem;
+        line-height: 1.8;
+    }
+
+    .archive-toolbar {
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .archive-results-header__title {
+        font-size: 1.15rem;
+    }
+
+    .archive-results-header__summary {
+        font-size: 0.82rem;
+    }
+
+    .active-filters__header {
+        display: block;
+    }
+
+    .active-filters__clear {
+        margin-top: 8px;
+    }
+
+    .filter-options,
+    #brandFilterOptions {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-modal__body {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .filter-modal__footer {
+        flex-direction: column;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .filter-modal__reset,
+    .filter-modal__apply {
+        width: 100%;
+    }
+
+    .archive-message {
+        min-height: 240px;
+        padding: 28px 16px;
+    }
+
+    #emptyResetButton,
+    .archive-button {
+        width: min(100%, 240px);
+        min-width: 0;
+    }
+
+    .notice-toggle-button {
+        min-height: 40px;
+    }
+
+    .notice-panel {
+        padding: 18px 14px;
+    }
+
+    .page-top-button {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+
+
+/* ========================================
+   極小画面
+   360px以下
+======================================== */
+
+@media screen and (max-width: 360px) {
+    :root {
+        --container-padding: 10px;
+    }
+
+    .archive-heading__title {
+        font-size: 1.6rem;
+    }
+
+    .archive-toolbar {
+        padding: 12px;
+    }
+
+    .archive-button,
+    .archive-sort__select,
+    .filter-button {
+        font-size: 0.84rem;
+    }
+
+    .filter-modal__title {
+        font-size: 1rem;
+    }
+
+    .filter-modal__close {
+        width: 40px;
+        height: 40px;
+    }
+
+    .footer-navigation__list {
+        justify-content: center;
+    }
+
+    .footer-navigation__list li:not(:last-child)::after {
+        margin-right: 4px;
+        margin-left: 4px;
+    }
+}
+
+
+/* ========================================
+   横向きスマートフォン
+======================================== */
+
+@media screen and (max-height: 520px) and (orientation: landscape) {
+    /*
+     * stretch・全画面化・角丸解除は中央配置を壊すため使用しません。
+     */
+    .filter-modal {
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        padding:
+            max(8px, env(safe-area-inset-top))
+            max(8px, env(safe-area-inset-right))
+            max(8px, env(safe-area-inset-bottom))
+            max(8px, env(safe-area-inset-left));
+    }
+
+    .filter-modal__panel {
+        width: min(760px, 100%);
+        min-height: 0;
+        max-height:
+            calc(
+                100dvh -
+                max(16px, env(safe-area-inset-top)) -
+                max(16px, env(safe-area-inset-bottom))
             );
-
-        if (
-            currentSignature ===
-            previousFilterSignature
-        ) {
-            return;
-        }
-
-        previousFilterSignature =
-            currentSignature;
-
-        if (
-            !arePublicationListsEqual(
-                state.visiblePublications,
-                filteredPublications
-            )
-        ) {
-            store.setVisiblePublications(
-                filteredPublications
-            );
-        }
-    });
-}
-
-
-/* ========================================
-   DOM取得
-======================================== */
-
-function getFilterElements() {
-    return {
-        keywordInput:
-            document.getElementById(
-                "keywordSearchInput"
-            ) ??
-            document.getElementById(
-                "keywordInput"
-            ),
-
-        modalKeywordInput:
-            document.getElementById(
-                "modalKeywordInput"
-            ),
-
-        keywordSearchButton:
-            document.getElementById(
-                "keywordSearchButton"
-            ) ??
-            document.getElementById(
-                "searchButton"
-            ),
-
-        keywordClearButton:
-            document.getElementById(
-                "keywordClearButton"
-            ) ??
-            document.getElementById(
-                "clearKeywordButton"
-            ),
-
-        categoryFilterOptions:
-            document.getElementById(
-                "categoryFilterOptions"
-            ),
-
-        brandFilterOptions:
-            document.getElementById(
-                "brandFilterOptions"
-            ),
-
-        singleBrandOnlyCheckbox:
-            document.getElementById(
-                "singleBrandOnlyCheckbox"
-            ),
-
-        yearFromSelect:
-            document.getElementById(
-                "yearFromSelect"
-            ),
-
-        yearToSelect:
-            document.getElementById(
-                "yearToSelect"
-            ),
-
-        interviewFilterOptions:
-            document.getElementById(
-                "interviewFilterOptions"
-            ),
-
-        siteStatusFilterOptions:
-            document.getElementById(
-                "siteStatusFilterOptions"
-            ),
-
-        applyFilterButton:
-            document.getElementById(
-                "applyFilterButton"
-            ),
-
-        resetFilterButton:
-            document.getElementById(
-                "resetFilterButton"
-            ),
-
-        clearAllFiltersButton:
-            document.getElementById(
-                "clearAllFiltersButton"
-            ),
-
-        emptyResetButton:
-            document.getElementById(
-                "emptyResetButton"
-            ),
-
-        activeFilterList:
-            document.getElementById(
-                "activeFilterList"
-            ) ??
-            document.getElementById(
-                "activeFilters"
-            ),
-
-        activeFiltersSection:
-            document.getElementById(
-                "activeFiltersSection"
-            ),
-
-        filterCount:
-            document.getElementById(
-                "selectedFilterCount"
-            ) ??
-            document.getElementById(
-                "filterCount"
-            ),
-
-        modalResultCount:
-            document.getElementById(
-                "modalResultCount"
-            ),
-
-        filterModal:
-            document.getElementById(
-                "filterModal"
-            )
-    };
-}
-
-
-/* ========================================
-   フィルター設定
-======================================== */
-
-function createFilterConfig() {
-    return FILTER_GROUP_CONFIG.map(
-        (config) => {
-            return {
-                ...config
-            };
-        }
-    );
-}
-
-
-/* ========================================
-   発行年の範囲指定
-======================================== */
-
-function initializeYearRange({
-    store,
-    publications,
-    elements
-}) {
-    const {
-        yearFromSelect,
-        yearToSelect
-    } = elements;
-
-    if (
-        !yearFromSelect ||
-        !yearToSelect
-    ) {
-        return;
+        margin: auto;
+        border: 1px solid rgb(244 122 36 / 22%);
+        border-radius: 16px;
     }
 
-    const years =
-        getPublicationYears(
-            publications
-        )
-            .map(Number)
-            .filter(Number.isFinite)
-            .sort((a, b) => {
-                return a - b;
-            });
-
-    renderYearOptions(
-        yearFromSelect,
-        years
-    );
-
-    renderYearOptions(
-        yearToSelect,
-        years
-    );
-
-    const updateYearRange = () => {
-        let yearFrom =
-            yearFromSelect.value;
-
-        let yearTo =
-            yearToSelect.value;
-
-        if (
-            yearFrom &&
-            yearTo &&
-            Number(yearFrom) >
-                Number(yearTo)
-        ) {
-            if (
-                document.activeElement ===
-                yearFromSelect
-            ) {
-                yearTo = yearFrom;
-                yearToSelect.value =
-                    yearTo;
-            } else {
-                yearFrom = yearTo;
-                yearFromSelect.value =
-                    yearFrom;
-            }
-        }
-
-        selectedYearFrom =
-            yearFrom || "";
-
-        selectedYearTo =
-            yearTo || "";
-
-        const selectedYears =
-            createSelectedYears(
-                years,
-                selectedYearFrom,
-                selectedYearTo
-            );
-
-        store.setFilters({
-            years: selectedYears
-        });
-    };
-
-    yearFromSelect.addEventListener(
-        "change",
-        updateYearRange
-    );
-
-    yearToSelect.addEventListener(
-        "change",
-        updateYearRange
-    );
-}
-
-
-function createSelectedYears(
-    years,
-    yearFrom,
-    yearTo
-) {
-    const normalizedFrom =
-        normalizeYearValue(yearFrom);
-
-    const normalizedTo =
-        normalizeYearValue(yearTo);
-
-    if (
-        !normalizedFrom &&
-        !normalizedTo
-    ) {
-        return [];
+    .filter-modal__header {
+        min-height: 58px;
     }
 
-    return years
-        .filter((year) => {
-            if (
-                normalizedFrom &&
-                year < Number(normalizedFrom)
-            ) {
-                return false;
-            }
+    .filter-modal__body {
+        min-height: 0;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding-bottom: 18px;
+    }
 
-            if (
-                normalizedTo &&
-                year > Number(normalizedTo)
-            ) {
-                return false;
-            }
-
-            return true;
-        })
-        .map(String);
-}
-
-
-function renderYearOptions(
-    select,
-    years
-) {
-    const currentValue =
-        select.value;
-
-    const fragment =
-        document.createDocumentFragment();
-
-    const emptyOption =
-        document.createElement(
-            "option"
-        );
-
-    emptyOption.value = "";
-
-    emptyOption.textContent =
-        "指定なし";
-
-    fragment.appendChild(
-        emptyOption
-    );
-
-    years.forEach((year) => {
-        const option =
-            document.createElement(
-                "option"
-            );
-
-        option.value =
-            String(year);
-
-        option.textContent =
-            `${year}年`;
-
-        fragment.appendChild(
-            option
-        );
-    });
-
-    select.replaceChildren(
-        fragment
-    );
-
-    if (
-        currentValue &&
-        years.includes(
-            Number(currentValue)
-        )
-    ) {
-        select.value =
-            currentValue;
+    .filter-group {
+        padding: 18px 0;
     }
 }
 
 
 /* ========================================
-   選択肢描画
+   タッチ端末
 ======================================== */
 
-function renderFilterOptions(
-    filterConfig,
-    elements
-) {
-    filterConfig.forEach(
-        (config) => {
-            const container =
-                elements[
-                    config.containerId
-                ];
-
-            if (!container) {
-                return;
-            }
-
-            const fragment =
-                document.createDocumentFragment();
-
-            config.options.forEach(
-                (option, index) => {
-                    const normalizedOption =
-                        normalizeFilterOption(
-                            option
-                        );
-
-                    const checkboxId =
-                        createCheckboxId(
-                            config.stateKey,
-                            normalizedOption.value,
-                            index
-                        );
-
-                    fragment.appendChild(
-                        createFilterCheckbox({
-                            checkboxId,
-
-                            stateKey:
-                                config.stateKey,
-
-                            value:
-                                normalizedOption.value,
-
-                            label:
-                                normalizedOption.label
-                        })
-                    );
-                }
-            );
-
-            container.replaceChildren(
-                fragment
-            );
-        }
-    );
-}
-
-
-function normalizeFilterOption(
-    option
-) {
-    if (
-        option &&
-        typeof option === "object"
-    ) {
-        return {
-            value: String(
-                option.value ?? ""
-            ),
-
-            label: String(
-                option.label ??
-                option.value ??
-                ""
-            )
-        };
+@media (hover: none) and (pointer: coarse) {
+    .publication-card__link:hover .publication-card__image-area,
+    .publication-card__link:hover .publication-card__image {
+        transform: none;
     }
 
-    return {
-        value: String(
-            option ?? ""
-        ),
-
-        label: String(
-            option ?? ""
-        )
-    };
-}
-
-
-function createFilterCheckbox({
-    checkboxId,
-    stateKey,
-    value,
-    label
-}) {
-    const labelElement =
-        document.createElement(
-            "label"
-        );
-
-    labelElement.className =
-        "filter-option";
-
-    labelElement.dataset.filterValue =
-        value;
-
-    const checkbox =
-        document.createElement(
-            "input"
-        );
-
-    checkbox.type =
-        "checkbox";
-
-    checkbox.id =
-        checkboxId;
-
-    checkbox.value =
-        value;
-
-    checkbox.dataset.filterKey =
-        stateKey;
-
-    const visual =
-        document.createElement(
-            "span"
-        );
-
-    visual.className =
-        "filter-option__visual";
-
-    visual.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    const text =
-        document.createElement(
-            "span"
-        );
-
-    text.className =
-        "filter-option__label";
-
-    text.textContent =
-        label;
-
-    labelElement.append(
-        checkbox,
-        visual,
-        text
-    );
-
-    return labelElement;
-}
-
-
-function createCheckboxId(
-    stateKey,
-    value,
-    index
-) {
-    const safeValue =
-        value
-            .normalize("NFKC")
-            .replace(
-                /[^a-zA-Z0-9\u3040-\u30ff\u3400-\u9fff-]+/g,
-                "-"
-            )
-            .replace(
-                /^-+|-+$/g,
-                ""
-            )
-            .toLowerCase();
-
-    return [
-        "filter",
-        stateKey,
-        safeValue || index
-    ].join("-");
-}
-
-/* ========================================
-   キーワード検索
-======================================== */
-
-function initializeKeywordSearch({
-    store,
-    elements
-}) {
-    const inputs = [
-        elements.keywordInput,
-        elements.modalKeywordInput
-    ].filter(Boolean);
-
-    if (inputs.length === 0) {
-        return;
-    }
-
-    const updateKeyword =
-        debounce(
-            (sourceInput) => {
-                synchronizeKeywordInputs(
-                    sourceInput.value,
-                    elements,
-                    sourceInput
-                );
-
-                store.setKeyword(
-                    sourceInput.value
-                );
-            },
-            KEYWORD_INPUT_DELAY
-        );
-
-    inputs.forEach((input) => {
-        input.addEventListener(
-            "input",
-            () => {
-                updateKeyword(input);
-            }
-        );
-
-        input.addEventListener(
-            "keydown",
-            (event) => {
-                if (
-                    event.key !== "Enter"
-                ) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                synchronizeKeywordInputs(
-                    input.value,
-                    elements,
-                    input
-                );
-
-                store.setKeyword(
-                    input.value
-                );
-            }
-        );
-    });
-
-    elements.keywordSearchButton
-        ?.addEventListener(
-            "click",
-            () => {
-                const value =
-                    elements
-                        .keywordInput
-                        ?.value ?? "";
-
-                synchronizeKeywordInputs(
-                    value,
-                    elements,
-                    elements.keywordInput
-                );
-
-                store.setKeyword(
-                    value
-                );
-            }
-        );
-
-    elements.keywordClearButton
-        ?.addEventListener(
-            "click",
-            () => {
-                synchronizeKeywordInputs(
-                    "",
-                    elements
-                );
-
-                store.setKeyword("");
-
-                elements
-                    .keywordInput
-                    ?.focus();
-            }
-        );
-}
-
-
-function synchronizeKeywordInputs(
-    value,
-    elements,
-    sourceInput = null
-) {
-    [
-        elements.keywordInput,
-        elements.modalKeywordInput
-    ]
-        .filter(Boolean)
-        .forEach((input) => {
-            if (
-                input !== sourceInput
-            ) {
-                input.value =
-                    value;
-            }
-        });
-}
-
-
-/* ========================================
-   チェックボックス操作
-======================================== */
-
-function initializeFilterOptionEvents({
-    store,
-    elements
-}) {
-    getFilterOptionContainers(
-        elements
-    ).forEach((container) => {
-        container.addEventListener(
-            "change",
-            (event) => {
-                const checkbox =
-                    event.target.closest(
-                        'input[type="checkbox"][data-filter-key]'
-                    );
-
-                if (!checkbox) {
-                    return;
-                }
-
-                applyCheckedFilters(
-                    store,
-                    elements
-                );
-            }
-        );
-    });
-}
-
-
-function applyCheckedFilters(
-    store,
-    elements
-) {
-    const nextFilters =
-        createEmptyArrayFilters();
-
-    getFilterOptionContainers(
-        elements
-    ).forEach((container) => {
-        container.querySelectorAll(
-            'input[type="checkbox"][data-filter-key]:checked'
-        ).forEach((checkbox) => {
-            const filterKey =
-                checkbox.dataset
-                    .filterKey;
-
-            if (
-                !nextFilters[
-                    filterKey
-                ]
-            ) {
-                return;
-            }
-
-            nextFilters[
-                filterKey
-            ].push(
-                checkbox.value
-            );
-        });
-    });
-
-    nextFilters.years = [
-        ...(
-            store.getState()
-                .filters
-                .years ?? []
-        )
-    ];
-
-    nextFilters.singleBrandOnly =
-        Boolean(
-            elements
-                .singleBrandOnlyCheckbox
-                ?.checked
-        );
-
-    store.setFilters(
-        nextFilters
-    );
-}
-
-
-function getFilterOptionContainers(
-    elements
-) {
-    return [
-        elements.categoryFilterOptions,
-        elements.brandFilterOptions,
-        elements.interviewFilterOptions,
-        elements.siteStatusFilterOptions
-    ].filter(Boolean);
-}
-
-
-/* ========================================
-   単一ブランドのみ表示
-======================================== */
-
-function initializeSingleBrandFilter({
-    store,
-    elements
-}) {
-    const checkbox =
-        elements.singleBrandOnlyCheckbox;
-
-    if (!checkbox) {
-        return;
-    }
-
-    checkbox.addEventListener(
-        "change",
-        () => {
-            store.setFilters({
-                singleBrandOnly:
-                    checkbox.checked
-            });
-        }
-    );
-}
-
-
-/* ========================================
-   適用・解除ボタン
-======================================== */
-
-function initializeFilterButtons({
-    store,
-    elements
-}) {
-    elements.applyFilterButton
-        ?.addEventListener(
-            "click",
-            () => {
-                applyCheckedFilters(
-                    store,
-                    elements
-                );
-
-                const keyword =
-                    elements
-                        .modalKeywordInput
-                        ?.value ??
-                    elements
-                        .keywordInput
-                        ?.value ??
-                    "";
-
-                synchronizeKeywordInputs(
-                    keyword,
-                    elements,
-                    elements.modalKeywordInput
-                );
-
-                store.setKeyword(
-                    keyword
-                );
-
-                closeFilterModal(
-                    elements.filterModal
-                );
-            }
-        );
-
-    elements.resetFilterButton
-        ?.addEventListener(
-            "click",
-            () => {
-                clearCheckboxes(
-                    elements
-                );
-
-                clearYearRange(
-                    elements
-                );
-
-                synchronizeKeywordInputs(
-                    "",
-                    elements
-                );
-
-                store.resetFilters();
-            }
-        );
-
-    elements.clearAllFiltersButton
-        ?.addEventListener(
-            "click",
-            () => {
-                clearAllFilters({
-                    store,
-                    elements
-                });
-            }
-        );
-}
-
-
-function initializeEmptyResetButton({
-    store,
-    elements
-}) {
-    elements.emptyResetButton
-        ?.addEventListener(
-            "click",
-            () => {
-                clearAllFilters({
-                    store,
-                    elements
-                });
-            }
-        );
-}
-
-
-function initializeGroupClearButtons({
-    store,
-    elements
-}) {
-    document
-        .querySelectorAll(
-            "[data-clear-filter]"
-        )
-        .forEach((button) => {
-            button.addEventListener(
-                "click",
-                () => {
-                    const filterKey =
-                        button.dataset
-                            .clearFilter;
-
-                    if (!filterKey) {
-                        return;
-                    }
-
-                    if (
-                        filterKey === "years" ||
-                        filterKey === "yearRange" ||
-                        filterKey === "yearFrom" ||
-                        filterKey === "yearTo"
-                    ) {
-                        clearYearRange(
-                            elements
-                        );
-
-                        store.setFilters({
-                            years: []
-                        });
-
-                        return;
-                    }
-
-                    const escapedFilterKey =
-                        typeof CSS !==
-                            "undefined" &&
-                        typeof CSS.escape ===
-                            "function"
-                            ? CSS.escape(
-                                filterKey
-                            )
-                            : filterKey;
-
-                    document.querySelectorAll(
-                        `input[type="checkbox"][data-filter-key="${escapedFilterKey}"]`
-                    ).forEach(
-                        (checkbox) => {
-                            checkbox.checked =
-                                false;
-                        }
-                    );
-
-                    if (
-                        filterKey === "brands" &&
-                        elements
-                            .singleBrandOnlyCheckbox
-                    ) {
-                        elements
-                            .singleBrandOnlyCheckbox
-                            .checked = false;
-
-                        store.setFilters({
-                            brands: [],
-                            singleBrandOnly: false
-                        });
-
-                        return;
-                    }
-
-                    store.setFilters({
-                        [filterKey]: []
-                    });
-                }
-            );
-        });
-}
-
-
-function clearAllFilters({
-    store,
-    elements
-}) {
-    clearCheckboxes(
-        elements
-    );
-
-    clearYearRange(
-        elements
-    );
-
-    if (
-        elements.singleBrandOnlyCheckbox
-    ) {
-        elements
-            .singleBrandOnlyCheckbox
-            .checked = false;
-    }
-
-    synchronizeKeywordInputs(
-        "",
-        elements
-    );
-
-    store.resetFilters();
-}
-
-
-function clearCheckboxes(
-    elements
-) {
-    getFilterOptionContainers(
-        elements
-    ).forEach((container) => {
-        container.querySelectorAll(
-            'input[type="checkbox"]'
-        ).forEach((checkbox) => {
-            checkbox.checked =
-                false;
-        });
-    });
-}
-
-
-function clearYearRange(
-    elements
-) {
-    selectedYearFrom = "";
-    selectedYearTo = "";
-
-    if (
-        elements.yearFromSelect
-    ) {
-        elements.yearFromSelect
-            .selectedIndex = 0;
-
-        elements.yearFromSelect
-            .value = "";
-    }
-
-    if (
-        elements.yearToSelect
-    ) {
-        elements.yearToSelect
-            .selectedIndex = 0;
-
-        elements.yearToSelect
-            .value = "";
-    }
-}
-
-
-function createEmptyArrayFilters() {
-    return {
-        categories: [],
-        brands: [],
-        years: [],
-        interview: [],
-        siteStatuses: []
-    };
-}
-
-
-/* ========================================
-   選択中条件
-======================================== */
-
-function initializeActiveFilterEvents({
-    store,
-    elements
-}) {
-    elements.activeFilterList
-        ?.addEventListener(
-            "click",
-            (event) => {
-                const removeButton =
-                    event.target.closest(
-                        "[data-remove-filter]"
-                    );
-
-                if (!removeButton) {
-                    return;
-                }
-
-                removeActiveFilter({
-                    store,
-                    elements,
-
-                    filterKey:
-                        removeButton
-                            .dataset
-                            .filterKey,
-
-                    filterValue:
-                        removeButton
-                            .dataset
-                            .filterValue
-                });
-            }
-        );
-}
-
-
-function renderActiveFilters(
-    filters,
-    container,
-    section
-) {
-    if (!container) {
-        return;
-    }
-
-    const activeFilters =
-        collectActiveFilters(
-            filters
-        );
-
-    if (
-        activeFilters.length === 0
-    ) {
-        container.replaceChildren();
-        container.hidden = true;
-
-        if (section) {
-            section.hidden = true;
-        }
-
-        return;
-    }
-
-    const fragment =
-        document.createDocumentFragment();
-
-    activeFilters.forEach(
-        (filter) => {
-            fragment.appendChild(
-                createActiveFilterButton(
-                    filter
-                )
-            );
-        }
-    );
-
-    container.replaceChildren(
-        fragment
-    );
-
-    container.hidden = false;
-
-    if (section) {
-        section.hidden = false;
-    }
-}
-
-
-function collectActiveFilters(
-    filters
-) {
-    const activeFilters = [];
-
-    const keyword =
-        String(
-            filters.keyword ?? ""
-        ).trim();
-
-    if (keyword) {
-        activeFilters.push({
-            key: "keyword",
-            value: keyword,
-            label:
-                `キーワード：${keyword}`
-        });
-    }
-
-    const filterLabels = {
-        categories: "分類",
-        brands: "ブランド",
-        years: "発行年",
-        interview: "インタビュー",
-        siteStatuses:
-            "制作物公開状況"
-    };
-
-    Object.entries(
-        filterLabels
-    ).forEach(
-        ([key, groupLabel]) => {
-            (
-                filters[key] ?? []
-            ).forEach((value) => {
-                activeFilters.push({
-                    key,
-                    value,
-
-                    label:
-                        `${groupLabel}：` +
-                        getFilterValueLabel(
-                            key,
-                            value
-                        )
-                });
-            });
-        }
-    );
-
-    if (
-        filters.singleBrandOnly
-    ) {
-        activeFilters.push({
-            key: "singleBrandOnly",
-            value: "true",
-            label: "単一ブランドのみ"
-        });
-    }
-
-    return activeFilters;
-}
-
-
-function createActiveFilterButton(
-    filter
-) {
-    const button =
-        document.createElement(
-            "button"
-        );
-
-    button.type = "button";
-
-    button.className =
-        "active-filter";
-
-    button.dataset.removeFilter =
-        "true";
-
-    button.dataset.filterKey =
-        filter.key;
-
-    button.dataset.filterValue =
-        filter.value;
-
-    button.setAttribute(
-        "aria-label",
-        `${filter.label}を解除`
-    );
-
-    const label =
-        document.createElement(
-            "span"
-        );
-
-    label.className =
-        "active-filter__label";
-
-    label.textContent =
-        filter.label;
-
-    const icon =
-        document.createElement(
-            "span"
-        );
-
-    icon.className =
-        "active-filter__remove";
-
-    icon.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    icon.textContent = "×";
-
-    button.append(
-        label,
-        icon
-    );
-
-    return button;
-}
-
-function removeActiveFilter({
-    store,
-    elements,
-    filterKey,
-    filterValue
-}) {
-    const state =
-        store.getState();
-
-    if (
-        filterKey === "keyword"
-    ) {
-        synchronizeKeywordInputs(
-            "",
-            elements
-        );
-
-        store.setKeyword("");
-        return;
-    }
-
-
-    if (
-        filterKey ===
-        "singleBrandOnly"
-    ) {
-        if (
-            elements
-                .singleBrandOnlyCheckbox
-        ) {
-            elements
-                .singleBrandOnlyCheckbox
-                .checked = false;
-        }
-
-        store.setFilters({
-            singleBrandOnly: false
-        });
-
-        return;
-    }
-
-    if (
-        !Array.isArray(
-            state.filters[
-                filterKey
-            ]
-        )
-    ) {
-        return;
-    }
-
-    const nextValues =
-        state.filters[
-            filterKey
-        ].filter((value) => {
-            return (
-                normalizeFilterValue(
-                    value
-                ) !==
-                normalizeFilterValue(
-                    filterValue
-                )
-            );
-        });
-
-    store.setFilters({
-        [filterKey]:
-            nextValues
-    });
-}
-
-
-function getFilterValueLabel(
-    key,
-    value
-) {
-    if (
-        key === "interview"
-    ) {
-        return value === "yes"
-            ? "あり"
-            : "なし";
-    }
-
-    return String(value);
-}
-
-
-/* ========================================
-   入力状態同期
-======================================== */
-
-function synchronizeFilterInputs(
-    filters,
-    elements
-) {
-    [
-        elements.keywordInput,
-        elements.modalKeywordInput
-    ]
-        .filter(Boolean)
-        .forEach((input) => {
-            if (
-                document.activeElement !==
-                input
-            ) {
-                input.value =
-                    filters.keyword ?? "";
-            }
-        });
-
-    getFilterOptionContainers(
-        elements
-    ).forEach((container) => {
-        container.querySelectorAll(
-            'input[type="checkbox"][data-filter-key]'
-        ).forEach((checkbox) => {
-            const filterKey =
-                checkbox.dataset
-                    .filterKey;
-
-            const selectedValues =
-                filters[
-                    filterKey
-                ] ?? [];
-
-            checkbox.checked =
-                selectedValues.some(
-                    (value) => {
-                        return (
-                            normalizeFilterValue(
-                                value
-                            ) ===
-                            normalizeFilterValue(
-                                checkbox.value
-                            )
-                        );
-                    }
-                );
-        });
-    });
-
-    if (
-        elements.singleBrandOnlyCheckbox
-    ) {
-        elements
-            .singleBrandOnlyCheckbox
-            .checked =
-                Boolean(
-                    filters.singleBrandOnly
-                );
-    }
-
-    if (
-        elements.yearFromSelect &&
-        elements.yearToSelect
-    ) {
-        const selectedYears =
-            Array.isArray(
-                filters.years
-            )
-                ? filters.years
-                : [];
-
-        if (
-            selectedYears.length === 0
-        ) {
-            selectedYearFrom = "";
-            selectedYearTo = "";
-
-            elements.yearFromSelect
-                .selectedIndex = 0;
-
-            elements.yearToSelect
-                .selectedIndex = 0;
-
-            elements.yearFromSelect
-                .value = "";
-
-            elements.yearToSelect
-                .value = "";
-        } else {
-            if (
-                document.activeElement !==
-                elements.yearFromSelect
-            ) {
-                elements.yearFromSelect
-                    .value =
-                        selectedYearFrom;
-            }
-
-            if (
-                document.activeElement !==
-                elements.yearToSelect
-            ) {
-                elements.yearToSelect
-                    .value =
-                        selectedYearTo;
-            }
-        }
+    .archive-button,
+    .filter-button,
+    .filter-modal__close,
+    .filter-modal__reset,
+    .filter-modal__apply,
+    .notice-toggle-button,
+    .page-top-button,
+    .site-header__menu-button {
+        -webkit-tap-highlight-color: transparent;
     }
 }
 
 
 /* ========================================
-   件数・ボタン状態
+   印刷
 ======================================== */
 
-function updateFilterCount(
-    filters,
-    element
-) {
-    if (!element) {
-        return;
+@media print {
+    .site-header,
+    .site-footer,
+    .archive-toolbar,
+    .active-filters,
+    .filter-modal,
+    .notice-section,
+    .page-top-button {
+        display: none !important;
     }
 
-    const count =
-        countActiveFilters(
-            filters
-        );
-
-    element.textContent =
-        String(count);
-
-    element.hidden =
-        count === 0;
-}
-
-
-function updateModalResultCount(
-    count,
-    element
-) {
-    if (!element) {
-        return;
+    .archive-main {
+        width: 100%;
+        padding: 0;
     }
 
-    element.textContent =
-        `${count}件`;
-}
-
-
-function countActiveFilters(
-    filters
-) {
-    let count =
-        String(
-            filters.keyword ?? ""
-        ).trim()
-            ? 1
-            : 0;
-
-    [
-        "categories",
-        "brands",
-        "years",
-        "interview",
-        "siteStatuses"
-    ].forEach((key) => {
-        count += (
-            filters[key] ?? []
-        ).length;
-    });
-
-    if (
-        filters.singleBrandOnly
-    ) {
-        count += 1;
+    .archive-container {
+        width: 100%;
     }
 
-    return count;
-}
-
-
-function updateResetButtonState(
-    filters,
-    elements
-) {
-    const hasArrayFilters =
-        [
-            "categories",
-            "brands",
-            "years",
-            "interview",
-            "siteStatuses"
-        ].some((key) => {
-            return (
-                filters[key] ?? []
-            ).length > 0;
-        });
-
-
-    const hasKeyword =
-        Boolean(
-            String(
-                filters.keyword ?? ""
-            ).trim()
-        );
-
-    const hasSingleBrandFilter =
-        Boolean(
-            filters.singleBrandOnly
-        );
-
-    if (
-        elements.resetFilterButton
-    ) {
-        elements.resetFilterButton
-            .disabled =
-                !hasArrayFilters &&
-                !hasKeyword &&
-                !hasSingleBrandFilter;
+    .publication-list {
+        gap: 24px;
     }
 
-    if (
-        elements.clearAllFiltersButton
-    ) {
-        elements.clearAllFiltersButton
-            .disabled =
-                countActiveFilters(
-                    filters
-                ) === 0;
-    }
-}
-
-
-/* ========================================
-   絞り込み本体
-======================================== */
-
-export function filterPublications(
-    publications = [],
-    filters = {}
-) {
-    if (
-        !Array.isArray(
-            publications
-        )
-    ) {
-        return [];
+    .publication-card {
+        break-inside: avoid;
     }
 
-    return publications.filter(
-        (publication) => {
-            return (
-                matchesKeyword(
-                    publication,
-                    filters.keyword
-                ) &&
-                matchesSingleValueGroup(
-                    publication.category,
-                    filters.categories
-                ) &&
-                matchesArrayGroup(
-                    publication.brands,
-                    filters.brands
-                ) &&
-                matchesSingleBrandOnly(
-                    publication.brands,
-                    filters.singleBrandOnly
-                ) &&
-                matchesYearGroup(
-                    publication.publishDate,
-                    filters.years
-                ) &&
-                matchesInterviewGroup(
-                    publication.hasInterview,
-                    filters.interview
-                ) &&
-                matchesArrayGroup(
-                    publication.siteStatuses,
-                    filters.siteStatuses
-                )
-            );
-        }
-    );
-}
-
-
-export function matchesKeyword(
-    publication,
-    keyword
-) {
-    const normalizedKeyword =
-        normalizeSearchText(
-            keyword
-        );
-
-    if (!normalizedKeyword) {
-        return true;
+    .publication-card__image-area {
+        box-shadow: none;
     }
 
-    const searchableText =
-        getPublicationSearchText(
-            publication
-        );
-
-    const keywordParts =
-        normalizedKeyword
-            .split(/\s+/)
-            .filter(Boolean);
-
-    return keywordParts.every(
-        (part) => {
-            return searchableText
-                .includes(part);
-        }
-    );
-}
-
-
-/**
- * 制作物ごとの検索対象文字列を取得します。
- * 同一オブジェクトは初回生成後の文字列を再利用します。
- *
- * @param {object} publication
- * @returns {string}
- */
-function getPublicationSearchText(
-    publication
-) {
-    if (
-        !publication ||
-        typeof publication !== "object"
-    ) {
-        return "";
+    a {
+        text-decoration: none;
     }
-
-    const cachedText =
-        SEARCH_TEXT_CACHE.get(
-            publication
-        );
-
-    if (
-        typeof cachedText === "string"
-    ) {
-        return cachedText;
-    }
-
-    const previewDescription =
-        publication.previewDescription || "";
-
-    const searchableText = [
-        publication.title,
-        publication.category,
-        publication.description,
-        previewDescription,
-        publication.publishDate,
-        ...(publication.brands ?? []),
-        ...(publication.siteStatuses ?? []),
-        ...(publication.keywords ?? [])
-    ]
-        .map(
-            normalizeSearchText
-        )
-        .join(" ");
-
-    SEARCH_TEXT_CACHE.set(
-        publication,
-        searchableText
-    );
-
-    return searchableText;
-}
-
-
-function matchesSingleBrandOnly(
-    publicationBrands,
-    singleBrandOnly
-) {
-    if (!singleBrandOnly) {
-        return true;
-    }
-
-    if (
-        !Array.isArray(
-            publicationBrands
-        )
-    ) {
-        return false;
-    }
-
-    const normalizedBrands = [
-        ...new Set(
-            publicationBrands
-                .map(
-                    normalizeFilterValue
-                )
-                .filter(Boolean)
-        )
-    ];
-
-    return (
-        normalizedBrands.length === 1
-    );
-}
-
-
-function matchesSingleValueGroup(
-    publicationValue,
-    selectedValues
-) {
-    if (
-        !Array.isArray(
-            selectedValues
-        ) ||
-        selectedValues.length === 0
-    ) {
-        return true;
-    }
-
-    return selectedValues.some(
-        (selectedValue) => {
-            return (
-                normalizeFilterValue(
-                    publicationValue
-                ) ===
-                normalizeFilterValue(
-                    selectedValue
-                )
-            );
-        }
-    );
-}
-
-
-function matchesArrayGroup(
-    publicationValues,
-    selectedValues
-) {
-    if (
-        !Array.isArray(
-            selectedValues
-        ) ||
-        selectedValues.length === 0
-    ) {
-        return true;
-    }
-
-    const normalizedPublicationValues =
-        Array.isArray(
-            publicationValues
-        )
-            ? publicationValues.map(
-                normalizeFilterValue
-            )
-            : [];
-
-    return selectedValues.some(
-        (selectedValue) => {
-            return normalizedPublicationValues
-                .includes(
-                    normalizeFilterValue(
-                        selectedValue
-                    )
-                );
-        }
-    );
-}
-
-
-function matchesYearGroup(
-    publishDate,
-    selectedYears
-) {
-    if (
-        !Array.isArray(selectedYears) ||
-        selectedYears.length === 0
-    ) {
-        return true;
-    }
-
-    const publicationYear =
-        extractPublicationYear(
-            publishDate
-        );
-
-    if (!publicationYear) {
-        return false;
-    }
-
-    return selectedYears.some(
-        (year) => {
-            return (
-                Number(year) ===
-                publicationYear
-            );
-        }
-    );
-}
-
-function extractPublicationYear(
-    publishDate
-) {
-    const dateText =
-        String(
-            publishDate ?? ""
-        ).trim();
-
-    const yearMatch =
-        dateText.match(
-            /^(\d{4})/
-        );
-
-    if (!yearMatch) {
-        return null;
-    }
-
-    const year =
-        Number(
-            yearMatch[1]
-        );
-
-    return Number.isFinite(year)
-        ? year
-        : null;
-}
-
-
-function normalizeYearValue(
-    value
-) {
-    const normalized =
-        String(
-            value ?? ""
-        ).trim();
-
-    if (
-        !/^\d{4}$/.test(
-            normalized
-        )
-    ) {
-        return "";
-    }
-
-    return normalized;
-}
-
-
-function matchesInterviewGroup(
-    hasInterview,
-    selectedValues
-) {
-    if (
-        !Array.isArray(
-            selectedValues
-        ) ||
-        selectedValues.length === 0
-    ) {
-        return true;
-    }
-
-    return selectedValues.some(
-        (selectedValue) => {
-            if (
-                selectedValue === "yes"
-            ) {
-                return (
-                    hasInterview === true
-                );
-            }
-
-            if (
-                selectedValue === "no"
-            ) {
-                return (
-                    hasInterview !== true
-                );
-            }
-
-            return false;
-        }
-    );
-}
-
-/* ========================================
-   フィルター値正規化
-======================================== */
-
-function normalizeFilterValue(
-    value
-) {
-    return String(
-        value ?? ""
-    )
-        .normalize("NFKC")
-        .trim();
-}
-
-
-/* ========================================
-   検索文字正規化
-======================================== */
-
-function normalizeSearchText(
-    value
-) {
-    return String(
-        value ?? ""
-    )
-        .normalize("NFKC")
-        .toLocaleLowerCase("ja")
-        .replace(
-            /\s+/g,
-            " "
-        )
-        .trim();
-}
-
-
-/* ========================================
-   比較・署名
-======================================== */
-
-function createFilterSignature(
-    publications,
-    filters
-) {
-    const publicationSignature =
-        publications.map(
-            (publication) => {
-                return [
-                    publication.id,
-                    publication.publishDate,
-                    publication.title
-                ].join(":");
-            }
-        );
-
-    return JSON.stringify({
-        publications:
-            publicationSignature,
-
-        filters
-    });
-}
-
-
-function arePublicationListsEqual(
-    listA,
-    listB
-) {
-    if (
-        !Array.isArray(listA) ||
-        !Array.isArray(listB)
-    ) {
-        return false;
-    }
-
-    if (
-        listA.length !==
-        listB.length
-    ) {
-        return false;
-    }
-
-    return listA.every(
-        (publication, index) => {
-            return (
-                publication.id ===
-                listB[index]?.id
-            );
-        }
-    );
-}
-
-
-/* ========================================
-   モーダル補助
-======================================== */
-
-function closeFilterModal(
-    modal
-) {
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove(
-        "is-open"
-    );
-
-    modal.hidden = true;
-
-    modal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.classList.remove(
-        "is-modal-open"
-    );
-
-    document.dispatchEvent(
-        new CustomEvent(
-            "archive:filter-modal-close"
-        )
-    );
-}
-
-
-/* ========================================
-   共通関数
-======================================== */
-
-function debounce(
-    callback,
-    delay = 300
-) {
-    let timerId = null;
-
-    return (...args) => {
-        window.clearTimeout(
-            timerId
-        );
-
-        timerId =
-            window.setTimeout(
-                () => {
-                    callback(
-                        ...args
-                    );
-                },
-                delay
-            );
-    };
 }
