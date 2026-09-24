@@ -90,7 +90,7 @@
 .filter-text-input {
     width: 100%;
     min-height: 52px;
-    padding: 0 16px 0 10px;
+    padding: 0 16px;
     border: 1px solid #eadfd4;
     border-radius: 16px;
     background: #ffffff;
@@ -2342,7 +2342,7 @@ and (max-width: 1180px) {
     outline: 0;
 
     background-color: transparent;
-    background-image: url("./page-top.png");
+    background-image: url("../asset/page-top.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -3072,22 +3072,3 @@ and (max-width: 1180px) {
         animation: none;
     }
 }
-
-
-/* ========================================
-   700～770px
-   キーワード入力欄横幅修正
-======================================== */
-@media screen and (min-width:700px) and (max-width:770px){
-    .archive-toolbar{display:flex;flex-wrap:wrap;gap:14px;}
-    .search-area{flex:1 1 100%;width:100%;max-width:none;min-width:0;}
-    .archive-keyword__input,
-    .filter-text-input{width:100%;}
-    .sort-area{flex:1 1 220px;min-width:220px;}
-}
-
-.archive-image img {
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
