@@ -165,7 +165,6 @@ input[type="search"] {
 
 input[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
-    filter: invert(52%) sepia(90%) saturate(1800%) hue-rotate(350deg);
 }
 
 fieldset {
@@ -784,13 +783,12 @@ body.is-navigation-open {
 .search-area input{
     width:100%;
     height:54px;
-    padding:0 20px 0 10px;
+    padding:0 20px 0 6px;
 
     border:1px solid #dddddd;
     border-radius:16px;
 
     background:#ffffff;
-    font-weight: 400;
 
     font-size:15px;
     transition:.25s;
@@ -986,14 +984,9 @@ body.is-navigation-open {
     border: 1px solid #eadfd4;
     border-radius: 999px;
     background: #fffdfb;
-    font-weight: 400;
     font-size: 15px;
     transition: .2s;
     box-shadow: none;
-}
-
-#modalKeywordInput {
-    font-weight: 400;
 }
 
 .archive-keyword__input:hover,
@@ -1003,7 +996,7 @@ body.is-navigation-open {
 
 /* キーワード入力文字を左端寄りに配置 */
 .archive-keyword__input {
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 .archive-keyword__input::placeholder {
@@ -1642,7 +1635,7 @@ body.is-navigation-open {
     outline: 0;
 
     background-color: transparent;
-    background-image: url("./page-top.png");
+    background-image: url("../asset/page-top.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
