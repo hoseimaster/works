@@ -9,7 +9,6 @@ export function initForm(form) {
     label.append(input,document.createTextNode(value));options.append(label);
   });
   form.elements.namedItem('id').readOnly=true;
-  form.elements.namedItem('coverImage').readOnly=true;
   const releaseAt=form.elements.namedItem('releaseAt');
   releaseAt.addEventListener('input',()=>{
     if(releaseAt.value)form.querySelector('input[name=releaseMode][value=scheduled]').checked=true;
@@ -26,19 +25,19 @@ export function fillForm(form,item) {
   }
   form.elements.namedItem('coverImage').value=x.coverImage??'';
   form.elements.namedItem('id').readOnly=true;
-  form.elements.namedItem('coverImage').readOnly=true;
   form.querySelectorAll('input[name=brands]').forEach(input=>input.checked=(x.brands||[]).includes(input.value));
   form.elements.namedItem('siteStatuses').value=x.siteStatuses?.[0]||'';
   form.querySelectorAll('input[name=hasInterview]').forEach(input=>input.checked=Boolean(item)&&input.value===(x.hasInterview?'yes':'no'));
   const mode=!x.publicationPermission?'hold':x.releaseAt&&Date.parse(x.releaseAt)>Date.now()?'scheduled':'now';
   form.querySelector(`input[name=releaseMode][value=${mode}]`).checked=true;
-  form.elements.namedItem('releaseAt').value=x.releaseAt?new Date(x.releaseAt).toLocaleString('sv-SE',{timeZone:'Asia/Tokyo',hour12:false}).replace(' ','T').slice(0,16):'';
+  form.elements.namedItem('releaseAt').value=mode==='scheduled'?new Date(x.releaseAt).toLocaleString('sv-SE',{timeZone:'Asia/Tokyo',hour12:false}).replace(' ','T').slice(0,16):'';
 }
 
-export function readForm(form,{id,coverImage}) {
+export function readForm(form,{id}) {
   const get=name=>form.elements.namedItem(name).value.trim();
+  const coverImage=get('coverImage');
   if(!/^publication-\d+$/.test(id))throw Error('制作物IDを取得できません。一覧から操作し直してください。');
-  if(!coverImage)throw Error('表紙画像のパスを確定できません。一覧から操作し直してください。');
+  if(!coverImage)throw Error('表紙画像のパスを入力してください。');
   const title=get('title'),publishDate=get('publishDate'),category=get('category');
   const selectedBrands=[...form.querySelectorAll('input[name=brands]:checked')].map(el=>el.value);
   const siteStatus=get('siteStatuses'),description=get('description');
