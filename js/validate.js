@@ -3,9 +3,9 @@
  * publications.js のデータ検証
  */
 
-import { getPublications } from "./publications.js";
+import { loadPublications } from "./publications.js";
 
-(() => {
+(async () => {
     "use strict";
 
     const VALID_CATEGORIES = ["会誌", "検定本", "リーフレット", "その他", "グッズ・特典"];
@@ -461,7 +461,7 @@ import { getPublications } from "./publications.js";
         };
     }
 
-    const publications = getPublications();
+    const publications = await loadPublications();
 
     if (!Array.isArray(publications)) {
         console.error(
