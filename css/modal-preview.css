@@ -194,17 +194,8 @@ body.is-preview-modal-open {
     overflow: visible;
 }
 
-.preview-modal__meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    min-width: 0;
-    margin: 0 0 10px;
-}
-
 .preview-modal__date {
-    margin: 0;
+    margin: 0 0 10px;
     color: #8a8179;
     font-size: 0.82rem;
     line-height: 1.6;
@@ -223,9 +214,9 @@ body.is-preview-modal-open {
 .preview-modal__category {
     display: inline-flex;
     align-items: center;
-    align-self: center;
+    align-self: flex-start;
     min-height: 24px;
-    margin: 0;
+    margin-top: 14px;
     padding: 2px 8px;
     border: 1px solid #e8b98f;
     border-radius: 999px;
@@ -573,13 +564,8 @@ body.is-preview-modal-open {
         overflow: visible;
     }
 
-    .preview-modal__meta {
-        gap: 6px;
-        margin-bottom: 6px;
-    }
-
     .preview-modal__date {
-        margin: 0;
+        margin-bottom: 6px;
         font-size: 0.72rem;
         line-height: 1.4;
     }
@@ -595,7 +581,7 @@ body.is-preview-modal-open {
 
     .preview-modal__category {
         min-height: 20px;
-        margin: 0;
+        margin-top: 8px;
         padding: 2px 6px;
         font-size: 0.58rem;
     }
