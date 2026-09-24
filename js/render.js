@@ -400,7 +400,6 @@ function createPublicationImageArea(
 
     const imagePath =
         normalizeImagePath(
-            publication.thumbnailImage ??
             publication.coverImage
         );
 
@@ -567,7 +566,6 @@ function createImagePreloadQueue(
             (publication) => {
                 const path =
                     normalizeImagePath(
-                        publication.thumbnailImage ??
                         publication.coverImage
                     );
 
@@ -994,9 +992,7 @@ function completeImagePreloadProgress() {
     );
 
     updateImagePreloadStatus(
-        imagePreloadFailedCount > 0
-            ? "error"
-            : "complete"
+        "complete"
     );
 }
 
