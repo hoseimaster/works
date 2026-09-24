@@ -31,6 +31,10 @@ import {
 } from "./render.js";
 
 import {
+    initializeRenderer
+} from "./validate.js";
+
+import {
     initializeFilterModal
 } from "./modal.js";
 
