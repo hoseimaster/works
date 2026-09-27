@@ -1069,6 +1069,7 @@ function initializeGroupClearButtons({
                     }
 
                     if (
+                        filterKey === "year" ||
                         filterKey === "years" ||
                         filterKey === "yearRange" ||
                         filterKey === "yearFrom" ||
