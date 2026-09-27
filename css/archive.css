@@ -2737,7 +2737,7 @@ and (max-width: 1180px) {
 .footer-navigation__list {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    gap: 0 18px !important;
+    gap: 0 !important;
     row-gap: 0;
 }
 
@@ -2874,8 +2874,8 @@ and (max-width: 1180px) {
 
     .footer-navigation__list {
         margin-bottom: 6px !important;
-        gap: 4px 14px !important;
-        row-gap: 6px;
+        gap: 0 !important;
+        row-gap: 4px;
     }
 
     .site-footer__copyright {
@@ -3070,5 +3070,26 @@ and (max-width: 1180px) {
 
     .image-preload-status.is-loading::after {
         animation: none;
+    }
+}
+
+.archive-keyword__input::-webkit-search-cancel-button,
+.filter-text-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #f6b382 url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M5 5l6 6m0-6l-6 6%27 stroke=%27white%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3C/svg%3E") center / 12px 12px no-repeat;
+}
+
+.site-footer .footer-navigation__list li:not(:last-child)::after {
+    margin: 0 8px;
+}
+
+@media (max-width: 600px) {
+    .site-footer .footer-navigation__list li:not(:last-child)::after {
+        margin: 0 4px !important;
     }
 }
