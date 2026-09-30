@@ -1,15 +1,9 @@
-/**
- * 制作物アーカイブ
- * 検索・絞り込み処理
- */
-
 import {
     PUBLICATION_CATEGORIES,
     BRAND_OPTIONS,
     SITE_STATUS_OPTIONS,
     getPublicationYears
 } from "./publications.js";
-
 
 const KEYWORD_INPUT_DELAY = 300;
 
@@ -50,11 +44,6 @@ const FILTER_GROUP_CONFIG = [
         options: SITE_STATUS_OPTIONS
     }
 ];
-
-
-/* ========================================
-   初期化
-======================================== */
 
 export function initializeFilters({
     store,
@@ -121,6 +110,23 @@ export function initializeFilters({
     let previousFilterSignature = "";
 
     store.subscribe((state) => {
+        const currentSignature =
+            createFilterSignature(
+                state.publications,
+                state.filters
+            );
+
+        if (
+            currentSignature ===
+            previousFilterSignature
+        ) {
+            return;
+        }
+
+        previousFilterSignature =
+            currentSignature;
+
+
         synchronizeFilterInputs(
             state.filters,
             elements
@@ -153,22 +159,6 @@ export function initializeFilters({
             elements.modalResultCount
         );
 
-        const currentSignature =
-            createFilterSignature(
-                state.publications,
-                state.filters
-            );
-
-        if (
-            currentSignature ===
-            previousFilterSignature
-        ) {
-            return;
-        }
-
-        previousFilterSignature =
-            currentSignature;
-
         if (
             !arePublicationListsEqual(
                 state.visiblePublications,
@@ -181,11 +171,6 @@ export function initializeFilters({
         }
     });
 }
-
-
-/* ========================================
-   DOM取得
-======================================== */
 
 function getFilterElements() {
     return {
@@ -306,11 +291,6 @@ function getFilterElements() {
     };
 }
 
-
-/* ========================================
-   フィルター設定
-======================================== */
-
 function createFilterConfig() {
     return FILTER_GROUP_CONFIG.map(
         (config) => {
@@ -320,11 +300,6 @@ function createFilterConfig() {
         }
     );
 }
-
-
-/* ========================================
-   発行年の範囲指定
-======================================== */
 
 function initializeYearRange({
     store,
@@ -419,7 +394,6 @@ function initializeYearRange({
     );
 }
 
-
 function createSelectedYears(
     years,
     yearFrom,
@@ -458,7 +432,6 @@ function createSelectedYears(
         })
         .map(String);
 }
-
 
 function renderYearOptions(
     select,
@@ -516,11 +489,6 @@ function renderYearOptions(
     }
 }
 
-
-/* ========================================
-   選択肢描画
-======================================== */
-
 function renderFilterOptions(
     filterConfig,
     elements
@@ -577,7 +545,6 @@ function renderFilterOptions(
     );
 }
 
-
 function normalizeFilterOption(
     option
 ) {
@@ -608,7 +575,6 @@ function normalizeFilterOption(
         )
     };
 }
-
 
 function createFilterCheckbox({
     checkboxId,
@@ -677,7 +643,6 @@ function createFilterCheckbox({
     return labelElement;
 }
 
-
 function createCheckboxId(
     stateKey,
     value,
@@ -702,10 +667,6 @@ function createCheckboxId(
         safeValue || index
     ].join("-");
 }
-
-/* ========================================
-   キーワード検索
-======================================== */
 
 function initializeKeywordSearch({
     store,
@@ -807,7 +768,6 @@ function initializeKeywordSearch({
         );
 }
 
-
 function synchronizeKeywordInputs(
     value,
     elements,
@@ -827,11 +787,6 @@ function synchronizeKeywordInputs(
             }
         });
 }
-
-
-/* ========================================
-   チェックボックス操作
-======================================== */
 
 function initializeFilterOptionEvents({
     store,
@@ -860,7 +815,6 @@ function initializeFilterOptionEvents({
         );
     });
 }
-
 
 function applyCheckedFilters(
     store,
@@ -915,7 +869,6 @@ function applyCheckedFilters(
     );
 }
 
-
 function getFilterOptionContainers(
     elements
 ) {
@@ -926,11 +879,6 @@ function getFilterOptionContainers(
         elements.siteStatusFilterOptions
     ].filter(Boolean);
 }
-
-
-/* ========================================
-   単一ブランドのみ表示
-======================================== */
 
 function initializeSingleBrandFilter({
     store,
@@ -953,11 +901,6 @@ function initializeSingleBrandFilter({
         }
     );
 }
-
-
-/* ========================================
-   適用・解除ボタン
-======================================== */
 
 function initializeFilterButtons({
     store,
@@ -1030,7 +973,6 @@ function initializeFilterButtons({
         );
 }
 
-
 function initializeEmptyResetButton({
     store,
     elements
@@ -1046,7 +988,6 @@ function initializeEmptyResetButton({
             }
         );
 }
-
 
 function initializeGroupClearButtons({
     store,
@@ -1130,7 +1071,6 @@ function initializeGroupClearButtons({
         });
 }
 
-
 function clearAllFilters({
     store,
     elements
@@ -1159,7 +1099,6 @@ function clearAllFilters({
     store.resetFilters();
 }
 
-
 function clearCheckboxes(
     elements
 ) {
@@ -1174,7 +1113,6 @@ function clearCheckboxes(
         });
     });
 }
-
 
 function clearYearRange(
     elements
@@ -1203,7 +1141,6 @@ function clearYearRange(
     }
 }
 
-
 function createEmptyArrayFilters() {
     return {
         categories: [],
@@ -1213,11 +1150,6 @@ function createEmptyArrayFilters() {
         siteStatuses: []
     };
 }
-
-
-/* ========================================
-   選択中条件
-======================================== */
 
 function initializeActiveFilterEvents({
     store,
@@ -1253,7 +1185,6 @@ function initializeActiveFilterEvents({
             }
         );
 }
-
 
 function renderActiveFilters(
     filters,
@@ -1305,7 +1236,6 @@ function renderActiveFilters(
         section.hidden = false;
     }
 }
-
 
 function collectActiveFilters(
     filters
@@ -1369,7 +1299,6 @@ function collectActiveFilters(
 
     return activeFilters;
 }
-
 
 function createActiveFilterButton(
     filter
@@ -1453,7 +1382,6 @@ function removeActiveFilter({
         return;
     }
 
-
     if (
         filterKey ===
         "singleBrandOnly"
@@ -1504,7 +1432,6 @@ function removeActiveFilter({
     });
 }
 
-
 function getFilterValueLabel(
     key,
     value
@@ -1519,11 +1446,6 @@ function getFilterValueLabel(
 
     return String(value);
 }
-
-
-/* ========================================
-   入力状態同期
-======================================== */
 
 function synchronizeFilterInputs(
     filters,
@@ -1636,11 +1558,6 @@ function synchronizeFilterInputs(
     }
 }
 
-
-/* ========================================
-   件数・ボタン状態
-======================================== */
-
 function updateFilterCount(
     filters,
     element
@@ -1661,7 +1578,6 @@ function updateFilterCount(
         count === 0;
 }
 
-
 function updateModalResultCount(
     count,
     element
@@ -1673,7 +1589,6 @@ function updateModalResultCount(
     element.textContent =
         `${count}件`;
 }
-
 
 function countActiveFilters(
     filters
@@ -1706,7 +1621,6 @@ function countActiveFilters(
     return count;
 }
 
-
 function updateResetButtonState(
     filters,
     elements
@@ -1723,7 +1637,6 @@ function updateResetButtonState(
                 filters[key] ?? []
             ).length > 0;
         });
-
 
     const hasKeyword =
         Boolean(
@@ -1757,11 +1670,6 @@ function updateResetButtonState(
                 ) === 0;
     }
 }
-
-
-/* ========================================
-   絞り込み本体
-======================================== */
 
 export function filterPublications(
     publications = [],
@@ -1811,7 +1719,6 @@ export function filterPublications(
     );
 }
 
-
 export function matchesKeyword(
     publication,
     keyword
@@ -1843,14 +1750,6 @@ export function matchesKeyword(
     );
 }
 
-
-/**
- * 制作物ごとの検索対象文字列を取得します。
- * 同一オブジェクトは初回生成後の文字列を再利用します。
- *
- * @param {object} publication
- * @returns {string}
- */
 function getPublicationSearchText(
     publication
 ) {
@@ -1898,7 +1797,6 @@ function getPublicationSearchText(
     return searchableText;
 }
 
-
 function matchesSingleBrandOnly(
     publicationBrands,
     singleBrandOnly
@@ -1930,7 +1828,6 @@ function matchesSingleBrandOnly(
     );
 }
 
-
 function matchesSingleValueGroup(
     publicationValue,
     selectedValues
@@ -1957,7 +1854,6 @@ function matchesSingleValueGroup(
         }
     );
 }
-
 
 function matchesArrayGroup(
     publicationValues,
@@ -1992,7 +1888,6 @@ function matchesArrayGroup(
         }
     );
 }
-
 
 function matchesYearGroup(
     publishDate,
@@ -2051,7 +1946,6 @@ function extractPublicationYear(
         : null;
 }
 
-
 function normalizeYearValue(
     value
 ) {
@@ -2070,7 +1964,6 @@ function normalizeYearValue(
 
     return normalized;
 }
-
 
 function matchesInterviewGroup(
     hasInterview,
@@ -2108,10 +2001,6 @@ function matchesInterviewGroup(
     );
 }
 
-/* ========================================
-   フィルター値正規化
-======================================== */
-
 function normalizeFilterValue(
     value
 ) {
@@ -2121,11 +2010,6 @@ function normalizeFilterValue(
         .normalize("NFKC")
         .trim();
 }
-
-
-/* ========================================
-   検索文字正規化
-======================================== */
 
 function normalizeSearchText(
     value
@@ -2142,25 +2026,11 @@ function normalizeSearchText(
         .trim();
 }
 
-
-/* ========================================
-   比較・署名
-======================================== */
-
 function createFilterSignature(
     publications,
     filters
 ) {
-    const publicationSignature =
-        publications.map(
-            (publication) => {
-                return [
-                    publication.id,
-                    publication.publishDate,
-                    publication.title
-                ].join(":");
-            }
-        );
+    const publicationSignature = publications;
 
     return JSON.stringify({
         publications:
@@ -2169,7 +2039,6 @@ function createFilterSignature(
         filters
     });
 }
-
 
 function arePublicationListsEqual(
     listA,
@@ -2199,11 +2068,6 @@ function arePublicationListsEqual(
     );
 }
 
-
-/* ========================================
-   モーダル補助
-======================================== */
-
 function closeFilterModal(
     modal
 ) {
@@ -2232,11 +2096,6 @@ function closeFilterModal(
         )
     );
 }
-
-
-/* ========================================
-   共通関数
-======================================== */
 
 function debounce(
     callback,
