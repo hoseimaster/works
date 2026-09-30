@@ -1,6 +1,3 @@
-/**
- * 制作物データを管理者画面で検証する。公開画面では呼び出さない。
- */
 export function validateAdminPublications(publications) {
     if (!Array.isArray(publications)) {
         return {errors: [{種別: "エラー", 固有番号: "ID未設定", 確認箇所: "publication", 内容: "制作物データは配列で指定してください。", 現在値: String(publications)}], warnings: [], notices: [], total: 0};
@@ -283,7 +280,6 @@ export function validateAdminPublications(publications) {
             "coverImage",
             "イメージ欄"
         );
-
 
         checkArray(item, index, "brands", true);
         checkArray(item, index, "siteStatuses", true);
