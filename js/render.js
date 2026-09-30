@@ -1,3 +1,5 @@
+import { publicationHash } from "./publication-links.js";
+
 /**
  * 制作物アーカイブ
  * 制作物一覧の描画処理
@@ -279,29 +281,9 @@ function createPublicationCard(
             String(publication.id);
     }
 
-    const detailUrl =
-        normalizeDetailUrl(
-            publication.detailUrl
-        );
-
-    const cardLink =
-        document.createElement("a");
-
-    cardLink.className =
-        "publication-card__link";
-
-    cardLink.href =
-        detailUrl || "#";
-
-    if (!detailUrl) {
-        cardLink.dataset.disabledLink =
-            "true";
-
-        cardLink.setAttribute(
-            "aria-disabled",
-            "true"
-        );
-    }
+    const cardLink = document.createElement("a");
+    cardLink.className = "publication-card__link";
+    cardLink.href = publicationHash(String(publication.id));
 
     const imageArea =
         createPublicationImageArea(
@@ -1343,12 +1325,7 @@ function createPublicationContent(
     linkLabel.className =
         "publication-card__detail-label";
 
-    linkLabel.textContent =
-        normalizeDetailUrl(
-            publication.detailUrl
-        )
-            ? "詳細を見る"
-            : "詳細ページ準備中";
+    linkLabel.textContent = "詳細を見る";
 
     linkLabel.setAttribute(
         "aria-hidden",
@@ -2059,49 +2036,6 @@ function normalizeStringArray(
 
 
 /**
- * 詳細ページURLを整えます。
- *
- * @param {*} value
- * @returns {string}
- */
-function normalizeDetailUrl(
-    value
-) {
-    const url =
-        String(
-            value ?? ""
-        ).trim();
-
-    if (
-        !url ||
-        url === "#"
-    ) {
-        return "";
-    }
-
-    let parsed;
-
-    try {
-        parsed = new URL(
-            url,
-            document.baseURI
-        );
-    } catch {
-        return "";
-    }
-
-    if (
-        parsed.protocol !== "http:" &&
-        parsed.protocol !== "https:"
-    ) {
-        return "";
-    }
-
-    return parsed.href;
-}
-
-
-/**
  * 画像パスを整えます。
  *
  * @param {*} value
@@ -2179,7 +2113,8 @@ function createPublicationSignature(
                 publication.publishDate,
                 publication.thumbnailImage,
                 publication.coverImage,
-                publication.detailUrl,
+                publication.pdfPath,
+                publication.salesUrl,
                 publication.category,
                 publication.hasInterview,
                 publication.coverType,
