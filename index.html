@@ -47,6 +47,7 @@
             background: #fffdf9;
         }
     </style>
+    <link rel="stylesheet" href="./css/admin-files.css">
 </head>
 <body>
 
@@ -677,14 +678,16 @@
         <div>
           <span class="admin-step">情報入力</span>
           <h2 id="editorTitle">制作物を編集</h2>
-          <p>入力後、公開内容を確認できます。</p>
+          <p>作品情報・ファイルの登録先・公開設定を編集できます。</p>
         </div>
-        <button id="back" type="button" class="admin-button admin-button--secondary">一覧に戻る</button>
+        <button id="back" type="button" class="admin-button admin-button--secondary">編集を終了して一覧へ</button>
       </div>
       <form id="editForm" class="admin-form" autocomplete="off">
+        <p class="admin-editor-intro">基本情報から順に入力し、最後に「入力内容を確認する」へ進んでください。「任意」以外の項目は入力が必要です。</p>
+        <section class="admin-editor-section" aria-labelledby="editorBasicTitle">
+          <h3 id="editorBasicTitle"><span>1</span> 基本情報</h3>
         <div class="admin-form-grid">
-          <label>制作物ID<input name="id" required readonly>
-          </label>
+          <div><label for="publicationIdInput">制作物ID</label><div class="admin-file-name"><input id="publicationIdInput" name="id" required readonly><button id="copyPublicationId" type="button" class="admin-button admin-button--secondary">IDをコピー</button></div></div>
           <label>発行日<input name="publishDate" type="date" required>
           </label>
         </div>
@@ -704,42 +707,6 @@
           <div id="brandOptions" class="admin-brand-grid">
           </div>
         </fieldset>
-        <label>キーワード（任意・改行区切り）<textarea name="keywords">
-          </textarea>
-        </label>
-        <label>表紙画像のパス<input name="coverImage" required>
-        </label>
-        <p class="note">新規登録時は制作物IDに合わせて自動入力します。必要に応じてパスを変更できます。画像自体はDBに保存しません。</p>
-        <label>サイト状況<select name="siteStatuses" required>
-            <option value="">選択してください</option>
-            <option value="非公開">非公開</option>
-            <option value="電子版公開中">電子版公開中</option>
-            <option value="電子版販売中">電子版販売中</option>
-          </select>
-        </label>
-        <div id="pdfPathField" hidden>
-          <label for="pdfPathInput">電子版PDFのパス（必須）</label>
-          <div class="admin-pdf-path">
-            <input id="pdfPathInput" name="pdfPath" placeholder="./pdf/publication-000105.pdf" inputmode="url" disabled>
-            <button id="generatePdfPath" type="button" class="admin-button admin-button--secondary" disabled>自動生成</button>
-          </div>
-          <label>PDFの綴じ方（必須）<select name="pdfBinding" disabled>
-            <option value="right">右綴じ（2ページ目が右・3ページ目が左）</option>
-            <option value="left">左綴じ（2ページ目が左・3ページ目が右）</option>
-            <option value="none">見開き不可（単頁のみ）</option>
-          </select></label>
-          <p class="note">「自動生成」で制作物IDに合ったパスを入力します。PDF本体はリポジトリの pdf/ に配置してください。PDFが見つからない場合は「電子版公開準備中」と表示します。</p>
-        </div>
-        <div id="salesUrlField" hidden>
-          <label>電子版販売ページURL（必須）<input name="salesUrl" type="url" placeholder="https://example.com/item/" disabled>
-          </label>
-        </div>
-        <label>簡単な説明<textarea name="description" rows="4" required>
-          </textarea>
-        </label>
-        <label>プレビュー用の詳細説明（任意）<textarea name="previewDescription" rows="9">
-          </textarea>
-        </label>
         <fieldset>
           <legend>インタビュー</legend>
           <div class="admin-inline-options">
@@ -749,6 +716,93 @@
               <input name="hasInterview" type="radio" value="no" required>なし</label>
           </div>
         </fieldset>
+        <label>キーワード（任意・改行区切り）<textarea name="keywords">
+          </textarea>
+        </label>
+        </section>
+        <section class="admin-editor-section" aria-labelledby="editorCoverTitle">
+          <h3 id="editorCoverTitle"><span>2</span> 表紙画像</h3>
+        <div class="admin-file-field">
+          <label for="coverFilenameInput">表紙画像のパス</label>
+          <div class="admin-file-name"><input id="coverFilenameInput" name="coverImage" required readonly><button id="copyCoverPath" type="button" class="admin-button admin-button--secondary">パスをコピー</button><button id="changeCoverPath" type="button" class="admin-button admin-button--secondary">パスを変更</button></div>
+<p class="note">制作物IDをファイル名にしたPNGをGitHubのリポジトリのcoverフォルダ内にアップロードしてください。</p>
+        <details class="admin-upload-guide"><summary>さらに詳しく アップロード手順</summary>
+          <ol>
+            <li>制作物IDの右側の「IDをコピー」を押し、IDをコピーしてください。表紙画像のファイル名は「制作物ID.png」です。</li>
+            <li>パソコン上のPNGファイルを、コピーしたIDに拡張子を付けたファイル名に変更してください。拡張子が二重にならないよう確認します。PNG以外の画像は、拡張子だけを変えずPNG形式で書き出してください。</li>
+            <li><a href="https://github.com/hoseimaster/works" target="_blank" rel="noopener noreferrer">worksリポジトリ</a>を開き、<strong>cover</strong>フォルダを選択してください。index.htmlと同じ階層にあるフォルダです。</li>
+            <li>「Add file」→「Upload files」を押し、ファイルをドラッグ＆ドロップしてください。既存ファイルを差し替える場合も同じ名前でアップロードします。</li>
+            <li>「Commit changes」で保存し、Actionsの配信処理が完了するまでお待ちください。画面にアップロード権限がない場合は、管理権限のあるGitHubアカウントでログインしてください。</li>
+            <li>制作物情報を管理画面で保存し、公開サイトで表紙画像が表示されることを確認してください。ファイル名の大文字・小文字も一致させてください。パスを任意に変更した場合は、変更後のパスに合った場所・ファイル名で配置してください。</li>
+          </ol>
+          <p>フォルダがない場合は「Add file」→「Create new file」で「cover/.gitkeep」を作成・保存し、フォルダ内にアップロードしてください。</p>
+        </details>
+        </div>
+        </section>
+        <section class="admin-editor-section" aria-labelledby="editorDigitalTitle">
+          <h3 id="editorDigitalTitle"><span>3</span> 電子版の設定</h3>
+          <p class="note">公開状況を選ぶと、PDFまたは販売ページの登録欄が表示されます。</p>
+        <label>電子版の公開状況<select name="siteStatuses" required>
+            <option value="">選択してください</option>
+            <option value="非公開">非公開</option>
+            <option value="電子版公開中">電子版公開中</option>
+            <option value="電子版販売中">電子版販売中</option>
+          </select>
+        </label>
+        <div id="pdfPathField" hidden>
+          <div class="admin-pdf-mode-bar">
+            <div><strong id="pdfModeLabel">1つのPDFで登録</strong><p id="pdfModeDescription" class="note">25MB未満のPDFを1ファイルで配置します。</p></div>
+            <button id="splitPdf" type="button" class="admin-button admin-button--secondary" disabled>25MBを超える場合：分割して登録</button>
+          </div>
+          <div id="pdfSingleFile">
+            <label for="pdfPathInput">PDFの登録パス（必須）</label>
+            <div class="admin-file-name"><input id="pdfPathInput" name="pdfPath" readonly disabled><button id="copyPdfPath" type="button" class="admin-button admin-button--secondary" disabled>パスをコピー</button><button id="changePdfPath" type="button" class="admin-button admin-button--secondary" disabled>パスを変更</button></div>
+          </div>
+          <div id="pdfPartsField" hidden>
+            <div class="admin-pdf-support-action"><a class="admin-button admin-button--primary" href="https://hoseimaster.github.io/works-support/" target="_blank" rel="noopener noreferrer">PDF分割アプリを開く ↗</a><p class="note">別タブでPDFを分割し、ダウンロードしたファイルをGitHubにアップロードしてください。</p></div>
+            <div class="admin-pdf-parts-heading"><strong>PDFを読む順番</strong><span id="pdfPartsCount" aria-live="polite"></span></div>
+            <p class="note">01 → 02 → 03…の順に、1冊としてつなげて表示します。ファイルの境目でも見開きが続きます。</p>
+            <div id="pdfPartsList"></div>
+            <button id="addPdfPart" type="button" class="admin-button admin-button--create" aria-label="次の分割PDFを追加">＋ 次のPDFを追加</button>
+            <p class="note">削除できるのは最後の登録欄だけです。GitHub上のPDFファイルは削除されません。</p>
+          </div>
+          <div class="admin-pdf-upload-reminder"><strong>PDFファイルは事前にご用意ください</strong><p>ここでは登録先を設定します。PDFの分割・アップロードは行いません。各ファイルを25MB未満にし、表示されたパスに配置してください。</p></div>
+<p class="note">制作物IDをファイル名にしたPDFをGitHubのリポジトリのpdfフォルダ内にアップロードしてください。</p>
+        <details class="admin-upload-guide"><summary>さらに詳しく アップロード手順</summary>
+          <ol>
+            <li>制作物IDの右側の「IDをコピー」を押し、IDをコピーしてください。PDFのファイル名は「制作物ID.pdf」です。分割の場合は「制作物ID-01.pdf」「制作物ID-02.pdf」…にしてください。</li>
+            <li>パソコン上のPDFファイルを、コピーしたIDに拡張子を付けたファイル名に変更してください。拡張子が二重にならないよう確認します。PDF形式のファイルをご用意ください。</li>
+            <li><a href="https://github.com/hoseimaster/works" target="_blank" rel="noopener noreferrer">worksリポジトリ</a>を開き、<strong>pdf</strong>フォルダを選択してください。index.htmlと同じ階層にあるフォルダです。</li>
+            <li>「Add file」→「Upload files」を押し、ファイルをドラッグ＆ドロップしてください。既存ファイルを差し替える場合も同じ名前でアップロードします。</li>
+            <li>「Commit changes」で保存し、Actionsの配信処理が完了するまでお待ちください。画面にアップロード権限がない場合は、管理権限のあるGitHubアカウントでログインしてください。</li>
+            <li>制作物情報を管理画面で保存し、公開サイトで電子版が開けることを確認してください。ファイル名の大文字・小文字も一致させてください。パスを任意に変更した場合は、変更後のパスに合った場所・ファイル名で配置してください。</li>
+          </ol>
+          <p>フォルダがない場合は「Add file」→「Create new file」で「pdf/.gitkeep」を作成・保存し、フォルダ内にアップロードしてください。</p>
+        </details>
+          <label>見開きの読み方向（必須）<select name="pdfBinding" disabled>
+            <option value="right">右綴じ（2ページ目が右・3ページ目が左）</option>
+            <option value="left">左綴じ（2ページ目が左・3ページ目が右）</option>
+            <option value="none">見開き不可（単頁のみ）</option>
+          </select></label>
+
+        </div>
+        <div id="salesUrlField" hidden>
+          <label>電子版販売ページURL（必須）<input name="salesUrl" type="url" placeholder="https://example.com/item/" disabled>
+          </label>
+        </div>
+        </section>
+        <section class="admin-editor-section" aria-labelledby="editorDescriptionTitle">
+          <h3 id="editorDescriptionTitle"><span>4</span> 作品の説明</h3>
+        <label>簡単な説明<textarea name="description" rows="4" required>
+          </textarea>
+        </label>
+        <label>プレビュー用の詳細説明（任意）<textarea name="previewDescription" rows="9">
+          </textarea>
+        </label>
+        </section>
+        <section class="admin-editor-section" aria-labelledby="editorPublishTitle">
+          <h3 id="editorPublishTitle"><span>5</span> 公開設定</h3>
+
         <fieldset>
           <legend>公開設定</legend>
           <div class="admin-release-options">
@@ -762,9 +816,10 @@
           <label>公開日時（日本時間）<input name="releaseAt" type="datetime-local">
           </label>
         </fieldset>
+        </section>
         <div class="actions admin-editor-actions">
           <button type="button" id="delete" class="admin-button admin-button--danger" hidden>この制作物を削除</button>
-          <button type="submit" class="admin-button admin-button--primary">内容を確認</button>
+          <button type="submit" class="admin-button admin-button--primary">入力内容を確認する</button>
         </div>
       </form>
     </section>
