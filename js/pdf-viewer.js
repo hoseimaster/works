@@ -9,6 +9,7 @@ let documentHandle;
 let loadingTask;
 let renderTask;
 let pageNumber = 1;
+let lastReadingPage = 1;
 let routeGeneration = 0;
 let renderGeneration = 0;
 let previousHash = '';
@@ -97,7 +98,7 @@ function build() {
 
 function openCompletion() {
   showReadCompletion(currentBook, () => {
-    if (documentHandle && location.hash.startsWith('#pdf/')) void showPage(documentHandle.numPages);
+    if (documentHandle && location.hash.startsWith('#pdf/')) void showPage(lastReadingPage);
   });
 }
 
@@ -260,6 +261,7 @@ async function showPage(number) {
   const enteringEnding = number === pdf.numPages + 1 && pageNumber !== number;
   clearTimeout(qualityTimer);
   pageNumber = number === pdf.numPages + 1 ? number : spread && number > 1 ? 2 + Math.floor((number - 2) / 2) * 2 : number;
+  if (pageNumber <= pdf.numPages) lastReadingPage = pageNumber;
   zoom = 1;
   pan = { x: 0, y: 0 };
   updatePageControls();
@@ -362,6 +364,7 @@ async function route() {
   if (libraryMatch && currentBook?.id === libraryMatch[1] && documentHandle && root?.inert) {
     root.inert = false;
     root.removeAttribute('aria-hidden');
+    if (pageNumber > documentHandle.numPages) await showPage(lastReadingPage);
     root.querySelector('.pdf-viewer__back').focus({ preventScroll: true });
     return;
   }
@@ -393,6 +396,7 @@ async function route() {
   root.classList.remove('is-dragging');
   document.body.classList.add('is-pdf-viewer-open');
   spread = false;
+  lastReadingPage = 1;
   completed = false;
   readPages.clear();
   zoom = 1;
