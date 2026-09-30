@@ -4,6 +4,7 @@ import { ensureAdminFeedback, showAdminToast, showDeleteDialog } from './admin-f
 import { updateAdminValidation } from './admin-validation.js';
 import { findMissingCovers } from './admin-cover-check.js';
 import { showPublicationLinkDialog } from './admin-share.js';
+import { initAdminSurveys, refreshSurveyBadge, clearAdminSurveys } from './admin-surveys.js';
 
 const root = $('archiveAdminRoot');
 const form = $('editForm');
@@ -23,7 +24,7 @@ function message(value) {
 }
 
 function screen(name) {
-  for (const id of ['login', 'management', 'editor', 'review']) {
+  for (const id of ['login', 'management', 'editor', 'review', 'feedbackManagement']) {
     $(id).hidden = id !== name;
   }
   $('logout').hidden = name === 'login';
@@ -52,11 +53,11 @@ async function route() {
   const open = isAdminRoute();
   root.hidden = !open;
   document.body.classList.toggle('archive-admin-mode', open);
-  if (!open) return;
+  if (!open) { clearAdminSurveys(); return; }
 
   if (authorized) {
     if (!records.length) await guarded(load);
-    else screen('management');
+    else { screen('management'); void refreshSurveyBadge(); }
     return;
   }
 
@@ -87,6 +88,7 @@ async function load() {
   updateAdminValidation(records);
   draw();
   screen('management');
+  void refreshSurveyBadge();
   findMissingCovers(records).then(missing => {
     if (generation !== coverCheckGeneration || !authorized) return;
     missingCoverIds = new Set(missing.map(item => item.id));
@@ -208,6 +210,7 @@ $('loginForm').onsubmit = event => {
 $('logout').onclick = () => {
   signOut();
   authorized = false;
+  clearAdminSurveys();
   coverCheckGeneration++;
   missingCoverIds = new Set();
   records = [];
@@ -301,5 +304,6 @@ $('confirmDelete').onclick = () => guarded(async () => {
   }
 });
 
+initAdminSurveys({ isAuthorized: () => authorized, showScreen: screen });
 window.addEventListener('hashchange', route);
 route();
