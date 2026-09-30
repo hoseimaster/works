@@ -313,7 +313,7 @@ async function renderPage(showLoading = false) {
     paper.style.height = `${paperSize.height}px`;
     applyTransform();
     const renderingZoom = zoom;
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2, Math.sqrt(16000000 / (paperSize.width * paperSize.height * renderingZoom ** 2)));
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2.5, Math.sqrt(16000000 / (paperSize.width * paperSize.height * renderingZoom ** 2)));
     const canvases = [...root.querySelectorAll('canvas')];
     canvases.forEach(canvas => { canvas.hidden = true; });
     const orderedPages = binding === 'right' && pages.length === 2 ? [...pages].reverse() : pages;
