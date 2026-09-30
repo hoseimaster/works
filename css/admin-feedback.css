@@ -88,3 +88,75 @@
     bottom:12px
   }
 }
+#archiveAdminRoot .admin-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+#archiveAdminRoot .item > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+#archiveAdminRoot .admin-share-dialog:not([open]),
+#archiveAdminRoot .admin-share-dialog [hidden] {
+  display: none !important;
+}
+#archiveAdminRoot .admin-share-dialog {
+  width: min(540px, calc(100% - 28px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 26px;
+  border: 1px solid #ead3ba;
+  border-radius: 18px;
+  background: #fffdfa;
+  color: #584332;
+  box-shadow: 0 22px 70px #4d301c30;
+}
+#archiveAdminRoot .admin-share-dialog::backdrop {
+  background: #30251e80;
+}
+#archiveAdminRoot .admin-share-dialog h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+#archiveAdminRoot .admin-share-dialog p {
+  font-size: .85rem;
+  overflow-wrap: anywhere;
+}
+#archiveAdminRoot .admin-share-name {
+  font-weight: 700;
+}
+#archiveAdminRoot .admin-share-option {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #e6bf9a;
+  border-radius: 12px;
+  background: #fff3e6;
+  color: #8b552b;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+#archiveAdminRoot .admin-share-option:hover {
+  background: #ffe8cf;
+}
+#archiveAdminRoot .admin-share-option span {
+  font-size: .75rem;
+  overflow-wrap: anywhere;
+}
+#archiveAdminRoot .admin-share-dialog .actions {
+  justify-content: flex-end;
+}
+@media (max-width: 520px) {
+  #archiveAdminRoot .admin-row-actions {
+    flex-direction: column;
+  }
+  #archiveAdminRoot .admin-share-dialog {
+    padding: 20px;
+  }
+}
