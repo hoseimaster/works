@@ -1,13 +1,3 @@
-/**
- * 制作物アーカイブ
- * 並び替え処理
- */
-
-
-/* ========================================
-   並び順設定
-======================================== */
-
 const SORT_OPTIONS = {
     "date-desc": {
         label: "発行日の新しい順",
@@ -37,18 +27,6 @@ const SORT_OPTIONS = {
 const DEFAULT_SORT_TYPE =
     "date-desc";
 
-
-/* ========================================
-   初期化
-======================================== */
-
-/**
- * 並び替え機能を初期化します。
- *
- * @param {{
- *   store: object
- * }} options
- */
 export function initializeSort({
     store
 }) {
@@ -142,11 +120,6 @@ export function initializeSort({
     });
 }
 
-
-/* ========================================
-   DOM取得
-======================================== */
-
 function getSortElements() {
     return {
         sortSelect:
@@ -159,16 +132,6 @@ function getSortElements() {
     };
 }
 
-
-/* ========================================
-   選択肢描画
-======================================== */
-
-/**
- * 並び順の選択肢を描画します。
- *
- * @param {HTMLSelectElement} select
- */
 function renderSortOptions(
     select
 ) {
@@ -209,11 +172,6 @@ function renderSortOptions(
         currentValue;
 }
 
-
-/* ========================================
-   ストア反映
-======================================== */
-
 function applySortToStore({
     store,
     sortType
@@ -232,20 +190,6 @@ function applySortToStore({
     );
 }
 
-
-/* ========================================
-   並び替え本体
-======================================== */
-
-/**
- * 制作物一覧を並び替えます。
- *
- * 元の配列は変更しません。
- *
- * @param {Array<object>} publications
- * @param {string} sortType
- * @returns {Array<object>}
- */
 export function sortPublications(
     publications = [],
     sortType =
@@ -293,10 +237,6 @@ export function sortPublications(
                     return result;
                 }
 
-                /*
-                 * 比較結果が同じ場合は
-                 * 元の順番を保持します。
-                 */
                 return (
                     itemA.originalIndex -
                     itemB.originalIndex
@@ -309,11 +249,6 @@ export function sortPublications(
         );
 }
 
-
-/* ========================================
-   日付順
-======================================== */
-
 function compareByDateDescending(
     publicationA,
     publicationB
@@ -324,7 +259,6 @@ function compareByDateDescending(
         "desc"
     );
 }
-
 
 function compareByDateAscending(
     publicationA,
@@ -337,18 +271,6 @@ function compareByDateAscending(
     );
 }
 
-
-/**
- * 発行日を比較します。
- *
- * 不正な日付・未入力の日付は、
- * 昇順・降順のどちらでも最後に配置します。
- *
- * @param {object} publicationA
- * @param {object} publicationB
- * @param {"asc"|"desc"} direction
- * @returns {number}
- */
 function comparePublicationDates(
     publicationA,
     publicationB,
@@ -402,16 +324,6 @@ function comparePublicationDates(
     );
 }
 
-
-/**
- * YYYY-MM-DD形式の日付を
- * タイムスタンプへ変換します。
- *
- * 不正な値の場合はNaNを返します。
- *
- * @param {*} value
- * @returns {number}
- */
 function getDateTimestamp(
     value
 ) {
@@ -457,11 +369,6 @@ function getDateTimestamp(
     return date.getTime();
 }
 
-
-/* ========================================
-   タイトル順
-======================================== */
-
 function compareByTitleAscending(
     publicationA,
     publicationB
@@ -481,7 +388,6 @@ function compareByTitleAscending(
         publicationB
     );
 }
-
 
 function compareByTitleDescending(
     publicationA,
@@ -503,18 +409,6 @@ function compareByTitleDescending(
     );
 }
 
-
-/* ========================================
-   補助比較
-======================================== */
-
-/**
- * タイトルなどの文字列を日本語向けに比較します。
- *
- * @param {*} valueA
- * @param {*} valueB
- * @returns {number}
- */
 function compareJapaneseText(
     valueA,
     valueB
@@ -555,15 +449,6 @@ function compareJapaneseText(
     );
 }
 
-
-/**
- * 日付やタイトルが同一の場合の
- * 安定した比較順を作ります。
- *
- * @param {object} publicationA
- * @param {object} publicationB
- * @returns {number}
- */
 function compareFallbackValues(
     publicationA,
     publicationB
@@ -584,7 +469,6 @@ function compareFallbackValues(
     );
 }
 
-
 function normalizeSortText(
     value
 ) {
@@ -594,11 +478,6 @@ function normalizeSortText(
         .normalize("NFKC")
         .trim();
 }
-
-
-/* ========================================
-   並び順正規化
-======================================== */
 
 function normalizeSortType(
     sortType
@@ -617,11 +496,6 @@ function normalizeSortType(
         ? normalized
         : DEFAULT_SORT_TYPE;
 }
-
-
-/* ========================================
-   再実行判定
-======================================== */
 
 function createSortSignature(
     publications,
@@ -653,11 +527,6 @@ function createSortSignature(
             )
     });
 }
-
-
-/* ========================================
-   配列比較
-======================================== */
 
 function arePublicationListsEqual(
     listA,
