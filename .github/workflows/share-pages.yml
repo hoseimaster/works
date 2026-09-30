@@ -17,22 +17,34 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/configure-pages@v5
       - name: Generate public share pages
         run: node scripts/generate-share-pages.mjs --base-url https://hoseimaster.github.io/works/
+      - name: Check changes against published site
+        id: changes
+        env:
+          FORCE_DEPLOY: ${{ github.event_name == 'workflow_dispatch' && 'true' || 'false' }}
+          SHARE_BASE_URL: https://hoseimaster.github.io/works/
+        run: node scripts/check-share-deploy.mjs
+      - uses: actions/configure-pages@v5
+        if: steps.changes.outputs.changed == 'true'
       - name: Prepare site artifact
+        if: steps.changes.outputs.changed == 'true'
         run: |
           mkdir _site
           rsync -a --exclude='.git/' --exclude='.github/' --exclude='scripts/' --exclude='_site/' --exclude='sql/' ./ _site/
       - uses: actions/upload-pages-artifact@v3
+        if: steps.changes.outputs.changed == 'true'
         with:
           path: _site
       - name: Deploy
         id: deployment
+        if: steps.changes.outputs.changed == 'true'
         uses: actions/deploy-pages@v4
+      - name: Report no changes
+        if: steps.changes.outputs.changed != 'true'
+        run: echo 'No changes. Skipped site upload and deployment.'
