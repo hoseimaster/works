@@ -46,7 +46,7 @@ function build() {
   root.setAttribute('aria-label', '電子版閲覧');
   root.innerHTML = `
     <header class="pdf-viewer__header">
-      <button class="pdf-viewer__back" type="button" aria-label="ライブラリーを閉じる"><span aria-hidden="true">✖</span></button>
+      <button class="pdf-viewer__back" type="button" aria-label="ライブラリーを閉じる"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></button>
       <div class="pdf-viewer__heading">
         <span class="pdf-viewer__eyebrow">電子版ライブラリー</span>
         <h2 class="pdf-viewer__title"></h2>
