@@ -1,8 +1,3 @@
-/**
- * 制作物アーカイブ
- * メイン初期化処理
- */
-
 import {
     getPublications,
     loadPublications,
@@ -34,11 +29,6 @@ import {
     initializeFilterModal
 } from "./modal.js";
 
-
-/* ========================================
-   ページ初期化
-======================================== */
-
 document.addEventListener(
     "DOMContentLoaded",
     () => {
@@ -46,10 +36,6 @@ document.addEventListener(
     }
 );
 
-
-/**
- * アーカイブページ全体を初期化します。
- */
 async function initializeArchivePage() {
     const elements =
         getMainElements();
@@ -151,11 +137,6 @@ async function initializeArchivePage() {
     }
 }
 
-
-/* ========================================
-   DOM取得
-======================================== */
-
 function getMainElements() {
     return {
         menuToggleButton:
@@ -205,11 +186,6 @@ function getMainElements() {
     };
 }
 
-
-/* ========================================
-   初期状態
-======================================== */
-
 function createInitialFilters() {
     return {
         keyword: "",
@@ -220,11 +196,6 @@ function createInitialFilters() {
         siteStatuses: []
     };
 }
-
-
-/* ========================================
-   データ検証
-======================================== */
 
 function validatePublicationData(
     publications
@@ -298,11 +269,6 @@ function validatePublicationData(
     }
 }
 
-
-/* ========================================
-   初期化エラー
-======================================== */
-
 function showInitializationError(
     elements
 ) {
@@ -329,11 +295,6 @@ function showInitializationError(
             false;
     }
 }
-
-
-/* ========================================
-   グローバルナビゲーション
-======================================== */
 
 function initializeGlobalNavigation(
     elements
@@ -471,11 +432,6 @@ function initializeGlobalNavigation(
     }
 }
 
-
-/* ========================================
-   ページ上部へ戻る
-======================================== */
-
 function initializePageTopButton(
     elements
 ) {
@@ -530,10 +486,7 @@ function initializePageTopButton(
                     updateButtonVisibility();
                 },
                 {
-                    /*
-                     * フッターに重なる直前から消し、
-                     * 著作権表示やリンクを隠さないようにします。
-                     */
+
                     rootMargin:
                         "0px 0px 72px 0px",
                     threshold: 0
@@ -579,18 +532,6 @@ function initializePageTopButton(
     updateButtonVisibility();
 }
 
-
-/* ========================================
-   絞り込みモーダルのフォーカス制御
-======================================== */
-
-/**
- * モーダルを開いた直後にキーワード入力欄が
- * 自動選択される挙動を抑止します。
- *
- * モーダル自体へ一時的にフォーカスを置くことで、
- * スマートフォンのキーボードも勝手に開きません。
- */
 function initializeFilterModalFocusGuard(
     elements
 ) {
@@ -627,10 +568,6 @@ function initializeFilterModalFocusGuard(
                 activeElement.blur();
             }
 
-            /*
-             * モーダルが表示された次の描画タイミングで
-             * 入力欄以外へフォーカスを移します。
-             */
             window.requestAnimationFrame(
                 () => {
                     modal.focus({
@@ -675,11 +612,6 @@ function initializeFilterModalFocusGuard(
     );
 }
 
-
-/* ========================================
-   開発確認用
-======================================== */
-
 function exposeArchiveDebugTools(
     store
 ) {
@@ -701,17 +633,11 @@ function exposeArchiveDebugTools(
     };
 }
 
-
-/* ========================================
-   共通関数
-======================================== */
-
 function prefersReducedMotion() {
     return window.matchMedia(
         "(prefers-reduced-motion: reduce)"
     ).matches;
 }
-
 
 function throttle(
     callback,
@@ -758,10 +684,6 @@ function throttle(
         );
     };
 }
-
-/* ========================================
-   ダブルタップ拡大防止
-======================================== */
 
 let lastTouchEnd = 0;
 
