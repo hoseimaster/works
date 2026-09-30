@@ -13,12 +13,13 @@
     <title>
         制作物アーカイブス｜法政大学アイドルマスター研究会
     </title>
-    <!-- CSS -->
+
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/archive.css?v=20260928-1">
     <link rel="stylesheet" href="./css/responsive.css">
     <link rel="stylesheet" href="./css/modal-preview.css?v=20260928-1">
     <link rel="stylesheet" href="./css/pdf-viewer.css">
+    <link rel="stylesheet" href="./css/feedback.css">
     <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/admin-feedback.css">
     <link rel="stylesheet" href="./css/admin-validation.css">
@@ -48,11 +49,9 @@
     </style>
 </head>
 <body>
-    <!-- JavaScriptが使用できない環境向け -->
+
     <noscript><style>.requires-javascript { display: none !important; }</style></noscript>
-    <!-- ========================================
-         サイトヘッダー
-    ========================================= -->
+
     <header class="site-header">
         <div class="site-header__inner">
             <a
@@ -116,18 +115,16 @@
             </nav>
         </div>
     </header>
-    <!-- ========================================
-         メインコンテンツ
-    ========================================= -->
+
     <main class="archive-main">
         <div class="archive-container">
-            <!-- ページタイトル -->
+
             <header class="archive-heading">
                 <h1 class="archive-heading__title">
                     制作物アーカイブス
                 </h1>
             </header>
-            <!-- JavaScript無効時の案内 -->
+
             <noscript>
                 <div class="archive-message archive-message--error">
                     <p>
@@ -136,14 +133,12 @@
                     </p>
                 </div>
             </noscript>
-            <!-- ========================================
-                 検索・絞り込みツールバー
-            ========================================= -->
+
             <section
                 class="archive-toolbar requires-javascript"
                 aria-label="制作物の検索と絞り込み"
             >
-                <!-- キーワード検索 -->
+
                 <div class="search-area">
                         <input
                             id="keywordInput"
@@ -174,9 +169,7 @@
                         </select>
                     </div>
                 </section>
-            <!-- ========================================
-                 選択中の検索条件
-            ========================================= -->
+
             <section
                 id="activeFiltersSection"
                 class="active-filters requires-javascript"
@@ -203,12 +196,10 @@
                     class="active-filters__list"
                     aria-live="polite"
                 >
-                    <!-- JSで条件タグを生成 -->
+
                 </div>
             </section>
-            <!-- ========================================
-                 検索結果情報
-            ========================================= -->
+
             <section
                 class="archive-results-header"
                 aria-labelledby="resultsHeading"
@@ -231,7 +222,7 @@
                     </p>
                 </div>
             </section>
-            <!-- 読み込み中 -->
+
             <div
                 id="loadingMessage"
                 class="archive-message"
@@ -239,7 +230,7 @@
             >
                 <p>制作物を読み込んでいます。</p>
             </div>
-            <!-- エラー表示 -->
+
             <div
                 id="errorMessage"
                 class="archive-message archive-message--error"
@@ -251,7 +242,7 @@
                     ページを再読み込みしてください。
                 </p>
             </div>
-            <!-- 検索結果なし -->
+
             <div
                 id="emptyMessage"
                 class="archive-message archive-message--empty"
@@ -271,21 +262,17 @@
                     検索条件をリセット
                 </button>
             </div>
-            <!-- ========================================
-                 制作物カード一覧
-            ========================================= -->
+
             <section
                 id="publicationList"
                 class="publication-list"
                 aria-label="制作物の検索結果"
             >
-                <!-- JavaScriptで制作物カードを生成 -->
+
             </section>
         </div>
     </main>
-    <!-- ========================================
-         検索条件モーダル
-    ========================================= -->
+
     <div
         id="filterModal"
         class="filter-modal requires-javascript"
@@ -294,13 +281,13 @@
         aria-labelledby="filterModalTitle"
         hidden
     >
-        <!-- 背景 -->
+
         <div
             class="filter-modal__backdrop"
             data-modal-close
             aria-hidden="true"
         ></div>
-        <!-- モーダル本体 -->
+
         <div class="filter-modal__panel">
             <header class="filter-modal__header">
                 <h2
@@ -319,7 +306,7 @@
                 </button>
             </header>
             <div class="filter-modal__body">
-                <!-- モーダル内キーワード -->
+
                 <section class="filter-group">
                     <h3 class="filter-group__title">
                         キーワード
@@ -338,7 +325,7 @@
                         autocomplete="off"
                     >
                 </section>
-                <!-- 分類 -->
+
                 <section
                     class="filter-group"
                     aria-labelledby="categoryFilterTitle"
@@ -362,10 +349,10 @@
                         id="categoryFilterOptions"
                         class="filter-options filter-options--buttons"
                     >
-                        <!-- publications.jsのデータからJSで生成 -->
+
                     </div>
                 </section>
-                <!-- ブランド -->
+
                 <section
                     class="filter-group"
                     aria-labelledby="brandFilterTitle"
@@ -389,7 +376,7 @@
                         id="brandFilterOptions"
                         class="filter-options filter-options--buttons"
                     >
-                        <!-- JavaScriptで生成 -->
+
                     </div>
                     <div class="single-brand-filter">
                         <label class="single-brand-filter__label">
@@ -411,7 +398,7 @@
                         </p>
                     </div>
                 </section>
-                <!-- 発行年 -->
+
                 <section
                     class="filter-group"
                     aria-labelledby="yearFilterTitle"
@@ -470,7 +457,7 @@
                         片方だけ指定した場合は、未指定側を全期間として検索します。
                     </p>
                 </section>
-                <!-- インタビュー -->
+
                 <section
                     class="filter-group"
                     aria-labelledby="interviewFilterTitle"
@@ -494,13 +481,13 @@
                         id="interviewFilterOptions"
                         class="filter-options"
                     >
-                        <!-- JavaScriptで生成 -->
+
                     </div>
                     <p class="filter-group__note">
                         作詞・作曲家様などのアイマス関係者様へのインタビューの掲載の有無です。
                     </p>
                 </section>
-                <!-- 制作物公開状況 -->
+
                 <section
                     class="filter-group"
                     aria-labelledby="siteStatusFilterTitle"
@@ -524,14 +511,14 @@
                         id="siteStatusFilterOptions"
                         class="filter-options"
                     >
-                        <!-- JavaScriptで生成 -->
+
                     </div>
                     <p class="filter-group__note">
                         一部制作物は詳細ページからサイト上や公式BOOTHなどにて電子版を閲覧することができます。
                     </p>
                 </section>
             </div>
-            <!-- モーダル下部 -->
+
             <footer class="filter-modal__footer">
                 <button
                     id="resetFilterButton"
@@ -557,9 +544,7 @@
             </footer>
         </div>
     </div>
-    <!-- ========================================
-         ページ上部へ戻る
-    ========================================= -->
+
     <button
         id="pageTopButton"
         class="page-top-button"
@@ -569,9 +554,7 @@
     >
         <span aria-hidden="true">↑</span>
     </button>
-    <!-- ========================================
-         ご注意
-    ========================================= -->
+
     <section class="notice-section">
         <div class="notice-section__inner">
             <button id="noticeToggleButton" class="notice-toggle-button" type="button" aria-controls="noticePanel" aria-expanded="false">
@@ -590,9 +573,7 @@
             </div>
         </div>
     </section>
-    <!-- ========================================
-         フッター
-    ========================================= -->
+
     <footer class="site-footer">
         <div class="site-footer__inner">
             <div class="site-footer__rule" aria-hidden="true"></div>
@@ -616,7 +597,7 @@
             </nav>
         </div>
     </footer>
-    <!-- JavaScript -->
+
 <div id="archiveAdminRoot" hidden>
   <div class="admin-shell">
     <header class="admin-header">
@@ -667,7 +648,8 @@
           <h2>制作物一覧</h2>
           <p>発行日の新しい順に表示しています。</p>
         </div>
-        <button id="new" type="button" class="admin-button admin-button--create">＋ 新規登録</button>
+        <div class="admin-row-actions"><button id="openFeedback" type="button" class="admin-button admin-button--secondary">感想・集計 <span id="feedbackUnreadBadge" hidden></span></button>
+        <button id="new" type="button" class="admin-button admin-button--create">＋ 新規登録</button></div>
       </div>
       <div class="admin-summary-grid">
         <div class="priority">
@@ -689,6 +671,7 @@
       <div id="list" class="admin-list">
       </div>
     </section>
+    <section id="feedbackManagement" class="admin-panel" hidden></section>
     <section id="editor" class="admin-panel" hidden>
       <div class="admin-panel-header">
         <div>
@@ -740,6 +723,11 @@
             <input id="pdfPathInput" name="pdfPath" placeholder="./pdf/publication-000105.pdf" inputmode="url" disabled>
             <button id="generatePdfPath" type="button" class="admin-button admin-button--secondary" disabled>自動生成</button>
           </div>
+          <label>PDFの綴じ方（必須）<select name="pdfBinding" disabled>
+            <option value="right">右綴じ（2ページ目が右・3ページ目が左）</option>
+            <option value="left">左綴じ（2ページ目が左・3ページ目が右）</option>
+            <option value="none">見開き不可（単頁のみ）</option>
+          </select></label>
           <p class="note">「自動生成」で制作物IDに合ったパスを入力します。PDF本体はリポジトリの pdf/ に配置してください。PDFが見つからない場合は「電子版公開準備中」と表示します。</p>
         </div>
         <div id="salesUrlField" hidden>
