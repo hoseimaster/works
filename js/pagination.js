@@ -1,18 +1,8 @@
-/**
- * 制作物アーカイブ
- * 表示件数切り替え・ページネーション
- */
-
 const PAGE_SIZE_OPTIONS = [20, 50, 100, 149, "all"];
 const DEFAULT_PAGE_SIZE = 20;
 const STORAGE_KEY = "archivePageSize";
 const TOUCH_FEEDBACK_DURATION = 400;
 
-/**
- * 表示件数切り替えとページネーションを初期化します。
- *
- * @param {{ store: object }} options
- */
 export function initializePagination({
     store
 }) {
@@ -109,10 +99,6 @@ export function initializePagination({
                             button
                         });
 
-                        /*
-                         * クリック・タップ後にフォーカス色が
-                         * 残り続けないようにします。
-                         */
                         button.blur();
 
                         window.requestAnimationFrame(
@@ -283,16 +269,6 @@ export function initializePagination({
     }
 }
 
-
-/**
- * タッチ端末で「前へ」「次へ」の押下色を
- * DOM再描画後も400ms維持します。
- *
- * @param {{
- *   container: HTMLElement,
- *   button: HTMLButtonElement
- * }} options
- */
 function showPaginationTouchFeedback({
     container,
     button
@@ -348,22 +324,11 @@ function showPaginationTouchFeedback({
     );
 }
 
-
-/**
- * タッチ操作を中心とする端末か判定します。
- *
- * @returns {boolean}
- */
 function isTouchInterface() {
     return window.matchMedia(
         "(hover: none), (pointer: coarse)"
     ).matches;
 }
-
-
-/* ========================================
-   UI生成
-======================================== */
 
 function createPaginationElements(
     publicationList
@@ -549,11 +514,7 @@ function createPageSizeControl() {
 }
 
 function getExistingSortArea() {
-    /*
-     * 検索ボックス内・検索結果ヘッダー内のどちらに
-     * 並び替えが置かれていても取得し、
-     * 表示件数の隣へ移動します。
-     */
+
     return (
         document.querySelector(
             ".archive-toolbar .archive-sort"
@@ -658,11 +619,6 @@ function removeExistingPagination() {
         );
 }
 
-
-/* ========================================
-   件数表示
-======================================== */
-
 function updateSummary({
     filteredCount,
     startIndex,
@@ -683,11 +639,6 @@ function updateSummary({
     summary.textContent =
         `${startIndex + 1}〜${endIndex}件を表示中`;
 }
-
-
-/* ========================================
-   ページ番号
-======================================== */
 
 function renderPaginationButtons({
     currentPage,
@@ -956,11 +907,6 @@ function createPageNumbers({
     return result;
 }
 
-
-/* ========================================
-   ユーティリティ
-======================================== */
-
 function validateStore(
     store
 ) {
@@ -1065,6 +1011,6 @@ function savePageSize(
                 String(pageSize)
             );
     } catch {
-        // localStorageが利用できない場合も、そのまま動作させます。
+
     }
 }
