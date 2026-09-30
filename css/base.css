@@ -1,7 +1,3 @@
-/* ========================================
-   基本設定
-======================================== */
-
 :root {
     --color-background: #ffffff;
     --color-background-subtle: #f6f6f6;
@@ -37,11 +33,6 @@
     --transition-speed: 0.2s;
 }
 
-
-/* ========================================
-   リセット
-======================================== */
-
 *,
 *::before,
 *::after {
@@ -74,11 +65,6 @@ body {
 body.is-modal-open {
     overflow: hidden;
 }
-
-
-/* ========================================
-   基本要素
-======================================== */
 
 h1,
 h2,
@@ -182,11 +168,6 @@ legend {
     display: none !important;
 }
 
-
-/* ========================================
-   アクセシビリティ
-======================================== */
-
 .visually-hidden {
     position: absolute !important;
 
@@ -215,11 +196,6 @@ legend {
     background: var(--color-text);
 }
 
-
-/* ========================================
-   共通コンテナ
-======================================== */
-
 .site-header__inner,
 .site-footer__inner,
 .archive-container {
@@ -230,11 +206,6 @@ legend {
     margin-right: auto;
     margin-left: auto;
 }
-
-
-/* ========================================
-   ヘッダー
-======================================== */
 
 .site-header {
     position: relative;
@@ -284,7 +255,6 @@ legend {
 
     margin-right: 17px;
 }
-
 
 .site-header__logo-image {
     display: block;
@@ -379,11 +349,6 @@ legend {
         opacity var(--transition-speed);
 }
 
-
-/* ========================================
-   グローバルナビゲーション
-======================================== */
-
 .global-navigation {
     margin-left: auto;
 }
@@ -438,20 +403,10 @@ legend {
     transform-origin: left center;
 }
 
-
-/* ========================================
-   メインコンテンツ
-======================================== */
-
 .archive-main {
     min-height: 60vh;
     padding: 44px 0 96px;
 }
-
-
-/* ========================================
-   パンくずリスト
-======================================== */
 
 .breadcrumb {
     margin-bottom: 46px;
@@ -487,11 +442,6 @@ legend {
 .breadcrumb__item a {
     color: inherit;
 }
-
-
-/* ========================================
-   フッター
-======================================== */
 
 .site-footer {
     padding: 52px 0 32px;
@@ -529,11 +479,6 @@ legend {
     font-size: 0.75rem;
 }
 
-
-/* ========================================
-   共通メッセージ
-======================================== */
-
 .archive-message {
     margin: 32px 0;
     padding: 28px;
@@ -560,11 +505,6 @@ legend {
     font-size: 1.1rem;
 }
 
-
-/* ========================================
-   モーション低減設定
-======================================== */
-
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -579,10 +519,6 @@ legend {
         animation-iteration-count: 1 !important;
     }
 }
-
-/* ========================================
-   ハンバーガーメニュー
-======================================== */
 
 @media screen and (max-width: 900px) {
     .site-header {
@@ -757,10 +693,6 @@ body.is-navigation-open {
     overflow: hidden;
 }
 
-/* ==========================================
-   検索・絞り込み・ソートエリア
-========================================== */
-
 .archive-toolbar{
     display:flex;
     align-items:center;
@@ -772,8 +704,6 @@ body.is-navigation-open {
     background:#fffdfb;
     box-shadow:0 12px 28px rgba(75,45,25,.08),0 0 0 1px rgba(220,196,174,.25);
 }
-
-/* ---------- 検索 ---------- */
 
 .search-area{
     flex:1;
@@ -815,8 +745,6 @@ body.is-navigation-open {
     font-size:20px;
 }
 
-/* ---------- 絞り込みボタン ---------- */
-
 .filter-button{
     height:54px;
     padding:0 24px;
@@ -841,8 +769,6 @@ body.is-navigation-open {
     background:#fff7f0;
     box-shadow:0 3px 12px rgba(255,122,0,.12);
 }
-
-/* ---------- ソート ---------- */
 
 .sort-area{
     min-width:250px;
@@ -873,10 +799,6 @@ body.is-navigation-open {
     border-color:#ff7a00;
     box-shadow:0 0 0 4px rgba(255,122,0,.12);
 }
-
-/* ==========================================
-   スマホ
-========================================== */
 
 @media (max-width:768px){
 
@@ -937,11 +859,6 @@ body.is-navigation-open {
     box-shadow:0 10px 24px rgba(0,0,0,.08);
 }
 
-
-/* ========================================
-   フッター（本サイト準拠）
-======================================== */
-
 .site-footer{
     padding:38px 20px 30px;
     background:#faf9fb;
@@ -969,7 +886,6 @@ body.is-navigation-open {
 .footer-navigation__list li:not(:last-child)::after{margin:0 4px;}
 }
 
-/* キーワード入力 */
 .search-area{
     padding: 0;
     border: none;
@@ -994,7 +910,6 @@ body.is-navigation-open {
     border-color: #dcc7b0;
 }
 
-/* キーワード入力文字を左端寄りに配置 */
 .archive-keyword__input {
     padding-left: 12px;
 }
@@ -1010,11 +925,6 @@ body.is-navigation-open {
     background: #ffffff;
     box-shadow: 0 0 0 4px rgba(217,169,123,.12);
 }
-
-
-/* ========================================
-   ヘッダーロゴ（画像一体型）
-======================================== */
 
 .site-header__logo{
     display:flex;
@@ -1062,12 +972,6 @@ body.is-navigation-open {
         max-width:240px;
     }
 }
-
-/* ========================================
-   ヘッダー最終調整
-   ロゴ・ナビゲーションのはみ出し防止
-   オレンジ帯の高さ調整
-======================================== */
 
 .site-header {
     position: relative;
@@ -1147,7 +1051,6 @@ body.is-navigation-open {
     white-space: nowrap;
 }
 
-/* PC幅が狭い場合 */
 @media screen and (max-width: 1180px) and (min-width: 901px) {
     .site-header__inner {
         gap: 14px;
@@ -1171,7 +1074,6 @@ body.is-navigation-open {
     }
 }
 
-/* 900px以下ではハンバーガーメニューへ切り替える */
 @media screen and (max-width: 900px) {
     .site-header {
         padding: 6px 0;
@@ -1271,8 +1173,6 @@ body.is-navigation-open {
     }
 }
 
-/* ===== ご注意 ===== */
-
 .notice-section{
     width:min(var(--container-width),calc(100% - var(--container-padding) * 2));
     margin:0 auto;
@@ -1363,11 +1263,6 @@ body.is-navigation-open {
     }
 }
 
-
-/* ========================================
-   制作物アーカイブ見出し
-======================================== */
-
 .archive-heading {
     width: 100%;
     margin: 8px auto 52px;
@@ -1397,10 +1292,6 @@ body.is-navigation-open {
     line-height: 2;
     text-align: center;
 }
-
-/* ========================================
-   検索結果なし・リセットボタン
-======================================== */
 
 #emptyResetButton,
 .archive-button {
@@ -1466,12 +1357,6 @@ body.is-navigation-open {
     }
 }
 
-/* ========================================
-   最終調整
-   ご注意・検索外枠・フッター
-======================================== */
-
-/* 検索等の大外枠を少し薄く */
 .archive-toolbar {
     border-color: #e8c9aa;
     box-shadow:
@@ -1479,7 +1364,6 @@ body.is-navigation-open {
         0 0 0 1px rgba(232, 201, 170, 0.16);
 }
 
-/* ご注意を中央へ配置 */
 .notice-section {
     width: min(
         760px,
@@ -1516,7 +1400,6 @@ body.is-navigation-open {
     box-shadow: 0 5px 16px rgba(85, 55, 35, 0.05);
 }
 
-/* 「ご注意」の視認性を高める控えめなアイコン */
 .notice-toggle-button::before {
     display: inline-grid;
     flex: 0 0 24px;
@@ -1561,19 +1444,16 @@ body.is-navigation-open {
     margin-top: 10px;
 }
 
-/* 著作権表示とリンク群の間だけ少し余白を設ける */
 .site-footer__copyright {
     margin-top: 0;
     margin-bottom: 9px;
     line-height: 1.55;
 }
 
-/* ページトップリンクと著作権表示の間隔を控えめにする */
 .site-footer__top-link {
     margin-bottom: 6px;
 }
 
-/* 各リンク群同士の間隔はほぼなくす */
 .footer-navigation {
     margin: 0;
 }
@@ -1610,11 +1490,6 @@ body.is-navigation-open {
         text-align: left;
     }
 }
-
-/* ========================================
-   ページ上部へ戻るボタン
-   画像をそのまま使用
-======================================== */
 
 .page-top-button {
     position: fixed;
@@ -1694,7 +1569,6 @@ body.is-navigation-open {
     box-shadow: none;
 }
 
-/* 旧デザインの矢印・丸・装飾を完全に非表示 */
 .page-top-button > span,
 .page-top-button > svg,
 .page-top-button > img,
@@ -1711,7 +1585,6 @@ body.is-navigation-open {
     box-shadow: none !important;
 }
 
-/* タブレット */
 @media screen and (max-width: 900px) {
     .page-top-button {
         right: 16px;
@@ -1721,7 +1594,6 @@ body.is-navigation-open {
     }
 }
 
-/* スマートフォン */
 @media screen and (max-width: 700px) {
     .page-top-button {
         right: 12px;
