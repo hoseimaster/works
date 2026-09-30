@@ -58,11 +58,29 @@ ${imageTags}
 <meta name="twitter:card" content="${image ? 'summary_large_image' : 'summary'}">
 <meta name="twitter:title" content="${escape(title)}">
 <meta name="twitter:description" content="${escape(description)}">
+<style>
+    html, body { min-height: 100%; margin: 0; }
+    body {
+        display: grid;
+        min-height: 100vh;
+        min-height: 100dvh;
+        place-items: center;
+        background: linear-gradient(135deg, #fffaf5, #fff0e2);
+        color: #9b7254;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    .share-loading { padding: 24px; text-align: center; }
+    .share-loading p { margin: 0; font-size: 14px; letter-spacing: .06em; }
+    .share-fallback { font-size: 14px; line-height: 1.8; }
+    .share-fallback a { color: #a65e31; text-underline-offset: 4px; }
+</style>
 </head>
 <body>
-<h1>${escape(title)}</h1>
-<p>${escape(description)}</p>
-<p><a href="${escape(target)}">${library ? '電子版を閲覧する' : '制作物を表示する'}</a></p>
+<div class="share-loading" role="status" aria-live="polite"><p>読み込み中…</p></div>
+<noscript>
+    <style>.share-loading { display: none; }</style>
+    <div class="share-fallback"><a href="${escape(target)}">${library ? '電子版を閲覧する' : '制作物を表示する'}</a></div>
+</noscript>
 <script>location.replace(${redirect});</script>
 </body>
 </html>
