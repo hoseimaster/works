@@ -19,10 +19,8 @@
  * @licend The above is the entire license notice for the
  * JavaScript code in this page
  */
-/**
- * pdfjsVersion = 5.6.205
- * pdfjsBuild = ada343803
- */ const e = !(
+
+ const e = !(
         "object" != typeof process ||
         process + "" != "[object process]" ||
         process.versions.nw ||
@@ -8623,8 +8621,7 @@ class JpxImage {
         try {
             n = (
                 await import(
-                    /*webpackIgnore: true*/
-                    /*@vite-ignore*/
+
                     t
                 )
             ).default();
