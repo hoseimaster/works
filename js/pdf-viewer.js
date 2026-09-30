@@ -45,7 +45,7 @@ function build() {
   root.hidden = true;
   root.setAttribute('aria-label', '電子版閲覧');
   root.innerHTML = `
-    <header class="pdf-viewer__header">
+    <header class="pdf-viewer__header" id="pdf-reader-header">
       <button class="pdf-viewer__back" type="button" aria-label="ライブラリーを閉じる"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></button>
       <div class="pdf-viewer__heading">
         <span class="pdf-viewer__eyebrow">電子版ライブラリー</span>
@@ -60,6 +60,7 @@ function build() {
         <button class="pdf-viewer__zoom-in" type="button" aria-label="拡大">＋</button>
         <button class="pdf-viewer__reset" type="button">全体表示</button>
       </div>
+      <button class="pdf-viewer__header-toggle" type="button" aria-label="ヘッダーを隠す" aria-expanded="true" aria-controls="pdf-reader-header"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 15L12 8L19 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
     </header>
     <div class="pdf-viewer__stage">
       <div class="pdf-viewer__surface"><div class="pdf-viewer__paper"><canvas class="pdf-viewer__canvas" aria-label="PDFのページ"></canvas><canvas class="pdf-viewer__canvas" aria-label="PDFのページ" hidden></canvas></div></div>
@@ -70,6 +71,16 @@ function build() {
     <nav class="pdf-viewer__controls" aria-label="ページ送り"><button class="pdf-viewer__previous" type="button"><span aria-hidden="true">←</span> 前のページ</button><span class="pdf-viewer__counter" aria-live="polite"></span><button class="pdf-viewer__next" type="button">次のページ <span aria-hidden="true">→</span></button></nav>`;
   document.body.append(root);
   root.querySelector('.pdf-viewer__back').onclick = close;
+  root.querySelector('.pdf-viewer__header-toggle').onclick = () => {
+    const collapsed = root.classList.toggle('is-header-collapsed');
+    const button = root.querySelector('.pdf-viewer__header-toggle');
+    button.setAttribute('aria-expanded', String(!collapsed));
+    button.setAttribute('aria-label', collapsed ? 'ヘッダーを表示する' : 'ヘッダーを隠す');
+    zoom = 1;
+    pan = { x: 0, y: 0 };
+    applyTransform();
+    scheduleResize();
+  };
   root.querySelectorAll('.pdf-viewer__previous, .pdf-viewer__side-previous').forEach(button => {
     button.onclick = () => void turnPage(-1);
   });
@@ -389,6 +400,9 @@ async function route() {
     return;
   }
   build();
+  root.classList.remove('is-header-collapsed');
+  root.querySelector('.pdf-viewer__header-toggle').setAttribute('aria-expanded', 'true');
+  root.querySelector('.pdf-viewer__header-toggle').setAttribute('aria-label', 'ヘッダーを隠す');
   root.hidden = false;
   root.inert = false;
   root.removeAttribute('aria-hidden');
@@ -407,7 +421,7 @@ async function route() {
   root.querySelector('.pdf-viewer__reader-actions').hidden = true;
   root.querySelector('.pdf-viewer__title').textContent = '電子版を読み込み中';
   root.querySelectorAll('.pdf-viewer__counter, .pdf-viewer__mobile-counter').forEach(counter => { counter.textContent = ''; });
-  root.querySelectorAll('button:not(.pdf-viewer__back)').forEach(button => { button.disabled = true; });
+  root.querySelectorAll('button:not(.pdf-viewer__back):not(.pdf-viewer__header-toggle)').forEach(button => { button.disabled = true; });
   applyTransform();
   message('電子版を読み込み中…');
   try {
