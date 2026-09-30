@@ -1,14 +1,20 @@
-/**
- * 制作物アーカイブ
- * 制作物の選択肢・取得・検証管理
- */
-
-
 import { api } from "./supabase-api.js";
 
 export const PUBLICATIONS = [];
 
+let pendingPublications = null;
+
 export async function loadPublications() {
+    if (!pendingPublications) {
+        pendingPublications = fetchPublications().finally(() => {
+            pendingPublications = null;
+        });
+    }
+    await pendingPublications;
+    return getPublications();
+}
+
+async function fetchPublications() {
     const now = Date.now();
     const releaseLimit = encodeURIComponent(new Date(now).toISOString());
     const rows = await api(`/rest/v1/archive_publications?select=*&publication_permission=eq.true&or=(release_at.is.null,release_at.lte.${releaseLimit})&order=publish_date.desc,id.desc`);
@@ -35,17 +41,6 @@ export async function loadPublications() {
     return getPublications();
 }
 
-
-/* ========================================
-   フィルター選択肢
-======================================== */
-
-/**
- * 制作物の分類
- *
- * 制作物データのcategoryと
- * 完全に同じ表記にしてください。
- */
 export const PUBLICATION_CATEGORIES = [
     {
         value: "リーフレット",
@@ -69,13 +64,6 @@ export const PUBLICATION_CATEGORIES = [
     },
 ];
 
-
-/**
- * THE IDOLM@STERシリーズのブランド
- *
- * 制作物データのbrandsと
- * 完全に同じ表記にしてください。
- */
 export const BRAND_OPTIONS = [
     {
         value: "THE IDOLM@STER",
@@ -107,12 +95,6 @@ export const BRAND_OPTIONS = [
     }
 ];
 
-
-/**
- * Webサイトへの掲載状況
- *
- * 必要に応じて項目を追加・削除できます。
- */
 export const SITE_STATUS_OPTIONS = [
     {
         value: "電子版公開中",
@@ -124,20 +106,6 @@ export const SITE_STATUS_OPTIONS = [
     }
 ];
 
-
-
-/* ========================================
-   制作物取得
-======================================== */
-
-/**
- * 制作物一覧を取得します。
- *
- * 外部から元データを直接変更されないよう、
- * 複製した配列を返します。
- *
- * @returns {Array<object>}
- */
 export function getPublications() {
     return PUBLICATIONS
         .filter((publication) => {
@@ -154,23 +122,10 @@ export function getPublications() {
         );
 }
 
-
-/**
- * 制作物件数を取得します。
- *
- * @returns {number}
- */
 export function getPublicationCount() {
     return PUBLICATIONS.length;
 }
 
-
-/**
- * IDを指定して制作物を取得します。
- *
- * @param {*} publicationId
- * @returns {object|null}
- */
 export function getPublicationById(
     publicationId
 ) {
@@ -202,19 +157,6 @@ export function getPublicationById(
         : null;
 }
 
-
-/* ========================================
-   発行年取得
-======================================== */
-
-/**
- * 制作物データから発行年を取得します。
- *
- * 新しい年から古い年の順で返します。
- *
- * @param {Array<object>} publications
- * @returns {Array<number>}
- */
 export function getPublicationYears(
     publications = PUBLICATIONS
 ) {
@@ -246,13 +188,6 @@ export function getPublicationYears(
     );
 }
 
-
-/**
- * 発行日から年を取得します。
- *
- * @param {*} publishDate
- * @returns {number|null}
- */
 function getPublicationYear(
     publishDate
 ) {
@@ -278,21 +213,6 @@ function getPublicationYear(
         : null;
 }
 
-
-/* ========================================
-   データ検証
-======================================== */
-
-/**
- * 制作物データを検証します。
- *
- * @param {Array<object>} publications
- * @returns {{
- *   isValid: boolean,
- *   errors: Array<string>,
- *   warnings: Array<string>
- * }}
- */
 export function validatePublications(
     publications = PUBLICATIONS
 ) {
@@ -410,8 +330,6 @@ export function validatePublications(
                 warnings
             });
 
-
-
             validatePaths({
                 publication,
                 position,
@@ -428,11 +346,6 @@ export function validatePublications(
         warnings
     };
 }
-
-
-/* ========================================
-   必須項目検証
-======================================== */
 
 function validateRequiredText({
     publication,
@@ -452,11 +365,6 @@ function validateRequiredText({
         );
     }
 }
-
-
-/* ========================================
-   ID検証
-======================================== */
 
 function validateId({
     publication,
@@ -495,11 +403,6 @@ function validateId({
     }
 }
 
-
-/* ========================================
-   発行日検証
-======================================== */
-
 function validatePublishDate({
     publication,
     position,
@@ -525,7 +428,6 @@ function validatePublishDate({
         );
     }
 }
-
 
 function isValidDate(
     dateText
@@ -559,11 +461,6 @@ function isValidDate(
         date.getDate() === day
     );
 }
-
-
-/* ========================================
-   分類検証
-======================================== */
 
 function validateCategory({
     publication,
@@ -605,11 +502,6 @@ function validateCategory({
         );
     }
 }
-
-
-/* ========================================
-   ブランド検証
-======================================== */
 
 function validateBrands({
     publication,
@@ -662,11 +554,6 @@ function validateBrands({
     );
 }
 
-
-/* ========================================
-   インタビュー検証
-======================================== */
-
 function validateInterview({
     publication,
     position,
@@ -681,11 +568,6 @@ function validateInterview({
         );
     }
 }
-
-
-/* ========================================
-   掲載状況検証
-======================================== */
 
 function validateSiteStatuses({
     publication,
@@ -738,11 +620,6 @@ function validateSiteStatuses({
     );
 }
 
-
-/* ========================================
-   パス検証
-======================================== */
-
 function validatePaths({
     publication,
     position,
@@ -753,7 +630,6 @@ function validatePaths({
             publication.coverImage ?? ""
         ).trim();
 
-
     if (!coverImage) {
         warnings.push(
             `${position}件目の表紙画像が設定されていません。`
@@ -761,11 +637,6 @@ function validatePaths({
     }
 
 }
-
-
-/* ========================================
-   選択肢補助
-======================================== */
 
 function getOptionValues(
     options
@@ -792,11 +663,6 @@ function getOptionValues(
         })
         .filter(Boolean);
 }
-
-
-/* ========================================
-   データ複製
-======================================== */
 
 function clonePublication(
     publication
