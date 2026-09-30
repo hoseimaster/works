@@ -1,11 +1,5 @@
 import { publicationHash } from "./publication-links.js";
 
-/**
- * 制作物アーカイブ
- * 制作物一覧の描画処理
- */
-
-
 const IMAGE_PRELOAD_DELAY = 300;
 const IMAGE_PRELOAD_CONCURRENCY = 3;
 const IMAGE_PRELOAD_RETRY_DELAY = 120;
@@ -20,19 +14,8 @@ let imagePreloadFailedCount = 0;
 let imagePreloadStatusTimer = null;
 let imagePreloadQueue = [];
 const preloadedImagePaths = new Set();
+const publicationCards = new Map();
 
-
-/* ========================================
-   初期化
-======================================== */
-
-/**
- * 制作物一覧の描画機能を初期化します。
- *
- * @param {{
- *   store: object
- * }} options
- */
 export function initializeRenderer({
     store
 }) {
@@ -82,16 +65,6 @@ export function initializeRenderer({
     });
 }
 
-
-/* ========================================
-   DOM取得
-======================================== */
-
-/**
- * 描画処理で使用するDOM要素を取得します。
- *
- * @returns {object}
- */
 function getRenderElements() {
     return {
         publicationList:
@@ -136,19 +109,6 @@ function getRenderElements() {
     };
 }
 
-
-/* ========================================
-   全体描画
-======================================== */
-
-/**
- * アーカイブ表示を更新します。
- *
- * @param {{
- *   state: object,
- *   elements: object
- * }} options
- */
 function renderArchive({
     state,
     elements
@@ -206,64 +166,39 @@ function renderArchive({
     });
 }
 
-
-/* ========================================
-   制作物一覧
-======================================== */
-
-/**
- * 制作物カード一覧を描画します。
- *
- * @param {Array<object>} publications
- * @param {HTMLElement|null} container
- */
-function renderPublicationList(
-    publications,
-    container
-) {
-    if (!container) {
-        return;
-    }
-
-    if (
-        !Array.isArray(publications) ||
-        publications.length === 0
-    ) {
+function renderPublicationList(publications, container) {
+    if (!container) return;
+    if (!Array.isArray(publications) || publications.length === 0) {
         container.replaceChildren();
+        publicationCards.clear();
         container.hidden = true;
-
         return;
     }
 
-    const fragment =
-        document.createDocumentFragment();
-
-    publications.forEach(
-        (publication, index) => {
-            fragment.appendChild(
-                createPublicationCard(
-                    publication,
-                    index
-                )
-            );
-        }
-    );
-
-    container.replaceChildren(
-        fragment
-    );
-
+    const nextCards = new Map();
+    const today = new Date().toDateString();
+    let cursor = container.firstElementChild;
+    publications.forEach((publication, index) => {
+        const key = String(publication.id);
+        const signature = JSON.stringify([publication, Math.min(index, 4), today]);
+        const cached = publicationCards.get(key);
+        const card = cached?.signature === signature
+            ? cached.card
+            : createPublicationCard(publication, index);
+        if (card === cursor) cursor = cursor.nextElementSibling;
+        else container.insertBefore(card, cursor);
+        nextCards.set(key, { card, signature });
+    });
+    while (cursor) {
+        const next = cursor.nextElementSibling;
+        cursor.remove();
+        cursor = next;
+    }
+    publicationCards.clear();
+    nextCards.forEach((entry, key) => publicationCards.set(key, entry));
     container.hidden = false;
 }
 
-
-/**
- * 制作物カードを作成します。
- *
- * @param {object} publication
- * @param {number} index
- * @returns {HTMLElement}
- */
 function createPublicationCard(
     publication,
     index
@@ -308,17 +243,6 @@ function createPublicationCard(
     return article;
 }
 
-
-/* ========================================
-   表紙画像
-======================================== */
-
-/**
- * 表紙画像部分を作成します。
- *
- * @param {object} publication
- * @returns {HTMLElement}
- */
 function createPublicationImageArea(
     publication,
     index
@@ -342,18 +266,9 @@ function createPublicationImageArea(
             publication
         );
 
-    /*
-     * 読み込み前から画像領域を確保し、
-     * レイアウトのずれを防ぎます。
-     */
     image.width = 700;
     image.height = 990;
 
-    /*
-     * 先頭画像へ通信とデコードの優先度を集中させます。
-     * 2〜4枚目は遅延させず読み込みつつ、
-     * 先頭画像と帯域を奪い合わないよう通常優先度にします。
-     */
     const isFirstImage =
         Number.isInteger(index) &&
         index === 0;
@@ -375,10 +290,7 @@ function createPublicationImageArea(
                 ? "auto"
                 : "low";
 
-    image.decoding =
-        isFirstImage
-            ? "sync"
-            : "async";
+    image.decoding = "async";
 
     const imagePath =
         normalizeImagePath(
@@ -441,15 +353,6 @@ function createPublicationImageArea(
     return imageArea;
 }
 
-
-/* ========================================
-   表示外画像の段階的プリロード
-======================================== */
-
-/**
- * タブの表示状態が変わった際に、
- * 非表示中は停止し、復帰時にすぐ再開します。
- */
 function initializeImagePreloadRuntime() {
     if (
         document.documentElement.dataset
@@ -478,12 +381,6 @@ function initializeImagePreloadRuntime() {
     );
 }
 
-/**
- * 現在の検索結果に含まれる表示外画像を、
- * 初期表示を妨げない速度で並列プリロードします。
- *
- * @param {Array<object>} publications
- */
 function scheduleImagePreload(
     publications
 ) {
@@ -529,13 +426,6 @@ function scheduleImagePreload(
     );
 }
 
-/**
- * 画像パスを重複なしでキュー化します。
- * 先頭4件は表示用として優先読み込みされるため除外します。
- *
- * @param {Array<object>} publications
- * @returns {Array<string>}
- */
 function createImagePreloadQueue(
     publications
 ) {
@@ -567,11 +457,6 @@ function createImagePreloadQueue(
     return [...uniquePaths];
 }
 
-/**
- * プリロード処理の再開を予約します。
- *
- * @param {number} delay
- */
 function schedulePreloadPump(
     delay = 0
 ) {
@@ -596,10 +481,6 @@ function schedulePreloadPump(
         );
 }
 
-/**
- * 最大3枚まで同時に読み込みます。
- * 入力処理が待機している場合は、少し待ってから再開します。
- */
 function pumpImagePreloadQueue() {
     if (
         document.hidden ||
@@ -638,14 +519,6 @@ function pumpImagePreloadQueue() {
     }
 }
 
-/**
- * 画像を1枚読み込みます。
- *
- * @param {{
- *   path: string,
- *   generation: number
- * }} options
- */
 function preloadSingleImage({
     path,
     generation
@@ -740,12 +613,6 @@ function preloadSingleImage({
         path;
 }
 
-/**
- * ユーザー入力が待機中なら、
- * プリロード開始を少し遅らせます。
- *
- * @returns {boolean}
- */
 function shouldPauseForUserInput() {
     const isInputPending =
         navigator.scheduling
@@ -771,9 +638,6 @@ function shouldPauseForUserInput() {
     }
 }
 
-/**
- * 保留中の処理と古いキューを無効化します。
- */
 function cancelScheduledImagePreload() {
     imagePreloadGeneration++;
 
@@ -810,12 +674,6 @@ function cancelScheduledImagePreload() {
     }
 }
 
-/**
- * 「全○件」と「○〜○件を表示」の間に置く
- * 控えめなプリロード進捗線を生成します。
- *
- * @param {object} elements
- */
 function initializeImagePreloadProgress(
     elements
 ) {
@@ -912,9 +770,6 @@ function initializeImagePreloadProgress(
     updateImagePreloadProgress();
 }
 
-/**
- * 現在のプリロード進捗率を線へ反映します。
- */
 function updateImagePreloadProgress() {
     const progress =
         document.getElementById(
@@ -951,9 +806,6 @@ function updateImagePreloadProgress() {
     );
 }
 
-/**
- * プリロード対象がない場合や完了時に100%へ進めます。
- */
 function completeImagePreloadProgress() {
     const progress =
         document.getElementById(
@@ -978,12 +830,6 @@ function completeImagePreloadProgress() {
     );
 }
 
-
-/**
- * プリロード状態表示を更新します。
- *
- * @param {"loading"|"complete"|"error"} state
- */
 function updateImagePreloadStatus(
     state
 ) {
@@ -1078,10 +924,6 @@ function updateImagePreloadStatus(
     }
 }
 
-
-/**
- * プリロード状態表示を非表示にします。
- */
 function hideImagePreloadStatus() {
     const element =
         document.getElementById(
@@ -1104,11 +946,6 @@ function hideImagePreloadStatus() {
     element.textContent = "";
 }
 
-/**
- * 通信量節約設定や低速回線ではプリロードを停止します。
- *
- * @returns {boolean}
- */
 function shouldSkipImagePreload() {
     const connection =
         navigator.connection ??
@@ -1134,13 +971,6 @@ function shouldSkipImagePreload() {
     );
 }
 
-
-/**
- * 表紙画像の代替テキストを作成します。
- *
- * @param {object} publication
- * @returns {string}
- */
 function createCoverAltText(
     publication
 ) {
@@ -1150,16 +980,6 @@ function createCoverAltText(
     return `${title}の表紙`;
 }
 
-
-/**
- * 画像がない場合の代替画像を設定します。
- *
- * SVGをData URLとして生成するため、
- * 追加の画像ファイルは不要です。
- *
- * @param {HTMLImageElement} image
- * @param {*} title
- */
 function applyFallbackImage(
     image,
     title
@@ -1227,13 +1047,6 @@ function applyFallbackImage(
     );
 }
 
-
-/**
- * SVG内で使用する文字列を安全にします。
- *
- * @param {string} value
- * @returns {string}
- */
 function escapeSvgText(value) {
     return value
         .replaceAll("&", "&amp;")
@@ -1243,17 +1056,6 @@ function escapeSvgText(value) {
         .replaceAll("'", "&apos;");
 }
 
-
-/* ========================================
-   カード本文
-======================================== */
-
-/**
- * 制作物カード本文を作成します。
- *
- * @param {object} publication
- * @returns {HTMLElement}
- */
 function createPublicationContent(
     publication
 ) {
@@ -1339,13 +1141,6 @@ function createPublicationContent(
     return content;
 }
 
-
-/**
- * 発行日・分類を表示する領域を作成します。
- *
- * @param {object} publication
- * @returns {HTMLElement}
- */
 function createPublicationMetadata(
     publication
 ) {
@@ -1414,13 +1209,6 @@ function createPublicationMetadata(
     return metadata;
 }
 
-
-/**
- * ブランド一覧を作成します。
- *
- * @param {Array<*>} brands
- * @returns {HTMLElement|null}
- */
 function createBrandList(
     brands
 ) {
@@ -1468,13 +1256,6 @@ function createBrandList(
     return list;
 }
 
-
-/**
- * 制作物の特徴を示すバッジを作成します。
- *
- * @param {object} publication
- * @returns {HTMLElement|null}
- */
 function createPublicationBadges(
     publication
 ) {
@@ -1557,13 +1338,6 @@ function createPublicationBadges(
     return container;
 }
 
-
-/**
- * 説明文を作成します。
- *
- * @param {*} description
- * @returns {HTMLElement|null}
- */
 function createDescription(
     description
 ) {
@@ -1588,21 +1362,6 @@ function createDescription(
     return paragraph;
 }
 
-
-/* ========================================
-   検索結果件数
-======================================== */
-
-/**
- * 検索結果件数を更新します。
- *
- * @param {{
- *   visibleCount: number,
- *   totalCount: number,
- *   filters: object,
- *   elements: object
- * }} options
- */
 function updateResultSummary({
     visibleCount,
     totalCount,
@@ -1699,23 +1458,12 @@ function updateResultSummary({
             fragment
         );
 
-    /*
-     * replaceChildrenによりresultCountが
-     * 新しい要素へ置き換わるため参照を更新します。
-     */
     elements.resultCount =
         document.getElementById(
             "resultCount"
         );
 }
 
-
-/**
- * 検索条件が1つ以上あるか確認します。
- *
- * @param {object} filters
- * @returns {boolean}
- */
 function hasActiveFilters(
     filters = {}
 ) {
@@ -1744,19 +1492,6 @@ function hasActiveFilters(
     });
 }
 
-
-/* ========================================
-   該当なし・エラー表示
-======================================== */
-
-/**
- * 該当なし表示を更新します。
- *
- * @param {{
- *   isEmpty: boolean,
- *   element: HTMLElement|null
- * }} options
- */
 function updateEmptyMessage({
     isEmpty,
     element
@@ -1769,12 +1504,6 @@ function updateEmptyMessage({
         !isEmpty;
 }
 
-
-/**
- * 読み込み中表示を非表示にします。
- *
- * @param {HTMLElement|null} element
- */
 function hideLoadingMessage(
     element
 ) {
@@ -1785,12 +1514,6 @@ function hideLoadingMessage(
     element.hidden = true;
 }
 
-
-/**
- * エラー表示を非表示にします。
- *
- * @param {HTMLElement|null} element
- */
 function hideErrorMessage(
     element
 ) {
@@ -1801,16 +1524,6 @@ function hideErrorMessage(
     element.hidden = true;
 }
 
-
-/* ========================================
-   一覧内イベント
-======================================== */
-
-/**
- * 制作物一覧内のイベントを登録します。
- *
- * @param {object} elements
- */
 function initializePublicationListEvents(
     elements
 ) {
@@ -1861,20 +1574,6 @@ function initializePublicationListEvents(
     );
 }
 
-
-/* ========================================
-   データ整形
-======================================== */
-
-/**
- * 発行日からNEW表示の対象か判定します。
- *
- * 未来の日付は常に表示し、
- * 過去の日付は当日を含む31日以内だけ表示します。
- *
- * @param {*} value
- * @returns {boolean}
- */
 function shouldDisplayNewBadge(
     value
 ) {
@@ -1938,13 +1637,6 @@ function shouldDisplayNewBadge(
     return elapsedDays <= 31;
 }
 
-
-/**
- * 発行日を日本語表示へ変換します。
- *
- * @param {string} dateText
- * @returns {string}
- */
 function formatPublishDate(
     dateText
 ) {
@@ -1964,13 +1656,6 @@ function formatPublishDate(
     ].join("");
 }
 
-
-/**
- * YYYY-MM-DD形式か確認します。
- *
- * @param {*} value
- * @returns {boolean}
- */
 function isValidDateFormat(
     value
 ) {
@@ -2007,13 +1692,6 @@ function isValidDateFormat(
     );
 }
 
-
-/**
- * 文字列配列を正規化します。
- *
- * @param {*} values
- * @returns {Array<string>}
- */
 function normalizeStringArray(
     values
 ) {
@@ -2034,13 +1712,6 @@ function normalizeStringArray(
     ];
 }
 
-
-/**
- * 画像パスを整えます。
- *
- * @param {*} value
- * @returns {string}
- */
 function normalizeImagePath(
     value
 ) {
@@ -2056,19 +1727,6 @@ function normalizeImagePath(
     return path;
 }
 
-
-/* ========================================
-   描画判定
-======================================== */
-
-/**
- * 再描画判定用の署名を作成します。
- *
- * @param {Array<object>} visiblePublications
- * @param {Array<object>} allPublications
- * @param {object} filters
- * @returns {string}
- */
 function createRenderSignature(
     visiblePublications,
     allPublications,
@@ -2091,13 +1749,6 @@ function createRenderSignature(
     });
 }
 
-
-/**
- * 制作物一覧の署名を作成します。
- *
- * @param {Array<object>} publications
- * @returns {Array<string>}
- */
 function createPublicationSignature(
     publications
 ) {
@@ -2107,20 +1758,7 @@ function createPublicationSignature(
 
     return publications.map(
         (publication) => {
-            return [
-                publication.id,
-                publication.title,
-                publication.publishDate,
-                publication.thumbnailImage,
-                publication.coverImage,
-                publication.pdfPath,
-                publication.salesUrl,
-                publication.category,
-                publication.hasInterview,
-                publication.coverType,
-                ...(publication.brands ?? []),
-                ...(publication.siteStatuses ?? [])
-            ].join("|");
+            return JSON.stringify(publication);
         }
     );
 }
