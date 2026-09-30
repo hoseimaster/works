@@ -19,10 +19,8 @@
  * @licend The above is the entire license notice for the
  * JavaScript code in this page
  */
-/**
- * pdfjsVersion = 5.6.205
- * pdfjsBuild = ada343803
- */ const t = !(
+
+ const t = !(
         "object" != typeof process ||
         process + "" != "[object process]" ||
         process.versions.nw ||
@@ -12837,8 +12835,7 @@ class PDFWorker {
                 if (this.#pr) return this.#pr;
                 return (
                     await import(
-                        /*webpackIgnore: true*/
-                        /*@vite-ignore*/
+
                         this.workerSrc
                     )
                 ).WorkerMessageHandler;
