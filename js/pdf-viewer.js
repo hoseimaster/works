@@ -70,7 +70,10 @@ function build() {
     </div>
     <nav class="pdf-viewer__controls" aria-label="ページ送り"><button class="pdf-viewer__previous" type="button"><span aria-hidden="true">←</span> 前のページ</button><span class="pdf-viewer__counter" aria-live="polite"></span><button class="pdf-viewer__next" type="button">次のページ <span aria-hidden="true">→</span></button></nav>`;
   document.body.append(root);
-  root.querySelector('.pdf-viewer__back').onclick = close;
+  root.querySelector('.pdf-viewer__back').onclick = event => {
+    event.currentTarget.blur();
+    close();
+  };
   root.querySelector('.pdf-viewer__header-toggle').onclick = () => {
     const collapsed = root.classList.toggle('is-header-collapsed');
     const button = root.querySelector('.pdf-viewer__header-toggle');
@@ -376,7 +379,6 @@ async function route() {
     root.inert = false;
     root.removeAttribute('aria-hidden');
     if (pageNumber > documentHandle.numPages) await showPage(lastReadingPage);
-    root.querySelector('.pdf-viewer__back').focus({ preventScroll: true });
     return;
   }
   closeReadCompletion();
@@ -406,7 +408,6 @@ async function route() {
   root.hidden = false;
   root.inert = false;
   root.removeAttribute('aria-hidden');
-  root.querySelector('.pdf-viewer__back').focus({ preventScroll: true });
   root.classList.remove('is-dragging');
   document.body.classList.add('is-pdf-viewer-open');
   spread = false;
