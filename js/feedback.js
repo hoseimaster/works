@@ -65,7 +65,7 @@ export function showReadCompletion(book, onContinue) {
             <p class="reader-completion__title"></p><p>よろしければ、感想をお聞かせください。</p>
             <div class="feedback-actions"><button type="button" class="feedback-primary" data-action="feedback">感想はこちらから</button>
             <button type="button" data-action="share">シェアする</button></div>
-            <button type="button" class="feedback-text-button" data-action="continue">閲覧を続ける</button>`;
+            <button type="button" class="feedback-text-button" data-action="continue">読書を続ける</button>`;
         document.body.append(completionDialog);
     }
     completionDialog.querySelector('.reader-completion__title').textContent = book.title;
