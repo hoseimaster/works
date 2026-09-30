@@ -233,6 +233,7 @@ $('new').onclick = () => guarded(async () => {
   fillForm(form, null);
   form.elements.namedItem('id').value = assignedId;
   form.elements.namedItem('coverImage').value = `./cover/${id}.png`;
+  form.elements.namedItem('pdfPath').value = `./pdf/${id}.pdf`;
   $('editorTitle').textContent = '制作物を新規登録';
   $('delete').hidden = true;
   screen('editor');
