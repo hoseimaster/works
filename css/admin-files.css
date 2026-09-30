@@ -1,0 +1,251 @@
+#archiveAdminRoot .admin-file-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#archiveAdminRoot .admin-file-name input {
+    flex: 1;
+    min-width: 0;
+    margin-top: 0;
+}
+#archiveAdminRoot .admin-file-name button {
+    flex-shrink: 0;
+}
+#archiveAdminRoot .admin-upload-guide {
+    margin: 6px 0 16px;
+    color: #77563e;
+    font-size: .85rem;
+    line-height: 1.8;
+}
+#archiveAdminRoot .admin-upload-guide summary {
+    cursor: pointer;
+    color: #a65e31;
+    font-weight: 600;
+}
+#archiveAdminRoot .admin-upload-guide ol {
+    padding-left: 1.5em;
+    margin: 10px 0;
+}
+#archiveAdminRoot .admin-upload-guide li + li {
+    margin-top: 8px;
+}
+#archiveAdminRoot .admin-upload-guide a {
+    color: #a65e31;
+    text-underline-offset: 3px;
+}
+
+#archiveAdminRoot .admin-path-dialog {
+    box-sizing: border-box;
+    width: min(480px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    overflow: auto;
+    border: 1px solid #ead5c0;
+    border-radius: 18px;
+    padding: 24px;
+    background: #fffaf5;
+    color: #77563e;
+}
+#archiveAdminRoot .admin-path-dialog::backdrop {
+    background: rgb(35 25 18 / 45%);
+}
+#archiveAdminRoot .admin-path-dialog h2 {
+    margin: 0 0 12px;
+    font-size: 1.2rem;
+}
+#archiveAdminRoot .admin-path-dialog p {
+    font-size: .9rem;
+    line-height: 1.8;
+}
+#archiveAdminRoot .admin-path-current {
+    overflow-wrap: anywhere;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f5eadf;
+}
+#archiveAdminRoot .admin-path-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+#archiveAdminRoot .admin-pdf-part-row { margin: 8px 0; }
+#archiveAdminRoot #splitPdf { margin: 8px 0; }
+#archiveAdminRoot #addPdfPart { min-width: 44px; }
+
+#archiveAdminRoot #editForm .admin-editor-intro {
+    margin: 0 0 18px;
+    color: #8d725f;
+    font-size: .88rem;
+    line-height: 1.8;
+}
+#archiveAdminRoot #editForm .admin-editor-section {
+    margin-bottom: 18px;
+    padding: 22px;
+    border: 1px solid #ecdfd2;
+    border-radius: 16px;
+    background: #fffdf9;
+}
+#archiveAdminRoot #editForm .admin-editor-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    color: #785236;
+    font-size: 1rem;
+}
+#archiveAdminRoot #editForm .admin-editor-section h3 span {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f9e6d3;
+    color: #a06536;
+    font-size: .8rem;
+}
+#archiveAdminRoot .admin-pdf-mode-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    margin: 10px 0 18px;
+    border-radius: 12px;
+    background: #fcf0e3;
+}
+#archiveAdminRoot .admin-pdf-mode-bar strong {
+    color: #815331;
+    font-size: .95rem;
+}
+#archiveAdminRoot .admin-pdf-mode-bar .note {
+    margin: 5px 0 0;
+}
+#archiveAdminRoot .admin-pdf-mode-bar #splitPdf {
+    flex-shrink: 0;
+    margin: 0;
+    font-size: .8rem;
+}
+#archiveAdminRoot .admin-pdf-parts-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+#archiveAdminRoot #pdfPartsCount {
+    color: #98775c;
+    font-size: .8rem;
+}
+#archiveAdminRoot .admin-pdf-part-card {
+    padding: 14px;
+    margin: 12px 0;
+    border: 1px solid #eadccc;
+    border-radius: 12px;
+    background: #fff;
+}
+#archiveAdminRoot .admin-pdf-part-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: .85rem;
+}
+#archiveAdminRoot .admin-pdf-part-heading strong {
+    overflow-wrap: anywhere;
+    min-width: 0;
+}
+#archiveAdminRoot .admin-pdf-part-number {
+    padding: 4px 8px;
+    border-radius: 7px;
+    background: #f7e8d8;
+    color: #a06436;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+#archiveAdminRoot #addPdfPart {
+    width: 100%;
+    margin: 4px 0 8px;
+}
+#archiveAdminRoot .admin-pdf-upload-reminder {
+    margin: 18px 0 12px;
+    padding: 12px 14px;
+    border-left: 3px solid #dbb17a;
+    background: #faf3e9;
+    font-size: .83rem;
+    line-height: 1.7;
+}
+#archiveAdminRoot .admin-pdf-upload-reminder p {
+    margin: 5px 0 0;
+}
+#archiveAdminRoot #editForm .admin-upload-guide {
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    background: #f7f3ee;
+}
+#archiveAdminRoot #editForm .admin-editor-actions {
+    padding-top: 12px;
+    border-top: 1px solid #eadccc;
+}
+@media (max-width: 700px) {
+    #archiveAdminRoot #editForm .admin-editor-section {
+        padding: 16px 12px;
+        border-radius: 12px;
+    }
+    #archiveAdminRoot .admin-pdf-mode-bar {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px;
+        gap: 10px;
+    }
+    #archiveAdminRoot .admin-file-name {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    #archiveAdminRoot .admin-file-name input {
+        flex-basis: 100%;
+        width: 100%;
+    }
+    #archiveAdminRoot .admin-file-name button {
+        font-size: .78rem;
+    }
+    #archiveAdminRoot .admin-pdf-part-card {
+        padding: 12px;
+    }
+}
+
+#archiveAdminRoot #editForm .admin-file-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#archiveAdminRoot #editForm .admin-file-name input,
+#archiveAdminRoot #editForm .admin-file-name .admin-button {
+    box-sizing: border-box;
+    height: 44px;
+    min-height: 44px;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: center;
+}
+#archiveAdminRoot #editForm .admin-file-name .admin-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+#archiveAdminRoot .admin-pdf-support-action {
+    margin: 0 0 18px;
+}
+#archiveAdminRoot .admin-pdf-support-action a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+#archiveAdminRoot .admin-pdf-support-action .note {
+    margin: 8px 0 0;
+}
