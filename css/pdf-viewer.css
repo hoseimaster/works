@@ -1,772 +1,305 @@
-/**
- * 制作物アーカイブ
- * 制作物プレビューモーダル専用スタイル
- */
-
-/* ========================================
-   モーダル全体
-======================================== */
-
-.preview-modal {
+.pdf-viewer[hidden], .pdf-viewer canvas[hidden] {
+    display: none !important;
+}
+.pdf-viewer {
+    --pdf-accent: #df884e;
+    --pdf-ink: #5d4838;
     position: fixed;
-    z-index: 1200;
     inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    box-sizing: border-box;
+    z-index: 3000;
     display: grid;
-    padding: 28px;
-    opacity: 0;
-    visibility: hidden;
-    transition:
-        opacity 0.18s ease,
-        visibility 0.18s ease;
-    place-items: center;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    background: linear-gradient(145deg, #fff8f0, #f7eee4 65%, #f5eee7);
+    color: var(--pdf-ink);
+    font-family: inherit;
 }
-
-.preview-modal[hidden] {
-    display: none;
+.pdf-viewer *, .pdf-viewer *::before, .pdf-viewer *::after {
+    box-sizing: border-box;
 }
-
-.preview-modal.is-open {
-    opacity: 1;
-    visibility: visible;
-}
-
-.preview-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgb(24 22 20 / 62%);
-    backdrop-filter: blur(2px);
-}
-
-.preview-modal__panel {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    width: min(1080px, 94vw);
-    max-height: min(860px, 90vh);
-    border: 1px solid rgb(244 122 36 / 18%);
-    border-radius: 22px;
-    background: #fffdf9;
-    box-shadow: 0 30px 90px rgb(0 0 0 / 30%);
-    opacity: 0;
-    transform: translateY(12px) scale(0.99);
-    transition:
-        opacity 0.18s ease,
-        transform 0.18s ease;
-}
-
-.preview-modal.is-open
-.preview-modal__panel {
-    opacity: 1;
-    transform: none;
-}
-
-.preview-modal__panel.is-changing
-.preview-modal__content {
-    opacity: 0.45;
-    transform: translateY(3px);
-}
-
-body.is-preview-modal-open {
-    overflow: hidden;
-}
-
-/* ========================================
-   閉じるボタン
-======================================== */
-
-.preview-modal__close {
-    position: absolute;
-    z-index: 4;
-    top: 14px;
-    right: 14px;
+.pdf-viewer__header {
     display: grid;
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: rgb(255 255 255 / 92%);
-    color: #4a4a4a;
-    font: inherit;
-    font-size: 1.45rem;
-    cursor: pointer;
-    box-shadow: 0 5px 16px rgb(0 0 0 / 12%);
-    transition:
-        background-color 0.18s ease,
-        color 0.18s ease,
-        transform 0.18s ease;
-    place-items: center;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 22px;
+    padding: 16px max(22px, env(safe-area-inset-right)) 16px max(22px, env(safe-area-inset-left));
+    padding-top: max(16px, env(safe-area-inset-top));
+    background: #fffdfaf5;
+    border-bottom: 1px solid #eadbca;
+    box-shadow: 0 3px 18px #80603e08;
+    z-index: 2;
 }
-
-.preview-modal__close:hover {
-    background: #ffffff;
-    color: #e66f28;
-    transform: rotate(4deg);
-}
-
-.preview-modal__close:focus-visible {
-    outline: 3px solid rgb(244 122 36 / 28%);
-    outline-offset: 3px;
-}
-
-/* ========================================
-   通常版：左右2カラム
-   PC・横向きタブレット・横向きスマートフォン
-======================================== */
-
-.preview-modal__content {
-    display: grid;
-    grid-template-columns:
-        minmax(320px, 44%)
-        minmax(0, 1fr);
-    gap: 34px;
-    align-items: stretch;
-    min-height: 620px;
-    padding: 34px;
-    transition:
-        opacity 0.12s ease,
-        transform 0.12s ease;
-}
-
-.preview-modal__visual {
-    display: flex;
+.pdf-viewer__heading {
     min-width: 0;
+}
+.pdf-viewer__eyebrow {
+    display: block;
+    margin-bottom: 4px;
+    color: #b68a66;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+.pdf-viewer__title {
+    margin: 0;
+    color: #584332;
+    font-size: clamp(.95rem, 1.35vw, 1.2rem);
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+.pdf-viewer button {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    border: 1px solid #e8d4c0;
+    border-radius: 12px;
+    padding: 9px 15px;
+    background: #fffaf5;
+    color: #8d6445;
+    font: inherit;
+    font-size: .85rem;
+    font-weight: 650;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background .15s, border-color .15s, color .15s;
 }
-
-.preview-modal__image-area {
+.pdf-viewer button:hover:not(:disabled) {
+    background: #ffecd9;
+    border-color: #e7b48b;
+    color: #a75d2b;
+}
+.pdf-viewer button:focus-visible {
+    outline: 3px solid #edb17b80;
+    outline-offset: 3px;
+}
+.pdf-viewer button:disabled {
+    opacity: .35;
+    cursor: default;
+}
+.pdf-viewer__back {
+    background: #fff !important;
+    white-space: nowrap;
+}
+.pdf-viewer__zoom-tools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid #eadbca;
+    border-radius: 15px;
+    background: #f9f3ec;
+}
+.pdf-viewer__zoom-tools button {
+    width: 38px;
+    min-height: 38px;
+    padding: 0;
+    border-color: transparent;
+    background: transparent;
+    font-size: 20px;
+}
+.pdf-viewer__zoom-value {
+    min-width: 58px;
+    color: #8a6e56;
+    font-size: .78rem;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+.pdf-viewer__zoom-tools .pdf-viewer__reset {
+    width: auto;
+    margin-left: 4px;
+    padding: 0 13px;
+    border-color: #ead6c2;
+    background: #fff;
+    font-size: .75rem;
+}
+.pdf-viewer__stage {
     position: relative;
+    min-width: 0;
+    min-height: 0;
     overflow: hidden;
-    width: min(100%, 430px);
-    aspect-ratio: 7 / 9.9;
-    border-radius: 14px;
-    background: #f0f0f0;
-    box-shadow: 0 16px 38px rgb(35 35 35 / 18%);
+    background-image: radial-gradient(#bd9b7526 .7px, transparent .7px);
+    background-size: 18px 18px;
 }
-
-.preview-modal__image {
+.pdf-viewer__surface {
+    position: absolute;
+    inset: 22px 26px 42px;
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.pdf-viewer.is-zoomed .pdf-viewer__surface {
+    cursor: grab;
+}
+.pdf-viewer.is-dragging.is-zoomed .pdf-viewer__surface {
+    cursor: grabbing;
+}
+.pdf-viewer__paper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+    background: white;
+    box-shadow: 0 7px 28px #6f4f2f24, 0 1px 4px #6f4f2f1a;
+    will-change: transform;
+}
+.pdf-viewer__canvas {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
-
-.preview-modal__new {
+.pdf-viewer__message {
     position: absolute;
-    z-index: 2;
-    top: 12px;
-    left: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 24px;
-    padding: 4px 9px;
-    border-radius: 999px;
-    background: rgb(244 122 36 / 90%);
-    color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0.08em;
-}
-
-.preview-modal__new[hidden] {
-    display: none;
-}
-
-/* ========================================
-   右側情報
-======================================== */
-
-.preview-modal__information {
-    display: flex;
-    min-width: 0;
-    min-height: 0;
-    flex-direction: column;
-    padding: 20px 10px 6px 0;
-}
-
-.preview-modal__header-information {
-    flex: 0 0 auto;
-    max-height: none;
-    padding-right: 52px;
-    overflow: visible;
-}
-
-.preview-modal__metadata {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px 10px;
-    margin-bottom: 10px;
-}
-
-.preview-modal__date {
-    margin: 0;
-    color: #8a8179;
-    font-size: 0.82rem;
-    line-height: 1.6;
-}
-
-.preview-modal__title {
-    margin: 0;
-    color: #252525;
-    font-size: clamp(1.18rem, 1.65vw, 1.62rem);
-    font-weight: 750;
-    line-height: 1.36;
-    letter-spacing: 0.015em;
-    overflow-wrap: anywhere;
-}
-
-.preview-modal__category {
-    display: inline-flex;
-    align-items: center;
-    align-self: flex-start;
-    min-height: 24px;
-    margin-top: 0;
-    padding: 2px 8px;
-    border: 1px solid #e8b98f;
-    border-radius: 999px;
-    background: #fff4ea;
-    color: #915528;
-    font-size: 0.68rem;
-    font-weight: 700;
-}
-
-.preview-modal__category[hidden] {
-    display: none;
-}
-
-.preview-modal__brands,
-.preview-modal__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin: 10px 0 0;
-    padding: 0;
-    list-style: none;
-}
-
-.preview-modal__brands[hidden],
-.preview-modal__badges[hidden] {
-    display: none;
-}
-
-.preview-modal__brand,
-.preview-modal__badge {
-    padding: 3px 7px;
-    border: 1px solid #e5e2df;
-    border-radius: 7px;
-    background: #f8f7f6;
-    color: #666666;
-    font-size: 0.66rem;
-    line-height: 1.3;
-}
-
-.preview-modal__badge {
-    border-color: #e5e2df;
-    background: #f8f7f6;
-    color: #666666;
-}
-
-.preview-modal__badge--interview {
-    border-color: transparent;
-    background: #fff0cc;
-    color: #8f5a00;
-}
-
-.preview-modal__badge--status {
-    border-color: transparent;
-    background: #eaf4ff;
-    color: #286b9e;
-}
-
-.preview-modal__badge--cover {
-    border-color: transparent;
-    background: #f1ecff;
-    color: #6743a2;
-}
-
-.preview-modal__description {
-    flex: 1 1 0;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin: 20px 0 0;
-    padding-right: 10px;
-    color: #666666;
-    font-size: 0.92rem;
-    line-height: 1.9;
-    white-space: pre-wrap;
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* ========================================
-   前後移動・詳細ボタン
-======================================== */
-
-.preview-modal__actions {
-    display: grid;
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(150px, 1.2fr)
-        minmax(0, 1fr);
-    gap: 10px;
-    margin-top: 16px;
-    padding-top: 0;
-}
-
-.preview-modal__navigation-button {
-    display: inline-flex;
-    gap: 9px;
-    align-items: center;
-    justify-content: center;
-    min-height: 52px;
-    padding: 10px 16px;
-    border: 1px solid #ded9d4;
-    border-radius: 12px;
-    background: #ffffff;
-    color: #555555;
-    font: inherit;
-    font-size: 0.86rem;
-    font-weight: 650;
-    cursor: pointer;
-    box-shadow: 0 5px 14px rgb(55 45 35 / 6%);
-    transition:
-        border-color 0.18s ease,
-        background-color 0.18s ease,
-        color 0.18s ease,
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .preview-modal__navigation-button:hover:not(:disabled) {
-        border-color: #e7a87a;
-        background: #fff7f0;
-        color: #b95f1d;
-        box-shadow: 0 8px 18px rgb(201 119 55 / 13%);
-        transform: translateY(-1px);
-    }
-}
-
-.preview-modal__navigation-button:active:not(:disabled) {
-    box-shadow: none;
-    transform: none;
-}
-
-@media (hover: none), (pointer: coarse) {
-    .preview-modal__navigation-button {
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .preview-modal__navigation-button:active:not(:disabled),
-    .preview-modal__navigation-button.is-tapped:not(:disabled) {
-        border-color: #e7a87a;
-        background: #fff7f0;
-        color: #b95f1d;
-        box-shadow: none;
-        transform: none;
-    }
-
-    .preview-modal__navigation-button:not(:active):not(.is-tapped):not(:disabled),
-    .preview-modal__navigation-button:focus:not(:focus-visible):not(.is-tapped):not(:disabled) {
-        border-color: #ded9d4;
-        background: #ffffff;
-        color: #555555;
-        box-shadow: 0 5px 14px rgb(55 45 35 / 6%);
-        outline: none;
-        transform: none;
-    }
-}
-
-.preview-modal__navigation-button:focus-visible {
-    outline: 3px solid rgb(244 122 36 / 22%);
-    outline-offset: 3px;
-}
-
-.preview-modal__navigation-button:disabled {
-    border-color: #e9e7e5;
-    background: #f5f4f3;
-    color: #b4b1ae;
-    cursor: default;
-    box-shadow: none;
-}
-
-.preview-modal__detail-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    top: 50%;
+    left: 0;
     width: 100%;
-    min-width: 0;
-    min-height: 52px;
-    padding: 8px 14px;
-    border: 1px solid #e98748;
-    border-radius: 10px;
-    background: #ed965d;
-    color: #ffffff;
-    font-size: 0.86rem;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 7px 16px rgb(226 139 83 / 19%);
-    transition:
-        border-color 0.18s ease,
-        background-color 0.18s ease,
-        box-shadow 0.18s ease,
-        transform 0.18s ease;
-}
-
-.preview-modal__detail-button:hover {
-    border-color: #df7e40;
-    background: #df8750;
-    box-shadow: 0 9px 20px rgb(226 139 83 / 24%);
-    transform: translateY(-1px);
-}
-
-.preview-modal__detail-button:active {
-    box-shadow: none;
-    transform: none;
-}
-
-.preview-modal__detail-button:focus-visible {
-    outline: 3px solid rgb(244 122 36 / 25%);
-    outline-offset: 3px;
-}
-
-.preview-modal__detail-button.is-disabled,
-.preview-modal__detail-button[aria-disabled="true"] {
-    border-color: #d8d5d2;
-    background: #efeeec;
-    color: #999591;
-    cursor: default;
-    box-shadow: none;
+    padding: 16px;
+    transform: translateY(-50%);
+    text-align: center;
+    overflow-wrap: anywhere;
+    color: #947456;
     pointer-events: none;
-    transform: none;
 }
-
-/* ========================================
-   横向きの小型画面調整
-   横向きスマートフォン・小型タブレット
-======================================== */
-
-@media screen and (orientation: landscape) and (max-height: 760px) {
-    .preview-modal {
-        padding: 14px;
-    }
-
-    .preview-modal__panel {
-        width: min(980px, 96vw);
-        max-height: 94dvh;
-    }
-
-    .preview-modal__content {
-        grid-template-columns:
-            minmax(220px, 38%)
-            minmax(0, 1fr);
-        gap: 24px;
-        min-height: min(560px, calc(94dvh - 28px));
-        max-height: 94dvh;
-        padding: 24px;
-    }
-
-    .preview-modal__image-area {
-        width: min(100%, 350px);
-    }
-
-    .preview-modal__information {
-        padding-top: 8px;
-    }
-
-    .preview-modal__description {
-        margin-top: 14px;
-        font-size: 0.86rem;
-        line-height: 1.75;
-    }
-
-    .preview-modal__navigation-button {
-        min-height: 46px;
-    }
+.pdf-viewer__hint {
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+    left: 12px;
+    margin: 0;
+    color: #a18c76;
+    font-size: .7rem;
+    text-align: center;
+    pointer-events: none;
 }
-
-/* ========================================
-   縦型画面版
-   スマートフォン・縦向きタブレット
-======================================== */
-
-@media screen and (orientation: portrait) and (max-width: 1024px) {
-    .preview-modal {
-        align-items: center;
-        padding:
-            max(10px, env(safe-area-inset-top))
-            max(10px, env(safe-area-inset-right))
-            max(10px, env(safe-area-inset-bottom))
-            max(10px, env(safe-area-inset-left));
+.pdf-viewer__controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 18px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid #eadbca;
+    background: #fffdfaf5;
+}
+.pdf-viewer__controls button {
+    min-width: 136px;
+    border-radius: 999px;
+}
+.pdf-viewer__counter {
+    min-width: 90px;
+    color: #9a7758;
+    font-size: .85rem;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+.pdf-viewer__mobile-meta, .pdf-viewer__mobile-controls, .pdf-viewer__hint-mobile {
+    display: none;
+}
+body.is-pdf-viewer-open {
+    overflow: hidden;
+}
+@media (max-width: 700px), (max-height: 500px) {
+    .pdf-viewer {
+        grid-template-rows: auto minmax(0, 1fr);
     }
-
-    .preview-modal__panel {
-        width: 100%;
-        max-height:
-            calc(
-                100dvh -
-                max(20px, env(safe-area-inset-top)) -
-                max(20px, env(safe-area-inset-bottom))
-            );
-        border-radius: 16px;
+    .pdf-viewer__header {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+        gap: 10px;
+        padding: 12px max(12px, env(safe-area-inset-right)) 10px max(12px, env(safe-area-inset-left));
+        padding-top: max(12px, env(safe-area-inset-top));
+        max-height: 30vh;
+        max-height: 30dvh;
+        overflow: auto;
     }
-
-    .preview-modal__content {
-        display: grid;
-        grid-template-columns:
-            minmax(120px, 40%)
-            minmax(0, 1fr);
-        grid-template-rows:
-            auto
-            minmax(100px, 1fr)
-            auto;
-        gap: 14px 16px;
-        width: 100%;
-        height:
-            min(
-                760px,
-                calc(100dvh - 40px)
-            );
-        min-height: 0;
-        max-height: none;
-        padding: 44px 16px 16px;
-        overflow: hidden;
-    }
-
-    .preview-modal__visual {
-        grid-column: 1;
-        grid-row: 1;
-        align-self: start;
-        min-width: 0;
-    }
-
-    .preview-modal__image-area {
-        width: 100%;
-        max-width: none;
-        border-radius: 10px;
-        box-shadow:
-            0 8px 20px
-            rgb(35 35 35 / 14%);
-    }
-
-    .preview-modal__information {
-        display: contents;
-        min-width: 0;
-        min-height: 0;
+    .pdf-viewer__back {
+        width: 46px;
+        min-height: 44px;
         padding: 0;
+        font-size: 22px;
     }
-
-    .preview-modal__header-information {
-        grid-column: 2;
-        grid-row: 1;
-        align-self: start;
-        min-width: 0;
-        max-height: none;
-        padding: 0 34px 0 0;
-        overflow: visible;
+    .pdf-viewer__back span:last-child {
+        display: none;
     }
-
-    .preview-modal__metadata {
-        margin-bottom: 6px;
+    .pdf-viewer__eyebrow {
+        margin-bottom: 3px;
+        font-size: .55rem;
     }
-
-    .preview-modal__date {
-        margin-bottom: 0;
-        font-size: 0.72rem;
-        line-height: 1.4;
+    .pdf-viewer__title {
+        font-size: clamp(.75rem, 3.4vw, .95rem);
+        line-height: 1.45;
     }
-
-    .preview-modal__title {
-        font-size: clamp(
-            0.94rem,
-            3.2vw,
-            1.2rem
-        );
-        line-height: 1.4;
+    .pdf-viewer__zoom-tools, .pdf-viewer__controls, .pdf-viewer__hint-desktop {
+        display: none;
     }
-
-    .preview-modal__category {
-        min-height: 20px;
-        margin-top: 0;
-        padding: 2px 6px;
-        font-size: 0.58rem;
-    }
-
-    .preview-modal__brands,
-    .preview-modal__badges {
-        gap: 4px;
-        margin-top: 6px;
-    }
-
-    .preview-modal__brand,
-    .preview-modal__badge {
-        padding: 2px 5px;
-        font-size: 0.56rem;
-        line-height: 1.25;
-    }
-
-    .preview-modal__description {
-        grid-column: 1 / -1;
-        grid-row: 2;
-        min-width: 0;
-        min-height: 0;
-        margin: 2px 0 0;
-        padding:
-            12px
-            8px
-            12px
-            0;
-        border-top:
-            1px solid
-            rgb(0 0 0 / 8%);
-        overflow-x: hidden;
-        overflow-y: auto;
-        font-size: 0.84rem;
-        line-height: 1.75;
-        white-space: pre-wrap;
-        overscroll-behavior: contain;
-        scrollbar-gutter: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .preview-modal__actions {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        grid-template-columns:
-            minmax(0, 0.8fr)
-            minmax(138px, 1.4fr)
-            minmax(0, 0.8fr);
-        gap: 7px;
-        margin-top: 0;
-    }
-
-    .preview-modal__detail-button {
-        min-width: 0;
-        min-height: 44px;
-        padding: 7px 8px;
-        font-size: 0.72rem;
-    }
-
-    .preview-modal__navigation-button {
-        min-height: 44px;
-        padding: 7px 6px;
-        font-size: 0.72rem;
-    }
-
-    .preview-modal__close {
-        top: 8px;
-        right: 8px;
-        width: 36px;
-        height: 36px;
-        font-size: 1.2rem;
-    }
-
-    .preview-modal__new {
-        top: 7px;
-        left: 7px;
-        min-height: 20px;
-        padding: 3px 7px;
-        font-size: 0.58rem;
-    }
-}
-
-/* ========================================
-   縦型スマートフォン微調整
-======================================== */
-
-@media screen and (orientation: portrait) and (max-width: 700px) {
-    .preview-modal {
+    .pdf-viewer__mobile-meta {
+        display: flex;
         align-items: center;
-        padding:
-            max(10px, env(safe-area-inset-top))
-            max(10px, env(safe-area-inset-right))
-            max(10px, env(safe-area-inset-bottom))
-            max(10px, env(safe-area-inset-left));
+        gap: 12px;
+        margin-top: 4px;
     }
-
-    .preview-modal__panel {
-        width: 100%;
-        max-height:
-            calc(
-                100dvh -
-                max(20px, env(safe-area-inset-top)) -
-                max(20px, env(safe-area-inset-bottom))
-            );
-        border: 1px solid rgb(244 122 36 / 18%);
-        border-radius: 18px;
+    .pdf-viewer__mobile-counter {
+        color: #a28367;
+        font-size: .7rem;
+        font-variant-numeric: tabular-nums;
     }
-
-    .preview-modal__content {
-        grid-template-columns:
-            minmax(105px, 39%)
-            minmax(0, 1fr);
-        gap: 12px 14px;
-        height:
-            min(
-                760px,
-                calc(
-                    100dvh -
-                    max(20px, env(safe-area-inset-top)) -
-                    max(20px, env(safe-area-inset-bottom))
-                )
-            );
-        padding:
-            44px
-            max(16px, env(safe-area-inset-right))
-            max(16px, env(safe-area-inset-bottom))
-            max(16px, env(safe-area-inset-left));
+    .pdf-viewer .pdf-viewer__mobile-reset {
+        min-height: 28px;
+        border: 0;
+        padding: 2px 8px;
+        background: #f5eadd;
+        border-radius: 999px;
+        font-size: .65rem;
     }
-
-    .preview-modal__title {
-        font-size: clamp(
-            0.9rem,
-            4vw,
-            1.08rem
-        );
+    .pdf-viewer__surface {
+        inset: 12px max(8px, env(safe-area-inset-right)) max(32px, calc(env(safe-area-inset-bottom) + 24px)) max(8px, env(safe-area-inset-left));
     }
-
-    .preview-modal__description {
-        font-size: 0.82rem;
+    .pdf-viewer__mobile-controls {
+        display: block;
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+    .pdf-viewer__mobile-controls button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        border-color: #dfcbb580;
+        background: #fffaf0c2;
+        color: #a68160;
+        font-size: 21px;
+        font-weight: 400;
+        box-shadow: 0 2px 10px #80603e0d;
+        pointer-events: auto;
+    }
+    .pdf-viewer__side-previous {
+        left: max(5px, env(safe-area-inset-left));
+    }
+    .pdf-viewer__side-next {
+        right: max(5px, env(safe-area-inset-right));
+    }
+    .pdf-viewer__mobile-controls button:disabled {
+        opacity: .18;
+    }
+    .pdf-viewer__hint-mobile {
+        display: inline;
+    }
+    .pdf-viewer__hint {
+        bottom: max(8px, env(safe-area-inset-bottom));
+        font-size: .6rem;
     }
 }
-
-/* ========================================
-   極小画面
-======================================== */
-
-@media screen and (orientation: portrait) and (max-width: 380px) {
-    .preview-modal__content {
-        grid-template-columns:
-            minmax(96px, 37%)
-            minmax(0, 1fr);
-        gap: 10px 12px;
-        padding-right: 12px;
-        padding-left: 12px;
-    }
-
-    .preview-modal__header-information {
-        padding-right: 30px;
-    }
-
-}
-
-/* ========================================
-   アニメーション抑制
-======================================== */
-
 @media (prefers-reduced-motion: reduce) {
-    .preview-modal,
-    .preview-modal__panel,
-    .preview-modal__content,
-    .preview-modal__close,
-    .preview-modal__navigation-button,
-    .preview-modal__detail-button {
+    .pdf-viewer button {
         transition: none;
     }
 }
