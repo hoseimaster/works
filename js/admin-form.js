@@ -51,6 +51,8 @@ function syncPdfInput(form) {
   form.elements.namedItem('pdfPath').disabled = !enabled;
   form.elements.namedItem('pdfPath').required = enabled;
   $('generatePdfPath').disabled = !enabled;
+  form.elements.namedItem('pdfBinding').disabled = !enabled;
+  form.elements.namedItem('pdfBinding').required = enabled;
   const selling = status === '電子版販売中';
   $('salesUrlField').hidden = !selling;
   form.elements.namedItem('salesUrl').disabled = !selling;
@@ -69,6 +71,7 @@ export function fillForm(form, item) {
   }
   form.elements.namedItem('coverImage').value = x.coverImage ?? '';
   form.elements.namedItem('pdfPath').value = x.pdfPath ?? '';
+  form.elements.namedItem('pdfBinding').value = x.pdfBinding || 'left';
   form.elements.namedItem('id').readOnly = true;
   form.querySelectorAll('input[name=brands]').forEach(input => {
     input.checked = (x.brands || []).includes(input.value);
@@ -100,6 +103,8 @@ export function readForm(form, { id }) {
     throw Error('PDFのパスは ./pdf/ から始まるリポジトリ内の .pdf ファイルを指定してください。');
   }
 
+  const pdfBinding = get('pdfBinding');
+  if (!['right', 'left', 'none'].includes(pdfBinding)) throw Error('PDFの綴じ方を選択してください。');
   const title = get('title');
   const publishDate = get('publishDate');
   const category = get('category');
@@ -148,7 +153,7 @@ export function readForm(form, { id }) {
     description,
     previewDescription: get('previewDescription'),
     coverImage,
-    pdfPath,
+    pdfPath, pdfBinding,
     hasInterview: interview.value === 'yes',
     publicationPermission: mode !== 'hold',
     releaseAt, mode
@@ -169,6 +174,7 @@ export function toDb(x) {
     preview_description: x.previewDescription,
     cover_path: x.coverImage,
     pdf_path: x.pdfPath || null,
+    pdf_binding: x.pdfBinding || 'left',
     has_interview: x.hasInterview,
     publication_permission: x.publicationPermission,
     release_at: x.releaseAt
@@ -189,6 +195,7 @@ export function fromDb(row) {
     previewDescription: row.preview_description || '',
     coverImage: row.cover_path ?? '',
     pdfPath: row.pdf_path ?? '',
+    pdfBinding: row.pdf_binding || 'left',
     hasInterview: row.has_interview,
     publicationPermission: row.publication_permission,
     releaseAt: row.release_at
@@ -212,6 +219,7 @@ export function showReview(x) {
     ['キーワード', x.keywords.join('、') || 'なし'],
     ['表紙画像', x.coverImage],
     ['電子版PDF', x.pdfPath || 'なし'],
+    ['PDFの綴じ方', ({right: '右綴じ', left: '左綴じ', none: '見開き不可'})[x.pdfBinding] || '左綴じ'],
     ['電子版販売ページURL', x.salesUrl || 'なし'],
     ['サイト状況', x.siteStatuses.join('、')],
     ['インタビュー', x.hasInterview ? 'あり' : 'なし'],
