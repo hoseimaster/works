@@ -1,13 +1,3 @@
-/**
- * 制作物アーカイブ
- * 絞り込みモーダル制御
- */
-
-
-/* ========================================
-   初期化
-======================================== */
-
 export function initializeFilterModal({
     store = null
 } = {}) {
@@ -247,11 +237,6 @@ export function initializeFilterModal({
     }
 }
 
-
-/* ========================================
-   DOM取得
-======================================== */
-
 function getModalElements() {
     const modal =
         document.getElementById(
@@ -305,11 +290,6 @@ function getModalElements() {
     };
 }
 
-
-/* ========================================
-   開閉判定
-======================================== */
-
 function isModalOpen(
     modal
 ) {
@@ -324,11 +304,6 @@ function isModalOpen(
         )
     );
 }
-
-
-/* ========================================
-   初期フォーカス
-======================================== */
 
 function focusInitialElement(
     elements
@@ -354,11 +329,6 @@ function focusInitialElement(
     focusableElements[0]
         ?.focus();
 }
-
-
-/* ========================================
-   フォーカストラップ
-======================================== */
 
 function trapFocus({
     event,
@@ -428,7 +398,6 @@ function trapFocus({
     }
 }
 
-
 function getFocusableElements(
     container
 ) {
@@ -466,7 +435,6 @@ function getFocusableElements(
     );
 }
 
-
 function isElementVisible(
     element
 ) {
@@ -477,11 +445,6 @@ function isElementVisible(
             .length
     );
 }
-
-
-/* ========================================
-   キーワード同期
-======================================== */
 
 function synchronizeModalKeyword(
     elements
@@ -496,7 +459,6 @@ function synchronizeModalKeyword(
         elements.keywordInput
             ?.value ?? "";
 }
-
 
 function synchronizeModalWithState({
     state,
@@ -524,11 +486,6 @@ function synchronizeModalWithState({
             keyword;
     }
 }
-
-
-/* ========================================
-   表示位置補助
-======================================== */
 
 function keepFocusedElementVisible(
     modal
