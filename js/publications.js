@@ -30,6 +30,7 @@ async function fetchPublications() {
         keywords: row.keywords || [],
         coverImage: row.cover_path ?? `./cover/${row.id}.png`,
         pdfPath: row.pdf_path || "",
+        pdfBinding: row.pdf_binding || "left",
         salesUrl: row.sales_url || "",
         publicationPermission: row.publication_permission,
         releaseAt: row.release_at,
