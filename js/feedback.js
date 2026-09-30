@@ -61,8 +61,7 @@ export async function shareLibrary(book) {
 export function showReadCompletion(book, onContinue) {
     if (!completionDialog) {
         completionDialog = element('dialog', 'reader-completion');
-        completionDialog.innerHTML = `<button class="reader-completion__close" type="button" aria-label="閉じる">✕</button>
-            <span class="feedback-eyebrow">THANK YOU FOR READING</span><h2>ご覧いただきありがとうございます</h2>
+        completionDialog.innerHTML = `<span class="feedback-eyebrow">THANK YOU FOR READING</span><h2 tabindex="-1" autofocus>ご覧いただきありがとうございます</h2>
             <p class="reader-completion__title"></p><p>よろしければ、感想をお聞かせください。</p>
             <div class="feedback-actions"><button type="button" class="feedback-primary" data-action="feedback">感想はこちらから</button>
             <button type="button" data-action="share">シェアする</button></div>
@@ -73,7 +72,6 @@ export function showReadCompletion(book, onContinue) {
     const button = completionDialog.querySelector('[data-action=feedback]');
     button.textContent = "感想はこちらから";
     const close = () => completionDialog.close();
-    completionDialog.querySelector('.reader-completion__close').onclick = close;
     completionDialog.querySelector('[data-action=continue]').onclick = () => {
         close();
         onContinue?.();
@@ -83,7 +81,10 @@ export function showReadCompletion(book, onContinue) {
         close();
         location.hash = `#feedback/${book.id}`;
     };
-    if (!completionDialog.open) completionDialog.showModal();
+    if (!completionDialog.open) {
+        completionDialog.showModal();
+        completionDialog.querySelector('h2').focus({ preventScroll: true });
+    }
 }
 
 export function closeReadCompletion() {
