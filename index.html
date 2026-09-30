@@ -15,12 +15,37 @@
     </title>
     <!-- CSS -->
     <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/archive.css">
+    <link rel="stylesheet" href="./css/archive.css?v=20260928-1">
     <link rel="stylesheet" href="./css/responsive.css">
-    <link rel="stylesheet" href="./css/modal-preview.css">
+    <link rel="stylesheet" href="./css/modal-preview.css?v=20260928-1">
+    <link rel="stylesheet" href="./css/pdf-viewer.css">
     <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/admin-feedback.css">
     <link rel="stylesheet" href="./css/admin-validation.css">
+    <style>
+        #filterModal[hidden], #publicationPreviewModal[hidden] { display: none !important; }
+        #filterModal:not([hidden]), #publicationPreviewModal:not([hidden]) {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 1200;
+            display: grid;
+            place-items: center;
+            padding: 16px;
+            isolation: isolate;
+        }
+        #filterModal:not([hidden]) { background: rgb(27 24 22 / 58%); }
+        #filterModal .filter-modal__backdrop,
+        #publicationPreviewModal .preview-modal__backdrop { position: absolute; inset: 0; }
+        #filterModal .filter-modal__panel,
+        #publicationPreviewModal .preview-modal__panel {
+            position: relative;
+            z-index: 1;
+            width: min(1040px, 100%);
+            max-height: calc(100dvh - 32px);
+            overflow: auto;
+            background: #fffdf9;
+        }
+    </style>
 </head>
 <body>
     <!-- JavaScriptが使用できない環境向け -->
@@ -702,8 +727,6 @@
         <label>表紙画像のパス<input name="coverImage" required>
         </label>
         <p class="note">新規登録時は制作物IDに合わせて自動入力します。必要に応じてパスを変更できます。画像自体はDBに保存しません。</p>
-        <label>詳細ページURL（任意）<input name="detailUrl" type="url">
-        </label>
         <label>サイト状況<select name="siteStatuses" required>
             <option value="">選択してください</option>
             <option value="非公開">非公開</option>
@@ -711,6 +734,18 @@
             <option value="電子版販売中">電子版販売中</option>
           </select>
         </label>
+        <div id="pdfPathField" hidden>
+          <label for="pdfPathInput">電子版PDFのパス（必須）</label>
+          <div class="admin-pdf-path">
+            <input id="pdfPathInput" name="pdfPath" placeholder="./pdf/publication-000105.pdf" inputmode="url" disabled>
+            <button id="generatePdfPath" type="button" class="admin-button admin-button--secondary" disabled>自動生成</button>
+          </div>
+          <p class="note">「自動生成」で制作物IDに合ったパスを入力します。PDF本体はリポジトリの pdf/ に配置してください。PDFが見つからない場合は「電子版公開準備中」と表示します。</p>
+        </div>
+        <div id="salesUrlField" hidden>
+          <label>電子版販売ページURL（必須）<input name="salesUrl" type="url" placeholder="https://example.com/item/" disabled>
+          </label>
+        </div>
         <label>簡単な説明<textarea name="description" rows="4" required>
           </textarea>
         </label>
@@ -778,6 +813,7 @@
 </div>
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/modal-preview.js"></script>
+    <script type="module" src="./js/pdf-viewer.js"></script>
     <script type="module" src="./js/admin.js"></script>
     <script>
 document.addEventListener("DOMContentLoaded",()=>{
