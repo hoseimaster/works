@@ -991,9 +991,13 @@ function arePublicationArraysEqual(
                     comparedPublication
                         .coverImage &&
 
-                publication.detailUrl ===
+                publication.pdfPath ===
                     comparedPublication
-                        .detailUrl &&
+                        .pdfPath &&
+
+                publication.salesUrl ===
+                    comparedPublication
+                        .salesUrl &&
 
                 publication.hasInterview ===
                     comparedPublication
