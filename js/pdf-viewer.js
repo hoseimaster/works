@@ -429,18 +429,36 @@ async function route() {
     const [, pdfjs] = await Promise.all([loadPublications(), import('./pdf.min.mjs')]);
     if (current !== routeGeneration) return;
     const publication = getPublicationById(match[1]);
-    const url = publication?.siteStatuses?.includes('電子版公開中') && publicPdfUrl(publication.pdfPath);
-    if (!url) throw Error('この電子版は公開されていません。');
+    const paths = publication?.pdfParts?.length ? publication.pdfParts : [publication?.pdfPath];
+    const urls = paths.map(publicPdfUrl);
+    if (!publication?.siteStatuses?.includes('電子版公開中') || !urls.length || urls.length > 99 || urls.some(url => !url)) throw Error('この電子版は公開されていません。');
     currentBook = publication;
     binding = ['right', 'left', 'none'].includes(publication.pdfBinding) ? publication.pdfBinding : 'left';
     root.querySelector('.pdf-viewer__title').textContent = publication.title;
     if (current !== routeGeneration) return;
     pdfjs.GlobalWorkerOptions.workerSrc = new URL('./pdf.worker.min.mjs', import.meta.url).href;
-    const task = pdfjs.getDocument({ url, useSystemFonts: true, useWasm: false, useWorkerFetch: true, wasmUrl: new URL('./', import.meta.url).href });
-    loadingTask = task;
-    const pdf = await task.promise;
+    const tasks = [];
+    const documents = [];
+    const group = {
+      destroy: () => Promise.allSettled(tasks.map(task => task.destroy()))
+    };
+    loadingTask = group;
+    try {
+      for (const url of urls) {
+        if (current !== routeGeneration) return;
+        const task = pdfjs.getDocument({ url, useSystemFonts: true, useWasm: false, useWorkerFetch: true, wasmUrl: new URL('./', import.meta.url).href });
+        tasks.push(task);
+        const pdf = await task.promise;
+        if (current !== routeGeneration) return;
+        documents.push(pdf);
+      }
+    } catch (error) {
+      await group.destroy();
+      if (loadingTask === group) loadingTask = null;
+      throw error;
+    }
     if (current !== routeGeneration) return;
-    documentHandle = pdf;
+    documentHandle = combinePdfDocuments(documents);
     root.querySelector('canvas').hidden = false;
     await showPage(1);
   } catch (error) {
@@ -465,3 +483,25 @@ window.addEventListener('resize', scheduleResize);
 window.addEventListener('hashchange', route);
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', route);
 else void route();
+
+function combinePdfDocuments(documents) {
+  const offsets = [];
+  let total = 0;
+  for (const document of documents) {
+    offsets.push(total);
+    total += document.numPages;
+  }
+  return {
+    numPages: total,
+    async getPage(number) {
+      if (!Number.isInteger(number) || number < 1 || number > total) throw Error('ページ番号を確認してください。');
+      const index = offsets.findIndex((offset, index) => number > offset && number <= offset + documents[index].numPages);
+      const page = await documents[index].getPage(number - offsets[index]);
+      return {
+        pageNumber: number,
+        getViewport: options => page.getViewport(options),
+        render: options => page.render(options)
+      };
+    }
+  };
+}
