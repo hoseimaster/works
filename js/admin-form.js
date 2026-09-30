@@ -24,6 +24,13 @@ export function initForm(form) {
   });
 
   form.elements.namedItem('id').readOnly = true;
+  form.elements.namedItem('siteStatuses').addEventListener('change', () => syncPdfInput(form));
+  $('generatePdfPath').addEventListener('click', () => {
+    const id = form.elements.namedItem('id').value;
+    if (form.elements.namedItem('pdfPath').disabled || !/^publication-[0-9]{6}$/.test(id)) return;
+    form.elements.namedItem('pdfPath').value = `./pdf/${id}.pdf`;
+  });
+  syncPdfInput(form);
   const releaseAt = form.elements.namedItem('releaseAt');
   releaseAt.addEventListener('input', () => {
     if (releaseAt.value) {
@@ -37,22 +44,37 @@ export function initForm(form) {
   );
 }
 
+function syncPdfInput(form) {
+  const status = form.elements.namedItem('siteStatuses').value;
+  const enabled = status === '電子版公開中';
+  $('pdfPathField').hidden = !enabled;
+  form.elements.namedItem('pdfPath').disabled = !enabled;
+  form.elements.namedItem('pdfPath').required = enabled;
+  $('generatePdfPath').disabled = !enabled;
+  const selling = status === '電子版販売中';
+  $('salesUrlField').hidden = !selling;
+  form.elements.namedItem('salesUrl').disabled = !selling;
+  form.elements.namedItem('salesUrl').required = selling;
+}
+
 export function fillForm(form, item) {
   form.reset();
   const x = item || {};
   for (const key of [
     'id', 'title', 'publishDate', 'category', 'keywords',
-    'detailUrl', 'description', 'previewDescription'
+    'salesUrl', 'description', 'previewDescription'
   ]) {
     form.elements.namedItem(key).value =
       Array.isArray(x[key]) ? x[key].join('\n') : x[key] || '';
   }
   form.elements.namedItem('coverImage').value = x.coverImage ?? '';
+  form.elements.namedItem('pdfPath').value = x.pdfPath ?? '';
   form.elements.namedItem('id').readOnly = true;
   form.querySelectorAll('input[name=brands]').forEach(input => {
     input.checked = (x.brands || []).includes(input.value);
   });
   form.elements.namedItem('siteStatuses').value = x.siteStatuses?.[0] || '';
+  syncPdfInput(form);
   form.querySelectorAll('input[name=hasInterview]').forEach(input => {
     input.checked = Boolean(item) && input.value === (x.hasInterview ? 'yes' : 'no');
   });
@@ -69,10 +91,14 @@ export function fillForm(form, item) {
 export function readForm(form, { id }) {
   const get = name => form.elements.namedItem(name).value.trim();
   const coverImage = get('coverImage');
+  const pdfPath = get('pdfPath');
   if (!/^publication-[0-9]{6}$/.test(id)) {
     throw Error('制作物IDを取得できません。一覧から操作し直してください。');
   }
   if (!coverImage) throw Error('表紙画像のパスを入力してください。');
+  if (pdfPath && (!/^\.\/pdf\/[a-zA-Z0-9_/-]+\.pdf$/i.test(pdfPath) || pdfPath.includes('..'))) {
+    throw Error('PDFのパスは ./pdf/ から始まるリポジトリ内の .pdf ファイルを指定してください。');
+  }
 
   const title = get('title');
   const publishDate = get('publishDate');
@@ -80,6 +106,13 @@ export function readForm(form, { id }) {
   const selectedBrands = [...form.querySelectorAll('input[name=brands]:checked')]
     .map(input => input.value);
   const siteStatus = get('siteStatuses');
+  if (siteStatus === '電子版公開中' && !pdfPath) {
+    throw Error('電子版公開中の場合はPDFのパスを入力してください。');
+  }
+  const salesUrl = get('salesUrl');
+  if (siteStatus === '電子版販売中' && !/^https:\/\/[^\s/]+/i.test(salesUrl)) {
+    throw Error('電子版販売中の場合は、https:// で始まる販売ページURLを入力してください。');
+  }
   const description = get('description');
   const interview = form.querySelector('input[name=hasInterview]:checked');
   if (
@@ -110,11 +143,12 @@ export function readForm(form, { id }) {
     id, title, publishDate, category,
     brands: selectedBrands,
     keywords: get('keywords').split(/\r?\n/).map(value => value.trim()).filter(Boolean),
-    detailUrl: get('detailUrl'),
+    salesUrl,
     siteStatuses: [siteStatus],
     description,
     previewDescription: get('previewDescription'),
     coverImage,
+    pdfPath,
     hasInterview: interview.value === 'yes',
     publicationPermission: mode !== 'hold',
     releaseAt, mode
@@ -129,11 +163,12 @@ export function toDb(x) {
     category: x.category,
     brands: x.brands,
     keywords: x.keywords,
-    detail_url: x.detailUrl,
+    sales_url: x.salesUrl || null,
     site_statuses: x.siteStatuses,
     description: x.description,
     preview_description: x.previewDescription,
     cover_path: x.coverImage,
+    pdf_path: x.pdfPath || null,
     has_interview: x.hasInterview,
     publication_permission: x.publicationPermission,
     release_at: x.releaseAt
@@ -148,11 +183,12 @@ export function fromDb(row) {
     category: row.category,
     brands: row.brands || [],
     keywords: row.keywords || [],
-    detailUrl: row.detail_url || '',
+    salesUrl: row.sales_url || '',
     siteStatuses: row.site_statuses || [],
     description: row.description || '',
     previewDescription: row.preview_description || '',
     coverImage: row.cover_path ?? '',
+    pdfPath: row.pdf_path ?? '',
     hasInterview: row.has_interview,
     publicationPermission: row.publication_permission,
     releaseAt: row.release_at
@@ -175,7 +211,8 @@ export function showReview(x) {
     ['ブランド', x.brands.join('、')],
     ['キーワード', x.keywords.join('、') || 'なし'],
     ['表紙画像', x.coverImage],
-    ['詳細ページURL', x.detailUrl || 'なし'],
+    ['電子版PDF', x.pdfPath || 'なし'],
+    ['電子版販売ページURL', x.salesUrl || 'なし'],
     ['サイト状況', x.siteStatuses.join('、')],
     ['インタビュー', x.hasInterview ? 'あり' : 'なし'],
     ['簡単な説明', x.description],
