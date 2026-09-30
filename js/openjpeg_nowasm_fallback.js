@@ -1,4 +1,3 @@
-/* THIS FILE IS GENERATED - DO NOT EDIT */
 async function OpenJPEG(moduleArg = {}) {
     var moduleRtn;
     var Module = moduleArg;
@@ -37,7 +36,7 @@ async function OpenJPEG(moduleArg = {}) {
         Module: function (binary) {},
         Instance: function (module, info) {
             this.exports = (
-                // EMSCRIPTEN_START_ASM
+
                 function instantiate(Aa) {
                     var a;
                     var b = new Uint8Array(123);
@@ -214,7 +213,7 @@ async function OpenJPEG(moduleArg = {}) {
                         var oa = 0;
                         var pa = 0;
                         var qa = 0;
-                        // EMSCRIPTEN_START_FUNCS
+
                         function _c(a, b) {
                             a = a | 0;
                             b = b | 0;
@@ -91290,7 +91289,7 @@ async function OpenJPEG(moduleArg = {}) {
                         function dd() {
                             D();
                         }
-                        // EMSCRIPTEN_END_FUNCS
+
                         a = I;
                         m(n);
                         var ra = [
@@ -91452,7 +91451,6 @@ async function OpenJPEG(moduleArg = {}) {
                     return za(Aa);
                 }
             )(
-                // EMSCRIPTEN_END_ASM
 
                 info
             );
