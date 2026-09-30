@@ -3,6 +3,7 @@ import { $, initForm, fillForm, readForm, toDb, fromDb, showReview, verifyAdmin 
 import { ensureAdminFeedback, showAdminToast, showDeleteDialog } from './admin-feedback.js';
 import { updateAdminValidation } from './admin-validation.js';
 import { findMissingCovers } from './admin-cover-check.js';
+import { showPublicationLinkDialog } from './admin-share.js';
 
 const root = $('archiveAdminRoot');
 const form = $('editForm');
@@ -126,7 +127,16 @@ function drawRows(target, items) {
     button.type = 'button';
     button.textContent = '編集';
     button.onclick = () => edit(item);
-    row.append(info, button);
+    const actions = document.createElement('div');
+    actions.className = 'admin-row-actions';
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.textContent = 'URLコピー';
+    copy.onclick = () => {
+      if (authorized) showPublicationLinkDialog(item);
+    };
+    actions.append(copy, button);
+    row.append(info, actions);
     target.append(row);
   }
 }
