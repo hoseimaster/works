@@ -203,7 +203,7 @@
 body.is-pdf-viewer-open {
     overflow: hidden;
 }
-@media (max-width: 700px), (max-height: 500px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px) {
     .pdf-viewer {
         grid-template-rows: auto minmax(0, 1fr);
     }
@@ -327,7 +327,7 @@ body.is-pdf-viewer-open {
 .pdf-viewer.is-right-bound .pdf-viewer__controls {
     flex-direction: row-reverse;
 }
-@media (max-width: 700px), (max-height: 500px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px) {
     .pdf-viewer.is-right-bound .pdf-viewer__side-previous {
         right: max(5px, env(safe-area-inset-right));
         left: auto;
@@ -388,7 +388,7 @@ body.is-pdf-viewer-open {
     background: #f7e9d9;
     border-color: #d8b998;
 }
-@media (max-width: 700px), (max-height: 500px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px) {
     .pdf-viewer .pdf-viewer__layout, .pdf-viewer .pdf-viewer__reader-actions {
         min-height: 32px;
         padding: 5px 8px;
@@ -427,7 +427,7 @@ body.is-pdf-viewer-open {
 .pdf-viewer .pdf-viewer__header-toggle {
     display: none;
 }
-@media (max-width: 700px), (max-height: 500px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px) {
     .pdf-viewer__header {
         position: relative;
         padding-bottom: 10px;
@@ -500,7 +500,7 @@ body.is-pdf-viewer-open {
 .pdf-viewer .pdf-viewer__back:focus:not(:focus-visible) {
     outline: none;
 }
-@media (max-width: 700px), (max-height: 500px) {
+@media (max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px) {
     .pdf-viewer .pdf-viewer__back {
         width: 34px;
         min-width: 34px;
