@@ -1,13 +1,3 @@
-/**
- * 制作物アーカイブ
- * 状態管理
- */
-
-
-/* ========================================
-   初期状態
-======================================== */
-
 const DEFAULT_FILTERS = {
     keyword: "",
     categories: [],
@@ -25,17 +15,6 @@ const DEFAULT_STATE = {
     sortType: "date-desc"
 };
 
-
-/* ========================================
-   ストア作成
-======================================== */
-
-/**
- * アーカイブ全体の状態管理ストアを作成します。
- *
- * @param {object} initialState
- * @returns {object}
- */
 export function createArchiveStore(
     initialState = {}
 ) {
@@ -56,26 +35,12 @@ export function createArchiveStore(
     const listeners =
         new Set();
 
-    /**
-     * 現在の状態を取得します。
-     *
-     * 外部から直接変更されないよう、
-     * 配列とオブジェクトを複製して返します。
-     */
     function getState() {
         return cloneState(
             state
         );
     }
 
-    /**
-     * 状態変更を購読します。
-     *
-     * 登録直後にも現在の状態を通知します。
-     *
-     * @param {Function} listener
-     * @returns {Function}
-     */
     function subscribe(
         listener
     ) {
@@ -103,11 +68,6 @@ export function createArchiveStore(
         };
     }
 
-    /**
-     * 状態を部分更新します。
-     *
-     * @param {object|Function} updater
-     */
     function setState(
         updater
     ) {
@@ -165,16 +125,6 @@ export function createArchiveStore(
         );
     }
 
-
-    /* ========================================
-       制作物データ
-    ======================================== */
-
-    /**
-     * 制作物全件を設定します。
-     *
-     * @param {Array<object>} publications
-     */
     function setPublications(
         publications
     ) {
@@ -189,11 +139,6 @@ export function createArchiveStore(
         });
     }
 
-    /**
-     * 現在表示する制作物を設定します。
-     *
-     * @param {Array<object>} publications
-     */
     function setVisiblePublications(
         publications
     ) {
@@ -208,16 +153,6 @@ export function createArchiveStore(
         });
     }
 
-
-    /* ========================================
-       キーワード
-    ======================================== */
-
-    /**
-     * キーワードを設定します。
-     *
-     * @param {*} keyword
-     */
     function setKeyword(
         keyword
     ) {
@@ -231,16 +166,6 @@ export function createArchiveStore(
         });
     }
 
-
-    /* ========================================
-       フィルター
-    ======================================== */
-
-    /**
-     * フィルターを部分更新します。
-     *
-     * @param {object} filters
-     */
     function setFilters(
         filters
     ) {
@@ -309,12 +234,6 @@ export function createArchiveStore(
         });
     }
 
-    /**
-     * 指定したフィルター項目へ値を追加します。
-     *
-     * @param {string} filterKey
-     * @param {*} value
-     */
     function addFilterValue(
         filterKey,
         value
@@ -357,12 +276,6 @@ export function createArchiveStore(
         });
     }
 
-    /**
-     * 指定したフィルター値を削除します。
-     *
-     * @param {string} filterKey
-     * @param {*} value
-     */
     function removeFilterValue(
         filterKey,
         value
@@ -400,11 +313,6 @@ export function createArchiveStore(
         });
     }
 
-    /**
-     * 指定したフィルターグループを解除します。
-     *
-     * @param {string} filterKey
-     */
     function clearFilterGroup(
         filterKey
     ) {
@@ -439,9 +347,6 @@ export function createArchiveStore(
         });
     }
 
-    /**
-     * 全フィルターを初期化します。
-     */
     function resetFilters() {
         setState({
             filters:
@@ -449,16 +354,6 @@ export function createArchiveStore(
         });
     }
 
-
-    /* ========================================
-       並び順
-    ======================================== */
-
-    /**
-     * 並び順を設定します。
-     *
-     * @param {*} sortType
-     */
     function setSortType(
         sortType
     ) {
@@ -469,11 +364,6 @@ export function createArchiveStore(
                 )
         });
     }
-
-
-    /* ========================================
-       公開API
-    ======================================== */
 
     return {
         getState,
@@ -494,11 +384,6 @@ export function createArchiveStore(
     };
 }
 
-
-/* ========================================
-   定数
-======================================== */
-
 const FILTER_ARRAY_KEYS = [
     "categories",
     "brands",
@@ -513,11 +398,6 @@ const VALID_SORT_TYPES = [
     "title-asc",
     "title-desc"
 ];
-
-
-/* ========================================
-   状態正規化
-======================================== */
 
 function normalizeState(
     rawState
@@ -548,7 +428,6 @@ function normalizeState(
             )
     };
 }
-
 
 function normalizeFilters(
     filters
@@ -600,7 +479,6 @@ function normalizeFilters(
             )
     };
 }
-
 
 function normalizePublications(
     publications
@@ -662,7 +540,6 @@ function normalizePublications(
         );
 }
 
-
 function normalizeKeyword(
     keyword
 ) {
@@ -676,7 +553,6 @@ function normalizeKeyword(
         )
         .trim();
 }
-
 
 function normalizeFilterArray(
     values
@@ -699,7 +575,6 @@ function normalizeFilterArray(
     ];
 }
 
-
 function normalizeFilterValue(
     value
 ) {
@@ -709,7 +584,6 @@ function normalizeFilterValue(
         .normalize("NFKC")
         .trim();
 }
-
 
 function normalizeSortType(
     sortType
@@ -726,11 +600,6 @@ function normalizeSortType(
         : "date-desc";
 }
 
-
-/* ========================================
-   初期値作成
-======================================== */
-
 function createDefaultFilters() {
     return {
         keyword: "",
@@ -742,11 +611,6 @@ function createDefaultFilters() {
         singleBrandOnly: false
     };
 }
-
-
-/* ========================================
-   購読通知
-======================================== */
 
 function notifyListeners(
     listeners,
@@ -772,11 +636,6 @@ function notifyListeners(
         }
     );
 }
-
-
-/* ========================================
-   複製
-======================================== */
 
 function cloneState(
     state
@@ -841,7 +700,6 @@ function cloneState(
     };
 }
 
-
 function clonePublication(
     publication
 ) {
@@ -871,11 +729,6 @@ function clonePublication(
     };
 }
 
-
-/* ========================================
-   状態比較
-======================================== */
-
 function areStatesEqual(
     stateA,
     stateB
@@ -900,7 +753,6 @@ function areStatesEqual(
         )
     );
 }
-
 
 function areFiltersEqual(
     filtersA,
@@ -929,7 +781,6 @@ function areFiltersEqual(
     );
 }
 
-
 function areStringArraysEqual(
     arrayA,
     arrayB
@@ -950,7 +801,6 @@ function areStringArraysEqual(
         }
     );
 }
-
 
 function arePublicationArraysEqual(
     arrayA,
