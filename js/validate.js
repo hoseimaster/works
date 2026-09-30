@@ -284,12 +284,6 @@ export function validateAdminPublications(publications) {
             "イメージ欄"
         );
 
-        checkOptionalField(
-            item,
-            index,
-            "detailUrl",
-            "URL欄"
-        );
 
         checkArray(item, index, "brands", true);
         checkArray(item, index, "siteStatuses", true);
