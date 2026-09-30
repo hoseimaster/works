@@ -34,7 +34,7 @@ void handlePreviewRoute();
 async function handlePreviewRoute() {
     const generation = ++previewRouteGeneration;
     const match = /^#publication\/(publication-[0-9]{6})$/.exec(location.hash);
-    const libraryMatch = /^#pdf\/(publication-[0-9]{6})$/.exec(location.hash);
+    const libraryMatch = /^#(?:pdf|feedback)\/(publication-[0-9]{6})$/.exec(location.hash);
     if (libraryMatch && isPreviewModalOpen() && previewItems[currentIndex]?.id === libraryMatch[1]) {
         suspendPreviewModal();
         return;
