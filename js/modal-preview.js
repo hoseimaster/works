@@ -1,4 +1,6 @@
-import { getPublicationById } from "./publications.js";
+import { getPublicationById, loadPublications } from "./publications.js";
+import { openPdfViewer, publicPdfUrl } from "./pdf-viewer.js";
+import { publicationHash } from "./publication-links.js";
 
 /**
  * 制作物アーカイブ
@@ -21,6 +23,8 @@ let previewItems = [];
 let currentIndex = -1;
 let previouslyFocusedElement = null;
 let isInitialized = false;
+let closeTimer;
+let previewRouteGeneration = 0;
 
 const PREVIEW_ITEM_CACHE =
     new WeakMap();
@@ -29,6 +33,57 @@ const PRELOADED_PREVIEW_IMAGES =
     new Set();
 
 initializePreviewModal();
+window.addEventListener("hashchange", handlePreviewRoute);
+void handlePreviewRoute();
+
+async function handlePreviewRoute() {
+    const generation = ++previewRouteGeneration;
+    const match = /^#publication\/(publication-[0-9]{6})$/.exec(location.hash);
+    if (!match) {
+        closePreviewModal();
+        return;
+    }
+    try {
+        const publications = await loadPublications();
+        if (generation !== previewRouteGeneration || location.hash !== match[0]) return;
+        previewItems = publications.map(createPreviewItemFromPublication);
+        const index = previewItems.findIndex(item => item.id === match[1]);
+        if (index >= 0) openPreviewModal(index);
+        else showPreviewRouteError("この制作物は公開されていないか、削除されています。");
+    } catch {
+        if (generation === previewRouteGeneration) showPreviewRouteError("制作物を読み込めませんでした。時間をおいて再度お試しください。");
+    }
+}
+
+function createPreviewItemFromPublication(publication) {
+    const date = String(publication.publishDate || "");
+    const parts = date.split("-").map(Number);
+    return {
+        id: publication.id,
+        pdfExpected: publication.siteStatuses?.includes("電子版公開中") || false,
+        saleExpected: publication.siteStatuses?.includes("電子版販売中") || false,
+        pdfPath: publication.siteStatuses?.includes("電子版公開中") ? publication.pdfPath : "",
+        salesUrl: publication.siteStatuses?.includes("電子版販売中") ? normalizeUrl(publication.salesUrl) : "",
+        pdfAvailable: false,
+        imageUrl: publication.coverImage || "",
+        imageAlt: `${publication.title || "制作物"}の表紙`,
+        title: publication.title || "タイトル未設定",
+        date: /^\d{4}-\d{2}-\d{2}$/.test(date) ? `${parts[0]}年${parts[1]}月${parts[2]}日` : date,
+        category: publication.category || "",
+        brands: publication.brands || [],
+        badges: [
+            ...(publication.hasInterview ? [{ label: "インタビュー掲載", type: "interview" }] : []),
+            ...(publication.siteStatuses || []).filter(status => status !== "非公開").map(label => ({ label, type: "status" }))
+        ],
+        previewDescription: publication.previewDescription || publication.description || "",
+        isNew: false
+    };
+}
+
+function showPreviewRouteError(description) {
+    previewItems = [{ id: "", title: "制作物を表示できません", imageUrl: "", imageAlt: "", date: "", category: "", brands: [], badges: [], previewDescription: description, isNew: false }];
+    openPreviewModal(0);
+}
 
 /**
  * プレビューモーダルを初期化します。
@@ -232,12 +287,7 @@ function createPreviewModal() {
                             <span>前へ</span>
                         </button>
 
-                        <a
-                            class="preview-modal__detail-button"
-                            href="#"
-                        >
-                            詳細ページを見る
-                        </a>
+                        <a class="preview-modal__detail-button" aria-disabled="true">電子版公開なし</a>
 
                         <button
                             class="preview-modal__navigation-button"
@@ -332,6 +382,15 @@ function createPreviewModal() {
             showNextItem();
         }
     );
+
+    elements.detailButton.addEventListener("click", event => {
+        const item = previewItems[currentIndex];
+        if (item?.pdfAvailable) {
+            event.preventDefault();
+            closePreviewModal();
+            openPdfViewer(item.id);
+        }
+    });
 
     return elements;
 }
@@ -454,10 +513,12 @@ function createPreviewItemFromCard(cardLink) {
     }).filter((badge) => badge.label);
 
     const previewItem = {
-        detailUrl: normalizeUrl(
-            publication.detailUrl ??
-            cardLink.getAttribute("href")
-        ),
+        id: publicationId,
+        pdfExpected: publication.siteStatuses?.includes("電子版公開中") || false,
+        saleExpected: publication.siteStatuses?.includes("電子版販売中") || false,
+        pdfPath: publication.siteStatuses?.includes("電子版公開中") ? publication.pdfPath : "",
+        salesUrl: publication.siteStatuses?.includes("電子版販売中") ? normalizeUrl(publication.salesUrl) : "",
+        pdfAvailable: false,
         imageUrl:
             image?.currentSrc ||
             image?.src ||
@@ -525,6 +586,7 @@ function createPreviewItemFromCard(cardLink) {
  * @param {number} selectedIndex
  */
 function openPreviewModal(selectedIndex) {
+    clearTimeout(closeTimer);
     if (
         !modalElements ||
         previewItems.length === 0
@@ -568,6 +630,9 @@ function closePreviewModal() {
     if (!isPreviewModalOpen()) {
         return;
     }
+    if (location.hash.startsWith("#publication/")) {
+        history.replaceState(null, "", `${location.pathname}${location.search}`);
+    }
 
     modalElements.root.classList.remove(
         "is-open"
@@ -577,7 +642,8 @@ function closePreviewModal() {
         "is-preview-modal-open"
     );
 
-    window.setTimeout(
+    clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(
         () => {
             modalElements.root.hidden = true;
             currentIndex = -1;
@@ -617,6 +683,10 @@ function showPreviewItem(
     }
 
     currentIndex = nextIndex;
+    const id = previewItems[currentIndex]?.id;
+    if (/^publication-[0-9]{6}$/.test(id || "")) {
+        history.replaceState(null, "", `${location.pathname}${location.search}${publicationHash(id)}`);
+    }
 
     const update = () => {
         applyPreviewItem(
@@ -698,7 +768,22 @@ function preloadAdjacentPreviewImages(
  * @param {object} item
  */
 function applyPreviewItem(item) {
-    modalElements.image.src = item.imageUrl;
+    const pdfUrl = publicPdfUrl(item.pdfPath);
+    item.pdfAvailable = false;
+    if (pdfUrl) {
+        fetch(pdfUrl, { method: "HEAD" }).then(response => {
+            if (response.ok && previewItems[currentIndex] === item && !modalElements.root.hidden && location.hash.startsWith("#publication/")) {
+                item.pdfAvailable = true;
+                modalElements.detailButton.href = `#pdf/${encodeURIComponent(item.id)}`;
+                modalElements.detailButton.textContent = "電子版を閲覧する";
+                modalElements.detailButton.removeAttribute("aria-disabled");
+                modalElements.detailButton.classList.remove("is-disabled");
+            }
+        }).catch(() => {});
+    }
+    modalElements.image.hidden = !item.imageUrl;
+    if (item.imageUrl) modalElements.image.src = item.imageUrl;
+    else modalElements.image.removeAttribute("src");
     modalElements.image.alt = item.imageAlt;
 
     modalElements.newBadge.hidden =
@@ -730,15 +815,14 @@ function applyPreviewItem(item) {
     modalElements.description.textContent =
         item.previewDescription;
 
-    const hasDetailPage =
-        Boolean(item.detailUrl);
+    const hasSalesPage = Boolean(item.saleExpected && item.salesUrl);
 
-    if (hasDetailPage) {
+    if (hasSalesPage) {
         modalElements.detailButton.href =
-            item.detailUrl;
+            item.salesUrl;
 
         modalElements.detailButton.textContent =
-            "詳細ページを見る";
+            "販売サイトへ";
 
         modalElements.detailButton.removeAttribute(
             "aria-disabled"
@@ -753,7 +837,7 @@ function applyPreviewItem(item) {
         );
 
         modalElements.detailButton.textContent =
-            "詳細ページ準備中";
+            item.saleExpected ? "販売サイト準備中" : item.pdfExpected ? "電子版公開準備中" : "電子版公開なし";
 
         modalElements.detailButton.setAttribute(
             "aria-disabled",
