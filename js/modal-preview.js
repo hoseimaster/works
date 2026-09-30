@@ -2,12 +2,6 @@ import { getPublicationById, loadPublications } from "./publications.js";
 import { openPdfViewer, publicPdfUrl } from "./pdf-viewer.js";
 import { publicationHash } from "./publication-links.js";
 
-/**
- * 制作物アーカイブ
- * 制作物プレビューモーダル
- */
-
-
 const PREVIEW_MODAL_CONFIG = Object.freeze({
     enabledOnDesktop: true,
     enabledOnTablet: true,
@@ -25,6 +19,7 @@ let previouslyFocusedElement = null;
 let isInitialized = false;
 let closeTimer;
 let previewRouteGeneration = 0;
+let suspendedPreviewId = null;
 
 const PREVIEW_ITEM_CACHE =
     new WeakMap();
@@ -39,6 +34,16 @@ void handlePreviewRoute();
 async function handlePreviewRoute() {
     const generation = ++previewRouteGeneration;
     const match = /^#publication\/(publication-[0-9]{6})$/.exec(location.hash);
+    const libraryMatch = /^#pdf\/(publication-[0-9]{6})$/.exec(location.hash);
+    if (libraryMatch && isPreviewModalOpen() && previewItems[currentIndex]?.id === libraryMatch[1]) {
+        suspendPreviewModal();
+        return;
+    }
+    if (match && suspendedPreviewId === match[1] && isPreviewModalOpen()) {
+        resumePreviewModal();
+        return;
+    }
+    if (suspendedPreviewId) resumePreviewModal(false);
     if (!match) {
         closePreviewModal();
         return;
@@ -85,9 +90,6 @@ function showPreviewRouteError(description) {
     openPreviewModal(0);
 }
 
-/**
- * プレビューモーダルを初期化します。
- */
 function initializePreviewModal() {
     if (isInitialized) {
         return;
@@ -110,12 +112,6 @@ function initializePreviewModal() {
     );
 }
 
-/**
- * 制作物カードのクリックを監視します。
- * 対象端末では通常遷移を止め、プレビューを開きます。
- *
- * @param {MouseEvent} event
- */
 function handleDocumentClick(event) {
     const cardLink = event.target.closest(
         ".publication-card__link"
@@ -139,10 +135,6 @@ function handleDocumentClick(event) {
         return;
     }
 
-    /*
-     * 詳細ページが未準備の制作物も含め、
-     * 一覧に表示されている全カードをプレビュー対象にします。
-     */
     const cardLinks = Array.from(
         document.querySelectorAll(
             ".publication-list .publication-card__link"
@@ -166,13 +158,8 @@ function handleDocumentClick(event) {
     openPreviewModal(selectedIndex);
 }
 
-/**
- * キーボード操作を処理します。
- *
- * @param {KeyboardEvent} event
- */
 function handleDocumentKeydown(event) {
-    if (!isPreviewModalOpen()) {
+    if (suspendedPreviewId || !isPreviewModalOpen()) {
         return;
     }
 
@@ -199,13 +186,6 @@ function handleDocumentKeydown(event) {
     }
 }
 
-/**
- * モーダルDOMを生成します。
- * HTMLファイル側へ複雑なモーダル構造を置かず、
- * PC・スマートフォンで同じ構造を共有します。
- *
- * @returns {object}
- */
 function createPreviewModal() {
     const root = document.createElement("div");
     root.id = "publicationPreviewModal";
@@ -387,7 +367,7 @@ function createPreviewModal() {
         const item = previewItems[currentIndex];
         if (item?.pdfAvailable) {
             event.preventDefault();
-            closePreviewModal();
+            suspendPreviewModal();
             openPdfViewer(item.id);
         }
     });
@@ -395,11 +375,6 @@ function createPreviewModal() {
     return elements;
 }
 
-/**
- * タッチ端末でボタンの押下色を一定時間表示します。
- *
- * @param {HTMLButtonElement} button
- */
 function showTouchFeedback(button) {
     if (
         !button ||
@@ -431,27 +406,12 @@ function showTouchFeedback(button) {
     );
 }
 
-
-/**
- * タッチ操作を中心とする端末か判定します。
- *
- * @returns {boolean}
- */
 function isTouchInterface() {
     return window.matchMedia(
         "(hover: none), (pointer: coarse)"
     ).matches;
 }
 
-
-/**
- * カードDOMからプレビュー表示用データを作成します。
- * render.jsのデータ構造へ直接依存しないため、
- * 将来カード項目が増えても影響範囲を限定できます。
- *
- * @param {HTMLAnchorElement} cardLink
- * @returns {object}
- */
 function createPreviewItemFromCard(cardLink) {
     const cachedItem =
         PREVIEW_ITEM_CACHE.get(
@@ -580,11 +540,6 @@ function createPreviewItemFromCard(cardLink) {
     return previewItem;
 }
 
-/**
- * モーダルを開きます。
- *
- * @param {number} selectedIndex
- */
 function openPreviewModal(selectedIndex) {
     clearTimeout(closeTimer);
     if (
@@ -599,10 +554,6 @@ function openPreviewModal(selectedIndex) {
             ? document.activeElement
             : null;
 
-    /*
-     * 表示前に内容を反映し、
-     * モーダルが空の状態で描画される時間をなくします。
-     */
     showPreviewItem(selectedIndex, {
         animate: false
     });
@@ -623,10 +574,26 @@ function openPreviewModal(selectedIndex) {
     });
 }
 
-/**
- * モーダルを閉じます。
- */
+function suspendPreviewModal() {
+    if (!isPreviewModalOpen()) return;
+    clearTimeout(closeTimer);
+    suspendedPreviewId = previewItems[currentIndex]?.id || null;
+    modalElements.root.inert = true;
+    modalElements.root.setAttribute("aria-hidden", "true");
+}
+
+function resumePreviewModal(restoreFocus = true) {
+    suspendedPreviewId = null;
+    if (!modalElements) return;
+    modalElements.root.inert = false;
+    modalElements.root.setAttribute("aria-hidden", "false");
+    if (restoreFocus && isPreviewModalOpen()) {
+        modalElements.detailButton.focus({ preventScroll: true });
+    }
+}
+
 function closePreviewModal() {
+    if (suspendedPreviewId) resumePreviewModal(false);
     if (!isPreviewModalOpen()) {
         return;
     }
@@ -663,12 +630,6 @@ function closePreviewModal() {
     );
 }
 
-/**
- * 指定位置の制作物を表示します。
- *
- * @param {number} nextIndex
- * @param {{animate?: boolean}} options
- */
 function showPreviewItem(
     nextIndex,
     {
@@ -717,11 +678,6 @@ function showPreviewItem(
     );
 }
 
-/**
- * 現在位置の前後画像だけを低優先度で先読みします。
- *
- * @param {number} index
- */
 function preloadAdjacentPreviewImages(
     index
 ) {
@@ -761,12 +717,6 @@ function preloadAdjacentPreviewImages(
     });
 }
 
-
-/**
- * 表示内容を更新します。
- *
- * @param {object} item
- */
 function applyPreviewItem(item) {
     const pdfUrl = publicPdfUrl(item.pdfPath);
     item.pdfAvailable = false;
@@ -857,9 +807,6 @@ function applyPreviewItem(item) {
         previewItems.length - 1;
 }
 
-/**
- * 前の制作物へ移動します。
- */
 function showPreviousItem() {
     if (currentIndex <= 0) {
         return;
@@ -870,9 +817,6 @@ function showPreviousItem() {
     );
 }
 
-/**
- * 次の制作物へ移動します。
- */
 function showNextItem() {
     if (
         currentIndex >=
@@ -886,12 +830,6 @@ function showNextItem() {
     );
 }
 
-/**
- * 現在の画面幅でモーダルを利用するか判定します。
- * 将来スマートフォン対応を行う際は設定値のみ変更します。
- *
- * @returns {boolean}
- */
 function shouldUsePreviewModal() {
     const width = window.innerWidth;
 
@@ -915,11 +853,6 @@ function shouldUsePreviewModal() {
         .enabledOnMobile;
 }
 
-/**
- * モーダルが開いているか確認します。
- *
- * @returns {boolean}
- */
 function isPreviewModalOpen() {
     return Boolean(
         modalElements &&
@@ -930,11 +863,6 @@ function isPreviewModalOpen() {
     );
 }
 
-/**
- * フォーカスをモーダル内に留めます。
- *
- * @param {KeyboardEvent} event
- */
 function keepFocusInsideModal(event) {
     const focusableElements = Array.from(
         modalElements.root.querySelectorAll(
@@ -974,14 +902,6 @@ function keepFocusInsideModal(event) {
     }
 }
 
-/**
- * 要素内の文字列を取得します。
- *
- * @param {Element} root
- * @param {string} selector
- * @param {string} fallback
- * @returns {string}
- */
 function getText(
     root,
     selector,
@@ -995,13 +915,6 @@ function getText(
     );
 }
 
-/**
- * 複数要素の文字列を取得します。
- *
- * @param {Element} root
- * @param {string} selector
- * @returns {Array<string>}
- */
 function getTexts(root, selector) {
     return Array.from(
         root.querySelectorAll(selector)
@@ -1012,13 +925,6 @@ function getTexts(root, selector) {
         .filter(Boolean);
 }
 
-/**
- * 文字列配列から一覧要素を生成します。
- *
- * @param {HTMLElement} container
- * @param {Array<string>} values
- * @param {string} className
- */
 function replaceTextList(
     container,
     values,
@@ -1044,12 +950,6 @@ function replaceTextList(
     container.hidden = values.length === 0;
 }
 
-/**
- * バッジ配列を本来の種類別配色で描画します。
- *
- * @param {HTMLElement} container
- * @param {Array<{label: string, type: string}>} badges
- */
 function replaceBadgeList(
     container,
     badges
@@ -1084,13 +984,6 @@ function replaceBadgeList(
         badges.length === 0;
 }
 
-
-/**
- * リンク先を正規化します。
- *
- * @param {*} value
- * @returns {string}
- */
 function normalizeUrl(value) {
     const url =
         String(
