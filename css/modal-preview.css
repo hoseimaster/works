@@ -1,3 +1,12 @@
+/**
+ * 制作物アーカイブ
+ * 制作物プレビューモーダル専用スタイル
+ */
+
+/* ========================================
+   モーダル全体
+======================================== */
+
 .preview-modal {
     position: fixed;
     z-index: 1200;
@@ -61,6 +70,10 @@ body.is-preview-modal-open {
     overflow: hidden;
 }
 
+/* ========================================
+   閉じるボタン
+======================================== */
+
 .preview-modal__close {
     position: absolute;
     z-index: 4;
@@ -95,6 +108,11 @@ body.is-preview-modal-open {
     outline: 3px solid rgb(244 122 36 / 28%);
     outline-offset: 3px;
 }
+
+/* ========================================
+   通常版：左右2カラム
+   PC・横向きタブレット・横向きスマートフォン
+======================================== */
 
 .preview-modal__content {
     display: grid;
@@ -156,6 +174,10 @@ body.is-preview-modal-open {
 .preview-modal__new[hidden] {
     display: none;
 }
+
+/* ========================================
+   右側情報
+======================================== */
 
 .preview-modal__information {
     display: flex;
@@ -281,6 +303,10 @@ body.is-preview-modal-open {
     scrollbar-gutter: stable;
     -webkit-overflow-scrolling: touch;
 }
+
+/* ========================================
+   前後移動・詳細ボタン
+======================================== */
 
 .preview-modal__actions {
     display: grid;
@@ -421,6 +447,11 @@ body.is-preview-modal-open {
     transform: none;
 }
 
+/* ========================================
+   横向きの小型画面調整
+   横向きスマートフォン・小型タブレット
+======================================== */
+
 @media screen and (orientation: landscape) and (max-height: 760px) {
     .preview-modal {
         padding: 14px;
@@ -459,6 +490,11 @@ body.is-preview-modal-open {
         min-height: 46px;
     }
 }
+
+/* ========================================
+   縦型画面版
+   スマートフォン・縦向きタブレット
+======================================== */
 
 @media screen and (orientation: portrait) and (max-width: 1024px) {
     .preview-modal {
@@ -640,6 +676,10 @@ body.is-preview-modal-open {
     }
 }
 
+/* ========================================
+   縦型スマートフォン微調整
+======================================== */
+
 @media screen and (orientation: portrait) and (max-width: 700px) {
     .preview-modal {
         align-items: center;
@@ -696,6 +736,10 @@ body.is-preview-modal-open {
     }
 }
 
+/* ========================================
+   極小画面
+======================================== */
+
 @media screen and (orientation: portrait) and (max-width: 380px) {
     .preview-modal__content {
         grid-template-columns:
@@ -712,6 +756,10 @@ body.is-preview-modal-open {
 
 }
 
+/* ========================================
+   アニメーション抑制
+======================================== */
+
 @media (prefers-reduced-motion: reduce) {
     .preview-modal,
     .preview-modal__panel,
@@ -720,5 +768,24 @@ body.is-preview-modal-open {
     .preview-modal__navigation-button,
     .preview-modal__detail-button {
         transition: none;
+    }
+}
+
+@media screen and (orientation: portrait) and (min-width: 701px) and (max-width: 1024px) {
+    .preview-modal {
+        box-sizing: border-box;
+    }
+    .preview-modal__panel {
+        box-sizing: border-box;
+        height: calc(100vh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+        height: calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom)));
+        max-height: none;
+        min-height: 0;
+    }
+    .preview-modal__content {
+        box-sizing: border-box;
+        height: 100%;
+        min-height: 0;
+        max-height: none;
     }
 }
