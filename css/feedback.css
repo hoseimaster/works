@@ -138,8 +138,10 @@ body.is-feedback-open {
     font-weight: 650;
     cursor: pointer;
 }
-.feedback-page button:hover:not(:disabled), .reader-completion button:hover:not(:disabled) {
-    background: #ffead6;
+@media (hover: hover) and (pointer: fine) {
+    .feedback-page button:hover:not(:disabled), .reader-completion button:hover:not(:disabled) {
+        background: #ffead6;
+    }
 }
 .feedback-page button.feedback-primary, .reader-completion button.feedback-primary {
     border-color: #e1a475;
@@ -199,14 +201,8 @@ body.is-feedback-open {
 .reader-completion .feedback-actions {
     flex-direction: column;
 }
-.reader-completion .reader-completion__close {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    padding: 4px;
-    min-width: 40px;
-    border: none;
-    background: transparent;
+.reader-completion h2:focus {
+    outline: none;
 }
 .reader-completion .feedback-text-button {
     margin-top: 10px;
