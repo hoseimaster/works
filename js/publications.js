@@ -23,7 +23,8 @@ export async function loadPublications() {
         brands: row.brands || [],
         keywords: row.keywords || [],
         coverImage: row.cover_path ?? `./cover/${row.id}.png`,
-        detailUrl: row.detail_url || "",
+        pdfPath: row.pdf_path || "",
+        salesUrl: row.sales_url || "",
         publicationPermission: row.publication_permission,
         releaseAt: row.release_at,
         hasInterview: row.has_interview,
@@ -752,10 +753,6 @@ function validatePaths({
             publication.coverImage ?? ""
         ).trim();
 
-    const detailUrl =
-        String(
-            publication.detailUrl ?? ""
-        ).trim();
 
     if (!coverImage) {
         warnings.push(
@@ -763,11 +760,6 @@ function validatePaths({
         );
     }
 
-    if (!detailUrl) {
-        warnings.push(
-            `${position}件目の詳細ページURLが設定されていません。`
-        );
-    }
 }
 
 
