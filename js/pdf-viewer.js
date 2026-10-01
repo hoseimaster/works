@@ -116,7 +116,12 @@ function openCompletion() {
   });
 }
 
-function message(value) { root.querySelector('.pdf-viewer__message').textContent = value; }
+function message(value, loading = false) {
+  const element = root.querySelector('.pdf-viewer__message');
+  element.textContent = value;
+  element.classList.toggle('is-loading', loading && Boolean(value));
+  element.setAttribute('aria-busy', String(loading && Boolean(value)));
+}
 function close() {
   const match = /^#pdf\/(publication-[0-9]{6})$/.exec(location.hash);
   location.hash = match ? publicationHash(match[1]) : previousHash || '';
@@ -293,7 +298,7 @@ async function renderPage(showLoading = false) {
   const oldTask = renderTask;
   oldTask?.cancel();
   const pageNumbers = displayedPageNumbers();
-  if (showLoading) message('ページを読み込み中…');
+  if (showLoading) message('ページを読み込み中…', true);
   try {
     if (oldTask) await oldTask.promise.catch(() => {});
     if (!pageNumbers.length) {
@@ -424,7 +429,7 @@ async function route() {
   root.querySelectorAll('.pdf-viewer__counter, .pdf-viewer__mobile-counter').forEach(counter => { counter.textContent = ''; });
   root.querySelectorAll('button:not(.pdf-viewer__back):not(.pdf-viewer__header-toggle)').forEach(button => { button.disabled = true; });
   applyTransform();
-  message('電子版を読み込み中…');
+  message('電子版を読み込み中…', true);
   try {
     const [, pdfjs] = await Promise.all([loadPublications(), import('./pdf.min.mjs')]);
     if (current !== routeGeneration) return;
