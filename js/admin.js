@@ -1,4 +1,4 @@
-import { api, signIn, signOut, signedIn, refreshSession } from './supabase-api.js';
+import { api, signIn, signOut, signedIn, refreshSession, setAdminGuard } from './supabase-api.js';
 import { $, initForm, fillForm, readForm, toDb, fromDb, showReview, verifyAdmin } from './admin-form.js';
 import { ensureAdminFeedback, showAdminToast, showDeleteDialog } from './admin-feedback.js';
 import { updateAdminValidation } from './admin-validation.js';
@@ -18,6 +18,65 @@ let authorized = false;
 let assignedId = null;
 let coverCheckGeneration = 0;
 let missingCoverIds = new Set();
+
+const IDLE_LIMIT = 30 * 60 * 1000;
+const ACTIVITY_KEY = 'archive-admin-last-activity';
+let lastActivity = Number(sessionStorage.getItem(ACTIVITY_KEY)) || 0;
+let idleTimer;
+let loginBusy = false;
+
+function endSession(reason) {
+  authorized = false;
+  clearTimeout(idleTimer);
+  signOut();
+  clearAdminSurveys();
+  coverCheckGeneration++;
+  records = [];
+  editing = pending = assignedId = null;
+  missingCoverIds = new Set();
+  form.reset();
+  for (const id of ['list', 'holdList', 'scheduledList', 'reviewContent']) $(id)?.replaceChildren();
+  root.querySelectorAll('dialog[open]').forEach(dialog => dialog.close());
+  screen('login');
+  message(reason);
+  showAdminToast(reason, 'error');
+}
+
+function checkIdle() {
+  if (!signedIn()) return;
+  if (!lastActivity || Date.now() - lastActivity >= IDLE_LIMIT) {
+    endSession('最後の操作から30分経過したためログアウトしました。');
+    throw Error('最後の操作から30分経過したためログアウトしました。');
+  }
+}
+function scheduleIdle() {
+  clearTimeout(idleTimer);
+  if (signedIn()) idleTimer = setTimeout(() => { try { checkIdle(); scheduleIdle(); } catch {} }, Math.max(1, IDLE_LIMIT - (Date.now() - lastActivity)));
+}
+function recordActivity() {
+  if (!authorized || !isAdminRoute()) return;
+  try { checkIdle(); } catch { return; }
+  lastActivity = Date.now();
+  sessionStorage.setItem(ACTIVITY_KEY, String(lastActivity));
+  scheduleIdle();
+}
+setAdminGuard(checkIdle);
+window.addEventListener('archive-admin-access-denied', () => endSession('管理者権限がないため操作できません'));
+for (const event of ['pointerdown', 'keydown', 'input', 'wheel']) root.addEventListener(event, recordActivity, { capture: true, passive: true });
+let lastPointerActivity = 0;
+root.addEventListener('pointermove', () => { if (Date.now() - lastPointerActivity >= 5000) { lastPointerActivity = Date.now(); recordActivity(); } }, { passive: true });
+window.addEventListener('scroll', recordActivity, { passive: true });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { try { checkIdle(); scheduleIdle(); } catch {} } });
+window.addEventListener('focus', () => { try { checkIdle(); scheduleIdle(); } catch {} });
+scheduleIdle();
+
+async function requireAdmin() {
+  checkIdle();
+  if (!authorized || !await verifyAdmin(api)) {
+    endSession('管理者権限がないため操作できません');
+    throw Error('管理者権限がないため操作できません');
+  }
+}
 
 function message(value) {
   $('message').textContent = value;
@@ -56,6 +115,7 @@ async function route() {
   if (!open) { clearAdminSurveys(); return; }
 
   if (authorized) {
+    try { await requireAdmin(); } catch { return; }
     if (!records.length) await guarded(load);
     else { screen('management'); void refreshSurveyBadge(); }
     return;
@@ -63,6 +123,7 @@ async function route() {
 
   screen('login');
   if (signedIn()) {
+    try { checkIdle(); } catch { return; }
     await guarded(async () => {
       if (await refreshSession() && await verifyAdmin(api)) {
         authorized = true;
@@ -75,10 +136,12 @@ async function route() {
 }
 
 async function load() {
+  const loadGeneration = coverCheckGeneration;
   const rows = await api(
     '/rest/v1/archive_publications?select=*&order=publish_date.desc.nullslast,id.desc',
     { auth: true }
   );
+  if (!authorized || loadGeneration !== coverCheckGeneration) return;
   records = rows.map(fromDb).sort((a, b) =>
     b.publishDate.localeCompare(a.publishDate) ||
     Number(b.id.split('-')[1]) - Number(a.id.split('-')[1])
@@ -128,14 +191,14 @@ function drawRows(target, items) {
     }
     button.type = 'button';
     button.textContent = '編集';
-    button.onclick = () => edit(item);
+    button.onclick = () => guarded(async () => { await requireAdmin(); edit(item); });
     const actions = document.createElement('div');
     actions.className = 'admin-row-actions';
     const copy = document.createElement('button');
     copy.type = 'button';
     copy.textContent = 'URLコピー';
     copy.onclick = () => {
-      if (authorized) showPublicationLinkDialog(item);
+      void guarded(async () => { await requireAdmin(); showPublicationLinkDialog(item); });
     };
     actions.append(copy, button);
     row.append(info, actions);
@@ -173,6 +236,11 @@ function edit(item) {
 
 $('loginForm').onsubmit = event => {
   event.preventDefault();
+  if (loginBusy) return;
+  loginBusy = true;
+  const loginButton = event.target.querySelector('[type=submit]');
+  loginButton.disabled = true;
+  loginButton.textContent = 'ログイン中…';
   const errorBox = $('loginError');
   errorBox.hidden = true;
   errorBox.textContent = '';
@@ -182,6 +250,7 @@ $('loginForm').onsubmit = event => {
     try {
       await signIn(fields.get('email'), fields.get('password'));
     } catch (error) {
+      signOut();
       if (
         error.status === 400 || error.status === 401 ||
         /invalid.login.credentials/i.test(`${error.code} ${error.message}`)
@@ -194,6 +263,9 @@ $('loginForm').onsubmit = event => {
       throw error;
     }
 
+    lastActivity = Date.now();
+    sessionStorage.setItem(ACTIVITY_KEY, String(lastActivity));
+    scheduleIdle();
     event.target.reset();
     if (!await verifyAdmin(api)) {
       signOut();
@@ -204,10 +276,15 @@ $('loginForm').onsubmit = event => {
     }
     authorized = true;
     await load();
-  });
+  }).finally(() => { loginBusy = false; loginButton.textContent = 'ログイン'; loginButton.disabled = authorized; });
 };
 
 $('logout').onclick = () => {
+  root.querySelectorAll('dialog[open]').forEach(dialog => dialog.close());
+  for (const id of ['list', 'holdList', 'scheduledList', 'reviewContent']) $(id)?.replaceChildren();
+  clearTimeout(idleTimer);
+  form.reset();
+  editing = pending = assignedId = null;
   signOut();
   authorized = false;
   clearAdminSurveys();
@@ -223,7 +300,8 @@ $('back').onclick = () => screen('management');
 
 $('new').onclick = () => guarded(async () => {
   if (!authorized || !await verifyAdmin(api)) {
-    throw Error('管理者権限がありません。');
+    endSession('管理者権限がないため操作できません');
+    throw Error('管理者権限がないため操作できません');
   }
   const id = await api('/rest/v1/rpc/next_archive_publication_id', {
     method: 'POST', body: {}, auth: true
@@ -242,6 +320,7 @@ $('new').onclick = () => guarded(async () => {
 form.onsubmit = event => {
   event.preventDefault();
   guarded(async () => {
+    await requireAdmin();
     pending = readForm(form, { id: assignedId });
     showReview(pending);
     $('confirmSave').textContent = editing ? 'この内容で保存' : 'この内容で登録';
@@ -253,7 +332,8 @@ $('reviewBack').onclick = () => screen('editor');
 
 $('confirmSave').onclick = () => guarded(async () => {
   if (!pending || !authorized || !await verifyAdmin(api)) {
-    throw Error('管理者権限がありません。');
+    endSession('管理者権限がないため操作できません');
+    throw Error('管理者権限がないため操作できません');
   }
   const isEdit = Boolean(editing);
   const title = pending.title;
@@ -280,16 +360,18 @@ $('confirmSave').onclick = () => guarded(async () => {
     isEdit ? 'edit' : 'create');
 });
 
-$('delete').onclick = () => {
+$('delete').onclick = () => guarded(async () => {
+  await requireAdmin();
   const item = records.find(row => row.id === editing);
   if (item) showDeleteDialog(item);
-};
+});
 $('cancelDelete').onclick = () => $('deleteDialog').close();
 
 $('confirmDelete').onclick = () => guarded(async () => {
   const item = records.find(row => row.id === editing);
   if (!item || !authorized || !await verifyAdmin(api)) {
-    throw Error('管理者権限がありません。');
+    endSession('管理者権限がないため操作できません');
+    throw Error('管理者権限がないため操作できません');
   }
   const button = $('confirmDelete');
   button.disabled = true;
