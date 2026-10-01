@@ -15,6 +15,9 @@ let renderGeneration = 0;
 let previousHash = '';
 let resizeTimer;
 let qualityTimer;
+let sliderHideTimer;
+let sliderInteracting = false;
+const MOBILE_VIEW_QUERY = '(max-width: 1024px), (hover: none) and (pointer: coarse), (max-height: 500px)';
 let zoom = 1;
 let pan = { x: 0, y: 0 };
 let paperSize = { width: 0, height: 0 };
@@ -65,10 +68,14 @@ function build() {
     <div class="pdf-viewer__stage">
       <div class="pdf-viewer__surface"><div class="pdf-viewer__paper"><canvas class="pdf-viewer__canvas" aria-label="PDFのページ"></canvas><canvas class="pdf-viewer__canvas" aria-label="PDFのページ" hidden></canvas></div></div>
       <div class="pdf-viewer__message" role="status" aria-live="polite"></div>
-      <nav class="pdf-viewer__mobile-controls" aria-label="ページ送り"><button class="pdf-viewer__side-previous" type="button" aria-label="前のページ">←</button><button class="pdf-viewer__side-next" type="button" aria-label="次のページ">→</button></nav>
+      <nav class="pdf-viewer__mobile-controls" aria-label="ページ送り"><button class="pdf-viewer__side-previous" type="button" aria-label="前のページ">${pageArrow('left')}</button><button class="pdf-viewer__side-next" type="button" aria-label="次のページ">${pageArrow('right')}</button></nav>
       <p class="pdf-viewer__hint"><span class="pdf-viewer__hint-desktop">拡大後はドラッグで移動</span><span class="pdf-viewer__hint-mobile">ピンチで拡大・縮小 ／ 2本指で移動</span></p>
     </div>
-    <nav class="pdf-viewer__controls" aria-label="ページ送り"><button class="pdf-viewer__previous" type="button"><span aria-hidden="true">←</span> 前のページ</button><span class="pdf-viewer__counter" aria-live="polite"></span><button class="pdf-viewer__next" type="button">次のページ <span aria-hidden="true">→</span></button></nav>`;
+    <nav class="pdf-viewer__controls" aria-label="ページ送り"><button class="pdf-viewer__previous" type="button">${pageArrow('left')} 前のページ</button><span class="pdf-viewer__counter" aria-live="polite"></span><button class="pdf-viewer__next" type="button">次のページ ${pageArrow('right')}</button></nav>
+    <button class="pdf-viewer__slider-toggle" type="button" aria-label="ページスライダーを表示" aria-expanded="false" aria-controls="pdf-page-slider"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M5 15L12 8L19 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></button>
+    <div class="pdf-viewer__page-slider" id="pdf-page-slider" role="group" aria-label="ページへ移動">
+      <div class="pdf-viewer__slider-track"><output class="pdf-viewer__slider-tooltip" aria-hidden="true"></output><input class="pdf-viewer__slider-input" type="range" min="1" max="1" value="1" step="1" aria-label="移動するページ" disabled></div>
+    </div>`;
   document.body.append(root);
   root.querySelector('.pdf-viewer__back').onclick = event => {
     event.currentTarget.blur();
@@ -105,6 +112,7 @@ function build() {
   root.querySelectorAll('.pdf-viewer__reset, .pdf-viewer__mobile-reset').forEach(button => {
     button.onclick = resetView;
   });
+  initializePageSlider();
   const surface = root.querySelector('.pdf-viewer__surface');
   initializeGestures(surface);
   if ('ResizeObserver' in window) new ResizeObserver(scheduleResize).observe(surface);
@@ -253,6 +261,17 @@ function turnPage(direction) {
   return showPage(next);
 }
 
+function pageArrow(direction) {
+  const path = direction === 'left' ? 'M20 12H4M10 6L4 12L10 18' : 'M4 12H20M14 6L20 12L14 18';
+  return `<svg class="pdf-viewer__page-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>`;
+}
+
+function setPageButton(button, direction, label) {
+  const icon = pageArrow(direction);
+  const content = label ? `<span>${label}</span>` : '';
+  button.innerHTML = direction === 'left' ? icon + content : content + icon;
+}
+
 function updatePageControls() {
   const pages = displayedPageNumbers();
   const ending = pageNumber > documentHandle.numPages;
@@ -262,16 +281,17 @@ function updatePageControls() {
   root.classList.toggle('is-right-bound', right);
   root.querySelectorAll('.pdf-viewer__previous, .pdf-viewer__side-previous').forEach(button => {
     button.disabled = pageNumber <= 1;
-    button.textContent = button.classList.contains('pdf-viewer__previous') ? right ? '前のページ →' : '← 前のページ' : right ? '→' : '←';
+    setPageButton(button, right ? 'right' : 'left', button.classList.contains('pdf-viewer__previous') ? '前のページ' : '');
   });
   root.querySelectorAll('.pdf-viewer__next, .pdf-viewer__side-next').forEach(button => {
     button.disabled = ending;
-    button.textContent = button.classList.contains('pdf-viewer__next') ? right ? '← 次のページ' : '次のページ →' : right ? '←' : '→';
+    setPageButton(button, right ? 'left' : 'right', button.classList.contains('pdf-viewer__next') ? '次のページ' : '');
   });
   const toggle = root.querySelector('.pdf-viewer__layout');
   toggle.disabled = binding === 'none';
   toggle.textContent = binding === 'none' ? '見開き不可' : spread ? '単頁表示にする' : '見開き表示にする';
   toggle.setAttribute('aria-pressed', String(spread));
+  updatePageSlider();
 }
 
 async function showPage(number) {
@@ -371,6 +391,7 @@ function scheduleQualityRender() {
 }
 
 async function route() {
+  closePageSlider();
   const feedbackMatch = /^#feedback\/(publication-[0-9]{6})$/.exec(location.hash);
   const libraryMatch = /^#pdf\/(publication-[0-9]{6})$/.exec(location.hash);
   if (feedbackMatch && currentBook?.id === feedbackMatch[1] && documentHandle) {
@@ -429,6 +450,11 @@ async function route() {
   root.querySelectorAll('.pdf-viewer__counter, .pdf-viewer__mobile-counter').forEach(counter => { counter.textContent = ''; });
   root.querySelectorAll('button:not(.pdf-viewer__back):not(.pdf-viewer__header-toggle)').forEach(button => { button.disabled = true; });
   applyTransform();
+  const pageSlider = root.querySelector('.pdf-viewer__slider-input');
+  pageSlider.disabled = true;
+  pageSlider.max = '1';
+  pageSlider.value = '1';
+  pageSlider.removeAttribute('aria-valuetext');
   message('電子版を読み込み中…', true);
   try {
     const [, pdfjs] = await Promise.all([loadPublications(), import('./pdf.min.mjs')]);
@@ -509,4 +535,110 @@ function combinePdfDocuments(documents) {
       };
     }
   };
+}
+
+function isMobileReader() {
+  return window.matchMedia?.(MOBILE_VIEW_QUERY).matches || false;
+}
+
+function syncPageSliderVisibility() {
+  if (!root) return;
+  const panel = root.querySelector('.pdf-viewer__page-slider');
+  panel.inert = isMobileReader() && !root.classList.contains('is-slider-open');
+}
+
+function scheduleSliderHide() {
+  clearTimeout(sliderHideTimer);
+  if (!root?.classList.contains('is-slider-open')) return;
+  sliderHideTimer = setTimeout(() => {
+    if (sliderInteracting) scheduleSliderHide();
+    else closePageSlider();
+  }, 5000);
+}
+
+function closePageSlider() {
+  clearTimeout(sliderHideTimer);
+  if (!root) return;
+  const panel = root.querySelector('.pdf-viewer__page-slider');
+  const toggle = root.querySelector('.pdf-viewer__slider-toggle');
+  if (isMobileReader() && panel.contains(document.activeElement)) {
+    toggle.focus({ preventScroll: true });
+  }
+  root.classList.remove('is-slider-open', 'is-slider-adjusting');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-label', 'ページスライダーを表示');
+  sliderInteracting = false;
+  syncPageSliderVisibility();
+}
+
+function sliderPageText(number) {
+  if (!documentHandle) return '–';
+  const first = spread && number > 1 ? 2 + Math.floor((number - 2) / 2) * 2 : number;
+  const last = spread && first > 1 ? Math.min(first + 1, documentHandle.numPages) : first;
+  return `${first === last ? first : `${first}–${last}`} / ${documentHandle.numPages}`;
+}
+
+function updatePageSlider() {
+  if (!documentHandle || !root) return;
+  const input = root.querySelector('.pdf-viewer__slider-input');
+  input.max = String(documentHandle.numPages);
+  input.value = String(Math.min(pageNumber, documentHandle.numPages));
+  input.dir = binding === 'right' ? 'rtl' : 'ltr';
+  input.disabled = documentHandle.numPages <= 1;
+  root.querySelector('.pdf-viewer__slider-toggle').disabled = documentHandle.numPages <= 1;
+  updateSliderPreview();
+  syncPageSliderVisibility();
+}
+
+function updateSliderPreview() {
+  const input = root.querySelector('.pdf-viewer__slider-input');
+  const text = sliderPageText(Number(input.value));
+  input.setAttribute('aria-valuetext', `${text}ページ`);
+  const progress = documentHandle.numPages > 1 ? (Number(input.value) - 1) / (documentHandle.numPages - 1) * 100 : 0;
+  input.style.setProperty('--slider-progress', `${progress}%`);
+  const tooltip = root.querySelector('.pdf-viewer__slider-tooltip');
+  tooltip.textContent = text;
+  const position = input.dir === 'rtl' ? 100 - progress : progress;
+  tooltip.style.left = `${8.5 + Math.max(0, input.clientWidth - 17) * position / 100}px`;
+}
+
+function initializePageSlider() {
+  const panel = root.querySelector('.pdf-viewer__page-slider');
+  const input = root.querySelector('.pdf-viewer__slider-input');
+  const toggle = root.querySelector('.pdf-viewer__slider-toggle');
+  toggle.onclick = () => {
+    if (!documentHandle) return;
+    if (root.classList.contains('is-slider-open')) closePageSlider();
+    else {
+      root.classList.add('is-slider-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'ページスライダーを隠す');
+      syncPageSliderVisibility();
+      scheduleSliderHide();
+    }
+  };
+  input.addEventListener('input', () => {
+    if (!documentHandle) return;
+    updateSliderPreview();
+    scheduleSliderHide();
+  });
+  input.addEventListener('change', () => {
+    if (!documentHandle) return;
+    const number = Number(input.value);
+    if (Number.isInteger(number)) void showPage(number);
+    scheduleSliderHide();
+  });
+  panel.addEventListener('pointerdown', () => { sliderInteracting = true; root.classList.add('is-slider-adjusting'); updateSliderPreview(); clearTimeout(sliderHideTimer); });
+  const finish = () => { sliderInteracting = false; root.classList.remove('is-slider-adjusting'); scheduleSliderHide(); };
+  window.addEventListener('pointerup', finish);
+  window.addEventListener('pointercancel', finish);
+  input.addEventListener('keydown', event => {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) root.classList.add('is-slider-adjusting');
+    scheduleSliderHide();
+  });
+  input.addEventListener('keyup', finish);
+  input.addEventListener('blur', finish);
+  window.addEventListener('resize', syncPageSliderVisibility);
+  window.matchMedia?.(MOBILE_VIEW_QUERY).addEventListener?.('change', syncPageSliderVisibility);
+  syncPageSliderVisibility();
 }
