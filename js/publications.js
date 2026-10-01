@@ -25,6 +25,7 @@ export async function loadPublications() {
         coverImage: row.cover_path ?? `./cover/${row.id}.png`,
         pdfPath: row.pdf_path || "",
         pdfParts: row.pdf_parts || [],
+        pdfBinding: ["right", "left", "none"].includes(row.pdf_binding) ? row.pdf_binding : "left",
         salesUrl: row.sales_url || "",
         publicationPermission: row.publication_permission,
         releaseAt: row.release_at,
