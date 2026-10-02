@@ -1613,3 +1613,27 @@ body.is-navigation-open {
         transform: none;
     }
 }
+
+.archive-heading__introduction {
+    box-sizing: border-box;
+    width: min(100%, 55em);
+    margin: 16px auto 0;
+    padding: 0 12px;
+    font-size: clamp(.85rem, 1.6vw, 1rem);
+    line-height: 1.9;
+    text-align: center;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    line-break: strict;
+    text-wrap: balance;
+}
+.archive-heading__introduction strong {
+    white-space: nAormal;
+}
+@media (max-width: 600px) {
+    .archive-heading__introduction {
+        padding: 0 4px;
+        line-height: 1.8;
+    }
+}
